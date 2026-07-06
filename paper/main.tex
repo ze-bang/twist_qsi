@@ -72,8 +72,8 @@ direct computation, that this average annihilates every winding ring
 exchange while preserving every contractible one -- provided two
 conditions are met that the naive procedure violates: the flux must be
 distributed uniformly (the boundary-only gauge removes merely half), and
-the average must span the \emph{extended} period set by the fractional
-positions of the emergent charges (the naive $2\pi$ period leaves a
+the average must span the doubled period set by the half-integer
+transport of the emergent charges (the naive $2\pi$ period leaves a
 $40\%$ residual). Both conditions have a transparent origin: a winding
 ring exchange transports emergent charge across the cluster, and only a
 translationally-invariant flux, averaged over its true period, dephases
@@ -234,7 +234,22 @@ where $\bdelta_{\mathcal C}$ is the \emph{net charge transport} of the
 process -- the physical displacement of the moved $S^z$ (boson) density,
 $\brho$ its intrinsic dipole and $\bN\!\cdot\!\bL$ the wrap contribution.
 Thus in the smooth gauge each ring exchange is weighted by a phase set
-by how far it transports emergent charge across the cluster.
+by how far it transports emergent charge across the cluster
+(\cref{fig:transport}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figs/fig_transport.pdf}
+\caption{(a) The net charge transport $\bdelta$ of a ring exchange is the
+dipole of its raised ($+$) minus lowered ($-$) sites. A contractible
+hexagon is balanced, $\bdelta=\bm0$, and is kept; a torus-winding
+four-loop shuttles charge by half a cell across the boundary,
+$\bdelta=\tfrac12$ lattice vector, and is removed. (b) The uniform flux
+gives such a process the phase $e^{-i\bvarphi/2}$, which winds at half
+the rate of $\bvarphi$; averaging dephases it only over the doubled
+period $[0,4\pi)$, not the naive $[0,2\pi)$.}
+\label{fig:transport}
+\end{figure}
 
 \paragraph{The average.}
 The method is to average the \emph{Hamiltonian} over the flux,
@@ -257,13 +272,17 @@ bond. In the boundary-only gauge a winding loop has a virtual path built
 from interior bonds alone, which carries no phase and survives the
 average -- leaving half the coupling. The uniform gauge closes this
 loophole.
-\item[(ii)] \emph{Extended period.} The emergent charges sit at the
-pyrochlore sublattice positions, which are quarter-integer in $a$, so
-$\bdelta$ is quantized in units of $a/4$ and the transport phase is
-$\bvarphi$-periodic only modulo $8\pi$. Averaging over the naive
-$[0,2\pi)^3$ does \emph{not} project; the full period $[0,8\pi)^3$ is
-required. (Equivalently, the flux quantum for the fractional emergent
-charge exceeds the $2\pi$ boundary-twist quantum.)
+\item[(ii)] \emph{Extended period.} A winding ring exchange transports
+emergent charge by \emph{half} a lattice vector ($\bL^{-1}\brho=\tfrac12$;
+verified for every winding four-loop and wrapping hexagon on both
+production clusters), so its transport phase
+$e^{-i\bvarphi\cdot(\bL^{-1}\bdelta)}=e^{-i\bvarphi/2}$ winds at half the
+rate of $\bvarphi$ and is $\bvarphi$-periodic only modulo $4\pi$.
+Averaging over the naive $[0,2\pi)^3$ therefore does \emph{not} project
+(the phase makes half a turn, leaving a $\sim\!40\%$ residual); the
+doubled period $[0,4\pi)^3$ is required. (Equivalently, the flux quantum
+for the half-integer emergent charge is twice the $2\pi$ boundary-twist
+quantum.)
 \end{itemize}
 The average is at the \emph{operator} level: one averages $\Heff$, then
 diagonalizes. Averaging an \emph{observable} (a specific $C(T)$ or
@@ -357,8 +376,8 @@ removed; within the NN model these are $O(\Jpm^4/\Jzz^3)$, below $\ghex$.
 \emph{(a) Boundary gauge:} the operator average keeps $\tfrac12
 g_{\mathcal C}$ (the zero-wrap matching is phase-free).
 \emph{(b) Naive period:} the smooth-gauge average over $[0,2\pi)^3$
-leaves a residual, because $\bL^{-1}\brho$ is fractional; the full
-$[0,8\pi)^3$ is required.
+leaves a residual, because $\bL^{-1}\brho=\tfrac12$ is half-integer; the
+doubled period $[0,4\pi)^3$ is required.
 \emph{(c) Observable average:} averaging $\mathcal O(g)$ rather than
 $\Heff$ keeps every even power of the gauge-invariant
 $|c_{\mathcal C}|=g_{\mathcal C}|\cos(\tfrac12\bw\cdot\bvarphi)|$, so the
@@ -388,7 +407,7 @@ average & coeff.\ $/\gfour$ & $\Tpk/\ghex$ \\
 none (bare) & $-1.00$ & $3.18$ \\
 boundary gauge & $-0.50$ & $1.63$ \\
 smooth gauge, $[0,2\pi)^3$ & $+0.40$ & $0.84$ \\
-smooth gauge, $[0,8\pi)^3$ (extended) & $0.00$ & $0.62$ \\
+smooth gauge, $[0,4\pi)^3$ (extended) & $0.00$ & $0.62$ \\
 \bottomrule
 \end{tabular}
 \end{center}
