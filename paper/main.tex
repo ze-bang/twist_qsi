@@ -17,6 +17,8 @@
 \newcommand{\Heff}{H_{\mathrm{eff}}}
 \newcommand{\Tpk}{T_{\mathrm{peak}}}
 \newcommand{\bvarphi}{\bm{\varphi}}
+\newcommand{\bA}{\mathbf{A}}
+\newcommand{\bd}{\mathbf{d}}
 \newcommand{\bw}{\mathbf{w}}
 \newcommand{\bn}{\mathbf{n}}
 \newcommand{\bN}{\mathbf{N}}
@@ -28,7 +30,6 @@
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Ds}{\Delta_{\mathrm{s}}}
 \newcommand{\twoinout}{2\text{-in-}2\text{-out}}
-\newcommand{\Pice}{\mathcal{P}}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}
@@ -40,7 +41,8 @@
 
 \title{Unbiased exact diagonalization of quantum spin ice in the
 $\pi$-flux regime:\\
-a zero-transport projector for finite-size gauge contamination}
+removing finite-size contamination by translationally-invariant
+twist averaging}
 \author{}
 \date{\today}
 
@@ -54,31 +56,35 @@ by an emergent compact $U(1)$ gauge field. Its unfrustrated
 quantum Monte Carlo (QMC); the frustrated \emph{$\pi$-flux} sector
 ($\Jpm<0$) realized in the dipolar--octupolar cerium pyrochlores carries
 a QMC sign problem, leaving exact diagonalization (ED) as the only
-unbiased finite-temperature method. ED, however, has a finite-size
-problem specific to QSI: a periodic cluster hosts short ice-preserving
-ring exchanges that wind the torus and have no infinite-lattice
-analogue. The dominant ones are four-site loops with coupling
-$\gfour=4\Jpm^2/\Jzz$, which is \emph{second} order in $\Jpm$ and
-therefore parametrically larger than the genuine photon coupling
-$\ghex=12|\Jpm|^3/\Jzz^2$; they contaminate exactly the emergent-gauge
-observables one wants (the low-$T$ specific-heat peak and the low-energy
-$S^{zz}(\bq,\omega)$). We remove this contamination with a
-\emph{zero-transport projector}: retain only ice-manifold processes
-whose net emergent-charge transport $\bdelta=\brho+\bN\!\cdot\!\bL$
-vanishes modulo the cluster periods. We prove, both mathematically and
-by direct computation, that the projector (i)~annihilates every winding
-ring exchange at all orders in $\Jpm$, (ii)~preserves every contractible
-ring exchange at full strength, and (iii)~coincides with the
-operator-level twist average taken in the translationally-invariant
-gauge -- clarifying why the naive twist averages used in practice fail
-(the boundary gauge removes only half; averaging observables rather than
-the Hamiltonian keeps the full spurious scale, gauge-invariantly). On
-the $16$- and $32$-site clusters the projector moves the low-$T$
-specific-heat peak and the low-energy $S^{zz}$ weight from the artifact
-scale $\gfour$ to the photon scale $\ghex$, for both flux signs. This
-makes a $32$-site pyrochlore an unbiased laboratory for the $\pi$-flux
-gauge sector, to be benchmarked against $0$-flux QMC and applied at the
-exchange parameters of the cerium pyrochlores.
+unbiased finite-temperature method. ED has a finite-size problem
+specific to QSI: a periodic cluster hosts short ice-preserving ring
+exchanges that wind the torus and have no infinite-lattice analogue. The
+dominant ones are four-site loops with coupling $\gfour=4\Jpm^2/\Jzz$,
+which is \emph{second} order in $\Jpm$ and hence parametrically larger
+than the genuine photon coupling $\ghex=12|\Jpm|^3/\Jzz^2$; they
+contaminate exactly the emergent-gauge observables (the low-$T$
+specific-heat peak and the low-energy $S^{zz}(\bq,\omega)$). We remove
+this contamination by \emph{twist averaging in the
+translationally-invariant gauge}: threading a $U(1)$ flux through the
+cluster as a uniform vector potential on \emph{every} bond and averaging
+the effective Hamiltonian over the flux. We show, mathematically and by
+direct computation, that this average annihilates every winding ring
+exchange while preserving every contractible one -- provided two
+conditions are met that the naive procedure violates: the flux must be
+distributed uniformly (the boundary-only gauge removes merely half), and
+the average must span the \emph{extended} period set by the fractional
+positions of the emergent charges (the naive $2\pi$ period leaves a
+$40\%$ residual). Both conditions have a transparent origin: a winding
+ring exchange transports emergent charge across the cluster, and only a
+translationally-invariant flux, averaged over its true period, dephases
+that transport completely. On the $16$- and $32$-site clusters the
+method moves the low-$T$ gauge peak and the low-energy $S^{zz}$ weight
+from the artifact scale $\gfour$ to the photon scale $\ghex$ for both
+flux signs, while leaving the high-$T$ charge (spinon) peak -- genuine,
+uncontaminated physics -- untouched. This makes a $32$-site pyrochlore
+an unbiased laboratory for the $\pi$-flux gauge sector, to be
+benchmarked against $0$-flux QMC and applied at the exchange parameters
+of the cerium pyrochlores.
 \end{abstract}
 
 %=====================================================================
@@ -87,7 +93,7 @@ exchange parameters of the cerium pyrochlores.
 
 \paragraph{Quantum spin ice and its emergent photon.}
 The minimal model of QSI is the XXZ antiferromagnet on the pyrochlore
-lattice, written in the local $\langle111\rangle$ frames,
+lattice, in the local $\langle111\rangle$ frames,
 \begin{equation}
 H=\Jzz\sum_{\langle ij\rangle}S^z_iS^z_j
 -\Jpm\sum_{\langle ij\rangle}\bigl(S^+_iS^-_j+S^-_iS^+_j\bigr),
@@ -95,7 +101,7 @@ H=\Jzz\sum_{\langle ij\rangle}S^z_iS^z_j
 \label{eq:H}
 \end{equation}
 For $\Jpm\to0$ the ground manifold is the exponentially degenerate set
-of $\twoinout$ (ice-rule) states. A small $\Jpm$ lifts this degeneracy
+of $\twoinout$ (ice-rule) states. A small $\Jpm$ lifts the degeneracy
 through virtual ring exchanges and generates the deconfined $U(1)$
 lattice gauge theory of QSI: $S^z$ is the emergent electric field, the
 third-order hexagonal ring exchange
@@ -103,32 +109,31 @@ third-order hexagonal ring exchange
 \ghex=\frac{12\,|\Jpm|^3}{\Jzz^2}
 \label{eq:ghex}
 \end{equation}
-is the Maxwell term whose quantum $=$ the emergent photon, and ice-rule
+is the Maxwell term whose quantum is the emergent photon, and ice-rule
 defects are gapped, fractionalized spinons (pair threshold
 $\Ds\approx0.8\,\Jzz$ on the clusters below). The \emph{sign} of the
 ring coupling follows $\mathrm{sgn}(\Jpm^3)$: $\Jpm>0$ gives the
 unfrustrated $0$-flux vacuum, $\Jpm<0$ the frustrated $\pi$-flux vacuum.
-Thermodynamically the photon appears as a low-temperature Schottky peak
-in $C(T)$ at $T\sim\ghex$, far below the spinon (charge) peak at
-$T\sim\Jzz$; dynamically it appears as low-energy spectral weight in the
+Thermodynamically the photon appears as a low-$T$ Schottky peak in
+$C(T)$ at $T\sim\ghex$, far below the spinon (charge) peak at
+$T\sim\Jzz$; dynamically it appears as low-energy weight in the
 non-spin-flip channel $S^{zz}(\bq,\omega)$.
 
 \paragraph{Why $\pi$-flux needs exact diagonalization.}
 In the $S^z$ basis the off-diagonal matrix elements of \cref{eq:H} are
 $-\Jpm$. For $\Jpm>0$ they are negative and worldline/stochastic-series
 QMC is sign-problem-free: the $0$-flux QSI is quantitatively
-characterized. For $\Jpm<0$ the same elements are positive and QMC
-acquires a sign problem. The $\pi$-flux regime -- believed to describe
-the cerium pyrochlores Ce$_2$Zr$_2$O$_7$, Ce$_2$Sn$_2$O$_7$,
-Ce$_2$Hf$_2$O$_7$ -- is thus a QMC dead zone, and unbiased
-finite-temperature information must come from exact diagonalization of a
-finite cluster.
+characterized. For $\Jpm<0$ they are positive and QMC acquires a sign
+problem. The $\pi$-flux regime -- believed to describe
+Ce$_2$Zr$_2$O$_7$, Ce$_2$Sn$_2$O$_7$, Ce$_2$Hf$_2$O$_7$ -- is thus a QMC
+dead zone, and unbiased finite-$T$ information must come from exact
+diagonalization of a finite cluster.
 
 \paragraph{The finite-size problem.}
 A periodic cluster is a flat torus, and its periodic identifications
-generate ice-preserving ring exchanges that \emph{wind} the torus and do
-not exist on the infinite lattice. The shortest and most damaging are
-\emph{four-site} loops. Because a four-site loop factorizes into two
+generate ice-preserving ring exchanges that \emph{wind} the torus with
+no counterpart on the infinite lattice. The shortest and most damaging
+are \emph{four-site} loops. Because a four-site loop factorizes into two
 disjoint nearest-neighbour (NN) hops, it is generated at \emph{second}
 order in $\Jpm$,
 \begin{equation}
@@ -138,19 +143,18 @@ order in $\Jpm$,
 \label{eq:g4}
 \end{equation}
 The artifact is thus \emph{parametrically larger} than the physics, and
-it grows as $|\Jpm|\to0$ -- exactly the weak-coupling regime of the
-cerium materials. It lives entirely in the ice manifold, so it
-contaminates precisely the emergent-gauge observables: it pushes the
-low-$T$ $C(T)$ peak and the low-energy $S^{zz}$ weight up to the scale
-$\gfour$ instead of $\ghex$ (quantified in \cref{sec:demo}). The spinon
-continuum ($S^{+-}$ at $\omega\sim\Jzz$) lies outside the ice manifold
-and is \emph{not} contaminated.
+grows as $|\Jpm|\to0$ -- the weak-coupling regime of the cerium
+materials. It lives entirely in the ice manifold, so it contaminates
+precisely the emergent-gauge observables: it pushes the low-$T$ $C(T)$
+peak and the low-energy $S^{zz}$ weight up to the scale $\gfour$ instead
+of $\ghex$ (quantified in \cref{sec:demo}). The spinon continuum
+($S^{+-}$ at $\omega\sim\Jzz$) lies outside the ice manifold and is
+\emph{not} contaminated.
 
 \paragraph{Goal.}
 Remove this finite-size contamination from the gauge sector of a
-periodic-cluster ED, rigorously and verifiably, so that the $32$-site
-pyrochlore delivers unbiased $\pi$-flux thermodynamics and dynamical
-structure factor.
+periodic-cluster ED, so that the $32$-site pyrochlore delivers unbiased
+$\pi$-flux thermodynamics and dynamical structure factor.
 
 %=====================================================================
 \section{The effective gauge Hamiltonian and the winding loops}
@@ -167,30 +171,29 @@ and nonzero across the boundary.
 
 \paragraph{Effective Hamiltonian.}
 Degenerate ($\Jpm$-)perturbation theory in the ice manifold yields
-$\Heff=\sum_{\mathcal C} c_{\mathcal C}\,O_{\mathcal C}$, a sum of
+$\Heff=\sum_{\mathcal C}c_{\mathcal C}O_{\mathcal C}$, a sum of
 ring-exchange operators
 $O_{\mathcal C}=(S^+_aS^-_bS^+_cS^-_d\cdots)$ over ice-preserving cycles
 $\mathcal C$; because each intermediate resolvent is Ising
-($\propto\Jzz$), the coefficient $c_{\mathcal C}$ is exactly
-$\propto\Jpm^{|\mathcal C|/2}$. On the $2{\times}2{\times}2$ FCC cluster
-($N=32$) the ice manifold has dimension $2970$, so $\Heff$ is
-\emph{fully diagonalizable} and its thermodynamics is numerically exact.
-Enumeration (Schrieffer--Wolff with per-process bookkeeping) gives the
-census in \cref{tab:census}: the winding four-loops and wrapping
-hexagons are the contamination; the contractible hexagons carry the
-photon.
+($\propto\Jzz$), $c_{\mathcal C}\propto\Jpm^{|\mathcal C|/2}$ exactly. On
+the $2{\times}2{\times}2$ FCC cluster ($N=32$) the ice manifold has
+dimension $2970$, so $\Heff$ is \emph{fully diagonalizable} and its
+thermodynamics is numerically exact. Enumeration (Schrieffer--Wolff with
+per-process bookkeeping) gives \cref{tab:census}: the winding four-loops
+and wrapping hexagons are the contamination; the contractible hexagons
+carry the photon.
 
 \begin{table}[t]
 \centering
-\caption{Census of ice-preserving ring exchanges on the two production
-clusters. ``winding/wrapping'' loops close only through the periodic
-boundary ($\bw\neq\bm0$); ``contractible'' hexagons are genuine bulk
-plaquettes ($\bw=\bm0$). The last column is the survival fraction under
-the zero-transport projector of \cref{sec:projector}.}
+\caption{Census of ice-preserving ring exchanges. ``Winding/wrapping''
+loops close only through the periodic boundary ($\bw\neq\bm0$);
+``contractible'' hexagons are genuine bulk plaquettes ($\bw=\bm0$). The
+last column is the survival fraction under translationally-invariant
+twist averaging (\cref{sec:method}).}
 \label{tab:census}
 \begin{tabular}{llrcc}
 \toprule
-cluster & channel & count & order & kept by projector \\
+cluster & channel & count & order & kept by the average \\
 \midrule
 \multirow{3}{*}{$1{\times}1{\times}1$ cubic ($N{=}16$)}
  & winding four-loops   & 36 & $\Jpm^2$ & $0$ \\
@@ -206,340 +209,242 @@ cluster & channel & count & order & kept by projector \\
 \end{table}
 
 %=====================================================================
-\section{The zero-transport projector}
-\label{sec:projector}
+\section{The method: twist averaging in the translationally-invariant gauge}
+\label{sec:method}
 
-The gauge-invariant label that distinguishes a genuine (bulk) ring
-exchange from a torus-winding one is not homology but \emph{charge
-transport}.
-
-\begin{definition}[Net charge transport]
-For an ice-manifold process taking configuration $c$ to $c'$ by raising
-a site set $R$ and lowering a site set $L$ through hops of total wrap
-$\bN=\sum\bn$, the net transport is
+\paragraph{Twist as a flat $U(1)$ connection.}
+Thread a $U(1)$ flux $\bvarphi\in[0,2\pi)^3$ through the three
+non-contractible cycles by attaching a phase to each transverse hop. The
+gauge-invariant content of the flux is its holonomy $e^{-i\bw\cdot\bvarphi}$
+around a loop of winding $\bw$, but \emph{how} the phase is distributed
+over bonds is a gauge choice, and the choice matters for the average
+below. We use the \emph{translationally-invariant} (``smooth'') gauge --
+a uniform vector potential $\bA=\bL^{-1}\bvarphi$ that places
+$\theta_{ij}=\bA\cdot\bd_{ij}$ on \emph{every} bond, with $\bd_{ij}$ the
+minimum-image bond displacement:
 \begin{equation}
-\bdelta=\brho+\bN\!\cdot\!\bL,
+\Heff(\bvarphi):\quad
+c_{\mathcal C}\;\to\;c_{\mathcal C}\,e^{-i\,\bA\cdot\bdelta_{\mathcal C}},
 \qquad
-\brho=\sum_{i\in R}\br_i-\sum_{j\in L}\br_j ,
-\label{eq:delta}
+\bdelta_{\mathcal C}=\sum_{\text{hops}}\bd
+=\underbrace{\sum_{i\in R}\br_i-\sum_{j\in L}\br_j}_{\brho}\;+\;\bN\!\cdot\!\bL ,
+\label{eq:phase}
 \end{equation}
-the physical displacement of the transported $S^z$ (boson) density.
-$\brho$ is the intrinsic dipole of the flipped-site set (home
-positions); $\bN\!\cdot\!\bL=\sum_k N_k\bL_k$ is the wrap contribution.
-\end{definition}
+where $\bdelta_{\mathcal C}$ is the \emph{net charge transport} of the
+process -- the physical displacement of the moved $S^z$ (boson) density,
+$\brho$ its intrinsic dipole and $\bN\!\cdot\!\bL$ the wrap contribution.
+Thus in the smooth gauge each ring exchange is weighted by a phase set
+by how far it transports emergent charge across the cluster.
 
-\begin{definition}[Zero-transport projector]
-$\Pice$ retains exactly the processes with $\bdelta\equiv\bm0
-\pmod{\bL}$, i.e.\ $\bdelta\in\bL\Z^3$, and deletes the rest.
-\end{definition}
-
-Two implementations, cross-validated in \cref{sec:proof-comp}:
-\emph{(i)} in perturbation theory, a row filter on the enumerated
-processes; \emph{(ii)} nonperturbatively, a mask on the exactly
-downfolded ice-manifold Hamiltonian, keeping matrix element $(c,c')$ iff
-its flip-set dipole $\brho\equiv\bm0\pmod\bL$. Because
-$\bN\!\cdot\!\bL\in\bL\Z^3$ automatically, the criterion
-$\bdelta\in\bL\Z^3$ reduces to $\brho\in\bL\Z^3$: \emph{the projector's
-action on an operator depends only on its dipole, at every order.}
+\paragraph{The average.}
+The method is to average the \emph{Hamiltonian} over the flux,
+\begin{equation}
+\boxed{\;\;
+\overline{\Heff}=\int \Heff(\bvarphi)\,\frac{d\bvarphi}{(\text{period})^3},
+\qquad
+c_{\mathcal C}\to c_{\mathcal C}\,\overline{e^{-i\bvarphi\cdot(\bL^{-1}\bdelta_{\mathcal C})}} .
+\;\;}
+\label{eq:avg}
+\end{equation}
+A process survives iff its transport phase averages to unity, i.e.\ iff
+$\bL^{-1}\bdelta_{\mathcal C}\in\Z^3$, i.e.\ iff $\bdelta_{\mathcal C}\in
+\bL\Z^3$. Two points, elaborated and proved in
+\cref{sec:why,sec:comp}, are essential and are where the naive procedure
+fails:
+\begin{itemize}
+\item[(i)] \emph{Translational invariance.} The phase must sit on every
+bond. In the boundary-only gauge a winding loop has a virtual path built
+from interior bonds alone, which carries no phase and survives the
+average -- leaving half the coupling. The uniform gauge closes this
+loophole.
+\item[(ii)] \emph{Extended period.} The emergent charges sit at the
+pyrochlore sublattice positions, which are quarter-integer in $a$, so
+$\bdelta$ is quantized in units of $a/4$ and the transport phase is
+$\bvarphi$-periodic only modulo $8\pi$. Averaging over the naive
+$[0,2\pi)^3$ does \emph{not} project; the full period $[0,8\pi)^3$ is
+required. (Equivalently, the flux quantum for the fractional emergent
+charge exceeds the $2\pi$ boundary-twist quantum.)
+\end{itemize}
+The average is at the \emph{operator} level: one averages $\Heff$, then
+diagonalizes. Averaging an \emph{observable} (a specific $C(T)$ or
+$S(\bq,\omega)$) instead fails in any gauge (\cref{sec:why}).
 
 %=====================================================================
-\section{Proof that the projector works: mathematics}
-\label{sec:proof-math}
+\section{Why it works}
+\label{sec:why}
 
 \subsection{Ring exchanges are sums over virtual paths}
 
 The naive expectation is that a winding ring exchange picks up its
-homology holonomy $e^{-i\bw\cdot\bvarphi}$ under a boundary twist
-$\bvarphi$ and so is removed by averaging over $\bvarphi$. This is
-false, and the reason underlies everything.
+holonomy $e^{-i\bw\cdot\bvarphi}$ and averages to zero. This is false in
+an instructive way.
 
 \begin{theorem}[Matched-pair factorization]
 \label{thm:matched}
-Let $\mathcal C$ be an ice-preserving simple cycle of length $2m$ with
-winding $\bw$. At the leading order at which $O_{\mathcal C}$ appears,
-its coefficient in the boundary-gauge twisted $\Heff(\bvarphi)$ is
+Let $\mathcal C$ be an ice-preserving cycle of length $2m$ and winding
+$\bw$. At the leading order at which $O_{\mathcal C}$ appears, its
+coefficient in the boundary-gauge twisted $\Heff(\bvarphi)$ is
 \begin{equation}
 c_{\mathcal C}(\bvarphi)=-\frac{g_{\mathcal C}}{M}\sum_{\mu=1}^{M}
-e^{-i\bN_\mu\cdot\bvarphi},
-\qquad \sum_\mu\bN_\mu=\bw \ (M{=}2),
-\label{eq:matched}
+e^{-i\bN_\mu\cdot\bvarphi},\qquad \sum_\mu\bN_\mu=\bw\ (M{=}2),
 \end{equation}
-where $\mu$ runs over the $M\ge2$ perfect matchings of $\mathcal C$ into
-disjoint NN dimer moves and $\bN_\mu$ is the total wrap of matching
-$\mu$. For a two-matching loop the gauge-invariant magnitude is
-\begin{equation}
-|c_{\mathcal C}(\bvarphi)|=g_{\mathcal C}\bigl|\cos(\tfrac12\bw\cdot\bvarphi)\bigr|.
-\label{eq:mag}
-\end{equation}
+summed over the $M\ge2$ perfect matchings of $\mathcal C$ into disjoint
+NN dimer moves, $\bN_\mu$ the wrap of matching $\mu$. The
+gauge-invariant magnitude is
+$|c_{\mathcal C}(\bvarphi)|=g_{\mathcal C}|\cos(\tfrac12\bw\cdot\bvarphi)|$
+for a two-matching loop.
 \end{theorem}
 
 \begin{proof}
 At leading order $O_{\mathcal C}$ is generated only by flipping each of
 its $2m$ spins once, i.e.\ by a product of $m$ disjoint NN dimer moves --
-a perfect matching of the cycle; an even cycle has $M\ge2$. Each hop
-$S^+_iS^-_j$ carries $e^{-i\bn_{ij}\cdot\bvarphi}$, so matching $\mu$
-carries $e^{-i\bN_\mu\cdot\bvarphi}$ with $\bN_\mu=\sum_{\text{hops}}\bn$.
-The $M$ matchings share amplitude $g_{\mathcal C}/M$ (equal denominators
-and weight). For a $4$-cycle $abcd$ the two matchings $\{ab,cd\}$ and
-$\{bc,da\}$ together traverse each bond once, so
-$\bN_1+\bN_2=\bw$; \eqref{eq:mag} follows from
+a perfect matching; an even cycle has $M\ge2$. Each hop $S^+_iS^-_j$
+carries $e^{-i\bn_{ij}\cdot\bvarphi}$, so matching $\mu$ carries
+$e^{-i\bN_\mu\cdot\bvarphi}$. For a $4$-cycle the two matchings traverse
+each bond once, $\bN_1+\bN_2=\bw$, giving
 $|1+e^{-i\bw\cdot\bvarphi}|=2|\cos(\tfrac12\bw\cdot\bvarphi)|$.
 \end{proof}
 
-The operator thus lives in \emph{several} transport sectors at once; the
-holonomy is only the \emph{relative} phase of the matchings, and the
-magnitude \eqref{eq:mag} \emph{vanishes} at $\bw\cdot\bvarphi=\pi$ --
-which a single homology phase (constant magnitude) never does.
+An operator thus lives in several transport sectors at once; the
+holonomy is only the \emph{relative} phase of its matchings, and the
+magnitude \emph{vanishes} at $\bw\cdot\bvarphi=\pi$ -- which a single
+homology phase never does. In the boundary gauge a winding loop's
+zero-wrap matching ($\bN_\mu=\bm0$) is phase-free and survives any
+average, leaving $\tfrac12g_{\mathcal C}$. The smooth gauge removes this
+loophole because it weights a process by its transport
+$\bdelta$ [\cref{eq:phase}], and \emph{both} matchings of a winding loop
+transport charge.
 
-\subsection{The projector removes winding, keeps contractible}
+\subsection{The smooth-gauge average removes winding, keeps contractible}
 
 \begin{theorem}[Transport selection]
 \label{thm:transport}
-Let $\ell_0=\min_{\bw\neq\bm0}|\bw\cdot\bL|$ be the shortest nonzero
-cluster period. If every ring exchange under consideration has
-alternating dipole $|\brho_{\mathcal C}|<\ell_0$, then $\Pice$ deletes
-every loop with $\brho_{\mathcal C}\neq\bm0$ at all orders in $\Jpm$ and
-keeps every loop with $\brho_{\mathcal C}=\bm0$ at full strength; on the
-production clusters these are exactly the winding and the contractible
-loops respectively.
+Let $\ell_0=\min_{\bw\neq\bm0}|\bw\cdot\bL|$. If every ring exchange has
+dipole $|\brho_{\mathcal C}|<\ell_0$, then the extended-period smooth-gauge
+average \eqref{eq:avg} deletes every loop with $\brho_{\mathcal C}\neq\bm0$
+at all orders in $\Jpm$ and keeps every loop with $\brho_{\mathcal C}=\bm0$
+at full strength; on the production clusters these are exactly the winding
+and the contractible loops.
 \end{theorem}
 
 \begin{proof}
-By the remark below \cref{eq:delta}, $\Pice$ keeps $O_{\mathcal C}$ iff
-$\brho_{\mathcal C}\in\bL\Z^3$, at every order. Since
-$|\brho_{\mathcal C}|<\ell_0$, the only lattice vector it can equal is
-$\bm0$: hence $\brho_{\mathcal C}\in\bL\Z^3\iff\brho_{\mathcal C}=\bm0$,
-and $\Pice$ keeps $O_{\mathcal C}$ iff $\brho_{\mathcal C}=\bm0$.
-
-A genuine bulk plaquette (regular $[111]$-hexagon, or its
-four-tetrahedron analogue) is centrosymmetric -- its raised and lowered
-sites share a centroid -- so $\brho=\bm0$ and it is kept. A winding loop
-has $\brho\neq\bm0$: were $\brho=\bm0$, then in the two-matching
-factorization $\bdelta_1+\bdelta_2=\bw\!\cdot\!\bL$ with
-$|\bw\!\cdot\!\bL|\ge\ell_0$ would force some
-$|\bdelta_\mu|\ge\tfrac12\ell_0$, yet $\bdelta_\mu=\brho+\bN_\mu\bL$ with
-$\brho=\bm0$ makes $\bdelta_\mu$ a lattice vector, hence $\bm0$ or
-$\ge\ell_0$ -- contradiction. So winding loops are deleted.
+The average keeps $O_{\mathcal C}$ iff $\bdelta_{\mathcal C}\in\bL\Z^3$;
+since $\bN\!\cdot\!\bL\in\bL\Z^3$, this is
+$\brho_{\mathcal C}\in\bL\Z^3$, independent of order. With
+$|\brho_{\mathcal C}|<\ell_0$ the only lattice vector it can equal is
+$\bm0$. A genuine bulk plaquette (regular $[111]$-hexagon or its
+four-tetrahedron analogue) is centrosymmetric, so $\brho=\bm0$ and it is
+kept. A winding loop has $\brho\neq\bm0$: otherwise
+$\bdelta_1+\bdelta_2=\bw\!\cdot\!\bL$ with $|\bw\!\cdot\!\bL|\ge\ell_0$
+would force some $|\bdelta_\mu|\ge\tfrac12\ell_0$ while $\bdelta_\mu=
+\brho+\bN_\mu\bL$ with $\brho=\bm0$ makes $\bdelta_\mu$ a lattice
+vector, hence $\bm0$ or $\ge\ell_0$ -- contradiction. So winding loops
+are deleted.
 \end{proof}
 
 On the production clusters the hypothesis holds with room to spare: the
-alternating dipole of \emph{every} four-loop and wrapping hexagon has the
-same magnitude $|\brho|=a/\sqrt2$, below $\ell_0=a$ (cubic) and
-$\sqrt2\,a$ (FCC), while every contractible hexagon has $\brho=\bm0$
-identically -- giving the $0/0/1$ survival pattern of \cref{tab:census}.
-The single residual bias
-is honest: a \emph{contractible} process with a nonzero dipole
-($\brho\neq\bm0$, possible only for non-centrosymmetric loops at order
-$\Jpm^4$ and beyond) would also be removed; within the NN model these are
-$O(\Jpm^4/\Jzz^3)$, parametrically below $\ghex$.
+dipole of \emph{every} four-loop and wrapping hexagon has magnitude
+$|\brho|=a/\sqrt2$, below $\ell_0=a$ (cubic) and $\sqrt2\,a$ (FCC), while
+every contractible hexagon has $\brho=\bm0$ identically -- the
+$0/0/1$ pattern of \cref{tab:census}. The one honest bias: a
+\emph{contractible} process with a nonzero dipole (possible only for
+non-centrosymmetric loops at order $\Jpm^4$ and beyond) would also be
+removed; within the NN model these are $O(\Jpm^4/\Jzz^3)$, below $\ghex$.
 
-\subsection{Relation to twist averaging: why the naive versions fail}
-
-\begin{theorem}[Twist-average identity]
-\label{thm:twist}
-In the translationally-invariant (``smooth'') gauge -- a uniform vector
-potential $\mathbf A=\bL^{-1}\bvarphi$ placing
-$\theta_{ij}=\mathbf A\cdot\mathbf d_{ij}$ on \emph{every} bond -- each
-process carries $e^{-i\mathbf A\cdot\bdelta}$, and the operator-level
-twist average over the extended period is $\Pice$:
-\begin{equation}
-\overline{\Heff}^{\,\rm smooth}
-=\int \Heff(\bvarphi)\,\frac{d\bvarphi}{(\text{period})}
-=\Pice\,\Heff .
-\end{equation}
-\end{theorem}
-
-\begin{proof}
-A hop $i\to j$ contributes $\mathbf A\cdot\mathbf d_{ij}$; summed along a
-process the phase is $\mathbf A\cdot(\sum\mathbf d)=\mathbf A\cdot\bdelta$
-with $\bdelta$ its transport. Averaging $e^{-i\mathbf A\cdot\bdelta}
-=e^{-i\bvarphi\cdot(\bL^{-1}\bdelta)}$ over the period on which the
-smooth-gauge $\Heff$ is single-valued gives $\delta_{\bL^{-1}\bdelta\in
-\Z^3}=\delta_{\bdelta\in\bL\Z^3}$, i.e.\ $\Pice$.
-\end{proof}
-
-\begin{remark}[The extended period is physical]
-\label{rem:period}
-The averaging period is \emph{not} $[0,2\pi)^3$. The emergent charges
-sit at the pyrochlore sublattice positions, which are quarter-integer in
-the cubic cell, so a transport $\bdelta$ is quantized in units of $a/4$
-and the smooth-gauge phase $e^{-i\bvarphi\cdot(\bL^{-1}\bdelta)}$ is
-$\bvarphi$-periodic only modulo $8\pi$ (equivalently, the flux quantum
-for the fractional emergent charge is larger than the naive boundary
-twist quantum $2\pi$). Averaging only over $[0,2\pi)^3$ does \emph{not}
-project: it leaves a residual $\sim\!40\%$ of each winding coupling
-(\cref{sec:proof-comp}). The full period is required, and over it the
-smooth-gauge operator average equals $\Pice$ exactly.
-\end{remark}
-
-So the projector \emph{is} twist averaging, done correctly. This pins
-down the two ways the naive procedure fails, both verified numerically
-in \cref{sec:proof-comp}:
-\begin{corollary}[Failure modes]
+\subsection{Why the naive versions fail}
+\begin{corollary}
 \label{cor:fail}
-\emph{(a) Wrong gauge.} In the boundary-bond gauge, a winding loop's
-zero-wrap matching ($\bN_\mu=\bm0$) is phase-free, so the operator
-average keeps $\tfrac12g_{\mathcal C}$ rather than $0$; the ``half'' is a
-gauge artifact.
-\emph{(b) Wrong object.} Averaging an \emph{observable} $\mathcal O(g)$
-(a specific $C(T)$ or $S(\bq,\omega)$) rather than the Hamiltonian keeps
-every \emph{even} power of the gauge-invariant $|c_{\mathcal C}(\bvarphi)|
-=g_{\mathcal C}|\cos(\tfrac12\bw\cdot\bvarphi)|$, because
-$\overline{|c|^{2k}}\neq0$; the spurious scale survives in \emph{any}
-gauge. Since practice averages the measured quantity, naive twist
-averaging fails.
+\emph{(a) Boundary gauge:} the operator average keeps $\tfrac12
+g_{\mathcal C}$ (the zero-wrap matching is phase-free).
+\emph{(b) Naive period:} the smooth-gauge average over $[0,2\pi)^3$
+leaves a residual, because $\bL^{-1}\brho$ is fractional; the full
+$[0,8\pi)^3$ is required.
+\emph{(c) Observable average:} averaging $\mathcal O(g)$ rather than
+$\Heff$ keeps every even power of the gauge-invariant
+$|c_{\mathcal C}|=g_{\mathcal C}|\cos(\tfrac12\bw\cdot\bvarphi)|$, so the
+spurious scale survives in any gauge.
 \end{corollary}
 
 %=====================================================================
-\section{Proof that the projector works: computation}
-\label{sec:proof-comp}
+\section{Computational verification}
+\label{sec:comp}
 
-Each mathematical claim is checked exactly on the $16$-site cluster
-(where full ED is available) and, where relevant, on the $32$-site FCC
-cluster.
+Each claim is checked exactly on the $16$-site cluster.
 
-\paragraph{(1) Matched-pair magnitude \eqref{eq:mag}.}
+\paragraph{(1) Matched-pair magnitude.}
 For a winding four-loop [sites $(0,2,8,10)$, $\bw=(-1,0,-1)$] the exact
 second-order coefficient obeys, along $\bw$,
-\[
-|c(\bvarphi)|/\gfour = 1.000,\,0.866,\,0.707,\,0.500,\,0.000,\dots
-= |\cos(\tfrac12\bw\cdot\bvarphi)|\ \text{to all digits,}
-\]
-vanishing at $\bw\cdot\bvarphi=\pi$. A single homology phase would keep
-$|c|=\gfour$ for all $\bvarphi$; the vanishing is the two-matching
-interference of \cref{thm:matched}.
+$|c(\bvarphi)|/\gfour=1.000,0.866,0.707,0.500,0.000,\dots
+=|\cos(\tfrac12\bw\cdot\bvarphi)|$ to all digits, vanishing at
+$\bw\cdot\bvarphi=\pi$.
 
-\paragraph{(2) Transport selection \eqref{thm:transport}.}
-Direct enumeration confirms \cref{tab:census}: on both clusters
-\emph{every} winding four-loop and wrapping hexagon has
-$\brho\notin\bL\Z^3$ (deleted), while \emph{every} contractible hexagon
-has $\brho=\bm0$ (kept) -- survival $0/0/1$, to machine precision, at
-orders $\Jpm^2$ and $\Jpm^3$.
-
-\paragraph{(3) Twist-average identity \eqref{thm:twist} and failure modes.}
-The coefficient of the winding four-loop under the operator-level twist
-average is
-\[
--\gfour\ (\text{bare})\ \longrightarrow\
--\tfrac12\gfour\ (\text{boundary gauge})\ \longrightarrow\
-0\ (\text{smooth gauge}=\Pice),
-\]
-while a contractible hexagon is $+\ghex$ in all three -- confirming both
-\cref{thm:twist} and \cref{cor:fail}(a). For \cref{cor:fail}(b), the
-corner-averaged \emph{observable} keeps the spurious scale
-(\cref{sec:demo}).
-
-\paragraph{(3$'$) The smooth gauge built explicitly, and the extended
-period.}
-Constructing the translationally-invariant gauge on every bond and
-averaging the \emph{Hamiltonian} over $\bvarphi$ realizes $\Pice$
-directly, provided the period of \cref{rem:period} is used. At
-$\Jpm=-0.1$ the winding four-loop coefficient and the resulting low-$T$
-$C(T)$ peak are
+\paragraph{(2) The average, gauge and period.}
+The winding four-loop coefficient under the operator-level average is
 \begin{center}
 \begin{tabular}{lcc}
 \toprule
-smooth-gauge average & winding coeff.\ $/\gfour$ & $\Tpk/\ghex$ \\
+average & coeff.\ $/\gfour$ & $\Tpk/\ghex$ \\
 \midrule
 none (bare) & $-1.00$ & $3.18$ \\
-over $[0,2\pi)^3$ & $+0.40$ & $0.84$ \\
-over $[0,8\pi)^3$ (extended) & $0.00$ & $0.62$ \\
-$\Pice$ (reference) & $0.00$ & $0.62$ \\
+boundary gauge & $-0.50$ & $1.63$ \\
+smooth gauge, $[0,2\pi)^3$ & $+0.40$ & $0.84$ \\
+smooth gauge, $[0,8\pi)^3$ (extended) & $0.00$ & $0.62$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-The extended-period smooth-gauge average agrees with $\Pice$ to all
-digits (peak $0.00748\,\Jzz$ either way); the naive $[0,2\pi)^3$ average
-leaves the peak dirty. This is the explicit, gauge-covariant
-demonstration that ``twist averaging throughout the bulk'' works and
-equals the projector once the emergent-charge period is respected.
+while a contractible hexagon is $+\ghex$ in every case (survival
+$0/0/1$, \cref{tab:census}, to machine precision). Only the uniform
+gauge over the extended period removes the loop; both naive choices leave
+a residual.
 
-\paragraph{(4) Nonperturbative agreement.}
-The dipole mask on the exactly downfolded $16$-site Hamiltonian
-reproduces the perturbative $\Pice$: e.g.\ the low-$T$ $C(T)$ peak at
-$\Jpm=-0.05$ agrees to $0.00122$ vs.\ $0.00127\,\Jzz$, validating the
-truncation.
+\paragraph{(3) Two-peak specific heat.}
+\Cref{fig:ct} shows the full $C(T)$ from exact $16$-site diagonalization
+($12870$ states in $S^z_{\rm tot}=0$), with the gauge band cleaned by
+the translationally-invariant average and the spinon sector taken from
+the same spectrum. The low-$T$ gauge (photon) peak moves from the
+artifact scale $\gfour$ (bare) to the photon scale $\ghex$ under the
+average, while the high-$T$ charge (spinon) peak at $T\sim\Jzz/3$ is
+essentially unchanged -- as it must be, being uncontaminated physics
+outside the ice manifold. Averaging the observable instead barely moves
+the gauge peak (\cref{cor:fail}(c)).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.8\textwidth]{figs/fig_ct_twopeak.pdf}
+\caption{Full specific heat of the $16$-site $\pi$-flux cluster
+($\Jpm=-0.1\,\Jzz$). Bare periodic ED (orange) places the low-$T$ gauge
+peak at the finite-size artifact scale $\gfour$; averaging the
+\emph{observable} over eight corners (olive) barely moves it;
+translationally-invariant twist averaging of the \emph{Hamiltonian}
+(blue) moves it to the photon scale $\ghex$. The high-$T$ charge
+(spinon) peak at $T\sim\Jzz/3$ is genuine, uncontaminated, and unchanged.}
+\label{fig:ct}
+\end{figure}
 
 %=====================================================================
-\section{Demonstration: the artifact removed, both flux sectors}
+\section{Demonstration and outlook}
 \label{sec:demo}
 
-\paragraph{Thermodynamics.}
-\Cref{tab:thermo} lists the low-$T$ (gauge) peak of $C(T)$ in units of
-$\ghex$. Bare periodic ED places it at the artifact scale, drifting up
-as $\gfour/\ghex=\Jzz/3|\Jpm|$ toward weak coupling; the projector
-brings it to $O(\ghex)$ for both flux signs. Corner-averaging the
-\emph{observable} barely moves it (\cref{cor:fail}(b)).
+The gauge peak of the exact $32$-site FCC $\Heff$ (full spectrum of the
+$2970$-state ice manifold), in units of $\ghex$: bare periodic ED sits
+at the artifact scale and drifts up as $\gfour/\ghex=\Jzz/3|\Jpm|$ toward
+weak coupling ($5.4,3.1$ at $\Jpm=-0.03,-0.05$), while the
+translationally-invariant average brings it to $O(1)$ ($0.6,0.3$). The
+same holds for the emergent-photon structure factor
+$S^{zz}(\bq,\omega)=\sum_n|\langle n|S^z_\bq|0\rangle|^2\delta(\omega
+-\omega_n)$, whose low-$\omega$ weight moves from $\sim\gfour$ (bare) to
+$\sim\ghex$ (averaged) on both clusters and both flux signs.
 
-\begin{table}[t]
-\centering
-\caption{Low-$T$ specific-heat (gauge) peak $\Tpk/\ghex$ on the
-$32$-site FCC cluster (exact full spectrum of the $2970$-state ice
-manifold, order $\Jpm^4$). Bare periodic ED sits at the artifact scale;
-$\Pice$ restores the photon scale $O(1)$.}
-\label{tab:thermo}
-\begin{tabular}{lccc}
-\toprule
-$\Jpm/\Jzz$ & bare PBC & $\Pice$ & $\gfour/\ghex$ \\
-\midrule
-$-0.03$ & $5.4$ & $0.6$ & $11.1$ \\
-$-0.05$ & $3.1$ & $0.3$ & $6.7$ \\
-$+0.046$ (0-flux) & $10.1$ & $0.8$ & $7.2$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Dynamical structure factor.}
-The emergent photon is the low-energy weight of the non-spin-flip
-channel $S^{zz}(\bq,\omega)=\sum_n|\langle n|S^z_\bq|0\rangle|^2
-\delta(\omega-\omega_n)$; since $S^z$ is diagonal in the ice basis this
-is computed exactly from the projected $\Heff$. \Cref{tab:dssf} gives
-the low-$\omega$ weight centroid: bare ED places it at the artifact
-scale $\gfour$, the observable twist-average leaves it there, and only
-$\Pice$ brings it to the photon scale. (The spinon continuum $S^{+-}$ at
-$\omega\sim\Jzz$ is uncontaminated and is obtained separately by
-full-Hilbert-space methods.)
-
-\begin{table}[t]
-\centering
-\caption{Low-$\omega$ centroid of the emergent-photon structure factor
-$S^{zz}$ (in units of $\gfour$) at $\Jpm=-0.05\,\Jzz$. Twist averaging
-of the observable fails; the projector reaches the photon scale
-$\sim\ghex=0.15\,\gfour$.}
-\label{tab:dssf}
-\begin{tabular}{lcc}
-\toprule
-scheme & $16$-site & $32$-site FCC \\
-\midrule
-bare PBC                         & $4.2\,\gfour$ & $1.8\,\gfour$ \\
-twist-averaged observable (8 corners) & $2.6\,\gfour$ & -- \\
-zero-transport projector $\Pice$ & $0.47\,\gfour$ & $0.28\,\gfour$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Both tables make the same point in the two experimentally relevant
-observables: the finite-size artifact sits at $\gfour$, twist averaging
-does not remove it, and $\Pice$ restores the photon scale $\ghex$ for
-both $0$- and $\pi$-flux.
-
-%=====================================================================
-\section{Outlook: the $\pi$-flux campaign}
-\label{sec:outlook}
-
-The projector makes the $32$-site pyrochlore an unbiased calculator of
-the QSI gauge sector, and the couplings scale as $\Jpm^k$ exactly, so a
-single effective-Hamiltonian build serves every coupling and both signs.
-The program is: \emph{(A)} benchmark the projected $0$-flux $C(T)$,
-$S(T)$ and photon $S^{zz}$ against sign-problem-free QMC at a common
-coupling; \emph{(B)} cross into $\pi$-flux and compute the same
-quantities where QMC cannot, resolving the emergent-photon lower peak;
-\emph{(C)} evaluate at the measured exchange parameters of
-Ce$_2$Zr$_2$O$_7$, Ce$_2$Sn$_2$O$_7$ and Ce$_2$Hf$_2$O$_7$ and confront
-the neutron $S(\bq,\omega)$ and the specific heat directly. The
-uncontaminated spinon continuum is supplied by full-Hilbert-space
-finite-temperature Lanczos, with twist averaging used for its legitimate
-purpose there -- Brillouin-zone interpolation of the genuine bands, not
-contamination removal.
+The couplings scale as $\Jpm^k$ exactly, so one effective-Hamiltonian
+build serves every coupling and both signs. The program is:
+\emph{(A)} benchmark the averaged $0$-flux $C(T)$, $S(T)$ and photon
+$S^{zz}$ against sign-problem-free QMC at a common coupling;
+\emph{(B)} cross into $\pi$-flux and compute the same quantities where
+QMC cannot; \emph{(C)} evaluate at the measured exchange parameters of
+Ce$_2$Zr$_2$O$_7$, Ce$_2$Sn$_2$O$_7$, Ce$_2$Hf$_2$O$_7$ and confront the
+neutron $S(\bq,\omega)$ and the specific heat. The uncontaminated spinon
+continuum is supplied by full-Hilbert-space finite-temperature Lanczos,
+with twist averaging there used for its standard purpose --
+Brillouin-zone interpolation of the genuine bands.
 
 \end{document}
