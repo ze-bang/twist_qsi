@@ -36,6 +36,7 @@
 \newtheorem{corollary}{Corollary}
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
 
 \title{Unbiased exact diagonalization of quantum spin ice in the
 $\pi$-flux regime:\\
@@ -357,6 +358,20 @@ smooth-gauge $\Heff$ is single-valued gives $\delta_{\bL^{-1}\bdelta\in
 \Z^3}=\delta_{\bdelta\in\bL\Z^3}$, i.e.\ $\Pice$.
 \end{proof}
 
+\begin{remark}[The extended period is physical]
+\label{rem:period}
+The averaging period is \emph{not} $[0,2\pi)^3$. The emergent charges
+sit at the pyrochlore sublattice positions, which are quarter-integer in
+the cubic cell, so a transport $\bdelta$ is quantized in units of $a/4$
+and the smooth-gauge phase $e^{-i\bvarphi\cdot(\bL^{-1}\bdelta)}$ is
+$\bvarphi$-periodic only modulo $8\pi$ (equivalently, the flux quantum
+for the fractional emergent charge is larger than the naive boundary
+twist quantum $2\pi$). Averaging only over $[0,2\pi)^3$ does \emph{not}
+project: it leaves a residual $\sim\!40\%$ of each winding coupling
+(\cref{sec:proof-comp}). The full period is required, and over it the
+smooth-gauge operator average equals $\Pice$ exactly.
+\end{remark}
+
 So the projector \emph{is} twist averaging, done correctly. This pins
 down the two ways the naive procedure fails, both verified numerically
 in \cref{sec:proof-comp}:
@@ -413,6 +428,31 @@ while a contractible hexagon is $+\ghex$ in all three -- confirming both
 \cref{thm:twist} and \cref{cor:fail}(a). For \cref{cor:fail}(b), the
 corner-averaged \emph{observable} keeps the spurious scale
 (\cref{sec:demo}).
+
+\paragraph{(3$'$) The smooth gauge built explicitly, and the extended
+period.}
+Constructing the translationally-invariant gauge on every bond and
+averaging the \emph{Hamiltonian} over $\bvarphi$ realizes $\Pice$
+directly, provided the period of \cref{rem:period} is used. At
+$\Jpm=-0.1$ the winding four-loop coefficient and the resulting low-$T$
+$C(T)$ peak are
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+smooth-gauge average & winding coeff.\ $/\gfour$ & $\Tpk/\ghex$ \\
+\midrule
+none (bare) & $-1.00$ & $3.18$ \\
+over $[0,2\pi)^3$ & $+0.40$ & $0.84$ \\
+over $[0,8\pi)^3$ (extended) & $0.00$ & $0.62$ \\
+$\Pice$ (reference) & $0.00$ & $0.62$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The extended-period smooth-gauge average agrees with $\Pice$ to all
+digits (peak $0.00748\,\Jzz$ either way); the naive $[0,2\pi)^3$ average
+leaves the peak dirty. This is the explicit, gauge-covariant
+demonstration that ``twist averaging throughout the bulk'' works and
+equals the projector once the emergent-charge period is respected.
 
 \paragraph{(4) Nonperturbative agreement.}
 The dipole mask on the exactly downfolded $16$-site Hamiltonian
