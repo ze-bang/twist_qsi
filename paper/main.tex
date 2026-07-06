@@ -41,7 +41,7 @@
 
 \title{Removing spurious finite-size loops in exact diagonalization of
 $\pi$-flux quantum spin ice:\\
-twist averaging versus charge-transport projection}
+twist averaging versus $S^z$-dipole projection}
 \author{}
 \date{\today}
 
@@ -64,17 +64,17 @@ than the genuine photon coupling $\ghex=12|\Jpm|^3/\Jzz^2$; they
 contaminate exactly the emergent-gauge observables (the low-$T$
 specific-heat peak and the low-energy $S^{zz}(\bq,\omega)$). We remove
 them using the one feature that separates them from genuine bulk ring
-exchanges: a winding loop transports emergent charge \emph{across} the
-cluster, whereas a bulk loop does not. This can be exploited two ways,
+exchanges: a winding loop carries the magnetization ($S^z$) pattern
+\emph{across} the cluster, whereas a bulk loop does not. This can be exploited two ways,
 which we show give the identical result. \emph{(i)~Twist averaging} in
 the translationally-invariant gauge -- threading a $U(1)$ flux as a
 uniform vector potential on every bond and averaging the Hamiltonian --
-dephases the charge-transporting loops away, but only if the gauge is
+dephases the magnetization-winding loops away, but only if the gauge is
 uniform (the boundary-only gauge removes merely half), the average spans
-the doubled period set by the half-integer charge transport (the naive
+the doubled period set by the half-integer $S^z$ dipole (the naive
 $2\pi$ leaves a $40\%$ residual), and it is done at the operator rather
-than observable level. \emph{(ii)~A charge-transport projection} deletes
-directly every ring exchange whose flipped-site dipole is nonzero;
+than observable level. \emph{(ii)~An $S^z$-dipole projection} deletes
+directly every ring exchange whose flipped-spin dipole is nonzero;
 gauge-, period- and grid-free, it is exact in one step and is the cleaner
 tool for the job, while twist averaging supplies its physical rationale.
 On the $16$- and $32$-site clusters both move the low-$T$ gauge peak and
@@ -212,20 +212,27 @@ cluster & channel & count & order & kept by the average \\
 \label{sec:twoways}
 
 The winding loops share one feature that no genuine bulk ring exchange
-has: they transport emergent charge \emph{across} the cluster. Define the
-net charge transport of a ring exchange $O_{\mathcal C}$ (which raises a
-site set $R$, lowers a set $L$) as the dipole of the moved $S^z$ (boson)
-density,
+has: they carry the magnetization ($S^z$) pattern \emph{across} the
+cluster. Define the $S^z$ dipole of a ring exchange $O_{\mathcal C}$
+(which raises a site set $R$, lowers a set $L$) as
 \begin{equation}
 \bdelta_{\mathcal C}=\brho_{\mathcal C}+\bN\!\cdot\!\bL,
 \qquad
 \brho_{\mathcal C}=\sum_{i\in R}\br_i-\sum_{j\in L}\br_j ,
 \label{eq:delta}
 \end{equation}
-with $\brho$ the intrinsic dipole (home positions) and $\bN\!\cdot\!\bL$
-the boundary-wrap contribution. A contractible hexagon is balanced,
-$\bdelta=\bm0$; a winding four-loop shuttles charge by half a cell across
-the boundary, $\bdelta\neq\bm0$ (\cref{fig:transport}). This one
+the net spatial displacement of the flipped $S^z$: $\brho$ is the
+intrinsic dipole (home positions), $\bN\!\cdot\!\bL$ the boundary-wrap
+contribution. (This is the microscopic $S^z$ associated with
+$S^z_{\rm tot}$ conservation -- to which the twist flux below couples --
+\emph{not} the emergent electric charge; the ice manifold is the
+charge-free vacuum, and $O_{\mathcal C}$ creates no spinons. The net
+$S^z_{\rm tot}$ is conserved, so $\bdelta$ measures whether the process's
+$S^z$ current \emph{winds} the torus, not a net charge moved.) A
+contractible hexagon closes in real space and is balanced,
+$\bdelta=\bm0$; a winding four-loop closes only through the boundary, so
+its flipped spins cannot balance and its $S^z$ pattern is offset by half
+a cell, $\bdelta\neq\bm0$ (\cref{fig:transport}). This one
 gauge-invariant label separates artifact from physics, and there are two
 ways to exploit it -- one indirect and physical, one direct -- which give
 the \emph{same} result.
@@ -233,14 +240,16 @@ the \emph{same} result.
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{figs/fig_transport.pdf}
-\caption{Charge transport on the $16$-site cubic pyrochlore cell,
-$\bdelta=\sum_{\rm raised}\br-\sum_{\rm lowered}\br$. (a) A contractible
-hexagon (sites $0,2,7,4,14,15$) is balanced -- raised ($+$) and lowered
-($-$) sites share a centroid -- so $\bdelta=\bm0$: physics. (b) A
-torus-winding four-loop ($0,2,7,5$) closes only through the periodic
-boundary (dashed bond to the periodic image of site $0$, wrapping in
-$z$); its charge is offset by half a cell, $\delta_z=-\tfrac12$: a
-finite-size artifact.}
+\caption{The $S^z$ dipole of a ring exchange on the $16$-site cubic
+pyrochlore cell, $\bdelta=\sum_{\rm raised}\br-\sum_{\rm lowered}\br$.
+(a) A contractible hexagon (sites $0,2,7,4,14,15$) is balanced -- raised
+($+$) and lowered ($-$) sites share a centroid -- so $\bdelta=\bm0$:
+physics. (b) A torus-winding four-loop ($0,2,7,5$) closes only through
+the periodic boundary (dashed bond to the periodic image of site $0$,
+wrapping in $z$); its $S^z$ pattern is offset by half a cell,
+$\delta_z=-\tfrac12$: a finite-size artifact. ($\bdelta$ is the
+microscopic magnetization dipole, not the emergent spinon charge, which
+is absent in the ice manifold.)}
 \label{fig:transport}
 \end{figure}
 
@@ -269,8 +278,8 @@ naive procedure violates are met:
 bonds, a winding loop has a virtual path through interior bonds alone
 that carries no phase and survives, leaving \emph{half} the coupling. The
 phase must sit on every bond.
-\item[(ii)] \emph{Doubled period.} A winding loop transports charge by
-half a lattice vector ($\bL^{-1}\brho=\tfrac12$; verified for all winding
+\item[(ii)] \emph{Doubled period.} A winding loop offsets its $S^z$
+pattern by half a lattice vector ($\bL^{-1}\brho=\tfrac12$; verified for all winding
 four-loops and wrapping hexagons on both clusters), so its phase
 $e^{-i\bvarphi/2}$ is periodic only modulo $4\pi$. Averaging over the
 naive $[0,2\pi)^3$ leaves a $\sim\!40\%$ residual; the period
@@ -280,12 +289,12 @@ And it must be done at the \emph{operator} level (average $\Heff$, then
 diagonalize): averaging a specific observable $C(T)$ or $S(\bq,\omega)$
 instead keeps the spurious scale in any gauge.
 
-\subsection{Way 2 -- charge-transport projection}
+\subsection{Way 2 -- $S^z$-dipole projection}
 \label{sec:way2}
 
 Skip the flux entirely. Since $\bN\!\cdot\!\bL\in\bL\Z^3$, the transport
 obeys $\bdelta_{\mathcal C}\equiv\brho_{\mathcal C}\pmod{\bL}$, so whether
-a ring exchange transports charge depends only on its dipole $\brho$ --
+a ring exchange winds the $S^z$ pattern depends only on its dipole $\brho$ --
 computed directly from which sites it raises and lowers, independent of
 gauge, path, or order. The projection is one line:
 \begin{equation}
@@ -327,7 +336,7 @@ can fail       & in three ways (i,ii, observable) & no \\
 \noindent
 \textbf{Verdict.} Use Way 2 (transport projection) to actually clean the
 Hamiltonian: it asks a single gauge-invariant question per process --
-does it move charge across the cluster? -- and is exact in one shot. Way
+does its $S^z$ pattern wind the cluster? -- and is exact in one shot. Way
 1 (twist averaging) reaches the identical answer only with the right
 gauge, period, and grid; its value is conceptual -- it is the physical
 reason the projection is the correct rule, and connects the recipe to the
