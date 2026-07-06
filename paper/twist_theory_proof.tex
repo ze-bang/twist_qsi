@@ -308,7 +308,35 @@ contractible hexagons are preserved in full; the FCC cluster gives the
 same with $24$, $96$, $32$. Thus twist averaging leaves the artifact at
 the $\gfour/2$ scale -- a fact confirmed spectrally: the corner-averaged
 $16$-site low-$T$ peak stalls at $0.018\,\Jzz\approx\gfour/2$, never
-reaching $\ghex=0.012\,\Jzz$.
+reaching $\ghex=0.012\,\Jzz$. A direct check on a single winding
+$4$-loop [sites $(0,2,8,10)$, $\bw=(-1,0,-1)$] makes the mechanism
+concrete: its exact ring coefficient obeys
+$|c_{\mathcal C}(\bvarphi)|=\gfour\,|\cos(\bw\cdot\bvarphi/2)|$ to all
+digits along $\bw$, dropping to \emph{zero} at $\bw\cdot\bvarphi=\pi$ --
+a single homology phase $e^{-i\bw\cdot\bvarphi}$ (constant magnitude)
+cannot vanish, whereas two interfering matchings do.
+
+\begin{remark}[Why a winding operator can be twist-blind: bonds vs.\
+tetrahedra]
+\label{rem:bondtet}
+It is natural to object that a winding operator, being non-existent under
+open boundaries, ``ought'' to be caught by the twist. The resolution is
+that the twist is a connection on \emph{bonds}, whereas the ice-rule
+closure of a process is a property of \emph{tetrahedra}, and the two need
+not coincide. For the loop above, the zero-wrap matching $\mu_0$ uses the
+interior bonds $\{(0,2),(8,10)\}$ (neither crosses the boundary, so
+$\bN_{\mu_0}=\bm0$ and it carries no twist phase), yet its virtual spinon
+pair can only be reabsorbed on the tetrahedron $\{0,5,10,15\}$, whose
+defining pair $(10,0)$ \emph{is} a wrapping bond. Under open boundaries
+that tetrahedron is absent and the process fails to return to the ice
+manifold -- so the operator does require periodicity -- but the twist,
+living on bonds, never sees the interior matching. What does see it is
+the charge \emph{transport} $\bdelta=\brho+\bN\cdot\bL$ of
+\cref{sec:transport}: here $\bN_{\mu_0}=\bm0$ but the operator dipole
+$\brho=\br_0+\br_8-\br_2-\br_{10}=(-\tfrac12,0,-\tfrac12)\neq\bm0$, so
+$\bdelta\neq\bm0$ and the zero-transport projector removes exactly the
+matching that twist averaging cannot.
+\end{remark}
 
 \begin{corollary}[Corner switch-off, not sign-flip]
 \label{cor:corner}
