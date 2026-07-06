@@ -1,0 +1,27 @@
+# Raw ED / FTLM output data (large, regenerable)
+output/
+
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.out
+*.toc
+*.synctex.gz
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+
+# Scratch / temp
+*.tmp
+.DS_Store
+rows/
+logs/

@@ -1,0 +1,12 @@
+{
+  "g_hex_HFB": 0.012000000000000004,
+  "g_hex_HFB_formula": "12 * |Jpm|^3 / Jzz^2",
+  "g_4cycle_estimate": 0.04000000000000001,
+  "g_4cycle_formula": "4 * |Jpm|^2 / Jzz",
+  "Schottky_T_peak_from_g_hex": 0.005001600000000002,
+  "Schottky_T_peak_from_4cycle": 0.016672000000000003,
+  "C_peak_T_bare_lowT": 0.038134929295117234,
+  "C_peak_T_twist_avg_lowT": 0.028528078793905114,
+  "ratio_Tpeak_bare_to_g_hex": 3.177910774593102,
+  "ratio_Tpeak_avg_to_g_hex": 2.377339899492092
+}

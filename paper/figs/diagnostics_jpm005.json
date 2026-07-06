@@ -1,0 +1,52 @@
+{
+  "Jpm": 0.05,
+  "Jzz": 1.0,
+  "n_corners": 8,
+  "ground_state_E0_phi0": -4.268559073834708,
+  "ground_state_E0_corner_mean": -4.191964078147106,
+  "ground_state_E0_corner_spread": 0.11048588024391393,
+  "ground_state_E0_downward_bias": 0.07659499568760175,
+  "ground_manifold_degeneracy_phi0": 7,
+  "ground_manifold_degeneracy_per_corner": [
+    7,
+    8,
+    7,
+    6,
+    9,
+    6,
+    6,
+    7
+  ],
+  "ground_manifold_degeneracy_range": [
+    6,
+    9
+  ],
+  "gap_to_next_manifold_phi0": 0.09696203270498671,
+  "gap_to_next_manifold_per_corner": [
+    0.09696203270498671,
+    0.05944250378377092,
+    0.05944250378375848,
+    0.0011381594815533802,
+    0.05944250378377003,
+    0.0011381594815480511,
+    0.0011381594815489393,
+    0.0011381594815507157
+  ],
+  "gap_to_next_manifold_corner_mean": 0.0349802727478109,
+  "C_peak_T_bare": 0.2589737339615606,
+  "C_peak_T_twist_avg": 0.2589737339615606,
+  "C_peak_value_bare": 4.491572053530097,
+  "C_peak_value_twist_avg": 4.475451779572225,
+  "S_inf_T_bare": 10.890340870351482,
+  "S_inf_T_twist_avg": 10.531625751538277,
+  "two_log2_per_site_x16": 11.090354888959125,
+  "N_ice_exact_2in2out_states": 90,
+  "S_ice_exact_per_site": 0.28123810439564156,
+  "S_pauling_per_site": 0.2027325540540822,
+  "ice_plateau_T_bare": 0.09653488644416254,
+  "ice_plateau_C_bare": 0.5818085383863544,
+  "ice_plateau_S_per_site_bare": 0.2627487101217686,
+  "ice_plateau_T_twist_avg": 0.08595361009292875,
+  "ice_plateau_C_twist_avg": 0.27705372648641996,
+  "ice_plateau_S_per_site_twist_avg": 0.24425809889245603
+}
