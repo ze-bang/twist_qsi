@@ -1,0 +1,52 @@
+{
+  "source_npz": "twist_qsi_demo/notes/twist_resolved_qed_dipole2_M2_jm0p05.npz",
+  "summary_selected": {
+    "jpm": -0.05,
+    "n_sites": 16,
+    "sz_dim": 12870,
+    "ice_dim": 90,
+    "n_band": 90,
+    "n_grid": 2,
+    "n_twists": 8,
+    "twist_kind": "dipole2",
+    "solver": "full",
+    "Tpk_qed_phi0": 0.012947554666587384,
+    "Tpk_qed_twist_operator_avg": 0.0012227162639773654,
+    "Tpk_pt_all": 0.010056391896344644,
+    "Tpk_pt_delta0": 0.0016044725170795068,
+    "g4": 0.010000000000000002,
+    "ghex": 0.0015000000000000005
+  },
+  "min_ice_overlap": 0.8872896692031145,
+  "max_full_vector_gram_deviation": 2.2537527399890678e-14,
+  "operator_metrics": {
+    "qed_phi0_vs_pt_all": {
+      "rel_fro_to_target": 0.07719457423111724,
+      "best_scale": 1.0177285122384359,
+      "rel_fro_after_best_scale": 0.07362213146050839,
+      "rel_spectrum_raw": 0.06480499705757253,
+      "rel_spectrum_after_best_scale": 0.06083518769466616
+    },
+    "qed_phi0_vs_pt_delta0": {
+      "rel_fro_to_target": 11.913051865075744,
+      "best_scale": 0.7030261257933579,
+      "rel_fro_after_best_scale": 0.9982621847648181,
+      "rel_spectrum_raw": 11.334543846215398,
+      "rel_spectrum_after_best_scale": 0.9644149518587173
+    },
+    "qed_projected_avg_vs_pt_all": {
+      "rel_fro_to_target": 0.9967913929101682,
+      "best_scale": 0.005144093603361894,
+      "rel_fro_after_best_scale": 0.9965852712620432,
+      "rel_spectrum_raw": 0.9527678210101106,
+      "rel_spectrum_after_best_scale": 0.9377796965343516
+    },
+    "qed_projected_avg_vs_pt_delta0": {
+      "rel_fro_to_target": 0.3526864526789732,
+      "best_scale": 0.7030261257934284,
+      "rel_fro_after_best_scale": 0.2612171430919621,
+      "rel_spectrum_raw": 0.3526864526789736,
+      "rel_spectrum_after_best_scale": 0.2612171430919621
+    }
+  }
+}

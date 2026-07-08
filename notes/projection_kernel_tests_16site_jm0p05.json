@@ -1,0 +1,91 @@
+{
+  "cluster": {
+    "basis": "cubic",
+    "shape": [
+      1,
+      1,
+      1
+    ],
+    "n_sites": 16,
+    "n_ice": 90
+  },
+  "jpm": -0.05,
+  "reference_peaks": {
+    "all": 0.010056391896344644,
+    "delta0": 0.0016044725170795068
+  },
+  "tests": {
+    "all": {
+      "Tpk": 0.010056391896344573,
+      "rel_to_all": 0.0,
+      "rel_to_delta0": 11.647603473104096,
+      "max_abs_difference_to_delta0": 0.007
+    },
+    "N0": {
+      "Tpk": 0.004646211835746226,
+      "rel_to_all": 0.4981673731862779,
+      "rel_to_delta0": 5.823801736552048,
+      "max_abs_difference_to_delta0": 0.0035000000000000005
+    },
+    "Nmod2": {
+      "Tpk": 0.004646211835746226,
+      "rel_to_all": 0.4981673731862779,
+      "rel_to_delta0": 5.823801736552048,
+      "max_abs_difference_to_delta0": 0.0035000000000000005
+    },
+    "delta4_mod2": {
+      "Tpk": 0.010056391896344573,
+      "rel_to_all": 0.0,
+      "rel_to_delta0": 11.647603473104096,
+      "max_abs_difference_to_delta0": 0.007
+    },
+    "delta4_mod3": {
+      "Tpk": 0.0016044725170795012,
+      "rel_to_all": 0.996334746372557,
+      "rel_to_delta0": 0.0,
+      "max_abs_difference_to_delta0": 0.0
+    },
+    "physical_delta_M2": {
+      "Tpk": 0.004354105429858669,
+      "rel_to_all": 0.6197954029060047,
+      "rel_to_delta0": 5.265189666310443,
+      "max_abs_difference_to_delta0": 0.0035
+    },
+    "physical_delta_M3": {
+      "Tpk": 0.0020504553386561887,
+      "rel_to_all": 0.7774357229522547,
+      "rel_to_delta0": 3.9374394414747838,
+      "max_abs_difference_to_delta0": 0.0031111111111111114
+    },
+    "physical_delta_M6": {
+      "Tpk": 0.0016563046992330204,
+      "rel_to_all": 0.9112072006088549,
+      "rel_to_delta0": 3.07399504049218,
+      "max_abs_difference_to_delta0": 0.002902706183664683
+    },
+    "physical_delta_M16": {
+      "Tpk": 0.00216856301816469,
+      "rel_to_all": 0.9839208349302377,
+      "rel_to_delta0": 2.8096161093362455,
+      "max_abs_difference_to_delta0": 0.0028461253220262595
+    },
+    "delta4_character_M2": {
+      "Tpk": 0.010056391896344573,
+      "rel_to_all": 0.0,
+      "rel_to_delta0": 11.647603473104096,
+      "max_abs_difference_to_delta0": 0.007
+    },
+    "delta4_character_M3": {
+      "Tpk": 0.0016044725170794997,
+      "rel_to_all": 0.9963347463725563,
+      "rel_to_delta0": 1.1420359275041215e-15,
+      "max_abs_difference_to_delta0": 8.635067969306775e-19
+    },
+    "delta4_character_M4": {
+      "Tpk": 0.0016044725170795012,
+      "rel_to_all": 0.996334746372557,
+      "rel_to_delta0": 0.0,
+      "max_abs_difference_to_delta0": 0.0
+    }
+  }
+}

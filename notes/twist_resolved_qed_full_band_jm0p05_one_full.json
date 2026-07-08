@@ -1,0 +1,41 @@
+{
+  "method": "QED full microscopic Hamiltonian, fixed Sz",
+  "jpm": -0.05,
+  "n_sites": 16,
+  "sz_dim": 12870,
+  "ice_dim": 90,
+  "n_band": 90,
+  "grid": "one",
+  "n_grid": 2,
+  "n_twists": 1,
+  "solver": "full",
+  "tolerance": 1e-10,
+  "max_iterations": 800,
+  "diagnostics": [
+    {
+      "full_vector_gram_min": 0.9999999999999899,
+      "full_vector_gram_max": 1.0000000000000102,
+      "ice_overlap_min": 0.887289669203117,
+      "ice_overlap_mean": 0.9371851067785985,
+      "ice_overlap_max": 0.9696904604152563,
+      "phi": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "elapsed_s": 102.90892601013184,
+      "E0": -4.157528428747066,
+      "Etop": -4.030982295191914
+    }
+  ],
+  "Tpk_qed_phi0": 0.012947554666587384,
+  "Tpk_qed_twist_operator_avg": 0.012947554666587384,
+  "Tpk_pt_all": 0.010056391896344644,
+  "Tpk_pt_delta0": 0.0016044725170795068,
+  "g4": 0.010000000000000002,
+  "ghex": 0.0015000000000000005,
+  "fro_qed_avg_vs_pt_all_centered": 0.07719457423111724,
+  "fro_qed_avg_vs_pt_delta0_centered": 11.913051865075744,
+  "fro_qed_phi0_vs_pt_all_centered": 0.07719457423111724,
+  "fro_qed_phi0_vs_pt_delta0_centered": 11.913051865075744
+}
