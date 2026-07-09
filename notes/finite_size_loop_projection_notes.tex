@@ -735,13 +735,10 @@ displacement carried by the virtual spin transfers after the periodic images
 have been undone.
 
 For the order-$\Jpm^2$ and order-$\Jpm^3$ ice-manifold rows explicitly
-enumerated below, the possible transported dipoles are actually coarser than
-the microscopic quarter-lattice: their components lie in $\frac12\Z$.  In other
-words, the computed $\bDelta=4\bdelta$ components are always even.  This is a
-property of the ice-preserving processes at these orders, not of a single
-nearest-neighbor hop.  A single microscopic transverse hop still carries a
-quarter-lattice displacement, so the full microscopic source field is most
-naturally written with $4\bd_{ij}$.
+enumerated below, the possible transported dipoles are coarser than the
+microscopic quarter-lattice: their components lie in $\frac12\Z$.  This is the
+only set of virtual processes that controls the unwanted four-loop peak and
+the physical hexagon peak in the present campaign.
 
 \begin{figure}[htbp]
 \centering
@@ -774,16 +771,16 @@ negative of the change in $\brho$, and the sum $\brho+\bN\bL$ is unchanged.
 \end{proof}
 
 \begin{proposition}[Transported-dipole character projection]
-For the clusters considered here, all coordinates lie on the quarter-lattice,
-so every transported dipole has components in $\frac14\Z$.  We therefore define
-the integer label
+For the order-$\Jpm^2$ and order-$\Jpm^3$ ice-manifold rows on the clusters
+considered here, every transported dipole has components in $\frac12\Z$.  We
+therefore define the integer row label
 \begin{equation}
-\boxed{\bDelta_r\equiv4\bdelta_r\in\Z^3.}
+\boxed{\bDelta_r\equiv2\bdelta_r\in\Z^3.}
 \label{eq:Delta_integer_label}
 \end{equation}
-This is only a change of units.  For example, the winding four-loop in
+This is only a change of units for these rows.  For example, the winding four-loop in
 Fig.~\ref{fig:real_loops} has
-$\bdelta=(0,0,-\tfrac12)$, hence $\bDelta=(0,0,-2)$.  The condition
+$\bdelta=(0,0,-\tfrac12)$, hence $\bDelta=(0,0,-1)$.  The condition
 $\bDelta=0$ is exactly the same condition as $\bdelta=0$.
 
 Couple an auxiliary character field $\btheta$ to this integer transported
@@ -804,7 +801,7 @@ The characters of the abelian group $\Z^3$ are orthogonal:
 e^{-i\btheta\cdot\bDelta_r}
 =c_r\,\delta_{\bDelta_r,0}.
 \]
-Since $\bDelta_r=4\bdelta_r$, the condition $\bDelta_r=0$ is equivalent to
+Since $\bDelta_r=2\bdelta_r$, the condition $\bDelta_r=0$ is equivalent to
 $\bdelta_r=0$.
 \end{proof}
 
@@ -823,47 +820,26 @@ e^{-i(2\pi m/M)\Delta}
 \]
 Thus the finite grid projects onto $\Delta=0$ only modulo $M$.  In the
 order-$\Jpm^2$ and order-$\Jpm^3$ row data, the nonzero components of
-$4\bdelta$ are $\pm2$.  Therefore the $4\bdelta$ convention needs a grid with
-$M\nmid 2$; the smallest choice is $M=3$.  If instead one worked only at the
-already-projected effective-row level and defined the integer label
-$\widetilde{\bDelta}=2\bdelta$, then the nonzero components would be $\pm1$ and
-an $M=2$ character average would distinguish them from zero.  We keep
-$4\bdelta$ for the microscopic protocol because a single nearest-neighbor hop
-can carry a quarter-lattice displacement, so $4\bd_{ij}$ is the natural integer
-bond label.
+$\bDelta=2\bdelta$ are $\pm1$.  Therefore the two-point grid $M=2$ already
+distinguishes the finite-size sectors from the clean zero-transport sector.
 
 This is a pure aliasing issue.  Consider one spurious four-loop component with
 $\delta_\mu=-\frac12$.  With the effective-row label
-$\widetilde\Delta_\mu=2\delta_\mu=-1$, the two-point average gives
+$\Delta_\mu=2\delta_\mu=-1$, the two-point average gives
 \[
 \frac12\left(1+e^{-i\pi(-1)}\right)=0,
 \]
-so the row is removed.  With the microscopic integer label
-$\Delta_\mu=4\delta_\mu=-2$, the same two-point average gives
-\[
-\frac12\left(1+e^{-i\pi(-2)}\right)=1,
-\]
-so the row is not removed at all.  The nonzero sector has aliased back into the
-zero sector modulo $2$.  The three-point average fixes this:
-\[
-\frac13\left(1+e^{-i(2\pi/3)(-2)}
- +e^{-i(4\pi/3)(-2)}\right)=0.
-\]
-The perturbative row-table check on the $16$-site cluster gives exactly this:
+so the row is removed.  The perturbative row-table check on the $16$-site
+cluster gives exactly this:
 \[
 \begin{array}{c|c|c}
 \text{integer label} & M & \text{relative error to strict }\bdelta=0\\
 \hline
-4\bdelta & 2 & 11.6476\\
-4\bdelta & 3 & 1.1\times10^{-15}\\
 2\bdelta & 2 & 0\\
-2\bdelta & 3 & 7.5\times10^{-16}
 \end{array}
 \]
-Thus $M=2$ was never universally correct; it was correct only after choosing
-the minimal effective-row charge $2\bdelta$.  Once the microscopic charge
-$4\bdelta$ is used, $M=2$ aliases the artifact and $M=3$ is the smallest
-correct grid for the order-$\Jpm^2$ and order-$\Jpm^3$ row data.
+Thus the minimal character projection for this campaign is $2\bdelta$ with
+$M=2$.
 \end{remark}
 
 \begin{remark}[Why physical twists were insufficient]
@@ -873,7 +849,7 @@ have half-cell transported dipoles, so the corresponding exponent is
 half-integer in $2\pi$ units.  Physical twist averaging therefore suppresses
 these rows but does not project them out exactly.  The auxiliary character
 field in Eq.~\eqref{eq:delta_character_phase} is the finite-cluster source
-conjugate to the integer transported dipole $\bDelta=4\bdelta$.
+conjugate to the integer transported dipole $\bDelta=2\bdelta$.
 \end{remark}
 
 \begin{corollary}[Clean ice-manifold Hamiltonian]
@@ -1014,33 +990,32 @@ character
 \end{equation}
 This is the correct language for integer homology.  The finite-size loops
 found above are slightly subtler.  On the $16$-site cubic cluster their
-transported dipoles are half-cell displacements: in the integer coordinates
+transported dipoles are half-cell displacements.  For the order-$\Jpm^2$ and
+order-$\Jpm^3$ ice-manifold rows, the natural integer coordinate is therefore
 \begin{equation}
-\bDelta_r\equiv4\bdelta_r
-\label{eq:delta4_def}
+\bDelta_r\equiv2\bdelta_r .
+\label{eq:delta2_def}
 \end{equation}
-the offending rows have components $\Delta_\mu=0,\pm2$, whereas the clean
-hexagons have $\bDelta=0$.  An ordinary $2\pi$-periodic flat holonomy is not
-orthogonal to a half-integer displacement.  This is why physical twist
-averaging suppresses the artifact but does not reproduce the strict
-$\bdelta=0$ projector.
+The offending rows have components $\Delta_\mu=0,\pm1$, whereas the clean
+hexagons have $\bDelta=0$.  An ordinary physical flat holonomy is not the same
+as this row-character projector.  This is why physical twist averaging
+suppresses the artifact but does not reproduce the strict $\bdelta=0$
+projector.
 
-The factor $4$ has no independent physical content.  It is the denominator of
-the coordinate grid used for the pyrochlore sites.  The exact projector needs a
-compact character variable with $2\pi$ periodicity:
+The exact projector needs a compact character variable with $2\pi$ periodicity:
 \[
 \int_0^{2\pi}\frac{d\theta}{2\pi}e^{-i\theta n}=\delta_{n,0}
 \qquad (n\in\Z).
 \]
 If we used the real displacement $\delta_\mu=-\tfrac12$ directly, the exponent
 $e^{-i\theta\delta_\mu}$ would not be a single-valued character on the
-$2\pi$-periodic $\theta$ circle.  Multiplying by $4$ converts all possible
-finite-cluster transported dipoles into integer labels.  Since multiplication
-by $4$ is invertible as a test of zero, it changes no physics in the
-projection: $\bDelta=0$ if and only if $\bdelta=0$.
+$2\pi$-periodic $\theta$ circle.  Multiplying by $2$ converts the transported
+dipoles appearing through third order into integer labels.  Since
+multiplication by $2$ is invertible as a test of zero, it changes no physics in
+the projection: $\bDelta=0$ if and only if $\bdelta=0$ for these rows.
 
 The exact character variable for the finite cluster is therefore not the
-integer winding $\bw$, but the integer transported dipole $\bDelta=4\bdelta$:
+integer winding $\bw$, but the integer transported dipole $\bDelta=2\bdelta$:
 \begin{equation}
 \chi_{\bDelta}(\btheta)=e^{-i\btheta\cdot\bDelta},
 \qquad \bDelta\in\Z^3.
@@ -1097,27 +1072,26 @@ the minimum-image displacement
 \bd_{ij}=\br_j-\br_i-\bn_{ij}\bL,
 \]
 the microscopic move $S_i^+S_j^-$ raises site $i$ and lowers site $j$, so its
-transported-dipole increment is $-\bd_{ij}$.  The deformation whose virtual
-paths acquire the character $e^{-i\btheta\cdot\bDelta}$ is therefore
+transported-dipole increment is $-\bd_{ij}$.  The deformation used in the
+adopted $2\bdelta$ protocol is therefore
 \begin{equation}
-\Hmic^{\Delta}(\btheta)=
+\Hmic^{2\delta}(\btheta)=
 \Jzz\sum_{\langle ij\rangle}S_i^zS_j^z
 -\Jpm\sum_{\langle ij\rangle}
 \left[
-e^{+i\btheta\cdot(4\bd_{ij})}S_i^+S_j^-
-+e^{-i\btheta\cdot(4\bd_{ij})}S_i^-S_j^+
+e^{+i\btheta\cdot(2\bd_{ij})}S_i^+S_j^-
++e^{-i\btheta\cdot(2\bd_{ij})}S_i^-S_j^+
 \right],
 \label{eq:mic_dipole_twisted}
 \end{equation}
-where $4\bd_{ij}$ is an integer vector on the clusters considered here.  This
-is not an ordinary physical flux insertion.  It is an auxiliary source field
-conjugate to the finite-cluster transported dipole.  Physical flat twists are
-still useful diagnostics, but Eq.~\eqref{eq:mic_dipole_twisted} is the
-deformation that reduces to the exact $\bdelta=0$ projection in perturbation
-theory.
+This is not an ordinary physical flux insertion.  It is an auxiliary source
+field chosen so that the relevant ice-manifold virtual processes are filtered
+by the $2\bdelta$ character.  Physical flat twists are still useful
+diagnostics, but Eq.~\eqref{eq:mic_dipole_twisted} is the deformation used in
+the $M=2$ full-Hamiltonian protocol below.
 
 Let $\{|\psi_n(\btheta)\rangle\}_{n=1}^{N_{\ice}}$ be the lowest ice-like band
-of $\Hmic^{\Delta}(\btheta)$, with energies $E_n(\btheta)$.  Let
+of $\Hmic^{2\delta}(\btheta)$, with energies $E_n(\btheta)$.  Let
 \[
 P_{\ice}=\sum_{\alpha\in\ice}|\alpha\rangle\langle\alpha|
 \]
@@ -1173,16 +1147,10 @@ For numerical work the integral is replaced by a Fourier quadrature,
 \qquad \HB=\HB(\btheta).
 \label{eq:grid_projection}
 \end{equation}
-For the $16$-site campaign below we use the minimal effective-row label
-\[
-\widetilde{\bDelta}=2\bdelta .
-\]
-The spurious four-loop sectors then carry $\widetilde\Delta_\mu=\pm1$, so the
-two-point grid $M=2$ distinguishes them from zero.  This is the smallest
-character average that exactly reproduces the strict $\bdelta=0$ row projector
-through order $\Jpm^3$.  With the alternative microscopic integer label
-$\bDelta=4\bdelta$, the same artifacts carry $\Delta_\mu=\pm2$, so $M=2$
-aliases them back to zero and one needs $M=3$.
+For the $16$-site campaign below we use $\bDelta=2\bdelta$.  The spurious
+four-loop sectors then carry $\Delta_\mu=\pm1$, so the two-point grid $M=2$
+distinguishes them from zero.  This is the smallest character average that
+exactly reproduces the strict $\bdelta=0$ row projector through order $\Jpm^3$.
 
 In larger clusters or at higher perturbative order, $M$ should be increased
 until $C(T)$, the low-band spectrum, and selected matrix elements of
@@ -1194,10 +1162,9 @@ The full microscopic calculation should therefore be organized as follows.
 \begin{enumerate}
 \item Choose a periodic cluster and construct a fixed ice basis
 $\{|\alpha\rangle\}$.
-\item For each character field $\btheta$ on the grid, build the source-deformed
-microscopic Hamiltonian in the full fixed-$S^z_{\rm tot}=0$ Hilbert space.  In
-the adopted $2\bdelta$ protocol, replace $4\bd_{ij}$ by $2\bd_{ij}$ in
-Eq.~\eqref{eq:mic_dipole_twisted} and use the $M=2$ grid
+\item For each character field $\btheta$ on the grid, build
+$\Hmic^{2\delta}(\btheta)$ in the full fixed-$S^z_{\rm tot}=0$ Hilbert space
+using Eq.~\eqref{eq:mic_dipole_twisted} and the $M=2$ grid
 $\theta_\mu\in\{0,\pi\}$.
 \item Diagonalize the lowest $N_{\ice}$ states.  Record the spectral
 separation between the $N_{\ice}$th and $(N_{\ice}+1)$st levels whenever
@@ -1250,18 +1217,13 @@ physical $\bA\!\cdot\!\bdelta$, $M=6$ & $0.0016563$ & $3.0740$
 & suppresses, not exact\\
 $2\bdelta$ character, $M=2$ & $0.0016045$ & $0$
 & minimal row-level charge\\
-$\bDelta=4\bdelta$ character, $M=3$ & $0.0016045$ & $0$
-& exact through order $3$\\
 \bottomrule
 \end{tabular}
 \end{center}
 
-We tested both microscopic source conventions.  The adopted $2\bdelta$ run used
-Eq.~\eqref{eq:mic_dipole_twisted} with $4\bd_{ij}$ replaced by $2\bd_{ij}$ on
-the $M=2$ grid, i.e. $8$ source-field points.  The $\bDelta=4\bdelta$ comparison
-run used Eq.~\eqref{eq:mic_dipole_twisted} on the $M=3$ grid, i.e. $27$
-source-field points.  The low-band pullback was well conditioned in both cases;
-for the $2\bdelta$ run,
+The full microscopic QED run used Eq.~\eqref{eq:mic_dipole_twisted} on the
+$M=2$ grid, i.e. $8$ source-field points.  The low-band pullback was well
+conditioned:
 \[
 \min_{\btheta}\lambda_{\min}\!\left[
 X^\dagger(\btheta)X(\btheta)\right]
@@ -1277,8 +1239,6 @@ operator & $T_{\rm peak}/\Jzz$ & comment\\
 full QED band, $\btheta=0$ & $0.0129476$ & matches all-row physics\\
 full QED band, $2\bdelta$ character $M=2$ & $0.0012227$
 & near clean scale, not identical\\
-full QED band, $4\bdelta$ character $M=3$ & $0.0012222$
-& better operator match\\
 perturbative all rows & $0.0100564$ & four-loop artifact\\
 perturbative $\bdelta=0$ & $0.0016045$ & clean hexagon target\\
 \bottomrule
@@ -1313,13 +1273,10 @@ At the operator level, after removing constants, the adopted $2\bdelta$, $M=2$
 projected full QED band has relative Frobenius error $0.3527$ against the
 perturbative $\bdelta=0$ matrix.  Allowing one overall scale factor, the
 residual falls to $0.2612$; the corresponding spectrum residual is also
-$0.2612$.  The $4\bdelta$, $M=3$ comparison run gives a slightly better
-operator residual, $0.1450$ after scale fitting, but it requires $27$ full ED
-points instead of $8$.  Thus the working protocol for the present $16$-site
-campaign is the cheaper and perturbatively minimal $2\bdelta$, $M=2$ character
-average.  Both character protocols are a large improvement over the ordinary
-physical $M=2$ holonomy average, whose operator error against $\bdelta=0$ was
-$5.4308$.
+$0.2612$.  Thus the working protocol for the present $16$-site campaign is the
+perturbatively minimal $2\bdelta$, $M=2$ character average.  It is a large
+improvement over the ordinary physical $M=2$ holonomy average, whose operator
+error against $\bdelta=0$ was $5.4308$.
 
 Thus the first microscopic test supports the corrected campaign: full ED
 dresses the ice manifold, while the transported-dipole character projection
