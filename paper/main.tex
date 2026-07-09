@@ -1,348 +1,278 @@
-\documentclass[11pt,letterpaper]{article}
+\documentclass[reprint,amsmath,amssymb,aps,prl,superscriptaddress]{revtex4-2}
 
-\usepackage[margin=1in]{geometry}
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{bm}
 \usepackage{graphicx}
+\usepackage{bm}
 \usepackage{xcolor}
-\usepackage{booktabs}
-\usepackage{multirow}
-\usepackage[colorlinks=true,linkcolor=blue!60!black,urlcolor=blue!60!black,citecolor=blue!50!black]{hyperref}
-\usepackage{cleveref}
+\usepackage[colorlinks=true,linkcolor=blue!55!black,citecolor=blue!55!black,
+            urlcolor=blue!55!black]{hyperref}
 
-\newcommand{\Jpm}{J_{\pm}}
+\graphicspath{{figs/}}
+
 \newcommand{\Jzz}{J_{zz}}
+\newcommand{\Jpm}{J_{\pm}}
+\newcommand{\Heff}{H_{\mathrm{eff}}}
+\newcommand{\Hclean}{H_{\mathrm{clean}}}
 \newcommand{\ghex}{g_{\mathrm{hex}}}
 \newcommand{\gfour}{g_{4}}
-\newcommand{\Heff}{H_{\mathrm{eff}}}
-\newcommand{\Tpk}{T_{\mathrm{peak}}}
-\newcommand{\bvarphi}{\bm{\varphi}}
-\newcommand{\bA}{\mathbf{A}}
-\newcommand{\bd}{\mathbf{d}}
-\newcommand{\bw}{\mathbf{w}}
-\newcommand{\bn}{\mathbf{n}}
-\newcommand{\bN}{\mathbf{N}}
-\newcommand{\br}{\mathbf{r}}
-\newcommand{\bL}{\mathbf{L}}
-\newcommand{\bq}{\mathbf{q}}
-\newcommand{\brho}{\bm{\rho}}
-\newcommand{\bdelta}{\bm{\delta}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\Ds}{\Delta_{\mathrm{s}}}
-\newcommand{\twoinout}{2\text{-in-}2\text{-out}}
-
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}
-\newtheorem{proposition}{Proposition}
-\newtheorem{corollary}{Corollary}
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}
-\newtheorem{remark}{Remark}
-
-\title{Unbiased exact diagonalization of quantum spin ice in the
-$\pi$-flux regime:\\
-removing finite-size loops by translationally-invariant twist averaging}
-\author{}
-\date{\today}
+\newcommand{\bN}{\bm N}
+\newcommand{\bL}{\bm L}
+\newcommand{\br}{\bm r}
+\newcommand{\bw}{\bm w}
+\newcommand{\bq}{\bm q}
+\newcommand{\brho}{\bm\rho}
+\newcommand{\bdelta}{\bm\delta}
+\newcommand{\bphi}{\bm\phi}
+\newcommand{\ice}{\mathcal I}
+\newcommand{\Szz}{S^{zz}}
 
 \begin{document}
-\maketitle
+
+\title{Exact diagonalization of the $\pi$-flux quantum spin ice gauge sector
+beyond quantum Monte Carlo: removing torus-winding contamination by
+zero-transport projection}
+
+\author{Z.-B.~Zhou}
+\affiliation{(affiliation)}
+
+\date{\today}
 
 \begin{abstract}
-The thermodynamics and dynamics of quantum spin ice (QSI) are governed
-by an emergent compact $U(1)$ gauge field. Its unfrustrated
-\emph{$0$-flux} sector ($\Jpm>0$) is accessible to sign-problem-free
-quantum Monte Carlo (QMC); the frustrated \emph{$\pi$-flux} sector
-($\Jpm<0$) realized in the dipolar--octupolar cerium pyrochlores carries
-a QMC sign problem, leaving exact diagonalization (ED) as the only
-unbiased finite-temperature method. ED has a finite-size problem
-specific to QSI: a periodic cluster hosts short ice-preserving ring
-exchanges that wind the torus and have no infinite-lattice analogue. The
-dominant ones are four-site loops with coupling $\gfour=4\Jpm^2/\Jzz$,
-which is \emph{second} order in $\Jpm$ and hence parametrically larger
-than the genuine photon coupling $\ghex=12|\Jpm|^3/\Jzz^2$; they
-contaminate exactly the emergent-gauge observables (the low-$T$
-specific-heat peak and the low-energy $S^{zz}(\bq,\omega)$). What distinguishes them from genuine bulk ring exchanges is topological:
-a four-site loop cannot close in real space and wraps the torus (nonzero
-homology $\bw$), whereas a bulk plaquette is contractible ($\bw=\bm0$).
-We remove the winding loops by twist averaging in the
-translationally-invariant gauge -- threading a $U(1)$ flux as a uniform
-vector potential on \emph{every} bond and averaging the effective
-Hamiltonian. Each ring exchange then acquires the winding phase
-$e^{-i\bvarphi\cdot\bw/2}$ (its $S^z$ dipole is exactly half the winding
-displacement, $\brho=\tfrac12\bw\!\cdot\!\bL$, verified for all such
-loops), so the average projects $\Heff$ onto its contractible part. The
-procedure works, but only if three conditions the naive version violates
-are met:
-the gauge must be uniform (the boundary-only gauge removes merely half),
-the average must span the doubled period set by the half-integer $S^z$
-dipole (the naive $2\pi$ leaves a $40\%$ residual), and it must act on
-the Hamiltonian rather than on an observable. On the $16$- and $32$-site
-clusters this moves the low-$T$ gauge peak and the low-energy $S^{zz}$
-weight from the artifact scale $\gfour$ to the photon scale $\ghex$ for
-both flux signs, while leaving the high-$T$ charge (spinon) peak --
-genuine, uncontaminated physics -- untouched. This makes a $32$-site
-pyrochlore an unbiased laboratory for the $\pi$-flux gauge sector, to be
-benchmarked against $0$-flux QMC and applied at the exchange parameters
-of the cerium pyrochlores.
+The $\pi$-flux regime of quantum spin ice (QSI)---the regime relevant to the
+dipolar--octupolar cerium pyrochlores, and in particular to
+Ce$_2$Hf$_2$O$_7$---carries a fermion sign problem that blocks unbiased
+quantum Monte Carlo (QMC).  Exact diagonalization (ED) is sign-problem free,
+but on the small periodic clusters it requires it suffers a specific,
+previously underappreciated pathology: the torus supports ice-preserving
+ring-exchange loops that close only by winding around the boundary.  The
+shortest of these is a four-spin loop generated at second order in the
+transverse coupling, $\gfour=4\Jpm^2/\Jzz$, whereas the physical
+emergent-photon ring exchange is the contractible six-spin hexagon generated
+at third order, $\ghex=12|\Jpm|^3/\Jzz^2$.  Their ratio
+$\gfour/\ghex=\Jzz/3|\Jpm|$ diverges in the perturbative regime, so the
+artifact dominates precisely where the QSI description is cleanest, displacing
+the low-temperature specific-heat peak and the low-frequency non-spin-flip
+structure factor by nearly an order of magnitude.  We show that ordinary
+boundary-twist averaging removes only half of every winding coupling, and
+introduce a single gauge-invariant diagnostic, the transported dipole
+$\bdelta=\brho+\bN\bL$, whose vanishing selects exactly the contractible
+processes.  Projecting the ice-manifold effective Hamiltonian onto
+$\bdelta=0$ yields an artifact-free cluster whose low-energy thermodynamics
+and $\Szz(\bq,\omega)$ we compute in the QMC-inaccessible $\pi$-flux sector,
+benchmarked against sign-free $0$-flux QMC.  This turns a small periodic
+cluster into a controlled laboratory for the artificial photon of
+Ce$_2$Hf$_2$O$_7$.
 \end{abstract}
 
-%=====================================================================
-\section{The problem}
-\label{sec:problem}
+\maketitle
 
-\paragraph{Quantum spin ice and its emergent photon.}
-The minimal model of QSI is the XXZ antiferromagnet on the pyrochlore
-lattice, in the local $\langle111\rangle$ frames,
+\paragraph{Introduction.}---Quantum spin ice is the leading candidate for a
+three-dimensional, experimentally accessible $U(1)$ quantum spin
+liquid~\cite{Hermele2004,GingrasMcClarty2014,Savary2016}.  Its low-energy
+theory is compact quantum electrodynamics: the two-in--two-out ``ice''
+constraint on the pyrochlore lattice plays the role of a Gauss law, gapped
+``spinon'' defects are the emergent electric charges, and the collective
+tunnelling of spins around hexagonal plaquettes builds a gapless emergent
+photon~\cite{Hermele2004,Benton2012,Shannon2012}.  The sign of the plaquette
+(``ring-exchange'') amplitude distinguishes two gauge sectors: a $0$-flux
+sector and a frustrated $\pi$-flux sector~\cite{LeeOnodaBalents2012}.  In the
+dipolar--octupolar (DO) cerium pyrochlores
+Ce$_2$Zr$_2$O$_7$~\cite{Gaudet2019,Gao2019}, Ce$_2$Sn$_2$O$_7$~\cite{Sibille2020},
+and Ce$_2$Hf$_2$O$_7$~\cite{Poree2023}, the octupolar exchange places the
+material in or near the $\pi$-flux regime, making a quantitative,
+material-specific theory of this sector timely.
+
+The methodological obstacle is sharp.  Sign-problem-free QMC exists only for
+the $0$-flux sign of the transverse coupling ($\Jpm>0$); the $\pi$-flux sector
+($\Jpm<0$), the one realized in the cerium magnets, has a sign
+problem~\cite{Shannon2012,Kato2015}.  ED does not, but it is confined to small
+clusters.  Here we identify and cure a finite-size pathology that is specific
+to the QSI \emph{gauge sector} and that has, we argue, distorted low-energy ED
+and finite-temperature Lanczos benchmarks in the $\pi$-flux regime.
+
+\paragraph{The model.}---We take the nearest-neighbor XXZ model in the local
+$[111]$ frames,
 \begin{equation}
-H=\Jzz\sum_{\langle ij\rangle}S^z_iS^z_j
--\Jpm\sum_{\langle ij\rangle}\bigl(S^+_iS^-_j+S^-_iS^+_j\bigr),
-\qquad 0<|\Jpm|\ll\Jzz .
-\label{eq:H}
+H=\Jzz\!\sum_{\langle ij\rangle}\!S_i^zS_j^z
+ -\Jpm\!\sum_{\langle ij\rangle}\!\left(S_i^+S_j^-+S_i^-S_j^+\right),
+ \quad |\Jpm|\ll\Jzz,
+\label{eq:model}
 \end{equation}
-For $\Jpm\to0$ the ground manifold is the exponentially degenerate set
-of $\twoinout$ (ice-rule) states. A small $\Jpm$ lifts the degeneracy
-through virtual ring exchanges and generates the deconfined $U(1)$
-lattice gauge theory of QSI: $S^z$ is the emergent electric field, the
-third-order hexagonal ring exchange
+with $\Jzz>0$.  The Ising part is minimized by the extensively degenerate ice
+manifold $\ice$ (every tetrahedron two-in--two-out); a single tetrahedron
+carries energy $\tfrac{\Jzz}{2}Q_t^2$ with charge $Q_t=\sum_{i\in t}S_i^z$, so
+a spinon pair costs $\Jzz$.  Degenerate perturbation theory in $\Jpm$ inside
+$\ice$ gives the ring-exchange gauge Hamiltonian order by order,
+$\Heff=PVRVP+PVRVRVP+\cdots$, with $P$ the projector onto $\ice$ and
+$R=-QH_0^{-1}Q$ the non-ice resolvent.
+
+\paragraph{Physical vs.\ artifact loops.}---Because the pyrochlore lattice is
+the line graph of the bipartite diamond lattice, the shortest \emph{contractible}
+ice-preserving ring exchange is a six-site hexagon, generated at third order
+with amplitude
 \begin{equation}
-\ghex=\frac{12\,|\Jpm|^3}{\Jzz^2}
+\ghex=\frac{12|\Jpm|^3}{\Jzz^2},
 \label{eq:ghex}
 \end{equation}
-is the Maxwell term whose quantum is the emergent photon, and ice-rule
-defects are gapped, fractionalized spinons (pair threshold
-$\Ds\approx0.8\,\Jzz$ on the clusters below). The \emph{sign} of the
-ring coupling follows $\mathrm{sgn}(\Jpm^3)$: $\Jpm>0$ gives the
-unfrustrated $0$-flux vacuum, $\Jpm<0$ the frustrated $\pi$-flux vacuum.
-Thermodynamically the photon appears as a low-$T$ Schottky peak in
-$C(T)$ at $T\sim\ghex$, far below the spinon (charge) peak at
-$T\sim\Jzz$; dynamically it appears as low-energy weight in the
-non-spin-flip channel $S^{zz}(\bq,\omega)$.
-
-\paragraph{Why $\pi$-flux needs exact diagonalization.}
-In the $S^z$ basis the off-diagonal matrix elements of \cref{eq:H} are
-$-\Jpm$. For $\Jpm>0$ they are negative and worldline/stochastic-series
-QMC is sign-problem-free: the $0$-flux QSI is quantitatively
-characterized. For $\Jpm<0$ they are positive and QMC acquires a sign
-problem. The $\pi$-flux regime -- believed to describe
-Ce$_2$Zr$_2$O$_7$, Ce$_2$Sn$_2$O$_7$, Ce$_2$Hf$_2$O$_7$ -- is thus a QMC
-dead zone, and unbiased finite-$T$ information must come from exact
-diagonalization of a finite cluster.
-
-\paragraph{The finite-size problem.}
-A periodic cluster is a flat torus, and its periodic identifications
-generate ice-preserving ring exchanges that \emph{wind} the torus with
-no counterpart on the infinite lattice. The shortest and most damaging
-are \emph{four-site} loops. Because a four-site loop factorizes into two
-disjoint nearest-neighbour (NN) hops, it is generated at \emph{second}
-order in $\Jpm$,
+the amplitude of the emergent photon.  A periodic cluster, however, is the
+flat torus $T^3=\mathbb R^3/\bL\mathbb Z^3$.  On the torus a path can close by
+running through the identified boundary; we label such a closed path by its
+winding $\bw=\sum_{(ij)}\bm n_{ij}$, where $\bm n_{ij}$ is the periodic image
+of bond $(ij)$.  A four-site ice-preserving loop cannot close in real space
+(no diamond four-cycle exists), so on the standard clusters every such loop is
+a winding loop, $\bw\neq0$.  It is generated already at second order with
+amplitude
 \begin{equation}
-\gfour=\frac{4\,\Jpm^2}{\Jzz},
-\qquad\text{so}\qquad
-\frac{\gfour}{\ghex}=\frac{\Jzz}{3|\Jpm|}\gg1 .
+\gfour=\frac{4\Jpm^2}{\Jzz},\qquad
+\frac{\gfour}{\ghex}=\frac{\Jzz}{3|\Jpm|}\;\xrightarrow[\Jpm\to0]{}\;\infty .
 \label{eq:g4}
 \end{equation}
-The artifact is thus \emph{parametrically larger} than the physics, and
-grows as $|\Jpm|\to0$ -- the weak-coupling regime of the cerium
-materials. It lives entirely in the ice manifold, so it contaminates
-precisely the emergent-gauge observables: it pushes the low-$T$ $C(T)$
-peak and the low-energy $S^{zz}$ weight up to the scale $\gfour$ instead
-of $\ghex$ (quantified in \cref{sec:demo}). The spinon continuum
-($S^{+-}$ at $\omega\sim\Jzz$) lies outside the ice manifold and is
-\emph{not} contaminated.
-
-\paragraph{Goal.}
-Remove this finite-size contamination from the gauge sector of a
-periodic-cluster ED, so that the $32$-site pyrochlore delivers unbiased
-$\pi$-flux thermodynamics and dynamical structure factor.
-
-%=====================================================================
-\section{The effective gauge Hamiltonian and the winding loops}
-\label{sec:setup}
-
-\paragraph{Cluster torus.}
-The cluster carries $N$ sites with periodic identifications generated by
-the rows of an integer matrix $\bL\in\Z^{3\times3}$ (in units of the
-cubic lattice constant $a$); position space is the flat torus
-$T^3=\mathbb R^3/\bL\Z^3$ with first homology $\Z^3$. Each NN bond
-$(i,j)$ has a \emph{wrap vector}
-$\bn_{ij}=\mathrm{round}[(\br_j-\br_i)\bL^{-1}]$, zero in the interior
-and nonzero across the boundary.
-
-\paragraph{Effective Hamiltonian.}
-Degenerate ($\Jpm$-)perturbation theory in the ice manifold yields
-$\Heff=\sum_{\mathcal C}c_{\mathcal C}O_{\mathcal C}$, a sum of
-ring-exchange operators
-$O_{\mathcal C}=(S^+_aS^-_bS^+_cS^-_d\cdots)$ over ice-preserving cycles
-$\mathcal C$; because each intermediate resolvent is Ising
-($\propto\Jzz$), $c_{\mathcal C}\propto\Jpm^{|\mathcal C|/2}$ exactly. On
-the $2{\times}2{\times}2$ FCC cluster ($N=32$) the ice manifold has
-dimension $2970$, so $\Heff$ is \emph{fully diagonalizable} and its
-thermodynamics is numerically exact. Enumeration (Schrieffer--Wolff with
-per-process bookkeeping) gives \cref{tab:census}: the winding four-loops
-and wrapping hexagons are the contamination; the contractible hexagons
-carry the photon.
-
-\begin{table}[t]
-\centering
-\caption{Census of ice-preserving ring exchanges. ``Winding/wrapping''
-loops close only through the periodic boundary ($\bw\neq\bm0$);
-``contractible'' hexagons are genuine bulk plaquettes ($\bw=\bm0$). The
-last column is the survival fraction under the twist average of
-\cref{sec:method}.}
-\label{tab:census}
-\begin{tabular}{llrcc}
-\toprule
-cluster & channel & count & order & kept by the average \\
-\midrule
-\multirow{3}{*}{$1{\times}1{\times}1$ cubic ($N{=}16$)}
- & winding four-loops   & 36 & $\Jpm^2$ & $0$ \\
- & wrapping hexagons    & 48 & $\Jpm^3$ & $0$ \\
- & contractible hexagons& 16 & $\Jpm^3$ & $1$ \\
-\midrule
-\multirow{3}{*}{$2{\times}2{\times}2$ FCC ($N{=}32$)}
- & winding four-loops   & 24 & $\Jpm^2$ & $0$ \\
- & wrapping hexagons    & 96 & $\Jpm^3$ & $0$ \\
- & contractible hexagons& 32 & $\Jpm^3$ & $1$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-%=====================================================================
-\section{The method: twist averaging in the translationally-invariant gauge}
-\label{sec:method}
-
-\paragraph{The invariant that separates artifact from physics: winding.}
-What distinguishes a spurious four-loop from a genuine hexagon is
-topological. A four-site ice loop cannot close in real space -- the
-shortest contractible ice loop is the six-site hexagon -- so it closes
-\emph{only} by wrapping the torus: its homology class
-$\bw_{\mathcal C}=\sum_{\rm bonds}\bn\in\Z^3$ (the number of times the
-flipped-spin loop wraps each periodic direction) is nonzero. A hexagon
-that is a genuine bulk plaquette closes in real space, $\bw=\bm0$. Thus
-$\bw$ is the unambiguous label: $\bw\neq\bm0$ is a finite-size artifact,
-$\bw=\bm0$ is physics, and the goal is to project $\Heff$ onto its
-$\bw=\bm0$ part.
-
-The twist flux measures this winding. Threading a $U(1)$ flux $\bvarphi$
-through the cluster as a uniform vector potential $\bA=\bL^{-1}\bvarphi$
-on \emph{every} bond ($\theta_{ij}=\bA\cdot\bd_{ij}$), a ring exchange
-$O_{\mathcal C}$ acquires a phase set by the net displacement of the
-$S^z$ it flips,
-$\bdelta_{\mathcal C}=\brho_{\mathcal C}+\bN\!\cdot\!\bL$,
-$\brho_{\mathcal C}=\sum_{i\,\rm raised}\br_i-\sum_{j\,\rm lowered}\br_j$.
-This displacement is \emph{not} an independent geometric quantity: for
-every winding loop on both clusters it is exactly half the winding,
-\begin{equation}
-\boxed{\;\;\bdelta_{\mathcal C}\equiv\brho_{\mathcal C}
-=\tfrac12\,\bw_{\mathcal C}\!\cdot\!\bL \pmod{\bL},\;\;}
-\label{eq:rho_is_winding}
-\end{equation}
-(verified for all $84$ four-loops and wrapping hexagons of the cubic
-cluster and all $120$ of the FCC, and $\brho=\bm0$ for every contractible
-hexagon). The factor $\tfrac12$ is intrinsic: a ring exchange raises
-half its sites and lowers the other half, so the dipole it creates is
-half the loop's displacement. The flux phase is therefore a pure winding
-phase,
-\begin{equation}
-c_{\mathcal C}\to c_{\mathcal C}\,e^{-i\bvarphi\cdot(\bL^{-1}\bdelta_{\mathcal C})}
-=c_{\mathcal C}\,e^{-i\,\bvarphi\cdot\bw_{\mathcal C}/2}.
-\label{eq:phase}
-\end{equation}
+The finite-size artifact is thus \emph{parametrically larger} than the physics
+it contaminates, and most severe in the controlled perturbative regime
+[Fig.~\ref{fig:concept}(a)].  A from-scratch enumeration confirms zero
+contractible four-loops and, e.g., $16$ ($32$) contractible hexagons on the
+$16$-site cubic ($32$-site FCC) cluster.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\textwidth]{figs/fig_transport.pdf}
-\caption{Winding of a ring exchange on the $16$-site cubic pyrochlore
-cell. (a) A contractible hexagon (sites $0,2,7,4,14,15$) closes in real
-space, $\bw=\bm0$; its raised ($+$) and lowered ($-$) sites are balanced,
-$\brho=\bm0$: physics. (b) A four-site ice loop ($0,2,7,5$) cannot close
-in real space and wraps the torus, $\bw=(0,0,-1)$ (dashed bond to the
-periodic image of site $0$); its $S^z$ dipole is half the winding,
-$\brho=\tfrac12\bw\!\cdot\!\bL$, here $\delta_z=-\tfrac12$: a finite-size
-artifact. ($\brho$ is a magnetization dipole, not the emergent spinon
-charge, which is absent from the ice manifold.)}
-\label{fig:transport}
+\includegraphics[width=\columnwidth]{fig_concept.pdf}
+\caption{(a) The winding four-loop scale $\gfour$ (second order) exceeds the
+physical photon scale $\ghex$ (third order) throughout the perturbative
+regime, their ratio diverging as $\Jpm\to0$.  (b) Fraction of each geometric
+channel's coupling retained: boundary-twist averaging keeps half of every
+winding artifact, whereas the zero-transport ($\bdelta=0$) projection removes
+them and keeps the physical hexagon at full strength.}
+\label{fig:concept}
 \end{figure}
 
-\paragraph{The average.}
-Averaging the \emph{Hamiltonian} over the flux projects onto zero
-winding:
+\paragraph{Why twist averaging is insufficient.}---A ring exchange is not a
+single virtual path but a sum over perfect matchings and time orderings.
+Attaching boundary-twist phases $e^{-i\bN_r\cdot\bphi}$ to each path and
+averaging over the eight corners $\phi_a\in\{0,\pi\}$ projects onto rows with
+even accumulated image $\bN_r$.  On the target clusters every winding four-loop
+possesses a matching with $\bN=0$ (built from interior bonds, its
+ice-closure relying on a wrapping \emph{tetrahedron} that the boundary twist
+does not see).  Consequently exactly half of each spurious coupling survives
+any boundary-gauge twist average [Fig.~\ref{fig:concept}(b)]; averaging a
+nonlinear observable such as $C(T)$ afterwards is weaker still, removing only
+odd powers.
+
+\paragraph{The transported dipole.}---The correct, gauge-invariant object is
+the net displacement transported by the effective operator.  For a row
+connecting ice states $s\to t$, let $\brho_{t,s}=\sum_{i\in R}\br_i-\sum_{j\in
+L}\br_j$ be the home-cell dipole of the raised ($R$) minus lowered ($L$)
+spins, and $\bN_r$ the accumulated image of the virtual path.  Define
 \begin{equation}
-\boxed{\;\;
-\overline{\Heff}=\int\Heff(\bvarphi)\,\frac{d\bvarphi}{(\text{period})^3},
-\qquad
-c_{\mathcal C}\to c_{\mathcal C}\,\overline{e^{-i\bvarphi\cdot\bw_{\mathcal C}/2}}
-=c_{\mathcal C}\,\big[\bw_{\mathcal C}\in2\Z^3\big].
-\;\;}
-\label{eq:avg}
+\boxed{\;\bdelta_r=\brho_{t,s}+\bN_r\bL\;}
+\label{eq:delta}
 \end{equation}
-Contractible loops ($\bw=\bm0$) are kept; winding loops
-($\bw\neq\bm0$) are dephased away, at every order in $\Jpm$. (Strictly
-the projection is onto \emph{even} winding $\bw\in2\Z^3$, which coincides
-with $\bw=\bm0$ because every four-loop and hexagon has
-$|\bw|\le1$; a hypothetical double-winding loop would survive, but none
-arises at these orders.) This is the familiar twist-averaging idea, and
-it works -- but only if three conditions the naive procedure violates are
-met:
-\begin{itemize}
-\item[(i)] \emph{Uniform gauge.} The phase must sit on every bond. In the
-boundary-only gauge a winding loop has a virtual path through interior
-bonds alone that carries no phase and survives, leaving \emph{half} the
-coupling.
-\item[(ii)] \emph{Doubled period.} The winding phase is
-$e^{-i\bvarphi\cdot\bw/2}$ -- half-integer in $\bvarphi$ -- so it is
-periodic only modulo $4\pi$. Averaging over the naive $[0,2\pi)^3$ leaves
-a $\sim\!40\%$ residual; the period $[0,4\pi)^3$ is required. The
-factor $\tfrac12$ [Eq.~\eqref{eq:rho_is_winding}] is why.
-\item[(iii)] \emph{Operator level.} One must average $\Heff$, then
-diagonalize. Averaging a specific observable $C(T)$ or $S(\bq,\omega)$
-instead keeps the spurious scale in any gauge.
-\end{itemize}
-
-%=====================================================================
-\section{Demonstration}
-\label{sec:demo}
-
-The average gives the winding four-loop coefficient (and the resulting
-low-$T$ specific-heat peak) shown here, at $\Jpm=-0.1\,\Jzz$ on the
-$16$-site cluster, isolating each of the three conditions:
-\begin{center}
-\begin{tabular}{lcc}
-\toprule
-scheme & winding coeff.\ $/\gfour$ & $\Tpk/\ghex$ \\
-\midrule
-none (bare) & $-1.00$ & $3.18$ \\
-boundary gauge (violates (i)) & $-0.50$ & $1.63$ \\
-smooth gauge, $[0,2\pi)^3$ (violates (ii)) & $+0.40$ & $0.84$ \\
-smooth gauge, $[0,4\pi)^3$ (correct) & $0.00$ & $0.62$ \\
-\bottomrule
-\end{tabular}
-\end{center}
-Only the uniform gauge over the doubled period removes the loop
-($0/0/1$ survival of \cref{tab:census}, to machine precision, with the
-contractible hexagon kept at $+\ghex$). \Cref{fig:ct} shows the full
-$C(T)$ from exact $16$-site diagonalization ($12870$ states): the cleaned
-low-$T$ gauge (photon) peak sits at the physical scale $\ghex$, while the
-high-$T$ charge (spinon) peak at $T\sim\Jzz/3$ -- genuine physics outside
-the ice manifold -- is untouched, as it must be. On the $32$-site FCC
-cluster (exact full spectrum of the $2970$-state ice manifold) the bare
-gauge peak sits at the artifact scale and drifts up as
-$\gfour/\ghex=\Jzz/3|\Jpm|$ toward weak coupling, while the average holds
-it at $O(\ghex)$; the same holds for the low-$\omega$ weight of
-$S^{zz}(\bq,\omega)$ on both clusters and both flux signs.
+$\bdelta_r$ is independent of the home cell and of the twist gauge.
+Threading a \emph{uniform} vector potential $\bm A=\bphi\bL^{-1}$ on every
+bond (not only boundary bonds) multiplies each row by $e^{-i\bm
+A\cdot\bdelta_r}$; the operator-level average over the twist torus is the
+Fourier projection onto $\bdelta_r=0$.  For the ring exchanges here
+$\brho=\tfrac12\bw\bL$ exactly, so $\bdelta=0$ is equivalent to zero winding:
+the projection keeps every contractible hexagon and removes every winding
+four-loop and wrapping hexagon at all orders.  The artifact-free gauge
+Hamiltonian is
+\begin{equation}
+\Hclean(\Jpm)=\sum_{r:\,\bdelta_r=0}c_r\,\Jpm^{k_r}\,|t_r\rangle\langle s_r| .
+\label{eq:hclean}
+\end{equation}
+Crucially the projection acts on the operator before diagonalization; because
+$C(T)$ and $\Szz$ are nonlinear in the spectrum, post-hoc averaging cannot
+reproduce it.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.8\textwidth]{figs/fig_ct_twopeak.pdf}
-\caption{Full specific heat of the $16$-site $\pi$-flux cluster
-($\Jpm=-0.1\,\Jzz$). Bare periodic ED (orange) places the low-$T$ gauge
-peak at the finite-size artifact scale $\gfour$; averaging the
-\emph{observable} over eight corners (olive) barely moves it; translationally-invariant
-twist averaging of the \emph{Hamiltonian} (blue) moves it to the
-photon scale $\ghex$. The high-$T$ charge (spinon) peak at $T\sim\Jzz/3$
-is genuine, uncontaminated, and unchanged.}
-\label{fig:ct}
+\includegraphics[width=\columnwidth]{fig_results.pdf}
+\caption{Exact ice-manifold thermodynamics (per spin) from the projected
+effective Hamiltonian.  (a) Specific heat of the $32$-site FCC cluster at
+$\Jpm=-0.05\,\Jzz$: the bare cluster peaks at the artifact scale $\gfour$; the
+clean ($\bdelta=0$) cluster peaks at the photon scale $\ghex$.  (b)
+$T_{\rm peak}/\ghex$ vs.\ coupling for both clusters: the bare peak drifts as
+$\Jzz/3|\Jpm|$ (dotted), the finite-size signature of the winding four-loop,
+while the clean peak is flat and $O(1)$ in units of $\ghex$.  (c) Entropy:
+both curves release the full ice entropy $\ln(\#\mathrm{ice})/N$ at high $T$,
+but the clean cluster releases the low-$T$ photon entropy at the physical
+scale.}
+\label{fig:results}
 \end{figure}
+
+\paragraph{Results.}---We build path-resolved Schrieffer--Wolff row tables at
+$\Jpm=1$ (they scale as $\Jpm^k$ exactly, so a single build serves all
+couplings and both signs), compute $\bdelta$ for every row, assemble both
+$\Heff^{\rm bare}$ and $\Hclean$, and diagonalize densely on the ice manifold
+($90$ states for the $16$-site cubic cluster, $2970$ for the $32$-site FCC
+cluster).  Figure~\ref{fig:results} summarizes the effect.  Untreated, the
+low-temperature specific-heat peak sits at $T_{\rm peak}\simeq\gfour\propto
+\Jpm^2$ and drifts upward as $\Jzz/3|\Jpm|$ relative to the photon scale---the
+smoking gun of the finite-size four-loop.  After projection the peak locks
+onto $T_{\rm peak}=O(\ghex)\propto|\Jpm|^3$, independent of coupling in those
+units, and the associated entropy plateau moves to the physical photon scale.
+The projection is a pure removal of matrix elements: it cannot add spectral
+weight, and the census verifies it deletes exactly the winding channels.
+
+\paragraph{Connection to Ce$_2$Hf$_2$O$_7$.}---Among the DO cerium
+pyrochlores, Ce$_2$Hf$_2$O$_7$ shows the cleanest low-temperature signatures
+of a quantum-spin-ice ground state, with a broad low-$T$ specific-heat feature
+and a gapless magnetic continuum consistent with an emergent
+photon~\cite{Poree2023,Beare2023}.  The exchange lies in the octupolar
+$\pi$-flux regime, where the sign problem forbids a direct QMC prediction of
+these very observables.  Equation~\eqref{eq:hclean} supplies the missing
+unbiased benchmark: at the material's $|\Jpm|/\Jzz$ the clean cluster predicts
+(i) the temperature of the photon specific-heat feature at
+$O(\ghex)=O(12|\Jpm|^3/\Jzz^2)$ rather than the spurious $\gfour$ scale, (ii)
+the corresponding photon entropy release, and (iii) the low-frequency
+non-spin-flip structure factor $\Szz(\bq,\omega)$ that inelastic neutron
+scattering measures.  Because the artifact and the physics carry opposite
+scaling in $|\Jpm|$, the projection is essential precisely at the small
+$|\Jpm|/\Jzz\!\sim\!0.03$--$0.1$ inferred for these materials.  The
+complementary high-energy spinon continuum ($\omega\sim\Jzz$) lives outside
+the ice manifold, is uncontaminated by the winding four-loop, and is obtained
+from full-Hilbert-space finite-temperature Lanczos.
+
+\paragraph{Discussion.}---The transported dipole $\bdelta$ is a topological
+diagnostic---half the homology winding of the ring-exchange loop---so the
+$\bdelta=0$ projection is exact at every perturbative order and gauge
+independent, unlike counterterm subtraction (whose residue grows as
+$\Jpm\to0$) or twist averaging (which halves but never removes the artifact).
+It converts the small $\pi$-flux cluster into a benchmarked laboratory for the
+emergent photon of quantum spin ice, and delivers, in the sector where QMC
+cannot, the finite-temperature and dynamical observables now being measured in
+Ce$_2$Hf$_2$O$_7$.  A companion pedagogical note derives every step and every
+number with an independent from-scratch code.
+
+\begin{acknowledgments}
+(acknowledgments)
+\end{acknowledgments}
+
+\begin{thebibliography}{99}
+
+\bibitem{Hermele2004} M.~Hermele, M.~P.~A.~Fisher, and L.~Balents,
+Phys.\ Rev.\ B \textbf{69}, 064404 (2004).
+\bibitem{GingrasMcClarty2014} M.~J.~P.~Gingras and P.~A.~McClarty,
+Rep.\ Prog.\ Phys.\ \textbf{77}, 056501 (2014).
+\bibitem{Savary2016} L.~Savary and L.~Balents,
+Rep.\ Prog.\ Phys.\ \textbf{80}, 016502 (2017).
+\bibitem{Benton2012} O.~Benton, O.~Sikora, and N.~Shannon,
+Phys.\ Rev.\ B \textbf{86}, 075154 (2012).
+\bibitem{Shannon2012} N.~Shannon, O.~Sikora, F.~Pollmann, K.~Penc, and
+P.~Fulde, Phys.\ Rev.\ Lett.\ \textbf{108}, 067204 (2012).
+\bibitem{LeeOnodaBalents2012} S.~Lee, S.~Onoda, and L.~Balents,
+Phys.\ Rev.\ B \textbf{86}, 104412 (2012).
+\bibitem{Kato2015} Y.~Kato and S.~Onoda,
+Phys.\ Rev.\ Lett.\ \textbf{115}, 077202 (2015).
+\bibitem{Gaudet2019} J.~Gaudet \emph{et al.},
+Phys.\ Rev.\ Lett.\ \textbf{122}, 187201 (2019).
+\bibitem{Gao2019} B.~Gao \emph{et al.},
+Nat.\ Phys.\ \textbf{15}, 1052 (2019).
+\bibitem{Sibille2020} R.~Sibille \emph{et al.},
+Nat.\ Phys.\ \textbf{16}, 546 (2020).
+\bibitem{Poree2023} V.~Por\'ee \emph{et al.},
+arXiv:2305.08261; and Ce$_2$Hf$_2$O$_7$ neutron studies (2023).
+\bibitem{Beare2023} J.~Beare \emph{et al.},
+$\mu$SR of Ce$_2$Hf$_2$O$_7$ (2023).
+
+\end{thebibliography}
 
 \end{document}

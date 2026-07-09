@@ -1,181 +1,209 @@
-# Simulation plan — unbiased 32-site ED of quantum spin ice: thermodynamics and dynamical structure factor for the π-flux cerium pyrochlores
+# Simulation plan: clean ice-band ED for 2x2x2 FCC and pi-flux Ce pyrochlores
 
-## 0. Goal (one paragraph)
+## Goal
 
-Compute, on the 32-site (2×2×2 FCC) pyrochlore cluster, the two quantities
-that confront quantum spin ice (QSI) with experiment — the specific heat
-`C(T)`/entropy `S(T)` and the dynamical spin structure factor `S(q,ω)` —
-**free of the finite-size ring-exchange artifact**, benchmark them against
-sign-problem-free quantum Monte Carlo (QMC) in the 0-flux sector, and then
-deliver them in the **π-flux sector QMC cannot reach** at the exchange
-parameters of the dipolar–octupolar cerium pyrochlores
-(Ce₂Zr₂O₇, Ce₂Sn₂O₇, Ce₂Hf₂O₇). The emergent photon shows up as the
-**lower peak** of `C(T)` and as low-ω weight in `S^{zz}(q,ω)`; both are the
-targets.
+Use the transported-dipole character formalism developed in
+`notes/finite_size_loop_projection_notes.pdf` as the working ED protocol for
+the quantum spin ice gauge sector.  The validated minimal protocol is
 
----
+```text
+transport charge: Q = 2 delta
+character grid:  M = 2, theta_mu in {0, pi}
+projection:      keep only Q = 0 rows in the ice manifold
+```
 
-## 1. The method question, resolved
+The 16-site full-microscopic check showed that this removes the spurious
+winding four-loop peak while leaving the higher-temperature microscopic
+spin-ice peak intact.  The campaign now moves to the 2x2x2 FCC pyrochlore
+cluster, then benchmarks the zero-flux case against sign-free QMC, and finally
+uses the same clean ice-band protocol to predict the pi-flux thermodynamics for
+Ce2Hf2O7 and Ce2Zr2O7.
 
-**Motivation for twist averaging (the original idea):** the periodic
-cluster carries spurious ice-preserving four-site ring exchanges,
-`g₄ = 4J±²/Jzz`, which are *second order* in `J±` and therefore
-parametrically larger than the genuine hexagon photon coupling
-`g_hex = 12|J±|³/Jzz²`. They live entirely in the ice manifold, so they
-contaminate exactly the low-energy (gauge/photon) sector: the lower `C(T)`
-peak and the low-ω `S^{zz}` weight. The hope was that averaging over
-U(1) boundary twists would delete them.
+## What has been validated locally
 
-**Does twist averaging remove the 4-ring? Verified: NO — for both `C(T)`
-and `S(q,ω)`.** The theorem (`paper/twist_theory_proof.tex`) is that a ring
-exchange is a sum over *virtual paths* (perfect matchings), one of which
-uses no wrapping bond and so survives any twist; and that averaging a
-*nonlinear observable* keeps all even powers of the spurious coupling.
-Both failure modes confirmed numerically (16-site, exact):
+- Cubic 16-site full ED:
+  - exact full spectrum: 65,536 states;
+  - low-band QED extraction agrees with the exact lowest 90 eigenvalues to
+    `6.22e-14`;
+  - full ED low peak: `T/Jzz = 0.0129475`;
+  - clean ice-band replacement low peak: `T/Jzz = 0.0012227`;
+  - full ED high peak: `T/Jzz = 0.252820`;
+  - clean ice-band replacement high peak: `T/Jzz = 0.252931`.
+- The high peak moves by only `4.37e-4` relatively, so the projection is acting
+  where it should: on the finite-size ice-band loop artifact, not on the
+  spinon/constraint-violation thermal scale.
+- The old `4 delta` / `M = 3` language is obsolete.  All production notes and
+  scripts should use `2 delta`, `M = 2`.
 
-| low-energy `S^{zz}(ω)` weight centroid, J±=−0.05 | value | in units of g₄ |
-|---|---|---|
-| bare PBC | 0.0416 | **4.2 g₄** (spurious) |
-| twist-averaged (8 corners) | 0.0261 | **2.6 g₄** (still spurious) |
-| zero-transport projected | 0.0047 | **0.47 g₄ ≈ 3 g_hex** (photon) |
+## 2x2x2 FCC target
 
-Twist averaging barely moves the spurious weight; only the projector brings
-it to the photon scale. Same conclusion for the `C(T)` low-T peak
-(0.037 → 0.031 → 0.0075 Jzz). *(32-site FCC confirms: S^{zz} centroid
-1.8 g₄ → 0.28 g₄ at −0.05; 4.7 g₄ → 0.65 g₄ at +0.046.)*
+There is no conceptual change on the 2x2x2 FCC cluster:
 
-**The robust method separates two things twist averaging conflates.**
-The DSSF has two channels with different physics and different cures:
+- the ice manifold has dimension 2,970 rather than 90;
+- the primitive vectors are FCC primitive vectors rather than cubic Cartesian
+  unit vectors;
+- `delta` must be represented in the FCC primitive coordinate frame used by the
+  cluster builder;
+- the same `Q = 2 delta`, `M = 2` character grid resolves the unwanted
+  finite-size transport sectors;
+- the artifact is still a winding-loop artifact, not a local contractible
+  four-spin ring exchange.
 
-1. **Photon / gauge sector — `S^{zz}(q,ω)` at low ω, and the lower `C(T)`
-   peak.** Lives in the ice manifold; *this* is what the 4-ring
-   contaminates. **Cure: the zero-transport (δ=0) projector** on the exact
-   ice-manifold effective Hamiltonian. Because the ice manifold of the
-   32-site FCC cluster is only 2970-dimensional, its **full spectrum** is
-   obtained by dense diagonalization → numerically exact, contamination-free
-   gauge thermodynamics *and* the photon spectral function
-   `S^{zz}(q,ω) = Σ_n |⟨n|S^z_q|0⟩|² δ(ω−ω_n)` from the projected
-   eigenstates. No stochastic low-T floor.
+There is one important practical change.  Full-Hilbert exact ED is not the
+right tool at 32 sites: `2^32` is too large.  The 32-site campaign therefore
+uses:
 
-2. **Spinon continuum — `S^{±∓}(q,ω)` at ω ≳ 2Δ_s ~ Jzz, and the high-T
-   `C(T)` Schottky.** Lives *outside* the ice manifold (pair creation), is
-   local physics, and is **not** 4-ring-contaminated. **Method: standard
-   full-Hilbert-space FTLM/Lanczos dynamics** on the 2³² cluster (existing
-   QED pipeline: `run_dssf.py`, distributed MPI), with a **twist grid used
-   for its legitimate purpose — Brillouin-zone interpolation of the genuine
-   continuum** (Lin–Zong–Ceperley), *not* for contamination removal.
+1. perturbative/SW ice-manifold ED for the clean low-energy gauge sector;
+2. QMC benchmarks in the zero-flux sign-free regime;
+3. QED/FTLM only for high-energy or non-ice-sector diagnostics when needed.
 
-So twist averaging is retained where it works (BZ sampling of the genuine
-spinon bands) and replaced by the projector where it fails (the ice-manifold
-photon sector). This is the sharp logical spine of the paper.
+The 16-site all-temperature spectral-replacement test is a validation of the
+method, not the production algorithm for 32 sites.
 
----
+## Immediate tasks
 
-## 2. What is computed, and by which engine
+| ID | Task | Output | Gate |
+|----|------|--------|------|
+| T1 | Rebuild FCC-32 row tables with `Q = 2 delta` labels in FCC primitive coordinates. | `output/fcc32/rows_order23_or_234.npz` plus row census JSON. | Row census separates `Q=0` from winding rows exactly. |
+| T2 | Compute FCC-32 clean and bare `C(T)` for `Jpm/Jzz = +/-{0.03,0.04,0.05,0.06,0.08,0.10}`. | Peak table and `C(T)` curves. | Clean peak scales with `ghex = 12 |Jpm|^3/Jzz^2`; bare peak shows four-loop drift. |
+| T3 | Benchmark zero-flux clean FCC-32 against sign-free QMC. | QMC comparison table. | Agreement in `C(T)`, entropy release, and photon peak location within agreed finite-size/QMC error bars. |
+| T4 | Add material parameter ingestion for Ce2Hf2O7 and Ce2Zr2O7. | `materials/*.json` with raw and rotated couplings. | `Jxz' = 0` after rotation; U(1) projection has `Jpmpm = 0`. |
+| T5 | Run pi-flux clean FCC-32 at the U(1)-projected material points. | Material prediction table and plots. | Stable against nearby `Jpm/Jzz` sweep and, if available, order-4 SW rows. |
 
-| Observable | Experimental counterpart | Engine | 4-ring? |
-|---|---|---|---|
-| `C(T)`, `S(T)` low-T (gauge) peak | photon Schottky, entropy release | projected Heff, full spectrum (2970) | removed by projector |
-| `C(T)` high-T (charge) peak | spinon Schottky at T~Jzz | full FTLM (2³²) or bare high-E | uncontaminated |
-| `S^{zz}(q,ω)` low ω | emergent photon / restored pinch-point dynamics | projected Heff dynamics (2970) | removed by projector |
-| `S^{±∓}(q,ω)` | broad spinon continuum | full FTLM + twist grid (2³²) | uncontaminated |
+## QMC benchmark protocol
 
-Feasibility (measured): the projected-Heff engine builds **once** at J±=1
-(row tables ∝ J±^k exactly; 218 s, 1.6 MB) and every coupling/both signs is
-a ~seconds dense diagonalization. The full-FTLM engine is the existing
-distributed pipeline.
+QMC can benchmark the zero-flux side, not the pi-flux side.
 
----
+1. Use `Jpm > 0` in the same local-frame convention as the ED notes.
+2. Run large-cluster sign-free QMC for the U(1) Hamiltonian
+   `Jpmpm = Jzpm = 0`.
+3. Compare against the clean FCC-32 ice-band ED, not the bare periodic ED.
+4. Compare dimensionless quantities first:
+   - `T_peak / ghex`;
+   - `C(T)/N`;
+   - entropy released through the gauge peak;
+   - low-T integrated weight.
+5. Treat a mismatch as a method failure until checked against:
+   - temperature normalization;
+   - sign convention for `Jpm`;
+   - whether QMC includes non-ice sectors at the compared temperature;
+   - whether order-4 SW corrections are needed at the benchmark coupling.
 
-## 3. Phase A — 0-flux benchmark (credibility firewall)
+Passing this benchmark is the main credibility gate before presenting pi-flux
+predictions.
 
-QMC is sign-problem-free only for J± > 0. Benchmark there.
+## Material parameter pipeline
 
-- **A1** Build 32-site row tables (order 4; + order 3 for convergence). One
-  job, ~15 min.
-- **A2** `gauge_thermo.py sweep` at J± = +0.03…+0.10, modes `all`/`delta0`:
-  projected `C(T)`, `S(T)`, gauge-peak position and entropy plateau.
-- **A3** Projected `S^{zz}(q,ω)` at the same couplings (new driver
-  `dssf_gauge.py`, Task T1).
-- **A4 (human):** digitize the published sign-problem-free QSI QMC at the
-  benchmark coupling (**working target J±/Jzz ≈ 0.046**; lock the exact
-  reference and observable — candidate: Kato & Onoda, PRL 115, 077202
-  (2015), and successors).
-- **Gate G1:** projected 32-site `C(T)`/entropy (and, if available, the
-  photon feature) agree with QMC within combined error at ≥2 couplings.
-  Fail → the perturbative gauge Hamiltonian is not trusted → reassess.
+For each material start from the fitted local exchange matrix in the
+dipolar-octupolar frame.  In the common simplified notation this is the
+`x-z` mixed form
 
-## 4. Phase B — π-flux payoff: the lower peaks
+```text
+H_ij = Jx S_i^x S_j^x + Jy S_i^y S_j^y + Jz S_i^z S_j^z
+     + Jxz (S_i^x S_j^z + S_i^z S_j^x).
+```
 
-The physically distinct, QMC-inaccessible sector (J± < 0).
+First rotate the local `x-z` axes to remove `Jxz`.  Let
 
-- **B1** `C(T)`/`S(T)` at J± = −0.03…−0.10, modes `all`/`delta0`: show the
-  bare lower peak sits at g₄ (drifting as g₄/g_hex = Jzz/3|J±| toward small
-  |J±|) and the projected lower peak lands at the photon scale, with the
-  `J±³` collapse (PBC drifts toward `J±²`). Both flux signs on one panel.
-- **B2** Projected `S^{zz}(q,ω)`: the emergent-photon spectral function —
-  low-ω weight, its dispersion across the cluster momenta, and the flux
-  contrast (π- vs 0-flux photon). This is the DSSF counterpart of the lower
-  `C(T)` peak.
-- **B3** Full-FTLM `S^{±∓}(q,ω)` spinon continuum at one π-flux coupling for
-  the complete `S(q,ω)` picture (2³² pipeline).
+```text
+M_xz = [[Jx,  Jxz],
+        [Jxz, Jz ]].
+```
 
-## 5. Phase C — experimental parameter sets
+Choose an orthogonal rotation `R(theta)` that diagonalizes `M_xz`:
 
-- **C1** Take the published exchange parameters (and their uncertainties)
-  for Ce₂Zr₂O₇, Ce₂Sn₂O₇, Ce₂Hf₂O₇ from the recent neutron/thermodynamic
-  determinations; map onto the effective `(Jzz, J±)` (octupolar-ice
-  convention; note DO-doublet sign conventions).
-- **C2** Predict `C(T)`, `S(T)`, and `S(q,ω)` (photon + continuum) at those
-  parameters; overlay the measured `C(T)` and INS `S(q,ω)`.
-- **C3** Deliverable: a controlled, contamination-free ED prediction for the
-  photon feature in each material, and a statement of which flux sector each
-  material's thermodynamics + DSSF is consistent with.
+```text
+R(theta)^T M_xz R(theta) = diag(Jx_rot, Jz_rot),
+tan(2 theta) = 2 Jxz / (Jx - Jz),
+```
 
----
+with the rotated `z` axis chosen as the dominant Ising axis.  Equivalently use
+the eigenvalues
 
-## 6. New code
+```text
+Jx_rot, Jz_rot = (Jx + Jz)/2 +/- sqrt(((Jx - Jz)/2)^2 + Jxz^2),
+```
 
-- **T1 `dssf_gauge.py` (core):** projected-Heff `S^{zz}(q,ω)`. From the
-  assembled projected Heff (2970²), full `eigh`, and
-  `S^z_q = Σ_i e^{iq·r_i} S^z_i` (diagonal in the ice-config basis), form
-  `Σ_n |⟨n|S^z_q|0⟩|² δ(ω−ω_n)` (and finite-T via Boltzmann weights over
-  eigenstates). Cheap (seconds/coupling). Verified prototype exists (this
-  session).
-- **T2 sparse assemble + Lanczos** for the 48-site scaling check (stretch).
-- **T3 plotting** (`plot_benchmark/scaling/dssf.py`) → figures.
-- **T4** the full-FTLM spinon `S^{±∓}(q,ω)` is the *existing* QED pipeline;
-  wire twist grid for BZ sampling (no contamination logic there).
+and assign `Jzz = Jz_rot` to the Ising coupling.
 
-## 7. Resources (single-node unless noted)
+Then map the rotated transverse couplings to the QSI convention used by the ED
+code:
 
-| Job | cores | mem | wall |
-|---|---|---|---|
-| A1 build 32-site o4 | 8 | 16G | 15 min |
-| A2–B2 sweeps + DSSF (projected) | 8 | 8G | <10 min each |
-| B3 full-FTLM spinon DSSF (2³²) | MPI | large | existing pipeline |
-| E 48-site build+Lanczos (stretch) | 16 | 64G | 6–12 h |
+```text
+Jpm   = -(Jx_rot + Jy) / 4,
+Jpmpm =  (Jx_rot - Jy) / 4.
+```
 
-Honest note: the projected-sector campaign (A, B1–B2, C) is small and fully
-reproducible; the only heavy compute is the *uncontaminated* full-FTLM
-spinon continuum (B3), which the existing distributed code already handles.
+For the first production campaign we enforce the U(1) model by killing the
+non-U(1) term after the rotation:
 
-## 8. Gates & risks
+```text
+Jpmpm -> 0,
+Jxx_U1 = Jyy_U1 = -2 Jpm,
+Jzz_U1 = Jzz.
+```
 
-- **G1 (Phase A):** projected 0-flux vs QMC agree → proceed; else methods-PRB.
-- **G2 (Phase B):** projected `S^{zz}` photon feature is cluster-stable
-  (16↔32↔48 trend) → the DSSF claim is robust; else report `C(T)` only.
-- Referee "just twist averaging": we *prove and show* twist averaging fails
-  for both `C(T)` and `S(q,ω)` (Sec. 1 table); the projector is the new
-  content.
-- Referee "perturbative gauge Hamiltonian": G1 QMC benchmark + order 3↔4
-  convergence; cerium materials sit at small |J±| where SW converges.
-- Referee "32 sites can't resolve the photon dispersion": we report the
-  photon *scale and spectral weight* (cluster-converged after projection)
-  and the BZ-limited dispersion honestly; twist grid interpolates.
+This preserves the fitted `Jzz` and the fitted transverse hopping scale `Jpm`,
+while removing the pair-creation term that breaks total `S^z` conservation.
+The pi-flux calculation is then the clean FCC-32 ice-band ED at the material's
+`Jpm/Jzz` ratio.  If `Jpm < 0`, the material point lies in the pi-flux sector
+of this convention.
 
-## 9. Critical path
+## Material input table
 
-`A1 → A2/A3 → [G1 vs QMC] → B1/B2 → [G2] → C (experimental sets) → merge PRL.`
-Everything on it except the full-FTLM continuum (existing pipeline) and the
-QMC digitization runs in minutes with the current tooling.
+Do not hard-code guessed material numbers in the analysis scripts.  Each
+material should have a JSON record with the raw fitted exchange constants,
+their source, the rotation angle, the rotated couplings, and the U(1)-projected
+couplings.
+
+```json
+{
+  "material": "Ce2Hf2O7",
+  "source": "fill with paper / table / fit identifier",
+  "raw": {"Jx": null, "Jy": null, "Jz": null, "Jxz": null, "units": "K or meV"},
+  "rotation": {"theta_rad": null, "Jx_rot": null, "Jz_rot": null},
+  "qsi": {"Jzz": null, "Jpm": null, "Jpmpm_before_projection": null},
+  "u1_projected": {"Jzz": null, "Jpm": null, "Jpmpm": 0.0}
+}
+```
+
+Create one record for Ce2Hf2O7 and one for Ce2Zr2O7.  The production table
+must report both:
+
+- the raw fitted model, so the connection to experiment is transparent;
+- the U(1)-projected model actually simulated in the first campaign.
+
+## Production observables
+
+For each benchmark/material point compute:
+
+- clean low-temperature `C(T)/N`;
+- entropy `S(T)/N` through the gauge scale;
+- `T_peak`, `C_peak`, and `T_peak/ghex`;
+- bare-vs-clean contrast for the same cluster;
+- row-sector weights by `Q = 2 delta`;
+- optional low-energy `Szz(q, omega)` in the clean ice band.
+
+For material-facing plots, convert the final temperature axis back to Kelvin or
+meV using the fitted `Jzz` units after the U(1) projection.
+
+## Expected figures
+
+1. FCC-32 method figure: bare vs clean `C(T)` for representative `Jpm`.
+2. QMC benchmark figure: zero-flux QMC vs clean FCC-32 ED.
+3. Pi-flux prediction figure: clean FCC-32 `C(T)` for Ce2Hf2O7 and Ce2Zr2O7
+   U(1)-projected material points.
+4. Parameter-flow figure/table: raw `(Jx,Jy,Jz,Jxz)` -> rotated
+   `(Jx_rot,Jy,Jz_rot)` -> QSI `(Jzz,Jpm,Jpmpm)` -> U(1)
+   `(Jzz,Jpm,Jpmpm=0)`.
+
+## Current caution flags
+
+- The FCC-32 calculation should not use the 16-site exact full-spectrum
+  replacement as if it were available at 32 sites.
+- The QMC comparison must be performed on the zero-flux side only.
+- The pi-flux material predictions are meaningful only after the zero-flux QMC
+  gate is passed.
+- `Jpmpm -> 0` is a controlled first campaign, not a claim that the fitted
+  material has exact U(1) symmetry.  Later runs should restore `Jpmpm` once the
+  clean projection method is established for the U(1) sector.
