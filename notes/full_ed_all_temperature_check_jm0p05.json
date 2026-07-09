@@ -1,0 +1,18 @@
+{
+  "method": "exact full spectrum plus ice-band spectral replacement",
+  "jpm": -0.05,
+  "n_sites": 16,
+  "n_full_eigenvalues": 65536,
+  "n_ice_band": 90,
+  "low_band_phi0_vs_full_max_abs": 6.217248937900877e-14,
+  "Tpk_full_ED_low": 0.012947541069544115,
+  "Cpk_full_ED_low": 3.8190617039676584,
+  "Tpk_replaced_low": 0.0012227199980060668,
+  "Cpk_replaced_low": 2.641375981175107,
+  "Tpk_full_ED_high": 0.25282035409370546,
+  "Cpk_full_ED_high": 4.522281110256648,
+  "Tpk_replaced_high": 0.25293095474133503,
+  "Cpk_replaced_high": 4.50042594629932,
+  "high_peak_relative_shift": 0.0004374673393131324,
+  "high_peak_relative_height_change": -0.004832774306701114
+}

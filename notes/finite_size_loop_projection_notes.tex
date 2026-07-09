@@ -1283,4 +1283,98 @@ dresses the ice manifold, while the transported-dipole character projection
 removes the dominant finite-size four-loop and recovers the clean hexagon
 scale up to higher-order dressing of the microscopic band.
 
+\subsection{All-temperature check: keep the full spectrum outside the ice band}
+
+The preceding comparison is deliberately a low-energy comparison.  It uses the
+lowest $N_{\rm ice}=90$ eigenvectors of the microscopic Hamiltonian, pulls that
+band back to the ice basis, and then applies the $2\bdelta$, $M=2$ character
+projection.  That construction cannot, by itself, contain the other specific
+heat peak at larger temperature: the larger-$T$ peak is produced by states
+outside the ice manifold, namely sectors with violated tetrahedron constraints.
+
+The all-temperature diagnostic should therefore not be a twist average of the
+entire microscopic partition function.  The phases in
+Eq.~\eqref{eq:mic_dipole_twisted} are auxiliary source fields designed to
+resolve transported-dipole sectors inside the ice perturbation theory.  If we
+apply them to every high-energy state and then thermally average the resulting
+Hamiltonians, we are no longer only removing the spurious four-site loop.  We
+are also changing the spinon sectors that are responsible for the larger
+specific-heat peak.
+
+The correct full-temperature test is a spectral surgery which acts only where
+the finite-size pathology lives.  Let
+\[
+E^{\rm full}_1\le E^{\rm full}_2\le \cdots \le E^{\rm full}_{2^{16}}
+\]
+be the exact untwisted microscopic spectrum, including all $S^z_{\rm tot}$
+sectors.  Let
+\[
+\epsilon^{\rm clean}_1\le\cdots\le \epsilon^{\rm clean}_{N_{\rm ice}}
+\]
+be the spectrum of the $2\bdelta$, $M=2$ twist-projected microscopic ice-band
+operator.  We define the all-temperature corrected spectrum by
+\begin{equation}
+\label{eq:allT_spectral_replacement}
+\widetilde E_a =
+\begin{cases}
+\epsilon^{\rm clean}_a+s,&1\le a\le N_{\rm ice},\\
+E^{\rm full}_a,&a>N_{\rm ice},
+\end{cases}
+\qquad
+s =
+\frac{1}{N_{\rm ice}}\sum_{a=1}^{N_{\rm ice}}E^{\rm full}_a
+-
+\frac{1}{N_{\rm ice}}\sum_{a=1}^{N_{\rm ice}}\epsilon^{\rm clean}_a .
+\end{equation}
+The shift $s$ fixes the center of the ice band relative to the spinon
+continuum.  It has no effect on the internal clean-loop splittings, but it
+prevents the diagnostic from artificially changing the ice-to-spinon gap.  The
+specific heat is then computed from the ordinary canonical expression
+\[
+C(T)=\frac{\langle E^2\rangle_T-\langle E\rangle_T^2}{T^2}
+\]
+using either $\{E^{\rm full}_a\}$ or $\{\widetilde E_a\}$.
+
+We computed $E^{\rm full}$ locally with QED by exact full-spectrum ED: all
+$2^{16}=65536$ eigenvalues were obtained by decomposing the Hamiltonian into
+all conserved $S^z_{\rm tot}$ sectors and the four translation irreducible
+representations of the $1\times1\times1$ cubic pyrochlore cluster.  As a
+check, the lowest $90$ eigenvalues of this full spectrum agree with the
+previous untwisted low-band QED extraction to
+$6.22\times 10^{-14}$.
+
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+curve & low-$T$ peak & larger-$T$ peak\\
+\midrule
+exact full ED & $0.0129475$ & $0.252820$\\
+full ED with clean ice-band replacement & $0.0012227$ & $0.252931$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Thus the correction strongly changes the low-temperature peak, where the
+finite-size four-loop lives, but it leaves the larger-temperature full-ED peak
+essentially fixed: the relative shift of the larger peak is
+$4.37\times10^{-4}$ and the relative height change is $-4.83\times10^{-3}$.
+This is the all-temperature consistency test we want.  The protocol removes the
+spurious ice-band finite-size loop without erasing the microscopic
+constraint-violation physics at larger temperature.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\textwidth]{fig_full_ed_all_temperature_specific_heat.pdf}
+\caption{\textbf{All-temperature full-ED check.}  The black curve is the exact
+untwisted microscopic full-ED specific heat for all $65536$ states of the
+$16$-site cluster.  The green curve keeps every non-ice eigenvalue fixed and
+replaces only the lowest $90$ ice-band eigenvalues by the $2\bdelta$, $M=2$
+clean twist-projected band, with the band-center shift in
+Eq.~\eqref{eq:allT_spectral_replacement}.  The lower panel zooms into the
+gauge scale and also shows the two isolated low-band traces.  The correction
+moves only the spurious low-temperature four-loop peak; the larger full-ED peak
+at $T/\Jzz\simeq0.253$ remains in place.}
+\label{fig:full_ed_all_temperature_specific_heat}
+\end{figure}
+
 \end{document}
