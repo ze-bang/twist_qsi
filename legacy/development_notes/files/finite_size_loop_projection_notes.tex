@@ -1,0 +1,1725 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage[colorlinks=true,linkcolor=blue!55!black,urlcolor=blue!55!black,citecolor=blue!55!black]{hyperref}
+
+\graphicspath{{figs/}{notes/figs/}}
+
+% Plain-language call-out box for readers new to quantum spin ice.
+\newtcolorbox{intuition}[1][]{colback=blue!4,colframe=blue!35!black,
+  boxrule=0.5pt,arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt,
+  fonttitle=\bfseries,title={In plain language},#1}
+
+\newcommand{\Jzz}{J_{zz}}
+\newcommand{\Jpm}{J_{\pm}}
+\newcommand{\Heff}{H_{\mathrm{eff}}}
+\newcommand{\Hclean}{H_{\mathrm{clean}}}
+\newcommand{\gfour}{g_4}
+\newcommand{\ghex}{g_{\mathrm{hex}}}
+\newcommand{\bA}{\bm A}
+\newcommand{\bd}{\bm d}
+\newcommand{\bn}{\bm n}
+\newcommand{\bN}{\bm N}
+\newcommand{\bL}{\bm L}
+\newcommand{\br}{\bm r}
+\newcommand{\bw}{\bm w}
+\newcommand{\bq}{\bm q}
+\newcommand{\brho}{\bm \rho}
+\newcommand{\bdelta}{\bm \delta}
+\newcommand{\bDelta}{\bm \Delta}
+\newcommand{\bphi}{\bm \phi}
+\newcommand{\btheta}{\bm \theta}
+\newcommand{\bW}{\bm W}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\ice}{\mathcal I}
+\newcommand{\cycle}{\mathcal C}
+\newcommand{\row}{\mathcal R}
+\newcommand{\HB}{H_{\mathrm{band}}}
+\newcommand{\Hmic}{H_{\mathrm{mic}}}
+
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+
+\title{Pedagogical notes on removing finite-size winding loops in exact
+diagonalization of quantum spin ice}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Exact diagonalization (ED) is the natural numerical route to the $\pi$-flux
+quantum spin ice (QSI) regime, where QMC has a sign problem.  The obstacle is
+not the usual small-system limitation alone: periodic pyrochlore clusters
+contain ice-preserving ring exchanges that close only by winding around the
+torus.  The dominant artifact is a four-site winding loop generated at order
+$\Jpm^2$, whereas the physical QSI photon ring exchange is the contractible
+six-site hexagon generated at order $|\Jpm|^3$.  These notes derive the
+transported-dipole label
+\[
+        \bdelta=\brho+\bN\bL,
+\]
+show why ordinary boundary-twist averaging does not remove the artifact, and
+prove two exact structure theorems that collapse the character-average
+protocol into its final form: at the minimal grid the character deformation is
+unitarily equivalent to the bare Hamiltonian through the diagonal
+polarization unitary $e^{2i\btheta\cdot\hat{\bm X}}$, so the entire
+eight-point character average of the downfolded ice-band operator equals a
+single untwisted downfolding followed by a \emph{polarization-parity mask}.
+Homotopy fixes the scope: the torus is a $K(\Z^3,1)$, the winding class is
+the complete topological invariant of a closed process, and the mask is the
+maximal topologically defined cleaning.  The production protocol at any
+$\Jpm$ is then \emph{graded Brillouin--Wigner downfolding}: the exact
+ice-block resolvent operator $F(z)=PHP+PHQ(z-QHQ)^{-1}QHP$, masked entry by
+entry, solved self-consistently.  It requires no eigenvectors, no band
+selection, and no Gram matrix; its diagnostics remain meaningful at every
+coupling, and its breakdown modes are physical (dissolution of the gauge
+sector into the spinon continuum), not numerical.  Every claim is verified
+against exact microscopic ED on the $16$-site cluster.
+\end{abstract}
+
+\tableofcontents
+
+\section{The idea in one page (for readers new to spin ice)}
+
+Before any equations, here is the whole story in words and pictures.
+
+\begin{itemize}
+\item \textbf{What the material is.}  ``Quantum spin ice'' (QSI) is a magnet
+in which the atomic magnetic moments sit on a lattice of corner-sharing
+tetrahedra (the \emph{pyrochlore} lattice).  On every tetrahedron the moments
+obey a local rule: two point in and two point out
+(Fig.~\ref{fig:ice_rule}).  This is the same counting rule that governs the
+proton positions in ordinary water ice, hence the name.  There are
+astronomically many ways to satisfy it, so the system has a huge
+ground-state degeneracy.
+
+\item \textbf{What makes it ``quantum''.}  A small quantum-mechanical term
+lets pairs of neighbouring moments flip.  Acting over and over, these flips
+let the system tunnel between different two-in--two-out patterns.  The
+smallest tunnelling move that respects the ice rule everywhere is a
+\emph{six-spin ring exchange} around a hexagon
+(Fig.~\ref{fig:diamond_hexagon} and Fig.~\ref{fig:ring_exchange}).  Remarkably,
+the collective dynamics of these ring flips is described by an emergent
+\emph{light}: QSI hosts its own artificial photon.  This is what makes the
+material exciting, and it is what we want to compute.
+
+\item \textbf{Why the computation is hard.}  We solve the model on a computer
+by exact diagonalization (ED), which requires a \emph{finite} block of the
+lattice with periodic boundaries---mathematically a doughnut, or
+\emph{torus}.  On a torus, some sequences of flips close up not because they
+form a real loop in space, but only because they run off one face and come
+back on the opposite face (Fig.~\ref{fig:torus_winding}).  The shortest such
+``wrap-around'' move involves only \emph{four} spins, and---crucially---it
+appears at a lower order in perturbation theory than the physical six-spin
+hexagon.  It is a pure artifact of the finite box, yet it is numerically
+\emph{larger} than the physics we are after (Fig.~\ref{fig:scale_sep}).
+
+\item \textbf{The symptom.}  Left untreated, this artifact puts the
+low-temperature specific-heat peak---one of the cleanest experimental
+fingerprints of the emergent photon---in the wrong place, at the artifact
+scale $g_4\propto J_\pm^2$ instead of the photon scale
+$g_{\mathrm{hex}}\propto|J_\pm|^3$ (Figs.~\ref{fig:ct_twopeak}
+and~\ref{fig:specific_heat_all_cases}).
+
+\item \textbf{The cure.}  The physical hexagon closes in real space; the
+artifact only closes through the wall of the box.  We give a single
+gauge-invariant number, the \emph{transported dipole}
+$\bdelta=\brho+\bN\bL$, that is exactly zero for real-space processes and
+nonzero for wrap-around ones (Fig.~\ref{fig:real_loops}).  In perturbation
+theory this says to keep only the zero-transport rows.  Nonperturbatively,
+two exact theorems reduce the corresponding operation to something almost
+embarrassingly simple: express the downfolded low-energy operator in the ice
+basis and \emph{delete every matrix element whose polarization difference is
+odd} (the parity mask).  At any coupling, the object to mask is the exact
+Brillouin--Wigner ice-block operator $F(z)$, which exists whether or not the
+low band is still ice-like.  We also show why simpler fixes, such as
+boundary-twist averaging or averaging thermodynamic curves, do not remove
+the artifact (Fig.~\ref{fig:twist_fail}) --- indeed for thermodynamic curves
+we prove that they \emph{cannot}.
+\end{itemize}
+
+The rest of these notes makes each of these statements precise and checks
+every number with an independent, from-scratch script.
+
+\section{The physical question}
+
+The QSI Hamiltonian considered here is the nearest-neighbor XXZ model in
+local pyrochlore frames,
+\begin{equation}
+H =
+\Jzz\sum_{\langle ij\rangle} S_i^zS_j^z
+-\Jpm\sum_{\langle ij\rangle}
+\left(S_i^+S_j^-+S_i^-S_j^+\right),
+\qquad |\Jpm|\ll \Jzz,\quad \Jzz>0 .
+\label{eq:model}
+\end{equation}
+The Ising part has an extensively degenerate ground manifold: every
+tetrahedron has two spins pointing in and two spins pointing out.  This is
+the ice manifold $\ice$.
+
+For $\Jpm>0$, the off-diagonal matrix elements in the $S^z$ basis are
+non-positive, and standard QMC can be sign-problem-free.  For $\Jpm<0$,
+the off-diagonal matrix elements have the opposite sign.  This is the
+frustrated $\pi$-flux QSI sector.  It is precisely the sector where ED is
+most valuable, because QMC no longer gives an unbiased finite-temperature
+benchmark.
+
+The central difficulty is that ED necessarily uses a finite periodic
+cluster.  Such a cluster is a torus.  On a torus, paths can close by
+periodic identification even when they do not close in real space.  Some of
+these winding paths preserve the ice rule and therefore appear directly in
+the low-energy gauge Hamiltonian.  The shortest such processes on the
+standard 16-site cubic and 32-site FCC clusters are four-site loops.  They
+are not physical bulk plaquettes.  Nevertheless, they strongly affect the
+low-temperature specific heat and the low-frequency $S^{zz}(\bq,\omega)$.
+
+\section{Ice variables and the energy cost of defects}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{fig_ice_rule.pdf}
+\caption{\textbf{The ice rule.}  Each spin lives on a corner of a
+tetrahedron and points either into the tetrahedron (red) or out of it
+(blue).  \emph{Left:} the low-energy ``ice'' configuration has two in and two
+out, so the net Ising charge $Q_t=\sum_{i\in t}S_i^z$ vanishes and the
+tetrahedron pays no energy.  \emph{Middle, right:} tipping one spin makes the
+tetrahedron three-in--one-out or one-in--three-out, with $|Q_t|=1$; by
+Eq.~\eqref{eq:tet_energy} this costs $\Jzz/2$.  These charged tetrahedra are
+the ``spinons'' of quantum spin ice.}
+\label{fig:ice_rule}
+\end{figure}
+
+For a tetrahedron $t$, define the Ising charge
+\begin{equation}
+Q_t=\sum_{i\in t} S_i^z .
+\end{equation}
+For spin $1/2$, $S_i^z=\pm 1/2$.  The Ising energy on one tetrahedron is
+\begin{equation}
+\sum_{\langle ij\rangle\in t} S_i^zS_j^z
+=\frac12\left[\left(\sum_{i\in t}S_i^z\right)^2-\sum_{i\in t}(S_i^z)^2\right]
+=\frac12 Q_t^2-\frac12 .
+\label{eq:tet_energy}
+\end{equation}
+Thus, up to a constant,
+\begin{equation}
+H_0=\frac{\Jzz}{2}\sum_t Q_t^2 .
+\label{eq:charge_h0}
+\end{equation}
+The ice rule is $Q_t=0$ on every tetrahedron.  A $3$-in--$1$-out or
+$1$-in--$3$-out tetrahedron has $|Q_t|=1$ and costs $\Jzz/2$ relative to an
+ice tetrahedron.
+
+Now act with a transverse exchange
+\[
+S_i^+S_j^-+S_i^-S_j^+
+\]
+on an antiparallel nearest-neighbor pair.  The two sites $i$ and $j$ lie on
+one common tetrahedron, where exchanging an up and a down spin preserves
+$Q_t=0$.  Each site also belongs to one other tetrahedron.  Those two
+neighboring tetrahedra become charged, each costing $\Jzz/2$.  Therefore a
+single nearest-neighbor exchange out of the ice manifold creates two
+defects with total cost
+\begin{equation}
+\Delta_{\mathrm{1hop}}=\Jzz .
+\label{eq:one_hop_cost}
+\end{equation}
+This simple denominator is the origin of the perturbative scales below.
+
+\begin{intuition}
+A single spin flip is like pushing one domino: it necessarily unbalances
+the two tetrahedra that share that spin, creating a pair of oppositely
+charged defects that together cost $\Jzz$.  To get back into the ice manifold
+you must flip more spins so that every tetrahedron is balanced again.  The
+cheapest way to do that around a closed path is what the next sections count.
+\end{intuition}
+
+\section{Degenerate perturbation theory in the ice manifold}
+
+Let $P$ be the projector onto the ice manifold and $Q=1-P$.  Write
+\[
+H=H_0+V,\qquad
+V=-\Jpm\sum_{\langle ij\rangle}
+\left(S_i^+S_j^-+S_i^-S_j^+\right).
+\]
+The ice energy is shifted to zero.  The non-ice resolvent is
+\begin{equation}
+R=Q\frac{1}{E_{\ice}-H_0}Q=-QH_0^{-1}Q .
+\end{equation}
+Because a single exchange leaves the ice manifold, $PVP=0$.  The first
+nonzero terms are therefore
+\begin{align}
+\Heff^{(2)} &= PVRVP, \label{eq:heff2}\\
+\Heff^{(3)} &= PVRVRVP. \label{eq:heff3}
+\end{align}
+For a path $s\to m_1\to \cdots \to t$, its contribution has the form
+\begin{equation}
+\langle t|\Heff^{(k)}|s\rangle
+=
+\sum_{\mathrm{paths}}
+\frac{\langle t|V|m_{k-1}\rangle\cdots
+\langle m_1|V|s\rangle}
+{(E_\ice-E_{m_1})\cdots(E_\ice-E_{m_{k-1}})} .
+\label{eq:path_pt}
+\end{equation}
+Each matrix element of $V$ contributes a factor $-\Jpm$, and each
+intermediate energy denominator is negative.
+
+\begin{remark}
+The standalone recomputation stores each perturbative process as a row
+\[
+        r=(s,t,\bN,c,k),
+\]
+meaning that the row connects ice states $s$ and $t$, appears at order $k$,
+has coefficient $c$ when $\Jpm=1$, and has accumulated periodic image
+transport $\bN$.  At physical coupling, the row contributes
+$c\Jpm^k|t\rangle\langle s|$.
+\end{remark}
+
+\section{Why the physical QSI ring exchange is a hexagon}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{fig_diamond_hexagon.pdf}
+\caption{\textbf{The smallest real ring exchange has six spins.}  Each
+tetrahedron is a vertex of the diamond lattice (circles); each spin is a link
+of that lattice (squares).  A ring exchange must flip an alternating chain of
+spins around a closed loop of tetrahedra.  \emph{Left:} the diamond lattice is
+bipartite (two colours, links only join different colours), so its shortest
+loop uses six links---a six-spin hexagon.  \emph{Right:} a four-spin ring
+would require a four-loop on the diamond lattice, which would need two
+same-colour vertices to be adjacent; no such loop exists in the bulk.  This is
+the geometric reason a contractible four-site ice loop is impossible.}
+\label{fig:diamond_hexagon}
+\end{figure}
+
+The pyrochlore lattice is the line graph of the diamond lattice: a
+pyrochlore site corresponds to a diamond bond, and a pyrochlore
+tetrahedron corresponds to a diamond vertex.  An ice configuration assigns
+a divergence-free electric field to diamond bonds.  A ring exchange in the
+ice manifold must flip an alternating set of spins around a closed path so
+that the divergence at every touched diamond vertex remains zero.
+
+\begin{lemma}[Shortest contractible ice loop]
+The shortest nontrivial contractible ice-preserving ring exchange on the
+infinite pyrochlore lattice is a six-site hexagon.
+\end{lemma}
+
+\begin{proof}
+An ice-preserving loop must enter and leave every touched tetrahedron, so
+on the diamond lattice it corresponds to a closed non-backtracking loop.
+The diamond lattice is bipartite and has no triangles.  It also has no
+four-cycles; its elementary loops are length six.  Therefore the shortest
+contractible closed diamond loop has length six.  Mapping back to the
+pyrochlore line graph gives a six-site pyrochlore hexagon.  A triangle of
+the pyrochlore graph lies inside one tetrahedron and is not an alternating
+ice ring.  A contractible four-site ice ring would map to a diamond
+four-cycle, which does not exist.
+\end{proof}
+
+\subsection{Third-order hexagon amplitude}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{fig_ring_exchange.pdf}
+\caption{\textbf{The physical ring exchange (the emergent-photon move).}
+Starting from an alternating up/down pattern on a hexagon, flipping all three
+alternating pairs turns each up into a down and vice versa, returning to the
+ice manifold.  Because the intermediate steps leave the ice manifold, the
+amplitude is third order in $J_\pm$, with magnitude
+$g_{\mathrm{hex}}=12|J_\pm|^3/J_{zz}^2$.  The coherent superposition of these
+ring flips across the lattice is the artificial photon of quantum spin ice.}
+\label{fig:ring_exchange}
+\end{figure}
+
+Consider a flippable hexagon with alternating spins.  To move from one ice
+configuration to the flipped configuration, one must exchange three
+alternating nearest-neighbor pairs.  After the first exchange the system
+has two charged tetrahedra and costs $\Jzz$.  After the second exchange it
+still has a pair of charged tetrahedra and costs $\Jzz$.  Thus each
+ordering gives a denominator $\Jzz^2$.
+
+For one orientation there are $3!$ orderings.  Including the Hermitian
+conjugate orientation gives the conventional ring term
+\begin{equation}
+\Heff^{\mathrm{hex}}
+=-\ghex\sum_{\mathrm{hex}}
+\left(
+S_1^+S_2^-S_3^+S_4^-S_5^+S_6^-+\mathrm{h.c.}
+\right),
+\end{equation}
+with magnitude
+\begin{equation}
+\boxed{
+\ghex=\frac{12|\Jpm|^3}{\Jzz^2}.
+}
+\label{eq:ghex}
+\end{equation}
+The sign of the effective ring term follows $\sgn(\Jpm^3)$.  This sign is
+what distinguishes the $0$-flux and $\pi$-flux gauge sectors.
+
+\section{Why a four-site loop is a finite-size artifact}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.9\textwidth]{fig_torus_winding.pdf}
+\caption{\textbf{A periodic cluster is a torus.}  Opposite walls of the
+simulation box are identified (glued), so the box is topologically a
+doughnut.  \emph{Left:} a loop that closes inside the box has winding
+$\bw=0$; it is a genuine real-space process such as the physical hexagon.
+\emph{Right:} a path can also close by leaving one wall and re-entering the
+opposite wall.  Its winding $\bw\neq0$; it exists \emph{only} because of the
+periodic gluing and has no counterpart in the infinite lattice.}
+\label{fig:torus_winding}
+\end{figure}
+
+A periodic cluster is not $\mathbb R^3$; it is the flat torus
+\begin{equation}
+T^3=\mathbb R^3/(\Z^3\bL) ,
+\end{equation}
+where we use row vectors and the rows of $\bL$ are the three cluster
+translation vectors.  Thus $\bm m\bL$, with $\bm m\in\Z^3$, is a periodic
+translation.  For the cubic $L_1\times L_2\times L_3$ cluster,
+\[
+\bL=\begin{pmatrix}
+L_1&0&0\\
+0&L_2&0\\
+0&0&L_3
+\end{pmatrix}.
+\]
+For the FCC primitive cluster, the rows are
+$L_1(\tfrac12,\tfrac12,0)$, $L_2(\tfrac12,0,\tfrac12)$, and
+$L_3(0,\tfrac12,\tfrac12)$.  All coordinates in this note are measured in
+conventional cubic-cell units.  The pyrochlore basis sites lie on the
+quarter-lattice,
+\[
+\br_i\in \frac14\Z^3,
+\]
+which is the reason factors of $4$ appear below.
+
+A bond
+from site $i$ to site $j$ is represented by a minimum-image displacement
+\begin{equation}
+\bd_{ij}=\br_j-\br_i-\bn_{ij}\bL,
+\qquad \bn_{ij}\in\Z^3 .
+\end{equation}
+For a closed path $\cycle$ on the periodic graph, define its winding vector
+\begin{equation}
+\bw_\cycle=\sum_{(ij)\in\cycle}\bn_{ij}.
+\label{eq:winding}
+\end{equation}
+If $\bw_\cycle=0$, the lifted path closes in real space and is
+contractible.  If $\bw_\cycle\ne0$, the path closes only because opposite
+faces of the cluster have been identified.
+
+\begin{proposition}[No physical four-loop]
+Every ice-preserving four-cycle on the standard $1\times1\times1$ cubic
+and $2\times2\times2$ FCC pyrochlore clusters is a winding torus loop, not
+a contractible bulk process.
+\end{proposition}
+
+\begin{proof}
+The geometric lemma above rules out a contractible four-site ice loop on
+the infinite pyrochlore lattice.  Therefore any four-site ice loop observed
+on a periodic cluster must use the periodic identification.  Equivalently,
+its lift to $\mathbb R^3$ fails to close and has nonzero winding
+$\bw_\cycle$.  The explicit independent enumeration below verifies this
+for the two clusters used in the ED calculation.
+\end{proof}
+
+\subsection{Second-order four-loop amplitude}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{fig_pt_ladder.pdf}
+\caption{\textbf{Counting the powers of $J_\pm$.}  Every transverse exchange
+adds one factor of $J_\pm$ and pushes the system one virtual step above the
+ice manifold, where it costs $\sim\Jzz$.  \emph{Left:} the winding four-loop
+returns to the ice manifold after just two exchanges (one intermediate
+tetrahedron pair), giving $g_4=4J_\pm^2/\Jzz$.  \emph{Right:} the hexagon
+needs three exchanges (two intermediate steps), giving the weaker,
+higher-order $g_{\mathrm{hex}}=12|J_\pm|^3/\Jzz^2$.  The extra rung is the
+entire reason the artifact is parametrically larger at small $J_\pm$.}
+\label{fig:pt_ladder}
+\end{figure}
+
+A winding four-loop has four alternating sites and can be flipped by two
+nearest-neighbor exchanges.  The two exchanged bonds form a perfect
+matching of the four sites.  There are two matchings, and for each matching
+there are two time orderings.  Each path has one intermediate state with
+energy cost $\Jzz$.  Thus the magnitude of the second-order matrix element
+is
+\begin{equation}
+4\frac{\Jpm^2}{\Jzz}.
+\end{equation}
+In the ring-exchange convention used here,
+\begin{equation}
+\boxed{
+\gfour=\frac{4\Jpm^2}{\Jzz}.
+}
+\label{eq:g4}
+\end{equation}
+The sign is convention dependent, but the scale is not.
+
+The scale separation is
+\begin{equation}
+\boxed{
+\frac{\gfour}{\ghex}
+=
+\frac{4\Jpm^2/\Jzz}{12|\Jpm|^3/\Jzz^2}
+=
+\frac{\Jzz}{3|\Jpm|}.
+}
+\label{eq:scale_separation}
+\end{equation}
+Thus the artifact becomes more severe precisely in the perturbative regime
+where the QSI description is best controlled.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\textwidth]{fig_scale_sep.pdf}
+\caption{\textbf{The artifact dominates exactly where we want to work.}  The
+finite-size four-loop scale $g_4$ (orange) and the physical photon scale
+$g_{\mathrm{hex}}$ (purple) both vanish as $J_\pm\to0$, but their ratio
+$g_4/g_{\mathrm{hex}}=\Jzz/(3|J_\pm|)$ \emph{grows}.  At the representative
+value $|J_\pm|=0.05\,\Jzz$ the artifact is already $\sim7\times$ larger than
+the physics it would otherwise swamp.}
+\label{fig:scale_sep}
+\end{figure}
+
+\section{Independent numerical verification}
+
+The script
+\[
+\texttt{notes/recompute\_finite\_size\_artifact.py}
+\]
+does not import the old \texttt{twist\_qsi\_demo/scripts} code and does not
+inspect git history.  It independently:
+\begin{enumerate}[label=(\roman*)]
+\item builds the pyrochlore positions, nearest-neighbor graph, tetrahedra,
+and periodic image vectors;
+\item enumerates all two-in--two-out ice states;
+\item enumerates ice-preserving four-cycles and hexagons;
+\item constructs $H_2=PVRVP$ and $H_3=PVRVRVP$ from path sums;
+\item applies either no projector or the zero-transport projector derived
+below;
+\item diagonalizes the resulting ice-manifold Hamiltonian and computes
+$C(T)$.
+\end{enumerate}
+The raw output is saved in
+\texttt{notes/recomputed\_finite\_size\_artifact.json}.
+
+\subsection{Geometry census}
+
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+cluster & sites & ice states & 4-cycles & contractible 4-cycles
+& contractible hexagons \\
+\midrule
+cubic $1\times1\times1$ & 16 & 90 & 36 & 0 & 16 \\
+FCC $2\times2\times2$ & 32 & 2970 & 24 & 0 & 32 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The same enumeration finds 48 wrapping hexagons on the 16-site cluster and
+96 wrapping hexagons on the 32-site cluster.  Those are also finite-size
+torus processes, but they appear at the same order as the physical
+hexagons.  The four-loops are the dominant contamination because they
+appear one order earlier.
+
+\section{Why the low-temperature specific heat peak is displaced}
+
+For an exact spectrum $\{E_n\}$, shifted so $E_0=0$,
+\begin{equation}
+Z(T)=\sum_n e^{-E_n/T},\qquad
+\langle E^p\rangle_T=\frac{1}{Z}\sum_n E_n^p e^{-E_n/T},
+\end{equation}
+and
+\begin{equation}
+C(T)=\frac{\langle E^2\rangle_T-\langle E\rangle_T^2}{T^2}.
+\label{eq:specific_heat}
+\end{equation}
+For a two-level system with splitting $\Delta$,
+\begin{equation}
+C_{\mathrm{2lev}}(T)
+=\frac{(\Delta/T)^2 e^{-\Delta/T}}
+{\left(1+e^{-\Delta/T}\right)^2},
+\end{equation}
+whose maximum is at $T=O(\Delta)$.  A many-level finite cluster has a more
+complicated spectrum, but the lower peak still tracks the dominant
+low-energy splitting scale in the ice manifold.
+
+Therefore:
+\begin{align}
+T_{\mathrm{peak}}^{\mathrm{bare}} &\sim \gfour\propto \Jpm^2,
+\qquad\text{if winding four-loops are present},\\
+T_{\mathrm{peak}}^{\mathrm{clean}} &\sim \ghex\propto |\Jpm|^3,
+\qquad\text{after winding transport is removed}.
+\end{align}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.66\textwidth]{fig_ct_twopeak.pdf}
+\caption{\textbf{The low-temperature specific-heat peak is displaced by the
+artifact.}  Exact specific heat of the $16$-site cubic ice-manifold
+Hamiltonian at $J_\pm=-0.05\,\Jzz$.  The bare cluster (orange) peaks at the
+artifact scale $g_4$; after the $\bdelta=0$ projection (green) the peak drops
+onto the physical photon scale $g_{\mathrm{hex}}$---nearly an order of
+magnitude lower in temperature.  Since the specific heat is a nonlinear
+function of the spectrum, this shift cannot be undone by averaging $C(T)$
+after the fact (Sec.~\ref{sec:qed-spine}).}
+\label{fig:ct_twopeak}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_specific_heat_all_cases.pdf}
+\caption{\textbf{Specific heat as a function of temperature for all
+independently recomputed scenarios.}  Each panel shows the exact
+ice-manifold specific heat per site, $C(T)/N$, from the standalone
+Schrieffer--Wolff calculation.  The columns are the three computed
+couplings, and the rows are the two ED clusters.  Orange is the bare
+periodic effective Hamiltonian; green is the zero-transport
+$(\bdelta=0)$ Hamiltonian.  Dotted orange/green vertical lines mark the
+actual peak positions of the two curves, the black dash-dot line marks
+$g_4$, and the purple dashed line marks $g_{\mathrm{hex}}$.  The full
+curves show the same conclusion as the peak table: removing transported
+winding processes shifts the low-temperature feature from the finite-size
+scale toward the photon scale.}
+\label{fig:specific_heat_all_cases}
+\end{figure}
+
+The independent calculation gives the following representative peaks:
+\begin{center}
+\begin{tabular}{llrrr}
+\toprule
+cluster & Hamiltonian & $\Jpm$ & $T_{\mathrm{peak}}$ &
+scale diagnostic \\
+\midrule
+cubic $N=16$ & bare & $-0.05$ & 0.010056 &
+$T_{\mathrm{peak}}/g_4=1.01$ \\
+cubic $N=16$ & clean & $-0.05$ & 0.001604 &
+$T_{\mathrm{peak}}/g_{\mathrm{hex}}=1.07$ \\
+FCC $N=32$ & bare & $-0.05$ & 0.004180 &
+$T_{\mathrm{peak}}/g_{\mathrm{hex}}=2.79$ \\
+FCC $N=32$ & clean & $-0.05$ & 0.000782 &
+$T_{\mathrm{peak}}/g_{\mathrm{hex}}=0.52$ \\
+FCC $N=32$ & bare & $-0.10$ & 0.018053 &
+$T_{\mathrm{peak}}/g_{\mathrm{hex}}=1.50$ \\
+FCC $N=32$ & clean & $-0.10$ & 0.006252 &
+$T_{\mathrm{peak}}/g_{\mathrm{hex}}=0.52$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+For the 16-site cluster at $\Jpm=-0.05$, $g_4=4(0.05)^2=0.010$ and
+$g_{\mathrm{hex}}=12(0.05)^3=0.0015$, so the scale identification is
+especially transparent.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_all_scenarios.pdf}
+\caption{\textbf{All independently recomputed finite-size scenarios in one
+place.}  \emph{(a)} The two ED clusters both contain winding four-loops
+and wrapping hexagons in addition to the physical contractible hexagons.
+\emph{(b)} Boundary-twist averaging keeps half of each winding channel on
+both clusters, while the zero-transport projector removes them and keeps
+the physical hexagon.  \emph{(c)} The low-temperature peak positions for
+all computed clusters, flux signs, and projection choices.  Black ticks
+mark $g_4$ and purple crosses mark $g_{\mathrm{hex}}$.  \emph{(d)} The same
+peak data in photon units.  The cleaned spectra stay at an order-one
+multiple of $g_{\mathrm{hex}}$, while the bare spectra are pushed upward by
+the winding-loop contamination.}
+\label{fig:all_scenarios}
+\end{figure}
+
+\section{Why ordinary boundary-twist averaging fails}
+
+Boundary twists are often used to reduce finite-size effects.  Put phases
+only on boundary-crossing bonds.  If a virtual path accumulates image
+transport $\bN$, its row coefficient becomes
+\begin{equation}
+c_r(\bphi)=c_r e^{-i\bN_r\cdot\bphi}.
+\end{equation}
+The eight-corner average over $\phi_a\in\{0,\pi\}$ gives
+\begin{equation}
+\frac18\sum_{\phi_a=0,\pi}e^{-i\bN\cdot\bphi}
+=\prod_{a=1}^3\frac{1+(-1)^{N_a}}{2}.
+\label{eq:corner_kernel}
+\end{equation}
+This keeps rows with even $\bN$.
+
+The subtle point is that the geometric ring exchange is not a single path.
+It is a sum over virtual paths.  A winding four-loop has multiple
+matchings and time orderings.  Some paths cross the boundary, while other
+paths implementing the same geometric flip can have $\bN=0$ in the
+boundary gauge.  The corner average therefore kills only part of the
+coefficient.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.66\textwidth]{fig_twist_fail.pdf}
+\caption{\textbf{Boundary-twist averaging is not enough.}  Fraction of each
+geometric channel's coupling that survives on the $16$-site cubic cluster.
+Ordinary boundary-twist (corner) averaging (grey) leaves \emph{half} of every
+winding artifact---because the ring exchange is a sum over virtual paths and
+some of those paths do not cross the boundary in the chosen gauge.  The
+gauge-invariant $\bdelta=0$ projection (green) removes the winding four-loop
+and wrapping hexagon completely while keeping the physical hexagon at full
+strength.}
+\label{fig:twist_fail}
+\end{figure}
+
+The standalone recomputation classifies the off-diagonal rows by geometric
+channel and gives:
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+channel & corner average kept & $N=0$ kept & zero-transport kept \\
+\midrule
+4-loop, cubic $N=16$ & 0.5 & 0.5 & 0 \\
+wrapping hexagon, cubic $N=16$ & 0.5 & 0.5 & 0 \\
+contractible hexagon, cubic $N=16$ & 1 & 1 & 1 \\
+4-loop, FCC $N=32$ & 0.5 & 0.5 & 0 \\
+wrapping hexagon, FCC $N=32$ & 0.5 & 0.5 & 0 \\
+contractible hexagon, FCC $N=32$ & 1 & 1 & 1 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Thus ordinary boundary-twist averaging reduces the winding artifact but
+does not remove it.
+
+\section{The transported dipole and the zero-transport theorem}
+\label{sec:transported-dipole}
+
+The correct object is not the boundary-crossing count of one chosen gauge.
+It is the gauge-invariant net displacement transported by the effective
+operator.
+
+\begin{definition}[Home-cell dipole]
+For a perturbative row connecting ice states $s$ and $t$, define
+\[
+R_+(t,s)=\{i:S_i^z(t)-S_i^z(s)>0\},\qquad
+R_-(t,s)=\{j:S_j^z(t)-S_j^z(s)<0\}.
+\]
+The set $R_+$ contains spins raised by the effective process; $R_-$ contains
+spins lowered by the effective process.  The home-cell dipole is
+\begin{equation}
+\brho_{t,s}=\sum_{i\in R_+(t,s)}\br_i-\sum_{j\in R_-(t,s)}\br_j .
+\label{eq:rho_def}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Transported dipole]
+Let $\bN_r\in\Z^3$ be the accumulated image vector of the virtual path.  In row
+vector convention, $\bN_r\bL$ is the net periodic translation needed when the
+path is lifted from the torus back to the covering space $\mathbb R^3$.  The
+transported dipole is
+\begin{equation}
+\boxed{
+\bdelta_r=\brho_{t,s}+\bN_r\bL .
+}
+\label{eq:delta_def}
+\end{equation}
+\end{definition}
+
+The formula is easiest to understand for one microscopic hop.  The operator
+$S_i^+S_j^-$ raises site $i$ and lowers site $j$, so its home-cell dipole is
+$\br_i-\br_j$.  If the nearest-neighbor bond was represented using the periodic
+image vector $\bn_{ij}$, then the lifted displacement of the spin transfer is
+\[
+\br_i-\br_j+\bn_{ij}\bL=-\bd_{ij}.
+\]
+The many-step perturbative row adds these lifted increments.  Thus
+$\bdelta_r$ is not a new dynamical charge.  It is the net real-space
+displacement carried by the virtual spin transfers after the periodic images
+have been undone.
+
+For the order-$\Jpm^2$ and order-$\Jpm^3$ ice-manifold rows explicitly
+enumerated below, the possible transported dipoles are coarser than the
+microscopic quarter-lattice: their components lie in $\frac12\Z$.  This is the
+only set of virtual processes that controls the unwanted four-loop peak and
+the physical hexagon peak in the present campaign.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{fig_real_loops.pdf}
+\caption{\textbf{The transported dipole tells the two loops apart, on the
+real $16$-site cubic cluster.}  Both loops flip alternating spins (red raised,
+blue lowered) and both return the system to the ice manifold.  \emph{Left:}
+the contractible hexagon is balanced---the raised and lowered spins average to
+the same point---so its transported dipole vanishes,
+$\bdelta=\brho+\bN\bL=0$.  \emph{Right:} the winding four-loop must cross the
+torus wall (dashed bonds); its raised and lowered spins are offset by half a
+unit cell, giving $\bdelta=(0,0,-\tfrac12)\neq0$.  Selecting $\bdelta=0$ keeps
+the left process and discards the right one.}
+\label{fig:real_loops}
+\end{figure}
+
+\begin{lemma}[Gauge invariance of $\bdelta$]
+The vector $\bdelta_r$ is independent of the choice of home cell and of the
+gauge used to place the twist phases.
+\end{lemma}
+
+\begin{proof}
+Move a site coordinate by a cluster translation, $\br_i\mapsto
+\br_i+\bm m\bL$ with $\bm m\in\Z^3$.  If that site is raised, $\brho$
+changes by $+\bm m\bL$; if it is lowered, $\brho$ changes by
+$-\bm m\bL$.  The image bookkeeping of the virtual path changes by the
+opposite integer vector, because the same physical hop is now represented
+using a different periodic image.  Therefore $\bN\bL$ changes by the
+negative of the change in $\brho$, and the sum $\brho+\bN\bL$ is unchanged.
+\end{proof}
+
+\begin{proposition}[Transported-dipole character projection]
+For the order-$\Jpm^2$ and order-$\Jpm^3$ ice-manifold rows on the clusters
+considered here, every transported dipole has components in $\frac12\Z$.  We
+therefore define the integer row label
+\begin{equation}
+\boxed{\bDelta_r\equiv2\bdelta_r\in\Z^3.}
+\label{eq:Delta_integer_label}
+\end{equation}
+This is only a change of units for these rows.  For example, the winding four-loop in
+Fig.~\ref{fig:real_loops} has
+$\bdelta=(0,0,-\tfrac12)$, hence $\bDelta=(0,0,-1)$.  The condition
+$\bDelta=0$ is exactly the same condition as $\bdelta=0$.
+
+Couple an auxiliary character field $\btheta$ to this integer transported
+dipole.  A perturbative row $r$ acquires the phase
+\begin{equation}
+c_r(\btheta)=c_r e^{-i\btheta\cdot\bDelta_r}.
+\label{eq:delta_character_phase}
+\end{equation}
+The operator-level average over $\btheta\in[0,2\pi)^3$ keeps exactly the rows
+with $\bdelta_r=0$.
+\end{proposition}
+
+\begin{proof}
+The characters of the abelian group $\Z^3$ are orthogonal:
+\[
+\overline{c_r}
+=c_r\int_{[0,2\pi)^3}\frac{d^3\theta}{(2\pi)^3}
+e^{-i\btheta\cdot\bDelta_r}
+=c_r\,\delta_{\bDelta_r,0}.
+\]
+Since $\bDelta_r=2\bdelta_r$, the condition $\bDelta_r=0$ is equivalent to
+$\bdelta_r=0$.
+\end{proof}
+
+\begin{remark}[How many discrete character points are needed?]
+The exact integral over $\btheta$ can be replaced by a finite Fourier sum if
+the grid separates the transported-dipole sectors present in the calculation.
+For one component,
+\[
+\frac1M\sum_{m=0}^{M-1}
+e^{-i(2\pi m/M)\Delta}
+=
+\begin{cases}
+1,& \Delta=0\pmod M,\\
+0,& \Delta\ne0\pmod M.
+\end{cases}
+\]
+Thus the finite grid projects onto $\Delta=0$ only modulo $M$.  In the
+order-$\Jpm^2$ and order-$\Jpm^3$ row data, the nonzero components of
+$\bDelta=2\bdelta$ are $\pm1$.  Therefore the two-point grid $M=2$ already
+distinguishes the finite-size sectors from the clean zero-transport sector.
+
+This is a pure aliasing issue.  Consider one spurious four-loop component with
+$\delta_\mu=-\frac12$.  With the effective-row label
+$\Delta_\mu=2\delta_\mu=-1$, the two-point average gives
+\[
+\frac12\left(1+e^{-i\pi(-1)}\right)=0,
+\]
+so the row is removed.  The perturbative row-table check on the $16$-site
+cluster gives exactly this:
+\[
+\begin{array}{c|c|c}
+\text{integer label} & M & \text{relative error to strict }\bdelta=0\\
+\hline
+2\bdelta & 2 & 0\\
+\end{array}
+\]
+Thus the minimal character projection for this campaign is $2\bdelta$ with
+$M=2$.
+\end{remark}
+
+\begin{remark}[Why physical twists were insufficient]
+A physical flat vector potential gives phases of the form
+$e^{-i\bA\cdot\bdelta_r}$.  On the $16$-site cluster the spurious four-loops
+have half-cell transported dipoles, so the corresponding exponent is
+half-integer in $2\pi$ units.  Physical twist averaging therefore suppresses
+these rows but does not project them out exactly.  The auxiliary character
+field in Eq.~\eqref{eq:delta_character_phase} is the finite-cluster source
+conjugate to the integer transported dipole $\bDelta=2\bdelta$.
+\end{remark}
+
+\begin{corollary}[Clean ice-manifold Hamiltonian]
+The artifact-free gauge Hamiltonian is
+\begin{equation}
+\boxed{
+\Hclean(\Jpm)=
+\sum_{r:\,\bdelta_r=0} c_r\Jpm^{k_r}|t_r\rangle\langle s_r| .
+}
+\label{eq:hclean}
+\end{equation}
+It keeps contractible hexagons and removes winding four-loops and wrapping
+hexagons.
+\end{corollary}
+
+\section{The microscopic spine: structure theorems and the
+polarization-parity mask}
+\label{sec:qed-spine}
+
+The perturbative derivation above identifies the topological quantum number
+that must be removed: nonzero transported dipole.  The production ED protocol
+does not stop at the truncated row table.  Its central object is a
+\emph{downfolded low-energy operator expressed in the ice basis}, and the
+transported-dipole character projection is applied to that operator before
+any thermodynamics are computed.  Historically this was implemented as an
+eight-point character average of QED low-band extractions; the structure
+theorems of Sec.~\ref{sec:structure_theorems} collapse it to
+\[
+\boxed{
+\Hmic
+\xrightarrow{\ \mathrm{downfold\ at\ }\btheta=0\ }
+\HB
+\xrightarrow{\ \mathrm{parity\ mask}\ }
+\HB^{\rm clean}
+\xrightarrow{\ \mathrm{ED}\ }
+C(T),\ S(T),\ \text{gauge-sector observables},
+}
+\]
+a single untwisted computation followed by an exact entrywise projection.
+Perturbation theory supplies the character label and the weak-coupling
+benchmark; the microscopic solver supplies the dressed low-band operator; the
+mask supplies the projection.
+
+\subsection{Gauge-theory meaning}
+
+The pyrochlore lattice is the line graph of the diamond lattice.  A spin on a
+pyrochlore site is a directed electric field on a diamond link,
+\[
+E_\ell=S_i^z,
+\]
+up to an orientation convention.  The ice rule is Gauss' law,
+\begin{equation}
+(\nabla\cdot E)_r=\sum_{\ell\supset r}\eta_{r\ell}E_\ell=0.
+\label{eq:gauss_law_new}
+\end{equation}
+so the ice manifold is the zero-charge sector of a compact $U(1)$ gauge
+theory.  Integrating out virtual spinons generates local magnetic dynamics,
+\begin{equation}
+\Heff^{\mathrm{bulk}}
+=-g_{\mathrm{hex}}\sum_{p\in\mathrm{hexagons}}
+\cos\!\left[(\nabla\times A)_p\right]+\cdots ,
+\label{eq:gauge_ring_new}
+\end{equation}
+where $A_\ell$ is conjugate to $E_\ell$.  This is a local plaquette term: the
+physical magnetic ring is a contractible diamond hexagon.
+
+On a three-torus there are also noncontractible Wilson loops, classified by
+\[
+H_1(T^3,\Z)=\Z^3.
+\]
+In the thermodynamic gauge theory these are global tunnelling events, not
+local photon dynamics.  On a tiny periodic cluster, however, a noncontractible
+Wilson loop can be only four spins long.  The protocol removes these
+finite-size topological tunnelling events while retaining the local
+contractible gauge dynamics.
+
+\begin{remark}[Homotopy fixes the scope of any cleaning scheme]
+\label{rem:homotopy_scope}
+The torus is aspherical: $T^3=K(\Z^3,1)$, so $\pi_n(T^3)=0$ for $n\ge2$ and
+free homotopy classes of closed loops are in bijection with
+$\pi_1(T^3)=H_1(T^3,\Z)=\Z^3$.  Two consequences frame everything below.
+\emph{(i) Completeness.}  The winding class is the \emph{only} topological
+invariant of a completed low-energy process; there is no torsion and no
+higher obstruction.  A cleaning scheme keyed to topological labels can remove
+at most the nontrivial classes, and the transported-dipole projection removes
+exactly these: it is the \emph{maximal} topologically defined cleaning.
+\emph{(ii) Matched pairs are honestly trivial.}  A process that winds by
+$+\bw$ and later by $-\bw$ lifts to a closed loop in the covering space
+$\mathbb R^3$; it has a genuine infinite-lattice counterpart (a virtual
+spinon excursion of length $\sim L$) and \emph{cannot} be distinguished from
+bulk physics by any superselection label.  Such contributions are ordinary
+finite-size image corrections, to be controlled by comparing cluster sizes,
+not pathologies to be projected.  This resolves, as a theorem rather than an
+observation, why matched-winding contributions survive every averaging
+scheme.
+
+At the group level, the transported dipoles generate an abelian group
+$\Gamma\subset\tfrac12\Z^3$ sitting in the exact sequence
+\[
+0\;\to\;\Z^3\bL\ (\text{windings},\ \pi_1)\;\to\;\Gamma\;\to\;
+\Gamma/\Z^3\bL\ (\text{polarization classes})\;\to\;0 .
+\]
+Ordinary boundary twists realize only the characters of the winding subgroup
+(flat $U(1)$ connections, $\mathrm{Hom}(\pi_1,U(1))$); the polarization
+phases of Sec.~\ref{sec:structure_theorems} realize the characters of the
+quotient.  Averaging over a subgroup of characters projects onto the
+annihilator of that subgroup --- which is why twist averaging alone keeps
+half of every winding channel, and why the gauge-invariant label
+$\bdelta=\brho+\bN\bL$ must glue the two factors together.
+\end{remark}
+
+\begin{intuition}
+The physical photon is built from local magnetic curls around hexagons.  The
+artifact is a Wilson loop that wraps around the torus but looks short because
+the torus is small.  The transported-dipole character distinguishes these
+topological classes even when the spin flips look deceptively similar.
+\end{intuition}
+
+\subsection{Character-deformed microscopic Hamiltonian}
+
+For a nearest-neighbor bond, write the minimum-image displacement as
+\[
+\bd_{ij}=\br_j-\br_i-\bn_{ij}\bL ,
+\]
+where $\bn_{ij}$ records which periodic image was used.  The microscopic move
+$S_i^+S_j^-$ raises site $i$ and lowers site $j$.  The auxiliary
+transported-dipole character deformation is
+\begin{equation}
+\Hmic^{2\delta}(\btheta)=
+\Jzz\sum_{\langle ij\rangle}S_i^zS_j^z
+-\Jpm\sum_{\langle ij\rangle}
+\left[
+e^{+i\btheta\cdot(2\bd_{ij})}S_i^+S_j^-
++e^{-i\btheta\cdot(2\bd_{ij})}S_i^-S_j^+
+\right].
+\label{eq:mic_dipole_twisted_new}
+\end{equation}
+This is not an ordinary physical boundary flux.  It is a finite-cluster source
+field conjugate to the integer transported dipole
+\[
+\bDelta=2\bdelta .
+\]
+For the leading finite-size sectors on the cubic-16 and FCC-32 clusters,
+$\Delta_\mu=0,\pm1$.  Thus the minimal grid is
+\begin{equation}
+\theta_\mu\in\{0,\pi\},\qquad M=2,
+\label{eq:m2_grid_new}
+\end{equation}
+with eight character points.  If higher-order or larger-cluster diagnostics
+reveal additional transported-dipole labels, $M$ must be increased until the
+low-band spectrum and relevant matrix elements converge.
+
+\subsection{Structure theorems: the character average is a mask}
+\label{sec:structure_theorems}
+
+The deformation \eqref{eq:mic_dipole_twisted_new} looks like it requires a
+separate microscopic diagonalization at every character point.  It does not.
+Let
+\begin{equation}
+\hat{\bm X}=\sum_i \br_i\,S_i^z
+\end{equation}
+be the many-body polarization in home-cell coordinates, a \emph{diagonal}
+operator in the $S^z$ product basis, and define the diagonal unitary
+$V(\btheta)=e^{2i\btheta\cdot\hat{\bm X}}$.
+
+\begin{proposition}[Isospectrality at the minimal grid]
+\label{prop:isospectral}
+Conjugating $\Hmic$ by $V(\btheta)$ multiplies the hop $S_i^+S_j^-$ by
+$e^{2i\btheta\cdot(\br_i-\br_j)}$, while the deformation
+\eqref{eq:mic_dipole_twisted_new} carries $e^{2i\btheta\cdot\bd_{ij}}$ with
+$\bd_{ij}=\br_j-\br_i-\bn_{ij}\bL$; the two differ by the boundary factor
+$e^{-2i\btheta\cdot\bn_{ij}\bL}$.  Because $\bL$ is an integer matrix, this
+factor equals $1$ at every $\btheta\in\{0,\pi\}^3$.  Hence
+\[
+\Hmic^{2\delta}(\btheta)=V(\btheta)\,\Hmic\,V(\btheta)^\dagger
+\qquad\text{exactly, at all eight corners.}
+\]
+Consequently all eight corner spectra coincide, and every observable
+diagonal in the $S^z$ basis --- including $P_\ice$, all Ising correlators,
+and every thermal trace $\Tr f(\Hmic^{2\delta}(\btheta))$ --- is exactly
+$\btheta$-independent.
+\end{proposition}
+
+Proposition~\ref{prop:isospectral} turns two empirical negative controls
+into theorems: observable averaging reproduced the bare peak \emph{to all
+digits} because the character family is isospectral, and the pullback
+diagnostics were corner-independent because the Gram matrix is.
+
+\begin{proposition}[Mask identity]
+\label{prop:mask}
+$P_\ice$ commutes with $V(\btheta)$ (both diagonal), so the low-band
+ice-frame data of Sec.~\ref{sec:qed-spine} transform covariantly:
+\[
+X(\btheta)=D(\btheta)X(0),\quad
+S(\btheta)=S(0),\quad
+\HB(\btheta)=D(\btheta)\,\HB(0)\,D(\btheta)^\dagger,
+\]
+with $D(\btheta)_{\alpha\alpha}=e^{2i\btheta\cdot\bm x_\alpha}$ and
+$\bm x_\alpha=\sum_i\br_i S_i^z(\alpha)$ the polarization of ice state
+$\alpha$.  The eight-corner average is therefore an exact entrywise
+projection,
+\begin{equation}
+\boxed{
+\left(\HB^{\rm clean}\right)_{\alpha\beta}
+=\left(\HB(0)\right)_{\alpha\beta}\,
+\Big[\,2(\bm x_\alpha-\bm x_\beta)\ \text{componentwise even}\,\Big],
+}
+\label{eq:mask_identity}
+\end{equation}
+the \emph{polarization-parity mask}.  One untwisted downfolding replaces the
+eight-point character sweep, and the projection is exact by construction.
+\end{proposition}
+
+\begin{proposition}[Factorization of the character group]
+\label{prop:factorization}
+For general $\btheta$ the same algebra gives
+\[
+\Hmic^{2\delta}(\btheta)
+=V(\btheta)\,H_{\rm twist}\!\left(\bphi=2\bL^{T}\btheta\right)V(\btheta)^\dagger:
+\]
+every character deformation is gauge-equivalent to an ordinary boundary
+twist composed with a polarization rotation, and the full character average
+factorizes as
+\[
+\text{(character average over $\hat\Gamma$)}
+=\text{(ordinary twist average)}\circ\text{(parity mask)} .
+\]
+At $M=2$ the twist factor is trivial and the average is a pure mask; for
+$M\ge3$ the twists are genuine and separate diagonalizations are required.
+This also explains \emph{structurally} why plain boundary-twist averaging
+retains exactly half of every winding channel: it implements only the first
+factor of the product.
+\end{proposition}
+
+All three statements are verified to machine precision against the stored
+eight-corner data by \texttt{notes/verify\_mask\_identity.py}: corner-spectra
+spread $3.6\times10^{-15}$; zero mask mismatches on all $8100$ band-operator
+entries with residual $<8\times10^{-15}$ at $\Jpm=-0.03$ and $-0.05$
+($1284$ of $8100$ entries kept); and, as the negative control, the
+dipole-$4\delta$, $M=3$ family --- which contains genuine twists --- has
+corner-spectra spread $5\times10^{-2}$ and is \emph{not} reproduced by any
+mask.
+
+\begin{intuition}
+The character field looks like eight different Hamiltonians, but at the
+minimal grid they are all the same Hamiltonian written in eight different
+phase conventions.  All of the cleaning power therefore lives in one place:
+the fixed ice basis in which the operators are compared.  Rotating each copy
+back into that common frame and averaging simply erases every matrix element
+whose end states differ by an odd polarization --- which is precisely the
+fingerprint the winding four-loop cannot hide.
+\end{intuition}
+
+\subsection{Pullback of the QED low band}
+
+Fix one classical ice basis
+\[
+\{|\alpha\rangle\}_{\alpha=1}^{N_{\ice}},\qquad
+P_\ice=\sum_{\alpha=1}^{N_\ice}|\alpha\rangle\langle\alpha|.
+\]
+For every character point, QED solves
+\begin{equation}
+\Hmic^{2\delta}(\btheta)|\psi_n(\btheta)\rangle
+=E_n(\btheta)|\psi_n(\btheta)\rangle,
+\qquad n=1,\ldots,N_\ice ,
+\label{eq:qed_low_eigenproblem}
+\end{equation}
+selecting the lowest ice-like band.  Define
+\begin{equation}
+X_{\alpha n}(\btheta)=\langle\alpha|\psi_n(\btheta)\rangle .
+\label{eq:X_projection_new}
+\end{equation}
+The projected vectors $P_\ice|\psi_n\rangle$ are not exactly orthonormal.
+Their Gram matrix is
+\begin{equation}
+S(\btheta)=X^\dagger(\btheta)X(\btheta).
+\label{eq:gram_matrix_new}
+\end{equation}
+The first control diagnostic is that $S(\btheta)$ must be nonsingular and well
+conditioned.  Physically, this says the selected microscopic band is still the
+dressed ice manifold.
+
+Use the Loewdin pullback
+\begin{equation}
+Q(\btheta)=X(\btheta)S^{-1/2}(\btheta),
+\qquad Q^\dagger(\btheta)Q(\btheta)=1.
+\label{eq:lowdin_pullback_new}
+\end{equation}
+The microscopic low-band operator represented in the fixed ice basis is
+\begin{equation}
+\boxed{
+\HB(\btheta)=
+Q(\btheta)\,
+\mathrm{diag}\!\left(E_1(\btheta),\ldots,E_{N_\ice}(\btheta)\right)
+Q^\dagger(\btheta).
+}
+\label{eq:band_operator_new}
+\end{equation}
+This is not a finite-order Schrieffer--Wolff truncation.  It contains the
+higher-order low-band dressing resolved by the microscopic QED diagonalization
+at the chosen coupling.
+
+\begin{remark}[What the Loewdin pullback means]
+The word ``pullback'' is being used in a finite-dimensional Hilbert-space
+sense.  The microscopic eigenvectors
+$|\psi_n(\btheta)\rangle$ live in the full Hilbert space, while the gauge
+Hamiltonian should act in the ice basis.  Projecting the microscopic vectors
+with $P_\ice$ gives the columns of $X$:
+\[
+X_{\alpha n}=\langle \alpha|\psi_n\rangle .
+\]
+These projected vectors are generally not orthonormal.  Their Gram matrix
+\[
+S_{mn}=\sum_\alpha X^*_{\alpha m}X_{\alpha n}
+=\langle\psi_m|P_\ice|\psi_n\rangle
+\]
+is the metric induced on the projected low-band frame by the ice-manifold
+inner product.  Multiplication by $S^{-1/2}$ removes this metric distortion:
+\[
+Q^\dagger Q
+=S^{-1/2}X^\dagger X S^{-1/2}
+=1 .
+\]
+Thus $Q=XS^{-1/2}$ is the orthonormal frame in the ice Hilbert space that is
+closest, in the symmetric Loewdin sense, to the projected microscopic low-band
+vectors.
+
+This is geometric, but not differential geometry in the sense of curvature or
+differential forms.  It is the geometry of finite-dimensional Hilbert-space
+subspaces: projection, induced metric, and choice of orthonormal frame.  The
+important diagnostic is $\lambda_{\min}S$.  If it is small, at least one
+microscopic low-band direction has little ice weight, the pullback amplifies
+noise, and the gauge-sector Hamiltonian is not controlled.  If $S$ is well
+conditioned, the QED low band is a dressed version of the ice manifold and
+Eq.~\eqref{eq:band_operator_new} is a meaningful representation of that dressed
+band as an operator on the ice basis.
+\end{remark}
+
+\subsection{The clean operator}
+
+The finite-size-clean gauge-sector Hamiltonian is the trivial
+transported-dipole character component of Eq.~\eqref{eq:band_operator_new}.
+By Proposition~\ref{prop:mask} it is computed \emph{without any character
+sweep}:
+\begin{equation}
+\boxed{
+\HB^{\rm clean}
+=\mathrm{mask}\!\left[\HB(\btheta=0)\right],
+\qquad
+\mathrm{mask}:\ \text{keep }(\alpha,\beta)\iff
+2(\bm x_\alpha-\bm x_\beta)\in(2\Z)^3,
+}
+\label{eq:clean_band_operator_new}
+\end{equation}
+which coincides identically with the eight-corner average
+$\frac18\sum_{\btheta\in\{0,\pi\}^3}\HB(\btheta)$.
+Only after this operator-level projection do we diagonalize.  This ordering
+is essential.  A single transverse hop leaves the ice manifold; the local
+hexagon ring appears only after a complete virtual process returns to the ice
+manifold.  Filtering microscopic hops directly can distort the process we
+want to keep (the direct microscopic average of
+Sec.~\ref{sec:qed_validation_new} fails for exactly this reason: winding
+lives in the \emph{composition} of hops --- in the $\pi_1$ class of the
+completed path --- so no linear operation on $\Hmic$ can see it).  Filtering
+the downfolded operator acts on the net transported dipole of the completed
+low-energy process.
+
+In the perturbative limit,
+\begin{equation}
+\HB^{\rm clean}-\mathrm{const.}
+=\Hclean+O(\Jpm^4/\Jzz^3),
+\label{eq:qed_to_sw_limit_new}
+\end{equation}
+provided the character grid resolves the transported-dipole sectors present
+through third order.  Away from the strict perturbative limit,
+Eq.~\eqref{eq:clean_band_operator_new} is a numerical gauge-sector downfolding,
+not a full microscopic all-temperature ED trace.
+
+\subsection{Exact implementation checklist (Stage A)}
+
+The production implementation is:
+\begin{enumerate}
+\item Build the periodic pyrochlore cluster.  Store every nearest-neighbor
+bond $(i,j)$, the minimum-image vector $\bd_{ij}$, and the periodic image
+integer $\bn_{ij}$.
+\item Enumerate tetrahedra and the classical ice basis
+$\{|\alpha\rangle\}_{\alpha=1}^{N_\ice}$; record the polarizations
+$\bm x_\alpha=\sum_i\br_i S_i^z(\alpha)$ \emph{in the same coordinate frame
+as the cluster builder} and precompute the parity mask of
+Eq.~\eqref{eq:mask_identity}.
+\item Diagonalize the lowest $N_\ice$ states of the \emph{untwisted}
+$\Hmic$ using a solver whose eigenvectors are accurately orthonormal.  A
+Krylov or block-Lanczos result is accepted only if its vector-Gram
+diagnostics pass.
+\item Compute $X$, $S=X^\dagger X$, and $Q=XS^{-1/2}$ at $\btheta=0$.  Record
+\[
+\lambda_{\min}S,\qquad
+\lambda_{\max}S,\qquad
+\|\Psi^\dagger\Psi-1\|.
+\]
+\item Assemble $\HB=\HB(\btheta=0)$ from Eq.~\eqref{eq:band_operator_new}
+and apply the mask, Eq.~\eqref{eq:clean_band_operator_new}.
+\item Diagonalize $\HB^{\rm clean}$ and compute
+\[
+C(T)=\frac{\langle E^2\rangle_T-\langle E\rangle_T^2}{T^2},
+\qquad
+S(T)=\ln Z+\frac{\langle E\rangle_T}{T}.
+\]
+\item Compare against the bare low-band operator
+$\HB^{\rm bare}=\HB(\btheta=0)$.  The bare operator should show the winding
+four-loop scale, while the clean operator should track $\ghex$ in the
+perturbative window.
+\item If double-winding (even nonzero transport) contamination is suspected,
+refine with genuine boundary twists $\bphi=2\bL^{T}\btheta$ on the $M=4$
+grid (Proposition~\ref{prop:factorization}) and check stationarity of the
+clean spectrum.
+\end{enumerate}
+
+\section{Validation of the QED spine on cubic-16}
+\label{sec:qed_validation_new}
+
+The $16$-site cubic cluster is small enough that every piece of the protocol
+can be tested against exact microscopic ED.  The fixed-$S^z_{\rm tot}=0$
+Hilbert space has dimension
+\[
+\binom{16}{8}=12870,
+\]
+and the ice band has $N_\ice=90$ states.
+
+\subsection{Choosing the character}
+
+The perturbative row-table test establishes the minimal character grid.  On
+this cluster, physical flat twists and integer winding projectors do not equal
+the strict $\bdelta=0$ row projector.  The $2\bdelta$ character does:
+\begin{center}
+\footnotesize
+\begin{tabular}{@{}p{0.30\linewidth}p{0.14\linewidth}p{0.20\linewidth}p{0.22\linewidth}@{}}
+\toprule
+projector & $T_{\rm peak}/\Jzz$ & rel. error to $\bdelta=0$
+& comment\\
+\midrule
+all rows & $0.0100564$ & $11.6476$ & winding four-loop present\\
+integer $N=0$ & $0.0046462$ & $5.8238$ & boundary winding only\\
+physical $\bA\!\cdot\!\bdelta$, $M=6$ & $0.0016563$ & $3.0740$
+& suppresses, not exact\\
+$2\bdelta$ character, $M=2$ & $0.0016045$ & $0$
+& minimal row-level charge\\
+\bottomrule
+\end{tabular}
+\end{center}
+This table is a row-level proof of the character.  The production calculation
+is the QED low-band construction in Eq.~\eqref{eq:clean_band_operator_new}.
+
+\subsection{QED low-band results}
+
+At $\Jpm=-0.05\Jzz$, the historical QED run used all eight $2\bdelta$, $M=2$
+character points; those stored operators are now also the machine-precision
+verification of Propositions~\ref{prop:isospectral} and~\ref{prop:mask}
+(identical corner spectra; averaged operator equal to the mask of the
+$\btheta=0$ operator).  The pullback was well conditioned:
+\[
+\min_{\btheta}\lambda_{\min}S(\btheta)=0.8872896692,
+\]
+and the saved QED eigenvectors were orthonormal to $2.3\times10^{-14}$.  The
+specific-heat peaks are
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+operator & $T_{\rm peak}/\Jzz$ & comment\\
+\midrule
+QED low band, $\btheta=0$ & $0.0129476$ & bare four-loop scale\\
+QED low-band operator average & $0.0012227$ & clean gauge scale\\
+perturbative all rows & $0.0100564$ & four-loop artifact\\
+perturbative $\bdelta=0$ & $0.0016045$ & leading hexagon target\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+A second full-QED check at $\Jpm=-0.03\Jzz$ confirms that the clean operator
+tracks the cubic hexagon scale:
+\begin{center}
+\begin{tabular}{ccccc}
+\toprule
+$\Jpm/\Jzz$ & $T_{\rm peak}^{\rm clean}$ & $\ghex$ &
+$T_{\rm peak}^{\rm clean}/\ghex$ & $T_{\rm peak}^{\rm bare}$\\
+\midrule
+$-0.03$ & $0.0002996$ & $0.000324$ & $0.925$ & $0.005541$\\
+$-0.05$ & $0.0012227$ & $0.001500$ & $0.815$ & $0.012948$\\
+\bottomrule
+\end{tabular}
+\end{center}
+For the $\Jpm=-0.03\Jzz$ run, the minimum ice-subspace overlap was $0.948$
+and the full-vector Gram deviation was below $2.1\times10^{-14}$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.78\textwidth]{fig_qed_dipole2_M2_specific_heat.pdf}
+\caption{\textbf{Specific heat from the adopted QED low-band operator
+average.}  The orange solid curve is the untwisted microscopic low-band
+operator $\HB(\btheta=0)$.  The green solid curve is the operator-level
+$2\bdelta$, $M=2$ character average.  Dotted curves are perturbative
+ice-manifold matrices.  The QED operator average moves the low-temperature
+peak from the spurious four-loop scale toward the clean hexagon scale.}
+\label{fig:qed_dipole2_m2_specific_heat_new}
+\end{figure}
+
+\subsection{Rejected shortcuts}
+
+The naive direct microscopic average
+\[
+\Hmic^{\rm avg}=\frac18\sum_{\btheta}\Hmic^{2\delta}(\btheta)
+\]
+was tested separately.  It produces a low band with large ice overlap
+($0.982$ mean at $\Jpm=-0.05\Jzz$), but its specific-heat peak follows
+$\gfour$, not $\ghex$:
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+$\Jpm/\Jzz$ & $T_{\rm peak}/\gfour$ & $T_{\rm peak}/\ghex$\\
+\midrule
+$-0.02$ & $0.125$ & $2.08$\\
+$-0.03$ & $0.119$ & $1.32$\\
+$-0.04$ & $0.114$ & $0.946$\\
+$-0.05$ & $0.109$ & $0.725$\\
+$-0.06$ & $0.104$ & $0.581$\\
+\bottomrule
+\end{tabular}
+\end{center}
+It changes the coefficient of the finite-size artifact but does not isolate
+the hexagon manifold.
+
+Observable averaging also fails.  At $\Jpm=-0.05\Jzz$, averaging the
+twist-resolved low-band specific heats gives
+\[
+T_{\rm peak}/\Jzz=0.0129476,
+\]
+the same peak as the bare periodic low band.  These shortcuts are useful
+negative controls, but the spine of the method is
+Eq.~\eqref{eq:clean_band_operator_new}.
+
+\section{Graded Brillouin--Wigner downfolding: the protocol at any $\Jpm$}
+\label{sec:bw_protocol}
+
+The Loewdin construction of Sec.~\ref{sec:qed-spine} anchors the lowest
+$N_\ice$ \emph{eigenstates} to the ice basis, and therefore requires the
+microscopic low band to still \emph{be} an ice band.  That requirement fails
+at material-scale couplings (the pullback Gram matrix becomes singular by
+$\Jpm/\Jzz\simeq-0.18$ on cubic-16).  The all-$\Jpm$ engine replaces
+eigenstate selection by the exact Feshbach--Schur (Brillouin--Wigner) map
+onto the ice block: with $P=P_\ice$, $Q=1-P$,
+\begin{equation}
+\boxed{
+F(z)=PHP+PHQ\,(z-QHQ)^{-1}\,QHP ,
+}
+\label{eq:bw_map}
+\end{equation}
+defined for every $\Jpm$ and every $z\notin\mathrm{spec}(QHQ)$.  No
+eigenvectors, no band selection, no Gram matrix.  The geometric expansion of
+the resolvent is a sum over \emph{completed} virtual excursions
+$P\to Q\to\cdots\to Q\to P$, each carrying a definite transported dipole, so
+the character grading of Sec.~\ref{sec:transported-dipole} applies to $F(z)$
+term by term, resummed to infinite order.  Eigenvalues of $H$ with nonzero
+ice weight are exactly the solutions of the nonlinear problem
+$\det[F(E)-E]=0$.
+
+\subsection{Equivariance and the masked operator}
+
+$P$ and $V(\btheta)$ are both diagonal in the $S^z$ basis, so the structure
+theorems transfer verbatim to the BW map:
+\[
+F(z;\btheta)=D(\btheta)\,F_{\rm twist}\!\left(z;2\bL^{T}\btheta\right)
+D(\btheta)^\dagger ,
+\]
+and at the minimal grid the clean object is a single masked operator,
+\begin{equation}
+\boxed{
+F_{\rm clean}(z)=\mathrm{mask}\!\left[F(z;\btheta=0)\right].
+}
+\label{eq:bw_masked}
+\end{equation}
+This projects every virtual process, at every order in $\Jpm$, onto
+$\bDelta=2\bdelta=0\pmod 2$: the winding four-loops and wrapping hexagons are
+removed identically, at any coupling, whether or not perturbation theory
+converges and whether or not the low band is ice-like.
+
+\subsection{Self-consistent solution and built-in diagnostics}
+
+The clean gauge-sector levels solve
+\begin{equation}
+E_n=\mathrm{eig}_n\,F_{\rm clean}(E_n),
+\label{eq:bw_selfconsistent}
+\end{equation}
+found by a damped fixed-point iteration per level.  Three diagnostics come
+for free:
+\begin{itemize}
+\item \textbf{Non-ice weight.}  At a solution with ice-block eigenvector
+$u_n$, the full eigenstate carries non-ice weight
+\[
+w_n^{\rm out}
+=\frac{u_n^\dagger\,PHQ\,(E_n-QHQ)^{-2}\,QHP\,u_n}
+       {1+u_n^\dagger\,PHQ\,(E_n-QHQ)^{-2}\,QHP\,u_n}
+\quad\in[0,1),
+\]
+which equals the $z$-derivative of the eigenvalue of $F$ and is therefore
+also the convergence rate of the fixed point: the solver converges exactly
+as fast as the state is ice-like.
+\item \textbf{Pole distance.}  $\min_k|E_n-\lambda_k(QHQ)|$ measures the
+spectral isolation of the gauge-sector resonance from the spinon continuum.
+\item \textbf{Anchoring check.}  The \emph{unmasked} self-consistent BW
+spectrum must reproduce the exact lowest $N_\ice$ microscopic levels
+whenever the low band is the ice band; a mismatch is the sharp statement
+that eigenstate-anchored constructions (Stage A) have lost their target,
+while the BW resonances remain defined.
+\end{itemize}
+Breakdown is therefore \emph{interpretable}: when the solutions collide with
+$\mathrm{spec}(QHQ)$ and the non-ice weight approaches one, the statement is
+that the cluster's gauge sector has dissolved into the spinon continuum at
+that coupling --- a physical finding, not a numerical failure.
+
+\section{The cubic-16 validation ladder}
+\label{sec:jpm_validity_classification_new}
+
+Every ingredient can be tested exactly on cubic-16
+(\texttt{notes/masked\_bw\_16site.py}; records in
+\texttt{notes/masked\_bw\_16site\_results.json}).  Per coupling the script
+computes the full microscopic spectrum densely (ground truth), the Stage-A
+masked Loewdin operator where it exists, and the Stage-B masked BW solution
+with all diagnostics.  Convention anchors: the exact lowest $90$ levels agree
+with the stored eight-corner files to $3\times10^{-14}$, and the
+$\btheta=0$ Gram eigenvalue $\eta_{\min}$ reproduces the earlier validity
+sweep at every coupling.
+
+\begin{center}
+\footnotesize
+\begin{tabular}{@{}rrrrrrrl@{}}
+\toprule
+$\Jpm/\Jzz$ & $\eta_{\min}$ & conv. & $T^{\rm clean}_{\rm peak}/\ghex$ &
+$\max_n w_n^{\rm out}$ & pole gap & Loewdin $/\ghex$ & verdict\\
+\midrule
+$-0.03$ & $0.948$ & $90/90$ & $0.927$ & $0.029$ & $0.84$ & $0.927$ &
+controlled\\
+$-0.05$ & $0.887$ & $90/90$ & $0.859$ & $0.074$ & $0.74$ & $0.817$ &
+controlled\\
+$-0.08$ & $0.790$ & $90/90$ & $0.769$ & $0.194$ & $0.59$ & $0.648$ &
+gray zone\\
+$-0.10$ & $0.724$ & $90/90$ & $0.705$ & $0.241$ & $0.50$ & $0.540$ &
+gray zone\\
+$-0.18$ & $0.360$ & $90/90$ & $0.435$ & $0.536$ & $0.185$ & $(0.257)$ &
+recovered; strongly dressed\\
+$-0.30$ & $\sim0$ & $52/90$ & --- & $0.9995$ & $2.1\times10^{-4}$ & --- &
+gauge sector dissolved\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Three conclusions, in increasing order of importance:
+
+\begin{enumerate}
+\item \textbf{Reduction.}  In the controlled window the masked BW solution
+coincides with the eight-corner character average.  At $\Jpm=-0.03$ the two
+clean specific-heat peaks are identical to all reported digits; the residual
+maximum spectral deviation ($5\times10^{-4}$) is a uniform shift of the whole
+band, invisible to thermodynamics.  At $-0.05$ the peaks agree to $5\%$, and
+the spread between the two constructions tracks the non-ice weight --- the
+diagnostic doubles as the error bar between resummations.
+\item \textbf{Extension.}  The CHO-like point $\Jpm/\Jzz=-0.18$, where the
+Gram matrix collapse ($\eta_{\min}=0.36$) invalidated Stage A, is
+\emph{recovered}.  The anchoring check makes the mechanism explicit: the
+unmasked BW resonances differ from the exact lowest-$90$ spectrum by up to
+$4.2\,\Jzz$ there (five levels do not even converge to the lowest band), so
+the lowest eigenstates are simply no longer the ice band; but the ice-block
+resonances themselves still exist, all $90$ masked levels converge, and they
+remain separated from the spinon continuum by $0.185\,\Jzz$.  The old
+``failure'' was an artifact of eigenstate anchoring, not of the physics.
+\item \textbf{Honest boundary.}  At the CZO-like point $\Jpm/\Jzz=-0.30$ the
+diagnostics deliver a verdict instead of a crash: $38$ of $90$ levels do not
+converge, the surviving solutions sit $2\times10^{-4}\,\Jzz$ from the
+continuum poles, and the non-ice weight reaches $0.9995$.  On this cluster,
+at this coupling, there is no isolated gauge sector to clean.  Whether
+FCC-32 restores one is now a well-posed question for the same diagnostics.
+\end{enumerate}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.62\textwidth]{fig_bw_peaks.pdf}
+\caption{\textbf{Peak scaling across the full coupling range (cubic-16).}
+The bare low band (orange) tracks the winding artifact $\gfour$; the masked
+BW clean operator (green) tracks the photon scale $\ghex$; crosses are the
+masked Loewdin operator where its Gram matrix is nonsingular.}
+\label{fig:bw_peaks}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{fig_bw_ct.pdf}
+\caption{\textbf{Clean specific heat in and beyond the old validity window.}
+Left: the controlled point $\Jpm=-0.05\Jzz$.  Right: the CHO-like point
+$\Jpm=-0.18\Jzz$, inaccessible to the eigenstate-anchored protocol, where
+the masked BW operator still yields fully converged clean thermodynamics
+(reported with its $54\%$ maximum dressing diagnostic).  Dashed and dotted
+verticals mark $\gfour$ and $\ghex$.}
+\label{fig:bw_ct}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.95\textwidth]{fig_bw_diagnostics.pdf}
+\caption{\textbf{All-$\Jpm$ validity diagnostics.}  Left: the old Stage-A
+gate $\eta_{\min}$ (purple) against the BW non-ice weight (green); the
+former collapses at $-0.18$ while the latter degrades smoothly and only
+saturates at $-0.30$.  Right: minimum distance of the solved levels to
+$\mathrm{spec}(QHQ)$ --- the spectral-isolation diagnostic whose collapse at
+$-0.30$ constitutes the physical statement that the gauge sector has merged
+with the spinon continuum.}
+\label{fig:bw_diagnostics}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\textwidth]{fig_jpm_validity_sweep_16site_summary.pdf}
+\caption{\textbf{Historical Stage-A validity sweep} (Loewdin pullback
+$\eta_{\min}$ and eight-corner clean peaks), retained for comparison with
+the BW ladder above.}
+\label{fig:jpm_validity_sweep_16site_new}
+\end{figure}
+
+The status classification is now three-tiered and applies at any coupling:
+\emph{controlled} ($w^{\rm out}\lesssim0.1$, pole gap $O(\Jzz)$: production
+gauge-sector ED), \emph{gray zone / exploratory}
+($0.1\lesssim w^{\rm out}\lesssim0.5$: report with the BW--Loewdin spread as
+the method error), and \emph{dissolved} (unconverged levels, pole gap
+$\to0$, $w^{\rm out}\to1$: the finding is the absence of an isolated gauge
+sector, and only a larger cluster can change it).  The sign of $\Jpm$ plays
+no role in the classification; the zero-flux side additionally admits
+sign-free QMC benchmarks.
+
+\section{All-temperature consistency check on cubic-16}
+\label{sec:all_temperature_check_new}
+
+The QED low-band operator average is a gauge-sector construction.  By itself
+it does not contain the larger-temperature peak produced by sectors with
+violated tetrahedron constraints.  Therefore the all-temperature diagnostic
+must alter only the part of the spectrum where the finite-size pathology lives.
+
+Let
+\[
+E^{\rm full}_1\le E^{\rm full}_2\le \cdots \le E^{\rm full}_{2^{16}}
+\]
+be the exact untwisted microscopic spectrum, including all $S^z_{\rm tot}$
+sectors, and let
+\[
+\epsilon^{\rm clean}_1\le\cdots\le \epsilon^{\rm clean}_{N_{\rm ice}}
+\]
+be the spectrum of $\HB^{\rm clean}$.  Define
+\begin{equation}
+\label{eq:allT_spectral_replacement_new}
+\widetilde E_a =
+\begin{cases}
+\epsilon^{\rm clean}_a+s,&1\le a\le N_{\rm ice},\\
+E^{\rm full}_a,&a>N_{\rm ice},
+\end{cases}
+\qquad
+s =
+\frac{1}{N_{\rm ice}}\sum_{a=1}^{N_{\rm ice}}E^{\rm full}_a
+-
+\frac{1}{N_{\rm ice}}\sum_{a=1}^{N_{\rm ice}}\epsilon^{\rm clean}_a .
+\end{equation}
+The shift $s$ preserves the center of the ice band relative to the spinon
+continuum and changes only the internal gauge-sector splittings.
+
+QED exact full-spectrum ED gives all $2^{16}=65536$ eigenvalues.  The lowest
+$90$ exact eigenvalues agree with the untwisted low-band extraction to
+$6.22\times10^{-14}$.  The peak comparison is
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+curve & low-$T$ peak & larger-$T$ peak\\
+\midrule
+exact full ED & $0.0129475$ & $0.252820$\\
+full ED with clean ice-band replacement & $0.0012227$ & $0.252931$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The larger peak shifts by only $4.37\times10^{-4}$ relatively, with height
+change $-4.83\times10^{-3}$.  The finite-size correction acts where intended:
+on the low-energy ice-band winding artifact, not on the microscopic
+constraint-violation scale.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\textwidth]{fig_full_ed_all_temperature_specific_heat.pdf}
+\caption{\textbf{All-temperature full-ED consistency check.}  The black curve
+is the exact untwisted microscopic full-ED specific heat for all $65536$ states
+of the $16$-site cluster.  The green curve keeps every non-ice eigenvalue fixed
+and replaces only the lowest $90$ ice-band eigenvalues by the clean QED
+low-band operator spectrum, with the band-center shift in
+Eq.~\eqref{eq:allT_spectral_replacement_new}.  The correction moves the
+spurious low-temperature four-loop peak while leaving the larger full-ED peak
+at $T/\Jzz\simeq0.253$ in place.}
+\label{fig:full_ed_all_temperature_specific_heat_new}
+\end{figure}
+
+\section{FCC-32 production protocol}
+\label{sec:fcc32_protocol_new}
+
+The $2\times2\times2$ FCC pyrochlore cluster has $32$ spins and
+\[
+N_\ice=2970
+\]
+ice states.  Full microscopic ED of all $2^{32}$ states is unavailable, so
+the production calculation is the gauge-sector construction above.  By
+Proposition~\ref{prop:mask} it requires a \emph{single} untwisted low-band
+extraction:
+\[
+H_{\mathrm{band,FCC32}}^{\rm clean}
+=\mathrm{mask}\!\left[H_{\mathrm{band,FCC32}}(\btheta=0)\right],
+\qquad
+H_{\mathrm{band,FCC32}}^{\rm bare}=H_{\mathrm{band,FCC32}}(\btheta=0),
+\]
+an eightfold cost reduction relative to the character sweep, with the
+projection exact rather than grid-sampled.  At material-scale couplings the
+Stage-B object replaces the band extraction: $2970$ shifted block-Krylov
+solves $(z-QHQ)^{-1}QHP\,e_\alpha$ in the fixed-$S^z$ sector (dimension
+$601{,}080{,}390$), one Krylov space per right-hand side serving all $z$,
+plus a Lanczos estimate of the $QHQ$ edge for the pole-gap diagnostic.
+
+The FCC implementation must:
+\begin{enumerate}
+\item express $\bd_{ij}$, $\bDelta=2\bdelta$, and the polarizations
+$\bm x_\alpha$ in the FCC primitive coordinate frame used by the cluster
+builder, and unit-test the parity mask against the cubic-16 reference
+(\texttt{notes/verify\_mask\_identity.py} logic);
+\item run the untwisted low-band extraction (Stage A) or the BW solves
+(Stage B) with ice-weight, Gram, pole-gap, and non-ice-weight diagnostics;
+\item diagonalize both $H_{\mathrm{band,FCC32}}^{\rm bare}$ and
+$H_{\mathrm{band,FCC32}}^{\rm clean}$;
+\item check that the clean peak scales with $\ghex$ at small $|\Jpm/\Jzz|$;
+\item spot-check $M$-convergence with genuine boundary twists
+$\bphi=2\bL^{T}\btheta$ on the $M=4$ grid
+(Proposition~\ref{prop:factorization});
+\item benchmark the zero-flux side against sign-free QMC before making
+pi-flux material claims.
+\end{enumerate}
+
+The material-facing runs should be interpreted as gauge-sector predictions.
+For the first U(1)-symmetric campaign one sets $J_{\pm\pm}=0$ after rotating
+away $J_{xz}$ and uses representative pi-flux points,
+\[
+\text{CZO-like: } \Jzz=1,\quad \Jpm=-0.30,\quad J_{\pm\pm}=0,
+\]
+\[
+\text{CHO-like: } \Jzz=1,\quad \Jpm=-0.18,\quad J_{\pm\pm}=0.
+\]
+These are not zero-flux material partners.  Zero-flux calculations are generic
+sign-free QMC benchmarks for the method.
+
+\end{document}

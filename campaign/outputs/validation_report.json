@@ -1,0 +1,150 @@
+{
+  "method": "canonical order-three gauge block plus zero-transport projection; exact cubic complement retained",
+  "coupling": 0.046,
+  "clusters": {
+    "cubic16": {
+      "n_ice": 90,
+      "loops4": {
+        "total": 36,
+        "contractible": 0,
+        "by_abs_w": {
+          "(0, 0, 1)": 24,
+          "(0, 1, 1)": 12
+        }
+      },
+      "hexagons": {
+        "total": 64,
+        "contractible": 16,
+        "by_abs_w": {
+          "(0, 0, 0)": 16,
+          "(0, 1, 1)": 48
+        }
+      },
+      "bare_low_peak": [
+        0.025540187370845818,
+        0.2690057694228309
+      ],
+      "clean_low_peak": [
+        0.0012518336191648164,
+        0.1587018919761628
+      ]
+    },
+    "fcc32": {
+      "n_ice": 2970,
+      "loops4": {
+        "total": 24,
+        "contractible": 0,
+        "by_abs_w": {
+          "(0, 0, 1)": 12,
+          "(0, 1, 1)": 12
+        }
+      },
+      "hexagons": {
+        "total": 128,
+        "contractible": 32,
+        "by_abs_w": {
+          "(0, 0, 0)": 32,
+          "(0, 0, 1)": 48,
+          "(0, 1, 1)": 48
+        }
+      },
+      "bare_low_peak_order3_band": [
+        0.008769920988691607,
+        0.19514827078967342
+      ],
+      "clean_low_peak_order3_band": [
+        0.0006080816036057466,
+        0.18176066009899558
+      ]
+    }
+  },
+  "qmc": {
+    "status": "vector extraction of published QMC heat capacity and entropy",
+    "source": "Huang, Deng, Wan, and Meng, Phys. Rev. Lett. 120, 167202 (2018), Fig. 1(b)",
+    "low_peak": [
+      0.001100447383,
+      0.1547068232
+    ],
+    "high_peak": [
+      0.210517794,
+      0.2586358664
+    ],
+    "cubic16_bare_low_temperature_heat_rmse": 0.08591012789031392,
+    "cubic16_clean_low_temperature_heat_rmse": 0.018798831234822913,
+    "cubic16_clean_full_heat_rmse": 0.024230876182853807,
+    "cubic16_bare_entropy_rmse": 0.051431954595985326,
+    "cubic16_clean_entropy_rmse": 0.04913680503408909,
+    "clean_low_peak_log10_error": 0.055977328812123604,
+    "clean_high_peak_log10_error": 0.08310235125369893
+  },
+  "all_temperature": {
+    "bare_high_peak": [
+      0.25491251727984787,
+      0.28287964905206453
+    ],
+    "clean_high_peak": [
+      0.25491251727984787,
+      0.27982610488998666
+    ],
+    "relative_high_peak_temperature_change": 0.0,
+    "relative_high_peak_height_change": 0.0107944992589971
+  },
+  "band_separation": {
+    "cubic16_gap_above_lowest_90": 0.3874086812652293,
+    "qualification": "spectral gap only; an eigenvector-overlap gate is still required for each exact pullback"
+  },
+  "character_convergence": {
+    "coupling": -0.05,
+    "comparison": "existing exact pulled-back cubic-16 M=2 vs M=3 operators",
+    "centered_operator_relative_error": 0.2021057863393174
+  },
+  "gates": {
+    "topology": {
+      "status": "pass"
+    },
+    "order": {
+      "status": "pending",
+      "reason": "order four not computed"
+    },
+    "character": {
+      "status": "fail",
+      "threshold": 0.05,
+      "qualification": "precheck only; stored M=2 and M=3 runs use different integer source normalizations"
+    },
+    "all_temperature": {
+      "status": "pass",
+      "threshold": 0.02
+    },
+    "cubic16_spectral_separation": {
+      "status": "pass",
+      "threshold": 0.1
+    },
+    "qmc_heat_capacity": {
+      "status": "pass",
+      "rmse_threshold": 0.02,
+      "low_peak_log10_threshold": 0.25,
+      "high_peak_log10_threshold": 0.12
+    },
+    "qmc_entropy": {
+      "status": "fail",
+      "rmse_threshold": 0.02,
+      "rmse_reduction_fraction": 0.04462497254723019
+    },
+    "qmc_relative_improvement": {
+      "status": "pass",
+      "low_temperature_heat_rmse_reduction_fraction": 0.7811802671412107
+    },
+    "qmc_energy": {
+      "status": "pending",
+      "reason": "the paper plots C and S but not an energy curve"
+    },
+    "qmc_sac_dynamics": {
+      "status": "pending",
+      "reason": "matched ED normalization, momentum grid, temperature, and broadening required"
+    },
+    "fcc32_full_hamiltonian": {
+      "status": "pending",
+      "reason": "current FCC-32 calculation is order-three ice-manifold only"
+    }
+  }
+}

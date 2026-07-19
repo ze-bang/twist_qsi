@@ -1,0 +1,29 @@
+{
+  "model": {
+    "Jzz": 1.0,
+    "Jpm_over_Jzz": 0.046,
+    "convention": "H = Jzz sum SzSz - Jpm sum (S+S- + h.c.)"
+  },
+  "temperature": {"minimum": 0.0001, "maximum": 2.0, "points": 1400},
+  "qmc": {
+    "source": "Huang, Deng, Wan, and Meng, Phys. Rev. Lett. 120, 167202 (2018), Fig. 1(b)",
+    "thermodynamics": "data/huang_2018_qmc_jpm_0p046.csv",
+    "status": "vector extraction of published QMC heat capacity and entropy",
+    "dynamics": {
+      "temperatures": [0.001, 0.04, 0.1],
+      "momentum_paths": ["2pi(0,2k,0)/8", "2pi(k,k,k)/8"],
+      "channels": ["Szz", "S+-"],
+      "status": "pending",
+      "reason": "matched ED normalization, momentum grid, temperature, and broadening required"
+    }
+  },
+  "gates": {
+    "high_peak_relative_change_max": 0.02,
+    "qmc_peak_log10_error_max": 0.25,
+    "qmc_low_temperature_rmse_max": 0.02,
+    "qmc_entropy_rmse_max": 0.02,
+    "qmc_high_peak_log10_error_max": 0.12,
+    "m_centered_operator_error_max": 0.05,
+    "cubic16_band_gap_min": 0.1
+  }
+}

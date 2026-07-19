@@ -1,0 +1,467 @@
+#!/usr/bin/env python3
+"""Run nonperturbative cubic-16 exact-band character projections."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+import time
+from itertools import product
+from pathlib import Path
+
+import numpy as np
+from scipy.sparse import diags
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "notes"))
+
+import recompute_finite_size_artifact as geometry  # noqa: E402
+from qsi_campaign.benchmarks import (  # noqa: E402
+    load_digitized_thermodynamics,
+    log_grid_rmse,
+)
+from qsi_campaign.exact_band import (  # noqa: E402
+    basis_character_phases,
+    cubic16_translation_permutations,
+    extract_exact_band,
+    extract_exact_band_full,
+    fixed_magnetization_basis,
+    microscopic_character_hamiltonian,
+    translation_sector_bases,
+    uniform_character_grid,
+)
+from qsi_campaign.protocol import (  # noqa: E402
+    centered_relative_error,
+    character_project,
+    replace_low_band,
+)
+from qsi_campaign.thermodynamics import peak_in_window, thermal_observables  # noqa: E402
+
+
+OUTPUT = ROOT / "campaign" / "outputs"
+POINT_CACHE = ROOT / "campaign" / "cache" / "nonperturbative_points"
+OUTPUT.mkdir(parents=True, exist_ok=True)
+POINT_CACHE.mkdir(parents=True, exist_ok=True)
+
+
+def coupling_tag(jpm: float) -> str:
+    return f"{jpm:+.6f}".replace("+", "p").replace("-", "m").replace(".", "p")
+
+
+def exact_m2_gauge_orbit(
+    cluster, states, ice_indices, microscopic_zero, band_zero, jpm
+):
+    operators = []
+    diagnostics = []
+    for index, theta in enumerate(uniform_character_grid(2), start=1):
+        full_phases = basis_character_phases(cluster, states, theta)
+        full_unitary = diags(full_phases, format="csc")
+        microscopic_corner = microscopic_character_hamiltonian(
+            cluster, states, jpm, theta
+        )
+        gauge_corner = full_unitary @ microscopic_zero @ full_unitary.conj().T
+        residual = microscopic_corner - gauge_corner
+        gauge_residual = float(np.max(np.abs(residual.data), initial=0.0))
+        if gauge_residual > 1.0e-11:
+            raise RuntimeError(
+                f"M=2 gauge identity failed at corner {index}: {gauge_residual:.3e}"
+            )
+        ice_phases = full_phases[ice_indices]
+        operators.append(
+            ice_phases[:, None]
+            * band_zero
+            * ice_phases.conjugate()[None, :]
+        )
+        diagnostics.append(
+            {
+                "theta": theta.tolist(),
+                "microscopic_gauge_identity_max_residual": gauge_residual,
+            }
+        )
+        print(
+            f"M=2 corner {index}/8 theta/2pi="
+            f"{tuple(float(value / (2 * np.pi)) for value in theta)} "
+            f"gauge_residual={gauge_residual:.3e}",
+            flush=True,
+        )
+    return character_project(np.asarray(operators)), np.asarray(operators), diagnostics
+
+
+def solve_or_load_point(
+    cluster, states, ice_indices, jpm, grid_size, index, tolerance
+):
+    tag = coupling_tag(jpm)
+    cache = POINT_CACHE / (
+        f"cubic16_{tag}_M{grid_size}_{index[0]}{index[1]}{index[2]}.npz"
+    )
+    if cache.exists():
+        saved = np.load(cache)
+        return (
+            np.asarray(saved["operator"]),
+            np.asarray(saved["spectrum"]),
+            json.loads(str(saved["diagnostics"])),
+            True,
+        )
+    theta = 2.0 * np.pi * np.asarray(index, dtype=float) / grid_size
+    started = time.perf_counter()
+    hamiltonian = microscopic_character_hamiltonian(cluster, states, jpm, theta)
+    result = extract_exact_band_full(
+        hamiltonian,
+        ice_indices,
+        cluster.n_ice,
+        tolerance=tolerance,
+    )
+    negative = microscopic_character_hamiltonian(cluster, states, jpm, -theta)
+    conjugation_residual = float(
+        np.max(np.abs((negative - hamiltonian.conjugate()).data), initial=0.0)
+    )
+    diagnostics = {
+        **result.diagnostics,
+        "index": list(index),
+        "theta": theta.tolist(),
+        "fixed_sz_gap_above_band": result.fixed_sz_gap_above_band,
+        "conjugation_identity_max_residual": conjugation_residual,
+        "solve_seconds": time.perf_counter() - started,
+    }
+    np.savez_compressed(
+        cache,
+        operator=result.operator,
+        spectrum=result.eigenvalues,
+        diagnostics=json.dumps(diagnostics),
+    )
+    return result.operator, result.eigenvalues, diagnostics, False
+
+
+def exact_character_grid(
+    cluster, states, ice_indices, jpm, tolerance, zero_operator, grid_size
+):
+    operators = []
+    diagnostics = []
+    visited = set()
+    representatives = []
+    self_conjugate = []
+    for index in product(range(grid_size), repeat=3):
+        if index in visited:
+            continue
+        negative = tuple((-value) % grid_size for value in index)
+        visited.add(index)
+        visited.add(negative)
+        if index == negative:
+            self_conjugate.append(index)
+        else:
+            representatives.append((index, negative))
+
+    for index in self_conjugate:
+        theta = 2.0 * np.pi * np.asarray(index, dtype=float) / grid_size
+        ice_phases = basis_character_phases(cluster, cluster.ice_states, theta)
+        operators.append(
+            ice_phases[:, None]
+            * zero_operator
+            * ice_phases.conjugate()[None, :]
+        )
+        diagnostics.append({"index": list(index), "kind": "exact_gauge_corner"})
+
+    for count, (index, negative) in enumerate(representatives, start=1):
+        operator, _, point_diagnostics, cached = solve_or_load_point(
+            cluster, states, ice_indices, jpm, grid_size, index, tolerance
+        )
+        operators.extend((operator, operator.conjugate()))
+        diagnostics.append(point_diagnostics)
+        timing = "cached" if cached else f"{point_diagnostics['solve_seconds']:.2f}s"
+        print(
+            f"M={grid_size} pair {count}/{len(representatives)} "
+            f"index={index},-{negative} "
+            f"{timing} "
+            f"gap={point_diagnostics['fixed_sz_gap_above_band']:.6g} "
+            f"overlap_min={point_diagnostics['model_overlap_min']:.6g}",
+            flush=True,
+        )
+    if len(operators) != grid_size**3:
+        raise RuntimeError(
+            f"M={grid_size} orbit produced {len(operators)} operators"
+        )
+    return character_project(np.asarray(operators)), np.asarray(operators), diagnostics
+
+
+def thermodynamic_metrics(
+    clean_spectrum,
+    full_spectrum,
+    temperatures,
+    qmc_temperature,
+    qmc_heat,
+    qmc_entropy,
+):
+    replaced = replace_low_band(full_spectrum, clean_spectrum)
+    thermal = thermal_observables(replaced, temperatures, n_sites=16)
+    low_mask = qmc_temperature <= 2.0e-2
+    return replaced, thermal, {
+        "low_temperature_heat_rmse": log_grid_rmse(
+            qmc_temperature[low_mask],
+            qmc_heat[low_mask],
+            temperatures,
+            thermal["heat_capacity_per_site"],
+        ),
+        "entropy_rmse": log_grid_rmse(
+            qmc_temperature,
+            qmc_entropy,
+            temperatures,
+            thermal["entropy_per_site"],
+        ),
+        "low_peak": peak_in_window(
+            temperatures, thermal["heat_capacity_per_site"], 5.0e-4, 3.0e-2
+        ),
+        "high_peak": peak_in_window(
+            temperatures, thermal["heat_capacity_per_site"], 5.0e-2, 1.0
+        ),
+    }
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--jpm", type=float, default=0.046)
+    parser.add_argument("--max-grid", type=int, choices=(2, 3, 4), default=2)
+    parser.add_argument("--tolerance", type=float, default=1.0e-10)
+    args = parser.parse_args()
+    cluster = geometry.build_cluster("cubic", (1, 1, 1))
+    states = fixed_magnetization_basis(cluster.n_sites, cluster.n_sites // 2)
+    state_index = {int(state): index for index, state in enumerate(states)}
+    ice_indices = np.asarray(
+        [state_index[int(state)] for state in cluster.ice_states], dtype=np.int64
+    )
+    sectors = translation_sector_bases(
+        states, cubic16_translation_permutations(cluster)
+    )
+    sector_dimensions = {name: sector.shape[1] for name, sector in sectors.items()}
+    print(
+        f"cubic-16 exact campaign: Sz=0 dimension={len(states)}, "
+        f"ice dimension={cluster.n_ice}, sectors={sector_dimensions}",
+        flush=True,
+    )
+
+    started = time.perf_counter()
+    microscopic_zero = microscopic_character_hamiltonian(
+        cluster, states, args.jpm, np.zeros(3)
+    )
+    exact_zero = extract_exact_band(
+        microscopic_zero,
+        sectors,
+        ice_indices,
+        cluster.n_ice,
+        tolerance=args.tolerance,
+    )
+    zero_seconds = time.perf_counter() - started
+    print(
+        f"exact zero-source band: {zero_seconds:.2f}s, "
+        f"fixed-Sz gap={exact_zero.fixed_sz_gap_above_band:.6g}, "
+        f"overlap_min={exact_zero.diagnostics['model_overlap_min']:.6g}",
+        flush=True,
+    )
+
+    m2_operator, m2_corners, m2_diagnostics = exact_m2_gauge_orbit(
+        cluster,
+        states,
+        ice_indices,
+        microscopic_zero,
+        exact_zero.operator,
+        args.jpm,
+    )
+    operators = {1: exact_zero.operator, 2: m2_operator}
+    operators_by_grid = {2: m2_corners}
+    grid_diagnostics = {2: m2_diagnostics}
+    for grid_size in range(3, args.max_grid + 1):
+        grid_operator, grid_points, diagnostics = exact_character_grid(
+            cluster,
+            states,
+            ice_indices,
+            args.jpm,
+            args.tolerance,
+            exact_zero.operator,
+            grid_size,
+        )
+        operators[grid_size] = grid_operator
+        operators_by_grid[grid_size] = grid_points
+        grid_diagnostics[grid_size] = diagnostics
+
+    temperatures = np.geomspace(1.0e-4, 2.0, 1400)
+    full_cache = ROOT / "campaign" / "cache" / "full_ed_cubic16_jpm_0p046.npz"
+    if not full_cache.exists():
+        raise FileNotFoundError(f"missing exact microscopic complement: {full_cache}")
+    full_spectrum = np.asarray(np.load(full_cache)["E_full"], dtype=float)
+    bare_full = thermal_observables(full_spectrum, temperatures, n_sites=16)
+    qmc_temperature, qmc_heat, qmc_entropy = load_digitized_thermodynamics(
+        ROOT / "campaign" / "data" / "huang_2018_qmc_jpm_0p046.csv"
+    )
+    low_mask = qmc_temperature <= 2.0e-2
+    bare_rmse = log_grid_rmse(
+        qmc_temperature[low_mask],
+        qmc_heat[low_mask],
+        temperatures,
+        bare_full["heat_capacity_per_site"],
+    )
+
+    report = {
+        "method": "exact microscopic bands, polar pullback, primitive q=2*delta character",
+        "qualification": (
+            "nonperturbative finite-character calculation; bulk use requires "
+            "M convergence and cluster convergence"
+        ),
+        "jpm": args.jpm,
+        "n_sites": cluster.n_sites,
+        "fixed_sz_dimension": len(states),
+        "band_dimension": cluster.n_ice,
+        "sector_dimensions_at_zero_source": sector_dimensions,
+        "zero_source": {
+            **exact_zero.diagnostics,
+            "fixed_sz_gap_above_band": exact_zero.fixed_sz_gap_above_band,
+            "solve_seconds": zero_seconds,
+        },
+        "grids": {
+            "M2": {
+                "n_characters": 8,
+                "maximum_microscopic_gauge_identity_residual": max(
+                    item["microscopic_gauge_identity_max_residual"]
+                    for item in m2_diagnostics
+                ),
+            }
+        },
+        "convergence": {
+            "M1_to_M2_centered_operator_relative_error": centered_relative_error(
+                operators[1], operators[2]
+            )
+        },
+        "qmc_thermodynamics": {
+            "source": "Huang et al., PRL 120, 167202 (2018), Fig. 1(b)",
+            "bare_low_temperature_heat_rmse": bare_rmse,
+        },
+        "pending": {
+            "full_hilbert_gap": (
+                "reported gaps are within Sz=0; other conserved magnetization "
+                "sectors are required for an unrestricted spectral gap"
+            )
+        },
+    }
+    for grid_size in range(3, args.max_grid + 1):
+        solved = [
+            item
+            for item in grid_diagnostics[grid_size]
+            if item.get("kind") != "exact_gauge_corner"
+        ]
+        report["grids"][f"M{grid_size}"] = {
+            "n_characters": grid_size**3,
+            "n_solved_representatives": len(solved),
+            "n_exact_gauge_corners": grid_size**3 - 2 * len(solved),
+            "minimum_fixed_sz_gap": min(
+                item["fixed_sz_gap_above_band"] for item in solved
+            ),
+            "minimum_model_overlap": min(
+                item["model_overlap_min"] for item in solved
+            ),
+            "maximum_ritz_residual": max(
+                item["maximum_ritz_residual"] for item in solved
+            ),
+            "maximum_conjugation_identity_residual": max(
+                item["conjugation_identity_max_residual"] for item in solved
+            ),
+        }
+        report["convergence"][
+            f"M{grid_size - 1}_to_M{grid_size}_centered_operator_relative_error"
+        ] = centered_relative_error(
+            operators[grid_size - 1], operators[grid_size]
+        )
+
+    arrays = {
+        "temperature": temperatures,
+        "bare_full_heat_capacity_per_site": bare_full["heat_capacity_per_site"],
+        "bare_full_entropy_per_site": bare_full["entropy_per_site"],
+        "qmc_temperature": qmc_temperature,
+        "qmc_heat_capacity_per_site": qmc_heat,
+        "qmc_entropy_per_site": qmc_entropy,
+        "zero_source_exact_band_spectrum": exact_zero.eigenvalues,
+    }
+    for grid, operator in operators.items():
+        spectrum = np.linalg.eigvalsh(operator)
+        band_thermal = thermal_observables(spectrum, temperatures, n_sites=16)
+        arrays[f"M{grid}_operator"] = operator
+        arrays[f"M{grid}_spectrum"] = spectrum
+        arrays[f"M{grid}_band_heat_capacity_per_site"] = band_thermal[
+            "heat_capacity_per_site"
+        ]
+        if grid >= 2:
+            replaced, full_thermal, metrics = thermodynamic_metrics(
+                spectrum,
+                full_spectrum,
+                temperatures,
+                qmc_temperature,
+                qmc_heat,
+                qmc_entropy,
+            )
+            metrics["heat_rmse_reduction_fraction"] = (
+                1.0 - metrics["low_temperature_heat_rmse"] / bare_rmse
+            )
+            report["qmc_thermodynamics"][f"M{grid}"] = metrics
+            arrays[f"M{grid}_full_spectrum"] = replaced
+            arrays[f"M{grid}_full_heat_capacity_per_site"] = full_thermal[
+                "heat_capacity_per_site"
+            ]
+            arrays[f"M{grid}_full_entropy_per_site"] = full_thermal[
+                "entropy_per_site"
+            ]
+            arrays[f"M{grid}_operators_by_character"] = operators_by_grid[grid]
+    final_grid = max(operators)
+    final_metrics = report["qmc_thermodynamics"][f"M{final_grid}"]
+    character_error = None
+    if final_grid >= 3:
+        character_error = report["convergence"][
+            f"M{final_grid - 1}_to_M{final_grid}_centered_operator_relative_error"
+        ]
+    report["gates"] = {
+        "exact_band_overlap": {
+            "status": "pass"
+            if report["zero_source"]["model_overlap_min"] > 1.0e-8
+            else "fail",
+            "singularity_cutoff": 1.0e-8,
+        },
+        "character_convergence": {
+            "status": "pass"
+            if character_error is not None and character_error < 0.05
+            else "pending" if character_error is None else "fail",
+            "threshold": 0.05,
+            "error": character_error,
+        },
+        "qmc_heat_capacity": {
+            "status": "pass"
+            if final_metrics["low_temperature_heat_rmse"] < 0.02
+            else "fail",
+            "threshold": 0.02,
+            "rmse": final_metrics["low_temperature_heat_rmse"],
+        },
+        "qmc_entropy": {
+            "status": "pass" if final_metrics["entropy_rmse"] < 0.02 else "fail",
+            "threshold": 0.02,
+            "rmse": final_metrics["entropy_rmse"],
+        },
+        "fcc32_full_hamiltonian": {
+            "status": "pending",
+            "reason": "current exact-band campaign is cubic-16 only",
+        },
+        "qmc_sac_dynamics": {
+            "status": "pending",
+            "reason": "matched finite-cluster momenta and spectral normalization required",
+        },
+    }
+    if args.max_grid < 3:
+        report["pending"]["character_convergence"] = (
+            "run --max-grid 3 for the first genuine boundary-twist comparison"
+        )
+    stem = f"nonperturbative_cubic16_{coupling_tag(args.jpm)}"
+    np.savez_compressed(OUTPUT / f"{stem}.npz", **arrays)
+    (OUTPUT / f"{stem}.json").write_text(json.dumps(report, indent=2))
+    print(json.dumps(report, indent=2))
+    print(f"wrote {OUTPUT / f'{stem}.npz'}")
+    print(f"wrote {OUTPUT / f'{stem}.json'}")
+
+
+if __name__ == "__main__":
+    main()

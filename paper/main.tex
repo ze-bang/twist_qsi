@@ -1,278 +1,183 @@
 \documentclass[reprint,amsmath,amssymb,aps,prl,superscriptaddress]{revtex4-2}
 
-\usepackage{graphicx}
 \usepackage{bm}
+\usepackage{graphicx}
+\usepackage{float}
 \usepackage{xcolor}
-\usepackage[colorlinks=true,linkcolor=blue!55!black,citecolor=blue!55!black,
-            urlcolor=blue!55!black]{hyperref}
-
+\usepackage[colorlinks=true,citecolor=blue!55!black,urlcolor=blue!55!black]{hyperref}
 \graphicspath{{figs/}}
 
 \newcommand{\Jzz}{J_{zz}}
 \newcommand{\Jpm}{J_{\pm}}
-\newcommand{\Heff}{H_{\mathrm{eff}}}
-\newcommand{\Hclean}{H_{\mathrm{clean}}}
-\newcommand{\ghex}{g_{\mathrm{hex}}}
-\newcommand{\gfour}{g_{4}}
-\newcommand{\bN}{\bm N}
-\newcommand{\bL}{\bm L}
-\newcommand{\br}{\bm r}
-\newcommand{\bw}{\bm w}
 \newcommand{\bq}{\bm q}
-\newcommand{\brho}{\bm\rho}
-\newcommand{\bdelta}{\bm\delta}
-\newcommand{\bphi}{\bm\phi}
-\newcommand{\ice}{\mathcal I}
-\newcommand{\Szz}{S^{zz}}
+\newcommand{\btheta}{\bm\theta}
+\newcommand{\PP}{\mathcal P}
 
 \begin{document}
 
-\title{Exact diagonalization of the $\pi$-flux quantum spin ice gauge sector
-beyond quantum Monte Carlo: removing torus-winding contamination by
-zero-transport projection}
+\title{Transport-projected exact diagonalization of quantum spin ice:
+benchmarks and convergence criteria}
 
-\author{Z.-B.~Zhou}
+\author{Z.-B. Zhou}
 \affiliation{(affiliation)}
 
 \date{\today}
 
 \begin{abstract}
-The $\pi$-flux regime of quantum spin ice (QSI)---the regime relevant to the
-dipolar--octupolar cerium pyrochlores, and in particular to
-Ce$_2$Hf$_2$O$_7$---carries a fermion sign problem that blocks unbiased
-quantum Monte Carlo (QMC).  Exact diagonalization (ED) is sign-problem free,
-but on the small periodic clusters it requires it suffers a specific,
-previously underappreciated pathology: the torus supports ice-preserving
-ring-exchange loops that close only by winding around the boundary.  The
-shortest of these is a four-spin loop generated at second order in the
-transverse coupling, $\gfour=4\Jpm^2/\Jzz$, whereas the physical
-emergent-photon ring exchange is the contractible six-spin hexagon generated
-at third order, $\ghex=12|\Jpm|^3/\Jzz^2$.  Their ratio
-$\gfour/\ghex=\Jzz/3|\Jpm|$ diverges in the perturbative regime, so the
-artifact dominates precisely where the QSI description is cleanest, displacing
-the low-temperature specific-heat peak and the low-frequency non-spin-flip
-structure factor by nearly an order of magnitude.  We show that ordinary
-boundary-twist averaging removes only half of every winding coupling, and
-introduce a single gauge-invariant diagnostic, the transported dipole
-$\bdelta=\brho+\bN\bL$, whose vanishing selects exactly the contractible
-processes.  Projecting the ice-manifold effective Hamiltonian onto
-$\bdelta=0$ yields an artifact-free cluster whose low-energy thermodynamics
-and $\Szz(\bq,\omega)$ we compute in the QMC-inaccessible $\pi$-flux sector,
-benchmarked against sign-free $0$-flux QMC.  This turns a small periodic
-cluster into a controlled laboratory for the artificial photon of
-Ce$_2$Hf$_2$O$_7$.
+Exact diagonalization of quantum spin ice on a periodic cluster can generate
+noncontractible four-spin tunneling at second order, parametrically before
+the physical six-spin ring exchange.  We formulate a nonperturbative remedy:
+exactly diagonalize a transported-dipole source family, canonically pull its
+isolated ice-descended band to a common basis, and project its zero Fourier
+component.  At $\Jpm/\Jzz=0.046$, the character sequence converges from
+$M=3$ to $M=4$ within $0.50\%$ in centered operator norm, with minimum ice
+overlap $0.762$.  Projection moves the cubic-16 heat-capacity peak from
+$0.0255\Jzz$ to $0.00146\Jzz$, compared with the quantum Monte Carlo value
+$0.00110\Jzz$, while retaining the exact microscopic complement.  The
+low-temperature heat-capacity error is reduced by $72.9\%$ but remains just
+outside our preregistered tolerance, and entropy also fails.  Thus the method
+is nonperturbatively converged on cubic-16, but the cluster is not yet a
+quantitative surrogate for bulk quantum spin ice.
 \end{abstract}
 
 \maketitle
 
-\paragraph{Introduction.}---Quantum spin ice is the leading candidate for a
-three-dimensional, experimentally accessible $U(1)$ quantum spin
-liquid~\cite{Hermele2004,GingrasMcClarty2014,Savary2016}.  Its low-energy
-theory is compact quantum electrodynamics: the two-in--two-out ``ice''
-constraint on the pyrochlore lattice plays the role of a Gauss law, gapped
-``spinon'' defects are the emergent electric charges, and the collective
-tunnelling of spins around hexagonal plaquettes builds a gapless emergent
-photon~\cite{Hermele2004,Benton2012,Shannon2012}.  The sign of the plaquette
-(``ring-exchange'') amplitude distinguishes two gauge sectors: a $0$-flux
-sector and a frustrated $\pi$-flux sector~\cite{LeeOnodaBalents2012}.  In the
-dipolar--octupolar (DO) cerium pyrochlores
-Ce$_2$Zr$_2$O$_7$~\cite{Gaudet2019,Gao2019}, Ce$_2$Sn$_2$O$_7$~\cite{Sibille2020},
-and Ce$_2$Hf$_2$O$_7$~\cite{Poree2023}, the octupolar exchange places the
-material in or near the $\pi$-flux regime, making a quantitative,
-material-specific theory of this sector timely.
+\emph{Motivation.}---Quantum spin ice (QSI) realizes a compact $U(1)$ gauge
+theory in a pyrochlore magnet: the two-in--two-out constraint is Gauss's law,
+defects are electric charges, and collective hexagon tunneling generates the
+emergent photon~\cite{Hermele2004,Gingras2014,Benton2012}.  This low scale is
+experimentally consequential.  In particular, the two heat-capacity features
+reported in Ce$_2$Hf$_2$O$_7$ motivate calculations that retain both the
+spin-ice crossover and quantum dynamics~\cite{Smith2025}.  Numerically, the
+problem is divided by sign.  Quantum Monte Carlo (QMC) reaches the zero-flux
+XXZ model and resolves its thermodynamics and dynamics~\cite{Shannon2012,Huang2018},
+whereas the opposite sign relevant to $\pi$-flux candidates has a sign
+problem.  Exact diagonalization (ED) has no sign problem, but its periodic
+clusters alter the shortest allowed gauge processes.
 
-The methodological obstacle is sharp.  Sign-problem-free QMC exists only for
-the $0$-flux sign of the transverse coupling ($\Jpm>0$); the $\pi$-flux sector
-($\Jpm<0$), the one realized in the cerium magnets, has a sign
-problem~\cite{Shannon2012,Kato2015}.  ED does not, but it is confined to small
-clusters.  Here we identify and cure a finite-size pathology that is specific
-to the QSI \emph{gauge sector} and that has, we argue, distorted low-energy ED
-and finite-temperature Lanczos benchmarks in the $\pi$-flux regime.
+We address that finite-size problem without replacing the microscopic model
+by an effective Hamiltonian.  Perturbation theory is used only to identify
+the offending path and test its topology; production results come from exact
+microscopic eigenspaces.  The controlled numerical limit is the
+transport-character resolution $M\to\infty$.  On the sign-free side,
+cleaning must also improve convergence toward QMC.  Exact removal of a known
+artifact is not by itself proof of convergence to the bulk.
 
-\paragraph{The model.}---We take the nearest-neighbor XXZ model in the local
-$[111]$ frames,
+\emph{The finite torus changes the leading process.}---We study
 \begin{equation}
-H=\Jzz\!\sum_{\langle ij\rangle}\!S_i^zS_j^z
- -\Jpm\!\sum_{\langle ij\rangle}\!\left(S_i^+S_j^-+S_i^-S_j^+\right),
- \quad |\Jpm|\ll\Jzz,
+ H=\Jzz\sum_{\langle ij\rangle}S_i^zS_j^z
+ -\Jpm\sum_{\langle ij\rangle}(S_i^+S_j^-+S_i^-S_j^+),
+ \qquad \Jzz>0 .
 \label{eq:model}
 \end{equation}
-with $\Jzz>0$.  The Ising part is minimized by the extensively degenerate ice
-manifold $\ice$ (every tetrahedron two-in--two-out); a single tetrahedron
-carries energy $\tfrac{\Jzz}{2}Q_t^2$ with charge $Q_t=\sum_{i\in t}S_i^z$, so
-a spinon pair costs $\Jzz$.  Degenerate perturbation theory in $\Jpm$ inside
-$\ice$ gives the ring-exchange gauge Hamiltonian order by order,
-$\Heff=PVRVP+PVRVRVP+\cdots$, with $P$ the projector onto $\ice$ and
-$R=-QH_0^{-1}Q$ the non-ice resolvent.
+The Ising ground states form the ice manifold $P$.  In the infinite
+pyrochlore lattice the shortest contractible ice-preserving cycle is a
+hexagon.  Its third-order matrix element has scale
+$g_6=12|\Jpm|^3/\Jzz^2$~\cite{Hermele2004}.  On a torus, however, a path may
+close through a periodic image.  Cubic-16 contains 36 winding four-cycles in
+two winding classes [Figs.~\ref{fig:geometry}(a) and \ref{fig:geometry}(b)]
+and 16 contractible hexagons [Fig.~\ref{fig:geometry}(c)].  The four-spin
+process enters at second order with $g_4=4\Jpm^2/\Jzz$, so
+$g_4/g_6=\Jzz/(3|\Jpm|)$ diverges in the nominally controlled limit.  FCC-32
+reduces but does not eliminate the problem: it has 24 winding four-cycles,
+32 contractible hexagons, and 96 wrapping hexagons.
 
-\paragraph{Physical vs.\ artifact loops.}---Because the pyrochlore lattice is
-the line graph of the bipartite diamond lattice, the shortest \emph{contractible}
-ice-preserving ring exchange is a six-site hexagon, generated at third order
-with amplitude
-\begin{equation}
-\ghex=\frac{12|\Jpm|^3}{\Jzz^2},
-\label{eq:ghex}
-\end{equation}
-the amplitude of the emergent photon.  A periodic cluster, however, is the
-flat torus $T^3=\mathbb R^3/\bL\mathbb Z^3$.  On the torus a path can close by
-running through the identified boundary; we label such a closed path by its
-winding $\bw=\sum_{(ij)}\bm n_{ij}$, where $\bm n_{ij}$ is the periodic image
-of bond $(ij)$.  A four-site ice-preserving loop cannot close in real space
-(no diamond four-cycle exists), so on the standard clusters every such loop is
-a winding loop, $\bw\neq0$.  It is generated already at second order with
-amplitude
-\begin{equation}
-\gfour=\frac{4\Jpm^2}{\Jzz},\qquad
-\frac{\gfour}{\ghex}=\frac{\Jzz}{3|\Jpm|}\;\xrightarrow[\Jpm\to0]{}\;\infty .
-\label{eq:g4}
-\end{equation}
-The finite-size artifact is thus \emph{parametrically larger} than the physics
-it contaminates, and most severe in the controlled perturbative regime
-[Fig.~\ref{fig:concept}(a)].  A from-scratch enumeration confirms zero
-contractible four-loops and, e.g., $16$ ($32$) contractible hexagons on the
-$16$-site cubic ($32$-site FCC) cluster.
-
-\begin{figure}[t]
+\begin{figure*}[t]
 \centering
-\includegraphics[width=\columnwidth]{fig_concept.pdf}
-\caption{(a) The winding four-loop scale $\gfour$ (second order) exceeds the
-physical photon scale $\ghex$ (third order) throughout the perturbative
-regime, their ratio diverging as $\Jpm\to0$.  (b) Fraction of each geometric
-channel's coupling retained: boundary-twist averaging keeps half of every
-winding artifact, whereas the zero-transport ($\bdelta=0$) projection removes
-them and keeps the physical hexagon at full strength.}
-\label{fig:concept}
+\includegraphics[width=0.94\textwidth]{fig_geometry.pdf}
+\caption{Representative gauge processes hosted on the periodic cubic-16
+pyrochlore cluster.  (a),(b) The two classes of ice-preserving four-spin loops
+close only through periodic identification.  (c) The physical six-spin
+hexagon closes in the covering lattice.  Dashed colored bonds cross the
+chosen cell boundary; the winding vector $\bm w$ is basis dependent, while
+its vanishing is not.}
+\label{fig:geometry}
+\end{figure*}
+
+\emph{Nonperturbative transport projection.}---Let $P$ project onto the
+90-state cubic-16 ice manifold.  Attach a microscopic source to every spin
+exchange so that a completed path carries $e^{-i\btheta\cdot\bq}$, where the
+primitive integer transported dipole is $\bq=2\bm\delta$.  For every
+$\btheta$, we diagonalize the microscopic $H(\btheta)$ in the $S^z=0$
+sector.  If $P_{\btheta}$ is the isolated 90-state spectral projector, the
+polar map
+\begin{equation}
+ W_{\btheta}=P_{\btheta}P(PP_{\btheta}P)^{-1/2}
+\label{eq:polar}
+\end{equation}
+canonically identifies it with $P$.  The exact pulled-back band is
+$h(\btheta)=W_{\btheta}^{\dagger}H(\btheta)W_{\btheta}$.  We define
+\begin{equation}
+ h_M=\frac{1}{M^3}
+ \sum_{\bm m\in\mathbb Z_M^3}
+ h(2\pi\bm m/M).
+\label{eq:character}
+\end{equation}
+Equation~(\ref{eq:character}) retains $\bq=0\pmod M$; nonperturbatively,
+$M\to\infty$ is required.  A singular $PP_{\btheta}P$ is an explicit failure
+of the method.  The canonical Schrieffer--Wolff series~\cite{Bravyi2011}
+recovers this construction order by order and supplies the loop topology
+test, but it is not used to construct the reported spectrum.  Thus the
+operation is neither a fitted counterterm nor an average of partition
+functions.  For thermal
+observables we replace only the bare band by the projected band,
+\begin{equation}
+ Z_{\rm clean}=Z_{\rm full}-Z_{\rm bare\ band}+Z_{\rm clean\ band},
+\label{eq:replacement}
+\end{equation}
+and apply the same identity to the first two energy moments.  This is the
+spectrum of one Hermitian, temperature-independent operator and leaves the
+microscopic complement intact.  Derivations and numerical details are given
+in the Supplemental Material~\cite{supp}.
+
+\emph{Internal tests.}---Direct row enumeration through third order gives a
+binary topology test.  On both clusters, Eq.~(\ref{eq:character}) removes
+100\% of winding four-loop weight and wrapping-hexagon weight and retains
+100\% of contractible-hexagon weight.  At $\Jpm/\Jzz=0.046$, cubic-16 moves
+from the unprojected $T_{\rm p}/\Jzz=0.02554$ to $0.001252$.  FCC-32 gives
+$0.008770$ and $0.000608$ respectively within the same third-order diagnostic.
+These FCC-32 values are not production thermodynamics.
+
+The exact cubic-16 calculation uses one source convention at every $M$.
+The zero-source band has minimum ice overlap 0.762 and fixed-$S^z$ gap
+$0.627\Jzz$.  All $M=3,4$ source points have larger overlaps and gaps, with
+maximum Ritz residual $3.7\times10^{-12}$.  The centered operator changes by
+6.78\% from $M=2$ to 3, but only 0.498\% from $M=3$ to 4, passing the 5\%
+character gate [Fig.~\ref{fig:validation}(c)].
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\columnwidth]{fig_nonperturbative_column.pdf}
+\caption{Nonperturbative validation at $\Jpm/\Jzz=0.046$ against Huang
+\emph{et al.}~\cite{Huang2018}.  (a) Exact character-projected heat capacity
+after retaining the microscopic complement.  (b) Entropy remains discrepant.
+(c) The $M=3\to4$ centered-operator change passes the 5\% gate.}
+\label{fig:validation}
 \end{figure}
 
-\paragraph{Why twist averaging is insufficient.}---A ring exchange is not a
-single virtual path but a sum over perfect matchings and time orderings.
-Attaching boundary-twist phases $e^{-i\bN_r\cdot\bphi}$ to each path and
-averaging over the eight corners $\phi_a\in\{0,\pi\}$ projects onto rows with
-even accumulated image $\bN_r$.  On the target clusters every winding four-loop
-possesses a matching with $\bN=0$ (built from interior bonds, its
-ice-closure relying on a wrapping \emph{tetrahedron} that the boundary twist
-does not see).  Consequently exactly half of each spurious coupling survives
-any boundary-gauge twist average [Fig.~\ref{fig:concept}(b)]; averaging a
-nonlinear observable such as $C(T)$ afterwards is weaker still, removing only
-odd powers.
+\emph{External QMC gate.}---Huang \emph{et al.} simulate precisely
+Eq.~(\ref{eq:model}) at $\Jpm/\Jzz=0.046$ using continuous-time worm QMC and
+report thermodynamics together with QMC-SAC dynamics on $8^3$ primitive
+cells~\cite{Huang2018}.  A vector extraction of their curves gives low- and
+high-temperature peaks at $T/\Jzz=0.001100$ and $0.2105$.  The converged
+$M=4$ result places the low peak at $0.001463\Jzz$ and reduces the
+low-temperature heat-capacity RMSE from 0.0859 to 0.02327, a 72.9\%
+improvement.  It nevertheless misses the preregistered 0.02 tolerance.
+Entropy also fails: its RMSE is 0.04509, again above 0.02
+[Fig.~\ref{fig:validation}(b)].
+The same paper provides the next dynamics gate, $S^{zz}$ and $S^{+-}$ at
+$T/\Jzz=0.001$, 0.04, and 0.1; matching its momentum points, normalization,
+and SAC resolution remains to be done.
 
-\paragraph{The transported dipole.}---The correct, gauge-invariant object is
-the net displacement transported by the effective operator.  For a row
-connecting ice states $s\to t$, let $\brho_{t,s}=\sum_{i\in R}\br_i-\sum_{j\in
-L}\br_j$ be the home-cell dipole of the raised ($R$) minus lowered ($L$)
-spins, and $\bN_r$ the accumulated image of the virtual path.  Define
-\begin{equation}
-\boxed{\;\bdelta_r=\brho_{t,s}+\bN_r\bL\;}
-\label{eq:delta}
-\end{equation}
-$\bdelta_r$ is independent of the home cell and of the twist gauge.
-Threading a \emph{uniform} vector potential $\bm A=\bphi\bL^{-1}$ on every
-bond (not only boundary bonds) multiplies each row by $e^{-i\bm
-A\cdot\bdelta_r}$; the operator-level average over the twist torus is the
-Fourier projection onto $\bdelta_r=0$.  For the ring exchanges here
-$\brho=\tfrac12\bw\bL$ exactly, so $\bdelta=0$ is equivalent to zero winding:
-the projection keeps every contractible hexagon and removes every winding
-four-loop and wrapping hexagon at all orders.  The artifact-free gauge
-Hamiltonian is
-\begin{equation}
-\Hclean(\Jpm)=\sum_{r:\,\bdelta_r=0}c_r\,\Jpm^{k_r}\,|t_r\rangle\langle s_r| .
-\label{eq:hclean}
-\end{equation}
-Crucially the projection acts on the operator before diagonalization; because
-$C(T)$ and $\Szz$ are nonlinear in the spectrum, post-hoc averaging cannot
-reproduce it.
+\emph{Outlook.}---Transport projection solves a sharply defined problem: it
+removes nonzero-winding processes from a canonically identified gauge band.
+The exact $M=3,4$ agreement demonstrates that this correction is not merely
+a low-order perturbative construction.  It also shows why convergence of the
+method must be separated from convergence of the cluster: cubic-16 remains
+outside the QMC heat and entropy tolerances.  A material application therefore
+requires a full-Hamiltonian FCC-32 calculation, cluster convergence, and
+matched $S^{zz}$ and $S^{+-}$ dynamics before entering the $\pi$-flux regime.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{fig_results.pdf}
-\caption{Exact ice-manifold thermodynamics (per spin) from the projected
-effective Hamiltonian.  (a) Specific heat of the $32$-site FCC cluster at
-$\Jpm=-0.05\,\Jzz$: the bare cluster peaks at the artifact scale $\gfour$; the
-clean ($\bdelta=0$) cluster peaks at the photon scale $\ghex$.  (b)
-$T_{\rm peak}/\ghex$ vs.\ coupling for both clusters: the bare peak drifts as
-$\Jzz/3|\Jpm|$ (dotted), the finite-size signature of the winding four-loop,
-while the clean peak is flat and $O(1)$ in units of $\ghex$.  (c) Entropy:
-both curves release the full ice entropy $\ln(\#\mathrm{ice})/N$ at high $T$,
-but the clean cluster releases the low-$T$ photon entropy at the physical
-scale.}
-\label{fig:results}
-\end{figure}
-
-\paragraph{Results.}---We build path-resolved Schrieffer--Wolff row tables at
-$\Jpm=1$ (they scale as $\Jpm^k$ exactly, so a single build serves all
-couplings and both signs), compute $\bdelta$ for every row, assemble both
-$\Heff^{\rm bare}$ and $\Hclean$, and diagonalize densely on the ice manifold
-($90$ states for the $16$-site cubic cluster, $2970$ for the $32$-site FCC
-cluster).  Figure~\ref{fig:results} summarizes the effect.  Untreated, the
-low-temperature specific-heat peak sits at $T_{\rm peak}\simeq\gfour\propto
-\Jpm^2$ and drifts upward as $\Jzz/3|\Jpm|$ relative to the photon scale---the
-smoking gun of the finite-size four-loop.  After projection the peak locks
-onto $T_{\rm peak}=O(\ghex)\propto|\Jpm|^3$, independent of coupling in those
-units, and the associated entropy plateau moves to the physical photon scale.
-The projection is a pure removal of matrix elements: it cannot add spectral
-weight, and the census verifies it deletes exactly the winding channels.
-
-\paragraph{Connection to Ce$_2$Hf$_2$O$_7$.}---Among the DO cerium
-pyrochlores, Ce$_2$Hf$_2$O$_7$ shows the cleanest low-temperature signatures
-of a quantum-spin-ice ground state, with a broad low-$T$ specific-heat feature
-and a gapless magnetic continuum consistent with an emergent
-photon~\cite{Poree2023,Beare2023}.  The exchange lies in the octupolar
-$\pi$-flux regime, where the sign problem forbids a direct QMC prediction of
-these very observables.  Equation~\eqref{eq:hclean} supplies the missing
-unbiased benchmark: at the material's $|\Jpm|/\Jzz$ the clean cluster predicts
-(i) the temperature of the photon specific-heat feature at
-$O(\ghex)=O(12|\Jpm|^3/\Jzz^2)$ rather than the spurious $\gfour$ scale, (ii)
-the corresponding photon entropy release, and (iii) the low-frequency
-non-spin-flip structure factor $\Szz(\bq,\omega)$ that inelastic neutron
-scattering measures.  Because the artifact and the physics carry opposite
-scaling in $|\Jpm|$, the projection is essential precisely at the small
-$|\Jpm|/\Jzz\!\sim\!0.03$--$0.1$ inferred for these materials.  The
-complementary high-energy spinon continuum ($\omega\sim\Jzz$) lives outside
-the ice manifold, is uncontaminated by the winding four-loop, and is obtained
-from full-Hilbert-space finite-temperature Lanczos.
-
-\paragraph{Discussion.}---The transported dipole $\bdelta$ is a topological
-diagnostic---half the homology winding of the ring-exchange loop---so the
-$\bdelta=0$ projection is exact at every perturbative order and gauge
-independent, unlike counterterm subtraction (whose residue grows as
-$\Jpm\to0$) or twist averaging (which halves but never removes the artifact).
-It converts the small $\pi$-flux cluster into a benchmarked laboratory for the
-emergent photon of quantum spin ice, and delivers, in the sector where QMC
-cannot, the finite-temperature and dynamical observables now being measured in
-Ce$_2$Hf$_2$O$_7$.  A companion pedagogical note derives every step and every
-number with an independent from-scratch code.
-
-\begin{acknowledgments}
-(acknowledgments)
-\end{acknowledgments}
-
-\begin{thebibliography}{99}
-
-\bibitem{Hermele2004} M.~Hermele, M.~P.~A.~Fisher, and L.~Balents,
-Phys.\ Rev.\ B \textbf{69}, 064404 (2004).
-\bibitem{GingrasMcClarty2014} M.~J.~P.~Gingras and P.~A.~McClarty,
-Rep.\ Prog.\ Phys.\ \textbf{77}, 056501 (2014).
-\bibitem{Savary2016} L.~Savary and L.~Balents,
-Rep.\ Prog.\ Phys.\ \textbf{80}, 016502 (2017).
-\bibitem{Benton2012} O.~Benton, O.~Sikora, and N.~Shannon,
-Phys.\ Rev.\ B \textbf{86}, 075154 (2012).
-\bibitem{Shannon2012} N.~Shannon, O.~Sikora, F.~Pollmann, K.~Penc, and
-P.~Fulde, Phys.\ Rev.\ Lett.\ \textbf{108}, 067204 (2012).
-\bibitem{LeeOnodaBalents2012} S.~Lee, S.~Onoda, and L.~Balents,
-Phys.\ Rev.\ B \textbf{86}, 104412 (2012).
-\bibitem{Kato2015} Y.~Kato and S.~Onoda,
-Phys.\ Rev.\ Lett.\ \textbf{115}, 077202 (2015).
-\bibitem{Gaudet2019} J.~Gaudet \emph{et al.},
-Phys.\ Rev.\ Lett.\ \textbf{122}, 187201 (2019).
-\bibitem{Gao2019} B.~Gao \emph{et al.},
-Nat.\ Phys.\ \textbf{15}, 1052 (2019).
-\bibitem{Sibille2020} R.~Sibille \emph{et al.},
-Nat.\ Phys.\ \textbf{16}, 546 (2020).
-\bibitem{Poree2023} V.~Por\'ee \emph{et al.},
-arXiv:2305.08261; and Ce$_2$Hf$_2$O$_7$ neutron studies (2023).
-\bibitem{Beare2023} J.~Beare \emph{et al.},
-$\mu$SR of Ce$_2$Hf$_2$O$_7$ (2023).
-
-\end{thebibliography}
+\bibliography{references}
 
 \end{document}

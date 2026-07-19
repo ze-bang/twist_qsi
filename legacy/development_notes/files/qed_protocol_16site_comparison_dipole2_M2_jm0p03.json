@@ -1,0 +1,52 @@
+{
+  "source_npz": "notes/twist_resolved_qed_dipole2_M2_jm0p03.npz",
+  "summary_selected": {
+    "jpm": -0.03,
+    "n_sites": 16,
+    "sz_dim": 12870,
+    "ice_dim": 90,
+    "n_band": 90,
+    "n_grid": 2,
+    "n_twists": 8,
+    "twist_kind": "dipole2",
+    "solver": "full",
+    "Tpk_qed_phi0": 0.005541354948157231,
+    "Tpk_qed_twist_operator_avg": 0.0002995856865146307,
+    "Tpk_pt_all": 0.005167188789485922,
+    "Tpk_pt_delta0": 0.00034656432659995975,
+    "g4": 0.0036,
+    "ghex": 0.00032399999999999996
+  },
+  "min_ice_overlap": 0.9484812894225728,
+  "max_full_vector_gram_deviation": 2.0539125955565396e-14,
+  "operator_metrics": {
+    "qed_phi0_vs_pt_all": {
+      "rel_fro_to_target": 0.024148683683695476,
+      "best_scale": 1.0049911716201987,
+      "rel_fro_after_best_scale": 0.02350341749121609,
+      "rel_spectrum_raw": 0.021541984462209698,
+      "rel_spectrum_after_best_scale": 0.020831845247332014
+    },
+    "qed_phi0_vs_pt_delta0": {
+      "rel_fro_to_target": 22.555752018113356,
+      "best_scale": 0.8189603459603033,
+      "rel_fro_after_best_scale": 0.9993414633574336,
+      "rel_spectrum_raw": 21.96055373653747,
+      "rel_spectrum_after_best_scale": 0.9777963949491721
+    },
+    "qed_projected_avg_vs_pt_all": {
+      "rel_fro_to_target": 0.9990545477782669,
+      "best_scale": 0.001624682537931986,
+      "rel_fro_after_best_scale": 0.99902862867605,
+      "rel_spectrum_raw": 0.9743629055950837,
+      "rel_spectrum_after_best_scale": 0.9694433625984596
+    },
+    "qed_projected_avg_vs_pt_delta0": {
+      "rel_fro_to_target": 0.217473389649697,
+      "best_scale": 0.8189603459604762,
+      "rel_fro_after_best_scale": 0.14556587474900803,
+      "rel_spectrum_raw": 0.2174733896496967,
+      "rel_spectrum_after_best_scale": 0.14556587474900765
+    }
+  }
+}

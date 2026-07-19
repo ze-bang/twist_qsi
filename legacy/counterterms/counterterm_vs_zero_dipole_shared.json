@@ -1,0 +1,222 @@
+{
+  "method": "full microscopic ED benchmarked against zero-dipole band",
+  "selection_objective": "centered 90-state spectral RMS / target standard deviation",
+  "cluster": {
+    "n_sites": 16,
+    "ice_states": 90,
+    "wrapping_four_loops": 36,
+    "wrapping_hexagons": 48
+  },
+  "best_shared_two_term": null,
+  "best_shared_ratio6_with_calibrated_ratio4": {
+    "ratio6": -6.0,
+    "ratio4_by_coupling": [
+      3.375,
+      3.0
+    ],
+    "mean_spectral_error": 1.1445951252794881,
+    "mean_mixing": 0.030458435462470228,
+    "by_coupling": [
+      {
+        "ratio4": 3.375,
+        "ratio6": -6.0,
+        "kappa4": 0.0030375,
+        "kappa6w": -0.00016199999999999998,
+        "spectral_error": 1.2210668555457191,
+        "mixing": [
+          0.0034250195453386185,
+          0.020555192511842218,
+          0.07904417503864766
+        ],
+        "mixing_mean": 0.03434146236527617,
+        "low_heat_peak": 0.00037754070685747386,
+        "defect_gap": 0.8530592285841376,
+        "m2_relative_change": 1.3753704701773345e-05,
+        "elapsed_s": 5.846233367919922
+      },
+      {
+        "ratio4": 3.0,
+        "ratio6": -6.0,
+        "kappa4": 0.0075000000000000015,
+        "kappa6w": -0.0007500000000000002,
+        "spectral_error": 1.0681233950132571,
+        "mixing": [
+          0.0025163659799291188,
+          0.015244534596617126,
+          0.06196532510244663
+        ],
+        "mixing_mean": 0.026575408559664292,
+        "low_heat_peak": 0.0016082002086978946,
+        "defect_gap": 0.7699965979976122,
+        "m2_relative_change": 8.29963235300104e-05,
+        "elapsed_s": 3.3817973136901855
+      }
+    ]
+  },
+  "results": [
+    {
+      "jpm": -0.03,
+      "target_path": "/home/pc_linux/exact_diagonalization_clean/twist_qsi_demo/notes/twist_resolved_qed_dipole2_M2_jm0p03.npz",
+      "target_peak": 0.0002995856865146307,
+      "target_flux_fraction": 0.012580049053151987,
+      "target_mixing": [
+        1.7031751138662696e-05,
+        0.00010772181188725637,
+        0.00044178941818881934
+      ],
+      "target_mixing_mean": 0.00018884766040491282,
+      "one_term": {
+        "ratio4": 3.375,
+        "ratio6": 0.0,
+        "kappa4": 0.0030375,
+        "kappa6w": 0.0,
+        "spectral_error": 1.8427188694190761,
+        "mixing": [
+          0.006525021478926376,
+          0.04003848634637215,
+          0.1526946138663943
+        ],
+        "mixing_mean": 0.06641937389723095,
+        "low_heat_peak": 0.000489065381748148,
+        "defect_gap": 0.8517887003290663,
+        "m2_relative_change": 1.3740676504713064e-05,
+        "elapsed_s": 5.159169435501099
+      },
+      "best_two_term": {
+        "ratio4": 3.375,
+        "ratio6": -6.0,
+        "kappa4": 0.0030375,
+        "kappa6w": -0.00016199999999999998,
+        "spectral_error": 1.2210668555457191,
+        "mixing": [
+          0.0034250195453386185,
+          0.020555192511842218,
+          0.07904417503864766
+        ],
+        "mixing_mean": 0.03434146236527617,
+        "low_heat_peak": 0.00037754070685747386,
+        "defect_gap": 0.8530592285841376,
+        "m2_relative_change": 1.3753704701773345e-05,
+        "elapsed_s": 5.846233367919922
+      },
+      "records": [
+        {
+          "ratio4": 3.375,
+          "ratio6": -6.0,
+          "kappa4": 0.0030375,
+          "kappa6w": -0.00016199999999999998,
+          "spectral_error": 1.2210668555457191,
+          "mixing": [
+            0.0034250195453386185,
+            0.020555192511842218,
+            0.07904417503864766
+          ],
+          "mixing_mean": 0.03434146236527617,
+          "low_heat_peak": 0.00037754070685747386,
+          "defect_gap": 0.8530592285841376,
+          "m2_relative_change": 1.3753704701773345e-05,
+          "elapsed_s": 5.846233367919922
+        },
+        {
+          "ratio4": 3.375,
+          "ratio6": 0.0,
+          "kappa4": 0.0030375,
+          "kappa6w": 0.0,
+          "spectral_error": 1.8427188694190761,
+          "mixing": [
+            0.006525021478926376,
+            0.04003848634637215,
+            0.1526946138663943
+          ],
+          "mixing_mean": 0.06641937389723095,
+          "low_heat_peak": 0.000489065381748148,
+          "defect_gap": 0.8517887003290663,
+          "m2_relative_change": 1.3740676504713064e-05,
+          "elapsed_s": 5.159169435501099
+        }
+      ]
+    },
+    {
+      "jpm": -0.05,
+      "target_path": "/home/pc_linux/exact_diagonalization_clean/twist_qsi_demo/notes/twist_resolved_qed_dipole2_M2_jm0p05.npz",
+      "target_peak": 0.0012227162639773654,
+      "target_flux_fraction": 0.04353925617954383,
+      "target_mixing": [
+        4.7373680037124955e-05,
+        0.0002989192865797508,
+        0.0012177519673342641
+      ],
+      "target_mixing_mean": 0.0005213483113170466,
+      "one_term": {
+        "ratio4": 3.0,
+        "ratio6": 0.0,
+        "kappa4": 0.0075000000000000015,
+        "kappa6w": 0.0,
+        "spectral_error": 1.7253623049943974,
+        "mixing": [
+          0.004820483422716134,
+          0.03141476563795106,
+          0.1285642291989592
+        ],
+        "mixing_mean": 0.05493315941987547,
+        "low_heat_peak": 0.002155913825515933,
+        "defect_gap": 0.7642984346419481,
+        "m2_relative_change": 8.27205882354279e-05,
+        "elapsed_s": 3.791818618774414
+      },
+      "best_two_term": {
+        "ratio4": 3.0,
+        "ratio6": -6.0,
+        "kappa4": 0.0075000000000000015,
+        "kappa6w": -0.0007500000000000002,
+        "spectral_error": 1.0681233950132571,
+        "mixing": [
+          0.0025163659799291188,
+          0.015244534596617126,
+          0.06196532510244663
+        ],
+        "mixing_mean": 0.026575408559664292,
+        "low_heat_peak": 0.0016082002086978946,
+        "defect_gap": 0.7699965979976122,
+        "m2_relative_change": 8.29963235300104e-05,
+        "elapsed_s": 3.3817973136901855
+      },
+      "records": [
+        {
+          "ratio4": 3.0,
+          "ratio6": -6.0,
+          "kappa4": 0.0075000000000000015,
+          "kappa6w": -0.0007500000000000002,
+          "spectral_error": 1.0681233950132571,
+          "mixing": [
+            0.0025163659799291188,
+            0.015244534596617126,
+            0.06196532510244663
+          ],
+          "mixing_mean": 0.026575408559664292,
+          "low_heat_peak": 0.0016082002086978946,
+          "defect_gap": 0.7699965979976122,
+          "m2_relative_change": 8.29963235300104e-05,
+          "elapsed_s": 3.3817973136901855
+        },
+        {
+          "ratio4": 3.0,
+          "ratio6": 0.0,
+          "kappa4": 0.0075000000000000015,
+          "kappa6w": 0.0,
+          "spectral_error": 1.7253623049943974,
+          "mixing": [
+            0.004820483422716134,
+            0.03141476563795106,
+            0.1285642291989592
+          ],
+          "mixing_mean": 0.05493315941987547,
+          "low_heat_peak": 0.002155913825515933,
+          "defect_gap": 0.7642984346419481,
+          "m2_relative_change": 8.27205882354279e-05,
+          "elapsed_s": 3.791818618774414
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "method": "exact microscopic bands, polar pullback, primitive q=2*delta character",
+  "qualification": "nonperturbative finite-character calculation; bulk use requires M convergence and cluster convergence",
+  "jpm": 0.046,
+  "n_sites": 16,
+  "fixed_sz_dimension": 12870,
+  "band_dimension": 90,
+  "sector_dimensions_at_zero_source": {
+    "++": 3270,
+    "+-": 3200,
+    "-+": 3200,
+    "--": 3200
+  },
+  "zero_source": {
+    "model_overlap_min": 0.7619676391967728,
+    "model_overlap_mean": 0.9269011246970857,
+    "model_overlap_max": 0.9757830469677228,
+    "pullback_unitarity_error": 2.7356223065717668e-14,
+    "sector_counts": {
+      "++": 36,
+      "+-": 18,
+      "-+": 18,
+      "--": 18
+    },
+    "sector_eigenpairs": {
+      "++": 62,
+      "+-": 31,
+      "-+": 31,
+      "--": 31
+    },
+    "band_minimum": -0.22469422788356752,
+    "band_maximum": -0.02569100775346477,
+    "fixed_sz_gap_above_band": 0.6268363074664087,
+    "solve_seconds": 2.709455219010124
+  },
+  "grids": {
+    "M2": {
+      "n_characters": 8,
+      "maximum_microscopic_gauge_identity_residual": 2.2533501104311298e-17
+    },
+    "M3": {
+      "n_characters": 27,
+      "n_solved_representatives": 13,
+      "n_exact_gauge_corners": 1,
+      "minimum_fixed_sz_gap": 0.663591134553109,
+      "minimum_model_overlap": 0.7948122237085763,
+      "maximum_ritz_residual": 3.6579810881133204e-12,
+      "maximum_conjugation_identity_residual": 0.0
+    },
+    "M4": {
+      "n_characters": 64,
+      "n_solved_representatives": 28,
+      "n_exact_gauge_corners": 8,
+      "minimum_fixed_sz_gap": 0.684435504640065,
+      "minimum_model_overlap": 0.8135555490250347,
+      "maximum_ritz_residual": 5.423972116563034e-13,
+      "maximum_conjugation_identity_residual": 0.0
+    }
+  },
+  "convergence": {
+    "M1_to_M2_centered_operator_relative_error": 19.356999790811933,
+    "M2_to_M3_centered_operator_relative_error": 0.06783637287147058,
+    "M3_to_M4_centered_operator_relative_error": 0.004983067873683687
+  },
+  "qmc_thermodynamics": {
+    "source": "Huang et al., PRL 120, 167202 (2018), Fig. 1(b)",
+    "bare_low_temperature_heat_rmse": 0.08591012789031392,
+    "M2": {
+      "low_temperature_heat_rmse": 0.022377061091880115,
+      "entropy_rmse": 0.045269909338174784,
+      "low_peak": [
+        0.0014422276445609492,
+        0.15773076928170013
+      ],
+      "high_peak": [
+        0.25491251727984787,
+        0.2798277792698146
+      ],
+      "heat_rmse_reduction_fraction": 0.7395294170618614
+    },
+    "M3": {
+      "low_temperature_heat_rmse": 0.023266856986492605,
+      "entropy_rmse": 0.04508826655156006,
+      "low_peak": [
+        0.0014627918647106021,
+        0.15834694305834587
+      ],
+      "high_peak": [
+        0.25491251727984787,
+        0.2798277779062784
+      ],
+      "heat_rmse_reduction_fraction": 0.729172129551493
+    },
+    "M4": {
+      "low_temperature_heat_rmse": 0.023265763685506185,
+      "entropy_rmse": 0.04508896898377919,
+      "low_peak": [
+        0.0014627918647106021,
+        0.1583459200217563
+      ],
+      "high_peak": [
+        0.25491251727984787,
+        0.27982777787669044
+      ],
+      "heat_rmse_reduction_fraction": 0.7291848556527487
+    }
+  },
+  "pending": {
+    "full_hilbert_gap": "reported gaps are within Sz=0; other conserved magnetization sectors are required for an unrestricted spectral gap"
+  },
+  "gates": {
+    "exact_band_overlap": {
+      "status": "pass",
+      "singularity_cutoff": 1e-08
+    },
+    "character_convergence": {
+      "status": "pass",
+      "threshold": 0.05,
+      "error": 0.004983067873683687
+    },
+    "qmc_heat_capacity": {
+      "status": "fail",
+      "threshold": 0.02,
+      "rmse": 0.023265763685506185
+    },
+    "qmc_entropy": {
+      "status": "fail",
+      "threshold": 0.02,
+      "rmse": 0.04508896898377919
+    },
+    "fcc32_full_hamiltonian": {
+      "status": "pending",
+      "reason": "current exact-band campaign is cubic-16 only"
+    },
+    "qmc_sac_dynamics": {
+      "status": "pending",
+      "reason": "matched finite-cluster momenta and spectral normalization required"
+    }
+  }
+}

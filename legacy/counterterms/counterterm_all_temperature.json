@@ -1,0 +1,38 @@
+{
+  "method": "exact 90-state low band plus deflated full-Hilbert SLQ",
+  "n_sites": 16,
+  "hilbert_dimension": 65536,
+  "jpm": -0.05,
+  "kappa4": 0.0075,
+  "mu4": 0.0,
+  "probes": 20,
+  "lanczos_steps": 180,
+  "bare_slq_max_abs_error_per_site": 0.001207883170215307,
+  "bare_slq_rms_error_per_site": 0.00033332541379014894,
+  "bare_low_peak": [
+    0.012947865980148975,
+    3.8190616349462516
+  ],
+  "improved_low_peak": [
+    0.0021559296712977743,
+    2.4286566611622504
+  ],
+  "bare_high_peak": [
+    0.252820347028104,
+    4.522290101825611
+  ],
+  "improved_high_peak": [
+    0.2521492015846061,
+    4.501712425067442
+  ],
+  "high_peak_relative_temperature_shift": -0.0026546338195767875,
+  "improved_high_peak_stderr_per_site": 0.0002951429872130917,
+  "bare_defect_gap": 0.7034007670701108,
+  "improved_defect_gap": 0.764298434641947,
+  "bare_trace_estimate_at_Tmax": 30224.124708320232,
+  "improved_trace_estimate_at_Tmax": 30684.419582230978,
+  "elapsed_s": {
+    "bare": 21.644450902938843,
+    "improved": 25.98823618888855
+  }
+}

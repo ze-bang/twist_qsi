@@ -1,0 +1,78 @@
+{
+  "method": "consolidated cubic-16 dense translation-block ED validity classification",
+  "note": "eight-corner rows include clean operator-average peak; one-corner rows measure pullback stability only",
+  "rows": [
+    {
+      "Jpm": -0.03,
+      "eta_min": 0.9484812894225723,
+      "eta_mean_min": 0.9749503619316747,
+      "status": "controlled ice band",
+      "Tpeak_clean": 0.0002995875823498157,
+      "Tpeak_clean_over_ghex": 0.9246530319438757,
+      "grid": "eight-corner operator average"
+    },
+    {
+      "Jpm": -0.05,
+      "eta_min": 0.8872896692031148,
+      "eta_mean_min": 0.9371851067785982,
+      "status": "controlled ice band",
+      "Tpeak_clean": 0.0012227200969419502,
+      "Tpeak_clean_over_ghex": 0.8151467312946332,
+      "grid": "eight-corner operator average"
+    },
+    {
+      "Jpm": -0.08,
+      "eta_min": 0.7896482693077125,
+      "eta_mean_min": 0.8617506502851773,
+      "status": "diagnostic gray zone",
+      "Tpeak_clean": null,
+      "Tpeak_clean_over_ghex": null,
+      "grid": "one-corner pullback"
+    },
+    {
+      "Jpm": -0.1,
+      "eta_min": 0.7241433797522936,
+      "eta_mean_min": 0.8036672363647717,
+      "status": "diagnostic gray zone",
+      "Tpeak_clean": 0.006469366659805866,
+      "Tpeak_clean_over_ghex": 0.5391138883171553,
+      "grid": "eight-corner operator average"
+    },
+    {
+      "Jpm": -0.15,
+      "eta_min": 0.5271567644197813,
+      "eta_mean_min": 0.6466385202991201,
+      "status": "diagnostic gray zone",
+      "Tpeak_clean": null,
+      "Tpeak_clean_over_ghex": null,
+      "grid": "one-corner pullback"
+    },
+    {
+      "Jpm": -0.18,
+      "eta_min": 0.3596680460652178,
+      "eta_mean_min": 0.5576738151313722,
+      "status": "failed ice-band pullback",
+      "Tpeak_clean": null,
+      "Tpeak_clean_over_ghex": null,
+      "grid": "one-corner pullback"
+    },
+    {
+      "Jpm": -0.25,
+      "eta_min": -4.7583374625279555e-17,
+      "eta_mean_min": 0.3796275627857763,
+      "status": "failed ice-band pullback",
+      "Tpeak_clean": null,
+      "Tpeak_clean_over_ghex": null,
+      "grid": "one-corner pullback"
+    },
+    {
+      "Jpm": -0.3,
+      "eta_min": -1.075297174202023e-16,
+      "eta_mean_min": 0.31638021816033374,
+      "status": "failed ice-band pullback",
+      "Tpeak_clean": null,
+      "Tpeak_clean_over_ghex": null,
+      "grid": "one-corner pullback"
+    }
+  ]
+}

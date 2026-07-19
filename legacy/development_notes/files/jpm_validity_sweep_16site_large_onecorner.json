@@ -1,0 +1,208 @@
+{
+  "method": "dense translation-block ED, cubic-16, fixed Sz=0, dipole2 M=2, lowest 90 states",
+  "n_sites": 16,
+  "sz0_dim": 12870,
+  "ice_dim": 90,
+  "n_twists": 1,
+  "grid": "one",
+  "rows": [
+    {
+      "Jpm": -0.08,
+      "eta_min": 0.7896482693077125,
+      "eta_mean_min": 0.8617506502851773,
+      "ice_gap_min": null,
+      "g4": 0.0256,
+      "ghex": 0.006144000000000001,
+      "Tpeak_bare": null,
+      "Tpeak_clean": null,
+      "Tpeak_clean_over_ghex": null,
+      "status": "diagnostic gray zone",
+      "elapsed_s": 367.7283556461334,
+      "diagnostics": [
+        {
+          "theta_over_pi": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "E0": -0.3500520012020578,
+          "Etop_ice": -0.08023596400506094,
+          "ice_overlap_min": 0.7896482693077125,
+          "ice_overlap_mean": 0.8617506502851773,
+          "ice_overlap_max": 0.9248987411529994,
+          "sector_counts": {
+            "++": 36,
+            "+-": 18,
+            "-+": 18,
+            "--": 18
+          }
+        }
+      ]
+    },
+    {
+      "Jpm": -0.1,
+      "eta_min": 0.7241433797522936,
+      "eta_mean_min": 0.8036672363647719,
+      "ice_gap_min": null,
+      "g4": 0.04000000000000001,
+      "ghex": 0.012000000000000004,
+      "Tpeak_bare": null,
+      "Tpeak_clean": null,
+      "Tpeak_clean_over_ghex": null,
+      "status": "diagnostic gray zone",
+      "elapsed_s": 242.7280204296112,
+      "diagnostics": [
+        {
+          "theta_over_pi": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "E0": -0.5029488477571785,
+          "Etop_ice": -0.12623937649097458,
+          "ice_overlap_min": 0.7241433797522936,
+          "ice_overlap_mean": 0.8036672363647719,
+          "ice_overlap_max": 0.8869503614750927,
+          "sector_counts": {
+            "++": 36,
+            "+-": 18,
+            "-+": 18,
+            "--": 18
+          }
+        }
+      ]
+    },
+    {
+      "Jpm": -0.15,
+      "eta_min": 0.5271567644197813,
+      "eta_mean_min": 0.6466385202991201,
+      "ice_gap_min": null,
+      "g4": 0.09,
+      "ghex": 0.040499999999999994,
+      "Tpeak_bare": null,
+      "Tpeak_clean": null,
+      "Tpeak_clean_over_ghex": null,
+      "status": "diagnostic gray zone",
+      "elapsed_s": 38.61813306808472,
+      "diagnostics": [
+        {
+          "theta_over_pi": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "E0": -0.9428750681406732,
+          "Etop_ice": -0.2862977216568542,
+          "ice_overlap_min": 0.5271567644197813,
+          "ice_overlap_mean": 0.6466385202991201,
+          "ice_overlap_max": 0.7818924613132319,
+          "sector_counts": {
+            "++": 36,
+            "+-": 18,
+            "-+": 18,
+            "--": 18
+          }
+        }
+      ]
+    },
+    {
+      "Jpm": -0.18,
+      "eta_min": 0.3596680460652178,
+      "eta_mean_min": 0.5576738151313722,
+      "ice_gap_min": null,
+      "g4": 0.1296,
+      "ghex": 0.06998399999999999,
+      "Tpeak_bare": null,
+      "Tpeak_clean": null,
+      "Tpeak_clean_over_ghex": null,
+      "status": "failed ice-band pullback",
+      "elapsed_s": 38.97789692878723,
+      "diagnostics": [
+        {
+          "theta_over_pi": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "E0": -1.234299960371026,
+          "Etop_ice": -0.4105009845293316,
+          "ice_overlap_min": 0.3596680460652178,
+          "ice_overlap_mean": 0.5576738151313722,
+          "ice_overlap_max": 0.7232578063230677,
+          "sector_counts": {
+            "++": 36,
+            "+-": 18,
+            "-+": 18,
+            "--": 18
+          }
+        }
+      ]
+    },
+    {
+      "Jpm": -0.25,
+      "eta_min": -4.7583374625279555e-17,
+      "eta_mean_min": 0.3796275627857763,
+      "ice_gap_min": null,
+      "g4": 0.25,
+      "ghex": 0.1875,
+      "Tpeak_bare": null,
+      "Tpeak_clean": null,
+      "Tpeak_clean_over_ghex": null,
+      "status": "failed ice-band pullback",
+      "elapsed_s": 230.15033221244812,
+      "diagnostics": [
+        {
+          "theta_over_pi": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "E0": -1.9631868257016754,
+          "Etop_ice": -0.8988266818925734,
+          "ice_overlap_min": -4.7583374625279555e-17,
+          "ice_overlap_mean": 0.3796275627857763,
+          "ice_overlap_max": 0.5716728993387594,
+          "sector_counts": {
+            "++": 31,
+            "+-": 19,
+            "-+": 20,
+            "--": 20
+          }
+        }
+      ]
+    },
+    {
+      "Jpm": -0.3,
+      "eta_min": -1.075297174202023e-16,
+      "eta_mean_min": 0.31638021816033374,
+      "ice_gap_min": null,
+      "g4": 0.36,
+      "ghex": 0.32399999999999995,
+      "Tpeak_bare": null,
+      "Tpeak_clean": null,
+      "Tpeak_clean_over_ghex": null,
+      "status": "failed ice-band pullback",
+      "elapsed_s": 158.45892977714539,
+      "diagnostics": [
+        {
+          "theta_over_pi": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "E0": -2.5108381467030814,
+          "Etop_ice": -1.3514449887219142,
+          "ice_overlap_min": -1.075297174202023e-16,
+          "ice_overlap_mean": 0.31638021816033374,
+          "ice_overlap_max": 0.5031711338400288,
+          "sector_counts": {
+            "++": 31,
+            "+-": 20,
+            "-+": 19,
+            "--": 20
+          }
+        }
+      ]
+    }
+  ]
+}

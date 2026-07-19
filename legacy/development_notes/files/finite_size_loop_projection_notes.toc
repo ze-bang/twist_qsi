@@ -1,0 +1,30 @@
+\contentsline {section}{\numberline {1}The idea in one page (for readers new to spin ice)}{2}{section.1}%
+\contentsline {section}{\numberline {2}The physical question}{3}{section.2}%
+\contentsline {section}{\numberline {3}Ice variables and the energy cost of defects}{4}{section.3}%
+\contentsline {section}{\numberline {4}Degenerate perturbation theory in the ice manifold}{5}{section.4}%
+\contentsline {section}{\numberline {5}Why the physical QSI ring exchange is a hexagon}{5}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Third-order hexagon amplitude}{7}{subsection.5.1}%
+\contentsline {section}{\numberline {6}Why a four-site loop is a finite-size artifact}{8}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Second-order four-loop amplitude}{9}{subsection.6.1}%
+\contentsline {section}{\numberline {7}Independent numerical verification}{10}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Geometry census}{11}{subsection.7.1}%
+\contentsline {section}{\numberline {8}Why the low-temperature specific heat peak is displaced}{11}{section.8}%
+\contentsline {section}{\numberline {9}Why ordinary boundary-twist averaging fails}{12}{section.9}%
+\contentsline {section}{\numberline {10}The transported dipole and the zero-transport theorem}{15}{section.10}%
+\contentsline {section}{\numberline {11}The microscopic spine: structure theorems and the polarization-parity mask}{18}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Gauge-theory meaning}{18}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Character-deformed microscopic Hamiltonian}{19}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Structure theorems: the character average is a mask}{20}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Pullback of the QED low band}{21}{subsection.11.4}%
+\contentsline {subsection}{\numberline {11.5}The clean operator}{22}{subsection.11.5}%
+\contentsline {subsection}{\numberline {11.6}Exact implementation checklist (Stage A)}{23}{subsection.11.6}%
+\contentsline {section}{\numberline {12}Validation of the QED spine on cubic-16}{23}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Choosing the character}{23}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}QED low-band results}{24}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Rejected shortcuts}{24}{subsection.12.3}%
+\contentsline {section}{\numberline {13}Graded Brillouin--Wigner downfolding: the protocol at any $J_{\pm }$}{25}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Equivariance and the masked operator}{26}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Self-consistent solution and built-in diagnostics}{26}{subsection.13.2}%
+\contentsline {section}{\numberline {14}The cubic-16 validation ladder}{26}{section.14}%
+\contentsline {section}{\numberline {15}All-temperature consistency check on cubic-16}{27}{section.15}%
+\contentsline {section}{\numberline {16}FCC-32 production protocol}{30}{section.16}%

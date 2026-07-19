@@ -1,0 +1,68 @@
+{
+  "method": "full microscopic Sz=0 ED",
+  "cluster": "cubic-16",
+  "momenta": [
+    [
+      12.566370614359172,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      12.566370614359172,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      12.566370614359172
+    ]
+  ],
+  "momentum_units": "inverse conventional cubic lattice constant",
+  "jpm": -0.05,
+  "kappa4": 0.0075,
+  "kappa6w": -0.0009375,
+  "mu4": 0.0,
+  "local_ice_projected": true,
+  "eta": 0.0005,
+  "bare": {
+    "ground_multiplicity": 1,
+    "defect_gap": 0.7034007670701158,
+    "szz": {
+      "integrated_low_spectral_weight": 0.43472406217123144,
+      "total_inelastic_static_weight": 0.43791519929862316,
+      "low_band_captured_fraction": 0.9927128879461076,
+      "lowest_weighted_excitation": 0.04193352722561432,
+      "spectral_centroid": 0.04421340611666994,
+      "broadened_peak": 0.041927951967978654
+    },
+    "contractible_hexagon": {
+      "integrated_low_spectral_weight": 0.23581199094392147,
+      "total_inelastic_static_weight": 0.249366348788635,
+      "low_band_captured_fraction": 0.9456447996670059,
+      "lowest_weighted_excitation": 0.08145545076401592,
+      "spectral_centroid": 0.12219508023813914,
+      "broadened_peak": 0.1246831220813876
+    }
+  },
+  "improved": {
+    "ground_multiplicity": 4,
+    "defect_gap": 0.7321580157606083,
+    "szz": {
+      "integrated_low_spectral_weight": 0.43083008266195394,
+      "total_inelastic_static_weight": 0.4395203474391207,
+      "low_band_captured_fraction": 0.9802278442220005,
+      "lowest_weighted_excitation": 0.002377392827717026,
+      "spectral_centroid": 0.005311272818963637,
+      "broadened_peak": 0.00590393595730487
+    },
+    "contractible_hexagon": {
+      "integrated_low_spectral_weight": 0.1074949326138198,
+      "total_inelastic_static_weight": 0.12573170385691373,
+      "low_band_captured_fraction": 0.8549548706995341,
+      "lowest_weighted_excitation": 0.005380590330007914,
+      "spectral_centroid": 0.020333412104165567,
+      "broadened_peak": 0.014609739826551034
+    }
+  }
+}

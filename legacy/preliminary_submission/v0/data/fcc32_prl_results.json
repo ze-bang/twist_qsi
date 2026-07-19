@@ -1,0 +1,74 @@
+{
+  "cluster": {
+    "sites": 32,
+    "ice_states": 2970,
+    "shape": "2x2x2 FCC"
+  },
+  "mask_identity_max_residual": 0.0,
+  "nonzero_matrix_elements": {
+    "periodic": 91482,
+    "projected": 18330
+  },
+  "reference_Jpm_over_Jzz": -0.05,
+  "allowed_momenta": [
+    [
+      0.0,
+      -0.0,
+      0.0
+    ],
+    [
+      -0.5,
+      0.5,
+      0.5
+    ],
+    [
+      0.5,
+      -0.5,
+      0.5
+    ],
+    [
+      0.0,
+      -0.0,
+      1.0
+    ],
+    [
+      0.5,
+      0.5,
+      -0.5
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      1.0,
+      -0.0,
+      0.0
+    ],
+    [
+      0.5,
+      0.5,
+      0.5
+    ]
+  ],
+  "alpha32_Tpeak_over_ghex": 0.5210289229010293,
+  "smith_NLC_A_meV": {
+    "Ja": 0.05,
+    "Jb": 0.021,
+    "Jc": 0.004
+  },
+  "moment_matched_candidate_meV": {
+    "Ja": 0.046435439614295276,
+    "Jb": 0.026614220212682872,
+    "Jc": 0.009614220212682871,
+    "Jpm": -0.009057110106341436,
+    "constraint": "matches sum(J_alpha^2) of NLC A and the 25 mK FCC-32 clean ring peak; not a seventh-order NLC refit"
+  },
+  "experimental_data": "digitized for visual comparison from Smith et al. PRL 135, 086702 (2025), Fig. 2(a)",
+  "dssf_observable": "four-sublattice trace of the longitudinal pseudospin correlation; no neutron-polarization factors",
+  "dssf_maximum": {
+    "periodic": 4.100771297393034e-30,
+    "projected": 1.601291617567181
+  }
+}

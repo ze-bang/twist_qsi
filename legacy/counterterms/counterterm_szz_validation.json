@@ -1,0 +1,58 @@
+{
+  "method": "full microscopic Sz=0 ED",
+  "cluster": "cubic-16",
+  "momenta": [
+    [
+      12.566370614359172,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      12.566370614359172,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      12.566370614359172
+    ]
+  ],
+  "momentum_units": "inverse conventional cubic lattice constant",
+  "jpm": -0.05,
+  "kappa4": 0.0075,
+  "mu4": 0.0,
+  "eta": 0.0005,
+  "bare": {
+    "ground_multiplicity": 1,
+    "defect_gap": 0.7034007670701142,
+    "szz": {
+      "integrated_low_spectral_weight": 0.4347240621712282,
+      "lowest_weighted_excitation": 0.041933527225614206,
+      "spectral_centroid": 0.04421340611666815,
+      "broadened_peak": 0.041927951967978654
+    },
+    "contractible_hexagon": {
+      "integrated_low_spectral_weight": 0.23581199094392344,
+      "lowest_weighted_excitation": 0.08145545076400806,
+      "spectral_centroid": 0.12219508023813448,
+      "broadened_peak": 0.1246831220813876
+    }
+  },
+  "improved": {
+    "ground_multiplicity": 4,
+    "defect_gap": 0.7642984346419485,
+    "szz": {
+      "integrated_low_spectral_weight": 0.43052377028382743,
+      "lowest_weighted_excitation": 0.005584751743337363,
+      "spectral_centroid": 0.0077903208796404715,
+      "broadened_peak": 0.005603735823882588
+    },
+    "contractible_hexagon": {
+      "integrated_low_spectral_weight": 0.1150870462261017,
+      "lowest_weighted_excitation": 0.01009334987779853,
+      "spectral_centroid": 0.021654291216115427,
+      "broadened_peak": 0.014409606404269514
+    }
+  }
+}
