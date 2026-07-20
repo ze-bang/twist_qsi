@@ -1,4 +1,4 @@
-.PHONY: validate nonperturbative nonperturbative-m3 nonperturbative-m4 figures test paper note all clean
+.PHONY: validate nonperturbative nonperturbative-m3 nonperturbative-m4 dssf figures material-fit test paper note all clean
 
 PYTHON ?= python
 
@@ -14,8 +14,14 @@ nonperturbative-m3:
 nonperturbative-m4:
 	PYTHONPATH=src $(PYTHON) campaign/run_nonperturbative.py --max-grid 4
 
-figures: nonperturbative-m4
+dssf: nonperturbative-m4
+	PYTHONPATH=src $(PYTHON) campaign/run_dssf.py
+
+figures: dssf
 	PYTHONPATH=src $(PYTHON) campaign/make_figures.py
+
+material-fit:
+	PYTHONPATH=src $(PYTHON) campaign/run_ce2hf2o7_fit.py
 
 test:
 	OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 pytest

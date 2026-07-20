@@ -26,3 +26,7 @@ def test_zero_transport_removes_four_loops_and_keeps_hexagons():
     hexagon = channels["H3"]["hexagon_contractible"]
     assert four["delta0_max"] == 0.0
     assert hexagon["delta0_min"] == 1.0
+    assert four["finite_grid_retained"] == {"M2": 0.0, "M3": 0.0, "M4": 0.0}
+    assert hexagon["finite_grid_retained"] == {"M2": 1.0, "M3": 1.0, "M4": 1.0}
+    assert four["finite_grid_terms"] == {"M2": 0, "M3": 0, "M4": 0}
+    assert hexagon["finite_grid_terms"] == {"M2": 16, "M3": 16, "M4": 16}

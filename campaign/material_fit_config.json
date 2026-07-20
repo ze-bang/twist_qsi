@@ -1,0 +1,31 @@
+{
+  "data": {
+    "path": "campaign/data/ce2hf2o7_smith2025_digitized.csv",
+    "source": "Smith et al., Phys. Rev. Lett. 135, 086702 (2025), Fig. 2(a), arXiv:2501.08327v5",
+    "status": "raster extraction without tabulated experimental uncertainties",
+    "submission_requirement": "replace with author data and uncertainties"
+  },
+  "published_seeds_meV": {
+    "NLC_A": {"Ja": 0.050, "Jb": 0.021, "Jc": 0.004},
+    "NLC_B": {"Ja": 0.051, "Jb": 0.008, "Jc": -0.018},
+    "QMC_ordered": {"Ja": 0.046, "Jb": -0.003, "Jc": -0.010},
+    "legacy_Astar_seed_not_a_fit": {"Ja": 0.0464354, "Jb": 0.0266142, "Jc": 0.0096142}
+  },
+  "parameter_domain_meV": {
+    "Ja": [0.035, 0.065],
+    "Jb": [-0.025, 0.035],
+    "Jc": [-0.030, 0.020],
+    "constraints": ["abs(Ja) >= abs(Jb)", "abs(Ja) >= abs(Jc)", "Jb >= Jc"]
+  },
+  "model_curves": {
+    "glob": "campaign/outputs/fcc32_xyz_grid/*.npz",
+    "required_method": "fcc32_exact_winding_free_xyz",
+    "required_sites": 32,
+    "required_gates": ["character_converged", "complement_converged"]
+  },
+  "fit": {
+    "temperature_window_K": [0.025, 2.35],
+    "ranking_metric": "unweighted RMSE after interpolation in log temperature",
+    "output": "campaign/outputs/ce2hf2o7_fit.json"
+  }
+}

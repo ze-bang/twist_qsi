@@ -152,6 +152,7 @@ def main() -> None:
                 "n_ice": cubic.n_ice,
                 "loops4": geometry.cycle_summary(cubic.loops4),
                 "hexagons": geometry.cycle_summary(cubic.hexes),
+                "transport_channels": cubic_channels,
                 "bare_low_peak": cubic_bare_peak,
                 "clean_low_peak": cubic_clean_peak,
             },
@@ -159,6 +160,7 @@ def main() -> None:
                 "n_ice": fcc.n_ice,
                 "loops4": geometry.cycle_summary(fcc.loops4),
                 "hexagons": geometry.cycle_summary(fcc.hexes),
+                "transport_channels": fcc_channels,
                 "bare_low_peak_order3_band": fcc_bare_peak,
                 "clean_low_peak_order3_band": fcc_clean_peak,
             },
@@ -242,7 +244,7 @@ def main() -> None:
             },
             "fcc32_full_hamiltonian": {
                 "status": "pending",
-                "reason": "current FCC-32 calculation is order-three ice-manifold only",
+                "reason": "current FCC-32 calculation is order three on Ran(P_ice) only",
             },
         },
     }

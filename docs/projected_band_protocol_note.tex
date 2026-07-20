@@ -33,13 +33,15 @@
 
 \newcommand{\Jzz}{J_{zz}}
 \newcommand{\Jpm}{J_{\pm}}
+\newcommand{\Jpp}{J_{\pm\pm}}
 \newcommand{\bq}{\bm q}
 \newcommand{\btheta}{\bm\theta}
 \newcommand{\PP}{\mathcal P}
 \newcommand{\cQ}{\mathcal Q}
+\newcommand{\Pice}{P_{\mathrm{ice}}}
 \newcommand{\code}[1]{\texttt{#1}}
 
-\title{A Pedagogical Guide to Transport-Projected Exact Diagonalization\\
+\title{A Pedagogical Guide to Winding-Free Exact Diagonalization\\
 for Quantum Spin Ice}
 \author{Implementation note for the \code{twist\_qsi\_demo} repository}
 \date{\today}
@@ -48,36 +50,71 @@ for Quantum Spin Ice}
 \maketitle
 
 \begin{abstract}
-This note explains the transport-projected band protocol at the level needed
-to reproduce, audit, and extend its current implementation.  The central
-problem is that a small periodic pyrochlore cluster contains ice-preserving
-virtual paths that close only through a periodic image.  On cubic-16, a
-spurious four-spin process then appears at order $\Jpm^2/\Jzz$, parametrically
-before the contractible six-spin ring exchange at order
-$|\Jpm|^3/\Jzz^2$~\cite{Hermele2004}.  The protocol labels each completed virtual path by its
-transport in the covering lattice and projects the selected low-energy band
-onto zero transport.  The production campaign now uses exact microscopic
-eigenspaces and a polar pullback on matched $M=2,3,4$ character grids; the
-$M=3\to4$ centered operator change is 0.498\%.  The order-two/order-three row
-enumeration remains only a pedagogical and topological diagnostic.
+This note gives an operator-level definition of winding-free exact
+diagonalization.  A small periodic pyrochlore cluster admits spin-exchange
+sequences that return to the same wrapped configuration only after crossing a
+supercell boundary.  The protocol inserts an explicit transport character in
+every microscopic exchange matrix element, diagonalizes the resulting
+Hamiltonian at the physical coupling, and extracts the zero-character Fourier
+component of the isolated band connected to the ice-rule subspace.  We define
+the ice projector, the sourced Hamiltonian, its exact spectral projector, and
+the polar pullback separately.  This makes clear both why the production
+calculation is nonperturbative and where its finite-grid and isolated-band
+assumptions enter.  Low-order path enumeration is used only to verify the
+transport interpretation.
 \end{abstract}
 
 \tableofcontents
 
-\section{What problem is being solved?}
+\section{The finite-torus problem and the ice projector}
 
-The local-axis XXZ model is
+The local-axis XYZ model is
 \begin{equation}
  H=H_0+V=
  \Jzz\sum_{\langle ij\rangle}S_i^zS_j^z
  -\Jpm\sum_{\langle ij\rangle}
- \left(S_i^+S_j^-+S_i^-S_j^+\right).
+ \left(S_i^+S_j^-+S_i^-S_j^+\right)
+ +\Jpp\sum_{\langle ij\rangle}
+ \left(S_i^+S_j^++S_i^-S_j^-\right).
  \label{eq:model}
 \end{equation}
-At $\Jpm=0$, the low-energy model space $P$ is the spin-ice manifold: every
-tetrahedron has two spins up and two down.  In the thermodynamic lattice, the
-first off-diagonal process within this manifold is the six-spin ring exchange
-around a contractible pyrochlore hexagon, with scale
+The QMC benchmark and analytic loop scales below use $\Jpp=0$, but the exact
+source construction and cubic-16 implementation allow finite $\Jpp$.
+For each tetrahedron $t$, define its Ising charge
+\begin{equation}
+ \widehat Q_t=\sum_{i\in t}S_i^z .
+\end{equation}
+All $\widehat Q_t$ commute.  The reference space is therefore specified
+without choosing or counting basis states.  For an $S^z$ basis state
+$|s\rangle$, the local factor acts as
+\begin{equation}
+ \mathbf 1_{\{0\}}(\widehat Q_t)|s\rangle=
+ \begin{cases}
+  |s\rangle,&Q_t(s)=0,\\
+  0,&Q_t(s)\ne0.
+ \end{cases}
+\end{equation}
+Thus $\mathbf 1_{\{0\}}(\widehat Q_t)$ is just the zero-charge projector on
+tetrahedron $t$.  Because a spin-$1/2$ tetrahedron has
+$Q_t\in\{-2,-1,0,1,2\}$, it can also be evaluated as
+\begin{equation}
+ \mathbf 1_{\{0\}}(\widehat Q_t)
+ =(1-\widehat Q_t^2)(1-\widehat Q_t^2/4).
+\end{equation}
+The global projector is the product of these commuting local conditions:
+\begin{equation}
+ \Pice=\prod_t \mathbf 1_{\{0\}}(\widehat Q_t)
+ =\sum_{\substack{s:\,Q_t(s)=0\\\text{for every }t}}|s\rangle\langle s|.
+ \label{eq:iceprojector}
+\end{equation}
+It obeys $\Pice^\dagger=\Pice$ and $\Pice^2=\Pice$, so it is the orthogonal
+projector onto the subspace of states satisfying the two-in--two-out rule on
+every tetrahedron.  Its rank depends on the cluster, but no step in the
+protocol is defined by that rank.
+
+In the thermodynamic lattice, the first off-diagonal process within
+the ice-rule subspace is the six-spin ring exchange around a contractible
+pyrochlore hexagon, with scale
 \begin{equation}
  g_6=12\frac{|\Jpm|^3}{\Jzz^2}.
 \end{equation}
@@ -94,315 +131,342 @@ lower order than $g_6$, ordinary periodic exact diagonalization can put the
 low-temperature peak at the wrong scale even when the microscopic Hamiltonian
 itself is correct.
 
-The objective is deliberately specific: remove completed virtual processes
-with nonzero covering-lattice transport from a chosen low-energy band, while
-retaining contractible processes and the microscopic high-energy complement.
-This does not by itself prove convergence to bulk quantum spin ice.  Order,
-character resolution, band isolation, cluster size, thermodynamics, and
+The objective is deliberately specific: remove nonzero covering-lattice
+transport from the exact band continuously connected to
+the ice-rule subspace, while retaining its winding-free ($\bq=0$) component.  It
+does not assert that the resulting finite cluster is already a bulk surrogate.
+Character resolution, band isolation, cluster size, thermodynamics, and
 external QMC remain independent validation gates.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.92\textwidth]{fig_geometry.pdf}
-  \caption{The finite-cluster geometry used by the implementation.  The
-  stored bond images distinguish a loop that closes only through a periodic
-  image from a contractible bulk hexagon, even when both look closed after
-  wrapping sites into the simulation cell.}
+  \includegraphics[width=0.62\textwidth]{fig_geometry.pdf}
+  \caption{The actual cubic-16 pyrochlore network without an external cubic
+  frame.  The two four-loop classes close through periodic bonds (dashed) and
+  carry finite $\bq_\gamma=2\sum_\ell\Delta\bm p_\ell$, shown as the dark
+  resultant of the colored spin-transfer arrows.  The contractible ring is viewed normal to its
+  plane, making its $D_6$ geometry and $\bq_\gamma=0$ explicit.}
   \label{fig:geometry}
 \end{figure}
 
-\section{Three levels that must not be conflated}
-
-\fbox{\begin{minipage}{0.94\textwidth}
-\textbf{Nonperturbative definition.}
-Diagonalize the transported-dipole source family $H(\bm\theta)$, identify its
-isolated ice-descended band, pull every source point into one ice basis with
-the polar/Kato map, and take a controlled $M\to\infty$ character limit.
-
-\textbf{Current production calculation.}
-The active campaign extracts the exact 90-state cubic-16 band in the
-12,870-dimensional $S^z=0$ sector at each independent character point.  It
-uses the primitive $\bq=2\bm\delta$ source, matched $M=2,3,4$ grids, and the
-exact 65,536-level microscopic complement for all-temperature observables.
-
-\textbf{Not yet demonstrated.}
-The repository has not established full-Hamiltonian FCC-32 thermodynamics,
-cluster convergence, an unrestricted gap across all conserved magnetization
-sectors, or matched QMC-SAC dynamics.  The converged cubic-16 heat and entropy
-curves still fail their QMC tolerances.
-\end{minipage}}
-
-This distinction is the most important reading rule for both the manuscript
-and the code.  The formal construction explains what a converged method would
-mean.  The low-order rows explain the mechanism; they do not generate the
-production spectrum.
-
-\section{Geometry and basis construction}
-
-\subsection{Periodic covering data}
+\section{The microscopic source is an explicit phase}
 
 Each site has a home-cell position $\bm r_i$, and the rows of $L$ are the
 three supercell vectors.  Each nearest-neighbor bond stores an integer image
 $\bm n_{ij}$.  Its displacement in the covering lattice is therefore
 \begin{equation}
- \bm d_{ij}=\bm r_j-\bm r_i-\bm n_{ij}^{T}L.
+ \bm d_{ij}=\bm r_j-\bm r_i-\bm n_{ij}^{T}L,
  \label{eq:liftedbond}
 \end{equation}
-The spin bit pattern alone is insufficient: it forgets which periodic image a
-virtual hop traversed.  The bond image must be propagated through every
-intermediate state.
-
-The geometry builder performs the following steps:
-\begin{enumerate}
- \item generate wrapped site positions and supercell vectors;
- \item find nearest-neighbor bonds and their image vectors;
- \item enumerate tetrahedra from the adjacency graph;
- \item enumerate bit states satisfying two-in/two-out on every tetrahedron;
- \item enumerate ice-preserving simple four- and six-cycles; and
- \item lift each cycle to classify its winding.
-\end{enumerate}
-The resulting census is
-\begin{center}
-\begin{tabular}{lrrrr}
-\toprule
-cluster & ice states & winding 4 & contractible 6 & wrapping 6\\
-\midrule
-cubic-16 & 90 & 36 & 16 & 48\\
-FCC-32 & 2970 & 24 & 32 & 96\\
-\bottomrule
-\end{tabular}
-\end{center}
-Neither cluster contains a contractible four-cycle.
-
-\subsection{Bit basis and excitation energy}
-
-A spin configuration is stored as an unsigned integer.  Bit $i=1$ denotes
-$S_i^z=+1/2$.  For a tetrahedron $t$, let $n_t$ be the number of set bits.
-After subtracting the common ice energy and setting $\Jzz=1$, the relative
-Ising energy used in denominators is
+from site $i$ to the chosen image of site $j$.  For a pair flip we also need
+$\bm c_{ij}=\bm r_i+\bm r_j-\bm n_{ij}^{T}L$.
+This is fixed by polarization bookkeeping.  With
+$\widetilde{\bm r}_j=\bm r_j-\bm n_{ij}^{T}L$, raising both spins changes the
+lifted polarization by
 \begin{equation}
- E_0(s)=\frac12\sum_t(n_t-2)^2.
- \label{eq:isingenergy}
+ \Delta\bm p(S_i^+S_j^+)=\bm r_i+\widetilde{\bm r}_j=\bm c_{ij},
 \end{equation}
-Thus every ice state has zero relative energy, while a state with spin-ice
-charges has positive energy.  The recursive ice-state enumerator prunes a
-partial bit assignment as soon as a tetrahedron can no longer reach exactly
-two up spins.
+while $S_i^+S_j^-$ changes it by
+$\bm r_i-\widetilde{\bm r}_j=-\bm d_{ij}$.  The source on every move is the
+single generating factor $e^{-2i\btheta\cdot\Delta\bm p}$.
 
-\section{A virtual path is a data object}
-
-The core numerical idea is not a matrix manipulation after the fact.  It is a
-path-resolved construction in which every active row carries
-\begin{equation}
- (s_{\rm current},\; a_{\rm source},\;\bm N,\;c).
-\end{equation}
-Here $s_{\rm current}$ is the current microscopic bit state,
-$a_{\rm source}$ labels the initial ice basis state, $\bm N\in\mathbb Z^3$ is
-the accumulated bond-image transport, and $c$ is the perturbative amplitude
-including all denominators accumulated so far.
-
-For every antiparallel nearest-neighbor pair, the perturbation flips both
-bits.  The code contributes a factor $-1$ for the operator in Eq.~\eqref{eq:model};
-the power of $\Jpm$ is inserted only when the final row table is assembled.
-Depending on whether the active term is $S_i^+S_j^-$ or $S_i^-S_j^+$, the
-stored image is updated by $+\bm n_{ij}$ or $-\bm n_{ij}$.
-
-Rows may interfere, so duplicates are summed.  The merge key is
-\begin{equation}
- (a_{\rm source},b_{\rm target},N_x,N_y,N_z),
- \label{eq:mergekey}
-\end{equation}
-not merely $(a_{\rm source},b_{\rm target})$.  Merging without $\bm N$ would
-irreversibly combine contractible and winding contributions before they can
-be projected.
-
-\section{What the order-three routine computes}
-
-Let $Q=1-P$ and define the reduced resolvent, with the ice energy set to zero,
-\begin{equation}
- R=-QH_0^{-1}Q.
-\end{equation}
-Because $PVP=0$ for this model, the active row routine constructs
+The implemented source family is
 \begin{align}
- H_P^{(2)}&=PVRVP,\\
- H_P^{(3)}&=PVRVRVP.
- \label{eq:order23}
+ H(\btheta)=H_0-\Jpm\sum_{\langle ij\rangle}
+ \left[e^{+2i\btheta\cdot\bm d_{ij}}S_i^+S_j^-
+      +e^{-2i\btheta\cdot\bm d_{ij}}S_i^-S_j^+\right]\nonumber\\
+ {}+\Jpp\sum_{\langle ij\rangle}
+ \left[e^{-2i\btheta\cdot\bm c_{ij}}S_i^+S_j^+
+      +e^{+2i\btheta\cdot\bm c_{ij}}S_i^-S_j^-\right].
+ \label{eq:sourcedH}
 \end{align}
-In code, division by
-\code{-e1} or \code{-e2} applies one factor of $R$.  A path that has already
-returned to the ice manifold after two hops is recorded in $H_P^{(2)}$ and is
-not passed through a zero denominator into the third-order table.
+Thus ``attaching a source'' means modifying an actual microscopic matrix
+element.  If $|s\rangle$ has $i$ down and $j$ up and
+$|s'\rangle=S_i^+S_j^-|s\rangle$, then
+\begin{equation}
+ \langle s'|H(\btheta)|s\rangle
+ =-\Jpm e^{+2i\btheta\cdot\bm d_{ij}},
+ \qquad
+ \langle s|H(\btheta)|s'\rangle
+ =\langle s'|H(\btheta)|s\rangle^*.
+ \label{eq:matrixelement}
+\end{equation}
+Equation~\eqref{eq:sourcedH} is Hermitian for every $\btheta$ and reduces to
+the original Hamiltonian at $\btheta=0$.  The source is a transport-counting
+twist, not a fitted field or counterterm.  Everything up to this point is an
+exact finite-cluster operator construction: no low-energy reduction, energy
+denominator, or expansion in either transverse coupling has been introduced.
 
-The following pseudocode mirrors \code{sw\_order23}:
+To see what it counts, consider a sequence $\gamma$ of microscopic moves.
+Step $\ell$ acts on the stored oriented bond $(i_\ell,j_\ell)$.  Define
+\begin{equation}
+ \Delta\bm p_\ell=\begin{cases}
+ -\bm d_{ij},&T_\ell=S_i^+S_j^-,\\
+ +\bm d_{ij},&T_\ell=S_i^-S_j^+,\\
+ +\bm c_{ij},&T_\ell=S_i^+S_j^+,\\
+ -\bm c_{ij},&T_\ell=S_i^-S_j^-.
+ \end{cases}
+ \label{eq:polarizationincrement}
+\end{equation}
+Multiplication of the microscopic matrix elements gives
+\begin{equation}
+ \prod_{\ell\in\gamma}e^{-2i\btheta\cdot\Delta\bm p_\ell}
+ =e^{-i\btheta\cdot\bq_\gamma},
+ \qquad
+ \bq_\gamma=2\sum_{\ell\in\gamma}\Delta\bm p_\ell.
+ \label{eq:pathphase}
+\end{equation}
+The coordinate normalization is chosen so that a completed path between
+ice-rule configurations has $\bq_\gamma\in\mathbb Z^3$.  A contractible
+closed path has $\bq_\gamma=0$; a path closed only by periodic identification
+has nonzero $\bq_\gamma$.  Changing home-cell representatives changes bond
+increments and endpoint phases together, leaving the completed
+$\bq_\gamma$ and especially the condition $\bq_\gamma=0$ invariant.
+Equation~\eqref{eq:pathphase} is likewise an exact product of microscopic
+matrix-element phases.  Calling $\gamma$ a path does not make this step
+perturbative.
+
+For integer completed transport, Fourier orthogonality gives
+\begin{equation}
+ \frac{1}{(2\pi)^3}\int d^3\theta\,
+ e^{-i\btheta\cdot\bq_\gamma}=\delta_{\bq_\gamma,\bm0}.
+ \label{eq:pathselector}
+\end{equation}
+As a reproducible cubic-16 example, the sequence
+$S_0^-S_1^+$, $S_8^+S_{10}^+$, $S_8^-S_{11}^-$ has increments
+\begin{equation}
+ (0,1/4,1/4),\quad(5/4,0,5/4),\quad(-5/4,-1/4,-1),
+\end{equation}
+and hence $\bq_\gamma=(0,0,1)$.  It connects two ice configurations but is a
+spurious $\Jpm\Jpp^2$ four-spin process, so Eq.~\eqref{eq:pathselector}
+annihilates it.  A pair flip followed by its inverse instead has increments
+$-\bm c_{ij}$ and $+\bm c_{ij}$ and is retained because its total transport
+vanishes.
+
+The averaging is performed only after exact band extraction and canonical
+pullback.  Averaging $H(\btheta)$ directly would erase individual moves before
+they can compose.  Averaging $h(\btheta)$ instead removes its nonzero-transport
+Fourier coefficients while retaining all zero-transport paths assembled from
+those same microscopic moves.
+
+The corresponding code operation is exactly
 \begin{lstlisting}[language=Python]
-for source, ice_state in enumerate(ice_basis):
-    paths1 = apply_V([(ice_state, source, N=0, amplitude=1)])
-    paths1.amplitude /= -ising_energy(paths1.state)
-
-    paths2 = apply_V(paths1)
-    returned = ising_energy(paths2.state) == 0
-    H2_rows += project_to_ice(paths2[returned])
-
-    charged2 = paths2[~returned]
-    charged2.amplitude /= -ising_energy(charged2.state)
-    paths3 = apply_V(charged2)
-    H3_rows += project_to_ice(paths3[ising_energy(paths3.state) == 0])
-
-H2_rows = merge_by_source_target_and_image(H2_rows)
-H3_rows = merge_by_source_target_and_image(H3_rows)
+d = r[j] - r[i] - image_ij @ L
+if spin[i] != spin[j]:
+    phase = exp(2j * theta @ d)
+    amplitude = -Jpm * (phase if spin[i] == down else conjugate(phase))
+else:
+    c = r[i] + r[j] - image_ij @ L
+    phase = exp(-2j * theta @ c)
+    amplitude = Jpmpm * (phase if spin[i] == down else conjugate(phase))
+H[flip_both(i, j, state), state] += amplitude
 \end{lstlisting}
+Because $\Jpp$ changes total $S^z$ by two, a finite-$\Jpp$ calculation uses
+the full $2^N$ spin basis (or another basis explicitly closed under pair
+flips).  Cubic-16 has dimension $65{,}536$ in this representation.
 
-This routine is a direct implementation of Eq.~\eqref{eq:order23}; it is not
-an arbitrary-order Schrieffer--Wolff engine.  The all-order protocol instead
-fixes the canonical, off-diagonal anti-Hermitian generator
+\section{The exact source-dependent band projector}
+
+The notation $P_{\btheta}$ does not denote the ice projector and does not
+insert the source.  It is the spectral projector of the already sourced
+microscopic Hamiltonian $H(\btheta)$ onto one isolated band.
+
+More precisely, turn on the transverse exchange continuously in
+$H_s(\btheta)=H_0+s[H(\btheta)-H_0]$, $0\le s\le1$.  Assume the band issuing
+from the ice-rule subspace remains separated from the rest of the
+spectrum.  If $\Gamma_{\btheta}$ encloses that band and no other eigenvalues
+at $s=1$, define the Riesz projector
 \begin{equation}
- S^{(N)}=\sum_{n=1}^{N}\lambda^nS_n,
- \qquad PS_nP=QS_nQ=0,
+ P_{\btheta}=\frac{1}{2\pi i}\oint_{\Gamma_{\btheta}}
+ (z-H(\btheta))^{-1}\,dz
+ =\sum_{\alpha\in\mathcal B_{\btheta}}
+ |\psi_{\alpha\btheta}\rangle\langle\psi_{\alpha\btheta}|.
+ \label{eq:Ptheta}
 \end{equation}
-so that $Qe^{-S^{(N)}}He^{S^{(N)}}P=O(\lambda^{N+1})$.  At each order the
-off-diagonal Baker--Campbell--Hausdorff coefficient $B_n$ gives
+By construction,
+$\operatorname{rank}P_{\btheta}=\operatorname{rank}\Pice$.  A gap closing
+makes the continuation ambiguous and is a failure of the protocol.
+
+Different diagonalizations choose different unitary mixtures inside the same
+band.  The polar map removes that arbitrary gauge.  On the ice-rule subspace,
+define
 \begin{equation}
- S_n=-\mathcal L_0^{-1}(B_n),\qquad \mathcal L_0(X)=[H_0,X].
- \label{eq:swrecursion}
+ G_{\btheta}=\Pice P_{\btheta}\Pice,
+ \qquad
+ W_{\btheta}=P_{\btheta}\Pice G_{\btheta}^{-1/2}.
+ \label{eq:polar}
 \end{equation}
-Implementing Eq.~\eqref{eq:swrecursion} at order four is the next order
-gate~\cite{Bravyi2011}.
-
-\section{Transported dipole and the zero-transport selector}
-
-For a completed row $a\to b$, let ``raised'' be sites that are down in $a$
-and up in $b$, and ``lowered'' the reverse.  The implementation computes
+When $G_{\btheta}$ is positive definite,
+$W_{\btheta}^\dagger W_{\btheta}=\Pice$ and
+$W_{\btheta}W_{\btheta}^\dagger=P_{\btheta}$.  The exact band operator in one
+fixed reference space is
 \begin{equation}
- \bm\delta_{ba}=
- \sum_{i\in\mathrm{raised}}\bm r_i
- -\sum_{j\in\mathrm{lowered}}\bm r_j
- +\bm N^TL.
- \label{eq:delta}
+ h(\btheta)=W_{\btheta}^\dagger H(\btheta)W_{\btheta}.
+ \label{eq:pullback}
 \end{equation}
-Coordinates and supercell vectors are multiplied by four and rounded to
-integers before this calculation.  This is exact for the pyrochlore
-coordinates used here and avoids floating-point equality tests.  The factor
-of four changes units, not the condition $\bm\delta=0$.
+A singular $G_{\btheta}$ means that the exact band can no longer be
+canonically identified with the ice-rule subspace; it must not be repaired by
+an arbitrary regularizer.
 
-For the exact character family, all completed ice-to-ice paths have even
-components in these quarter-cell units.  The active code therefore uses the
-primitive integer source $\bq=\bm\delta_4/2=2\bm\delta$.  Using
-$\bq=\bm\delta_4$ would incorrectly alias the leading winding row on the
-$M=2$ grid.
-
-Changing a site's home-cell representative shifts the first two terms in
-Eq.~\eqref{eq:delta} and $\bm N^TL$ oppositely.  Hence the transported dipole
-and, in particular, its vanishing are invariant under this representation
-choice.
-
-The active assembler has two modes:
-\begin{align}
- H_{\rm bare}^{(3)}&=\Jpm^2 H_P^{(2)}+\Jpm^3H_P^{(3)},\\
- H_{\rm clean}^{(3)}&=
- \sum_{\bm\delta=0}\left(\Jpm^2h^{(2)}(\bm\delta)
- +\Jpm^3h^{(3)}(\bm\delta)\right).
-\end{align}
-It then explicitly Hermitian-symmetrizes the dense ice-space matrix.  The
-topology test verifies that the selector removes every winding four-loop and
-retains every contractible hexagon on both clusters.
-
-\section{Why this is a character projection}
-
-Attach a phase $e^{i\btheta\cdot\Delta\bq}$ to each lifted hop.  Completed
-rows have a finite Fourier expansion
+Numerically, let $B$ be an isometry whose columns span the ice-rule subspace,
+let $\Psi_{\btheta}$ contain orthonormal exact band
+eigenvectors, and let $E_{\btheta}$ be their eigenvalues.  With
 \begin{equation}
- [H_P^{(N)}(\btheta)]_{ba}
- =\sum_{\bq}h_{ba}^{(N)}(\bq)e^{i\btheta\cdot\bq}.
+ X_{\btheta}=B^\dagger\Psi_{\btheta},\qquad
+ U_{\btheta}=X_{\btheta}(X_{\btheta}^\dagger X_{\btheta})^{-1/2},
 \end{equation}
-Average over the characters of $\mathbb Z_M^3$:
+the matrix actually averaged by the code is
 \begin{equation}
- \PP_M[H]=\frac{1}{M^3}
- \sum_{m_x,m_y,m_z=0}^{M-1}
- H\!\left(\frac{2\pi}{M}\bm m\right).
+ h(\btheta)=U_{\btheta}\,\operatorname{diag}(E_{\btheta})\,
+ U_{\btheta}^\dagger.
+ \label{eq:numericalpullback}
+\end{equation}
+The smallest eigenvalue of $X_{\btheta}^\dagger X_{\btheta}$ is the reported
+band-overlap diagnostic.
+
+\section{Zero-character projection}
+
+Because completed transport is integer valued, the pulled-back band has a
+Fourier decomposition
+\begin{equation}
+ h(\btheta)=\sum_{\bq\in\mathbb Z^3}h_{\bq}e^{-i\btheta\cdot\bq}.
+ \label{eq:exactfourier}
+\end{equation}
+The desired operator is the zero Fourier coefficient,
+\begin{equation}
+ h_{\bq=0}=\frac{1}{(2\pi)^3}\int_{[0,2\pi)^3}
+ d^3\theta\;h(\btheta).
+ \label{eq:continuousprojection}
+\end{equation}
+The implementation approximates this integral by the complete character grid
+\begin{equation}
+ h_M=\frac{1}{M^3}\sum_{\bm m\in\mathbb Z_M^3}
+ h\!\left(\frac{2\pi}{M}\bm m\right).
  \label{eq:characterprojector}
 \end{equation}
 Discrete Fourier orthogonality gives
 \begin{equation}
- \PP_M[H_P^{(N)}]=
- \sum_{\bq=0\ ({\rm mod}\ M)}h^{(N)}(\bq).
+ h_M=\sum_{\bq\in M\mathbb Z^3}h_{\bq}.
  \label{eq:alias}
 \end{equation}
-At fixed perturbative order only finitely many transports are possible.  An
-$M$ larger than every possible component therefore makes
-Eq.~\eqref{eq:characterprojector} exactly equivalent to the direct
-$\bm\delta=0$ row selector used by the active low-order code.  At all orders,
-however, finite $M$ aliases $\bq=M\bm k$ with zero transport.  A controlled
-$M\to2M$ ladder is required.
+Finite $M$ therefore aliases transports $M\bm k$ with zero transport.  It is
+not an exact all-order selector.  The controlled numerical check is convergence
+of $h_M$ as $M$ is increased.
 
-This also explains why several tempting operations are not equivalent:
-\begin{itemize}
- \item Averaging $Z(\btheta)=\mathrm{Tr}\,e^{-\beta H(\btheta)}$ averages a
- nonlinear thermal quantity, not a Hamiltonian block.
- \item Averaging the microscopic Hamiltonian before multiplication projects
- individual hops, preventing the virtual paths from composing first.
- \item Deleting entries of the final ice-space matrix after image labels have
- been merged cannot recover the decomposition in Eq.~\eqref{eq:alias}.
- \item A fitted counterterm can cancel a chosen leading matrix element but
- does not classify all completed paths at higher order.
-\end{itemize}
+The order of operations matters.  One must first construct $H(\btheta)$,
+diagonalize it, form $P_{\btheta}$, and pull the band back before averaging.
+Averaging $H(\btheta)$ first would remove individual exchanges before they can
+compose.  Averaging $\operatorname{Tr}e^{-\beta H(\btheta)}$ would average a
+nonlinear observable rather than define $h_{\bq=0}$.
 
-\section{Exact isolated-band continuation}
+\section{In what sense is the construction nonperturbative?}
 
-Suppose the microscopic Hamiltonian has an isolated exact band projector
-$P_\lambda$ with $\mathrm{rank}(P_\lambda)=\mathrm{rank}(P)$.  The polar map
+At every source point the production calculation diagonalizes the microscopic
+$H(\btheta)$ at the target values of $(\Jpm,\Jpp)/\Jzz$.  It does not expand the
+eigenvalues, $P_{\btheta}$, $G_{\btheta}^{-1/2}$, or $h(\btheta)$ in that
+ratio.  The Riesz projector and polar map therefore contain repeated virtual
+excursions out of the ice-rule subspace to all orders allowed by the finite
+Hilbert space.
+
+Perturbation theory provides a useful identity, not the numerical definition.
+If a formal coupling $\lambda$ is introduced and the isolated band is
+analytic, then
 \begin{equation}
- W_\lambda=P_\lambda P(PP_\lambda P)^{-1/2}
- \label{eq:polar}
+ h(\btheta;\lambda)=
+ \sum_{n=0}^{\infty}\lambda^n
+ \sum_{\bq\in\mathbb Z^3}h_{n,\bq}e^{-i\btheta\cdot\bq}.
+ \label{eq:formalseries}
 \end{equation}
-canonically transports the model-space basis into the exact band.  It fixes
-the otherwise arbitrary unitary gauge among eigenvectors in that band.  The
-exact pulled-back operator is
+Substitution into Eq.~\eqref{eq:continuousprojection} yields
 \begin{equation}
- H_{\rm band}=W_\lambda^\dagger H W_\lambda.
+ h_{\bq=0}(\lambda)=\sum_{n=0}^{\infty}\lambda^n h_{n,0}.
 \end{equation}
+Low-order Schrieffer--Wolff theory computes a few terms on the right.  The
+production protocol instead evaluates the left-hand side directly at
+$\lambda=1$.  This is the precise nonperturbative statement.
 
-If $\Psi$ is a matrix of exact band eigenvectors and $X=P\Psi$, the code
-orthonormalizes $X$ as
+It is also a limited statement.  The result is exact only for the chosen
+finite-cluster band, up to eigensolver tolerance and the $M\to\infty$
+quadrature limit.  It requires band isolation and a nonsingular polar overlap.
+It does not establish cluster-size convergence or bulk QSI physics.
+
+\section{Production algorithm}
+
+The implementation follows Eqs.~\eqref{eq:sourcedH}--\eqref{eq:characterprojector}:
+\begin{lstlisting}[language=Python]
+B = ice_projector_basis()  # B @ B.H = P_ice
+
+for theta in complete_character_grid(M):
+    Htheta = microscopic_character_hamiltonian(theta)
+    Etheta, Psitheta = isolated_band_connected_to_P_ice(Htheta)
+    Xtheta = B.H @ Psitheta
+    require min_eig(Xtheta.H @ Xtheta) > overlap_cutoff
+    Utheta = Xtheta @ inverse_sqrt(Xtheta.H @ Xtheta)
+    htheta[theta] = Utheta @ diag(Etheta) @ Utheta.H
+
+hM = mean(htheta over the complete grid)
+compare centered(hM) with centered(h_previous_M)
+\end{lstlisting}
+The current implementation works in a conserved magnetization sector and
+uses translation sectors at zero source as an acceleration.  These symmetry
+choices do not alter the definitions above.
+
+\section{Low-order path enumeration is an audit}
+
+The path code is retained to prove that the source distinguishes the known
+finite-torus loop from a contractible hexagon.  Let $Q_{\rm ice}=1-\Pice$ and
 \begin{equation}
- q=X(X^\dagger X)^{-1/2},\qquad
- H_{\rm band}=q\,\mathrm{diag}(E_a)q^\dagger.
+ R=-Q_{\rm ice}(H_0-E_{\rm ice})^{-1}Q_{\rm ice}.
 \end{equation}
-It reports the minimum, mean, and maximum eigenvalues of $X^\dagger X$ and a
-unitarity residual.  A singular projected Gram matrix means the selected band
-cannot be canonically identified with the ice manifold; this is a failed
-band-overlap gate, not a numerical nuisance to regularize away.
+Because $\Pice V\Pice=0$ in the XXZ model, the first diagnostic blocks are
+\begin{align}
+ h^{(2)}&=\Pice VRV\Pice,\\
+ h^{(3)}&=\Pice VRVRV\Pice.
+ \label{eq:order23}
+\end{align}
+Each row remains keyed by its source state, target state, and accumulated
+image vector until $\bq_\gamma$ is evaluated.  Equation~\eqref{eq:pathphase}
+then verifies directly that winding four-loops have nonzero transport while
+contractible hexagons have zero transport.  These rows test the meaning of the
+source; they do not generate the production spectrum.  In terms of absolute
+row weight, the $\bq=0$ selector retains 0\% of the winding four-loop and
+wrapping-hexagon channels and 100\% of the contractible-hexagon channel on
+both clusters.
 
-For a character calculation, Eq.~\eqref{eq:polar} must be applied separately
-at each $\btheta$ before averaging operators.  Averaging eigenvalues alone
-loses matrix character, while averaging eigenvectors without the polar gauge
-mixes arbitrary basis choices.  The utility functions implementing the polar
-map and operator average are present in \code{src/qsi\_campaign/protocol.py}
-and are called by the active nonperturbative campaign.  At
-$\Jpm/\Jzz=0.046$, the zero-source minimum overlap is 0.762; every generic
-$M=3,4$ point has a larger minimum overlap.
+The geometry census used by this audit is listed in
+Table~\ref{tab:note_geometry_census}.
+\begin{table}[htbp]
+\caption{Finite-cluster loop census used by the low-order topology audit.}
+\label{tab:note_geometry_census}
+\centering
+\begin{tabular}{lrrr}
+\toprule
+cluster & winding 4 & contractible 6 & wrapping 6\\
+\midrule
+cubic-16 & 36 & 16 & 48\\
+FCC-32 & 24 & 32 & 96\\
+\bottomrule
+\end{tabular}
+\end{table}
+Neither cluster contains a contractible four-cycle.
 
 \section{Full-temperature spectral replacement}
 
-A low-energy effective block alone cannot produce all-temperature
-thermodynamics.  The current cubic-16 construction retains the exact
-microscopic complement.  Let the sorted exact spectrum be
-$E_1\le\cdots\le E_{65536}$ and let $\widetilde E_1,\ldots,\widetilde E_{90}$
-be the exact character-projected band spectrum.  First shift the clean band so
-that its mean equals that of the lowest 90 exact levels, and then define
+The nonperturbative construction above returns a selected band, not a full
+spectrum.  For the cubic-16 thermodynamic diagnostic, let
+$d=\operatorname{rank}\Pice$, let
+$E_1\le\cdots\le E_D$ be the exact unsourced microscopic spectrum, and let
+$\widetilde E_1,\ldots,\widetilde E_d$ be the eigenvalues of $h_M$.  After
+matching the band trace, the diagnostic spectrum is defined as
 \begin{equation}
  \mathrm{spec}(H_{\rm replacement})=
- \{\widetilde E_a\}_{a=1}^{90}\cup\{E_i\}_{i=91}^{65536}.
+ \{\widetilde E_a\}_{a=1}^{d}\cup\{E_i\}_{i=d+1}^{D}.
  \label{eq:replacement}
 \end{equation}
-Trace matching fixes the band's scalar energy relative to the untouched
-complement; specific heat within an isolated band would not fix this offset.
-
-There is an important qualification.  The exact band is overlap-certified
-within the conserved $S^z=0$ sector, where the zero-source gap above it is
-$0.627\Jzz$.  The cached full spectrum gives a smaller unrestricted gap
-$0.387\Jzz$ because other magnetization sectors are present.  Those sectors
-do not mix with the ice band, but an unrestricted spectral-gap statement must
-still report them separately.
+This is a temperature-independent hybrid spectrum that leaves the microscopic
+complement unchanged.  It is useful for testing whether making the selected band winding-free
+band improves all-temperature observables, but it is not the spectrum of the
+original $H(0)$ and should not be described as such.
 
 For any finite spectrum, the thermodynamics are evaluated after shifting by
 the ground-state energy to stabilize the Boltzmann weights:
@@ -420,7 +484,7 @@ grid is logarithmic from $10^{-4}\Jzz$ to $2\Jzz$ with 1400 points.
 \section{External verification against Huang et al.}
 
 Huang, Deng, Wan, and Meng simulate Eq.~\eqref{eq:model} at the sign-free
-point $\Jpm/\Jzz=0.046$ using continuous-time worm QMC
+point $(\Jpm,\Jpp)/\Jzz=(0.046,0)$ using continuous-time worm QMC
 \cite{Huang2018}.  This is an especially useful reference because its sign
 and coupling convention match the repository directly.
 
@@ -434,17 +498,21 @@ windows and log-position errors.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{fig_nonperturbative.pdf}
-  \caption{Exact-band benchmark at $\Jpm/\Jzz=0.046$.  The $M=3,4$
-  operators agree, while both converged thermodynamic curves remain distinct
-  from QMC.}
+  \caption{Periodic and winding-free thermodynamics at
+  $(\Jpm,\Jpp)/\Jzz=(0.046,0)$.  Solid curves and the left axis show $C/N$; dashed curves
+  and the right axis show $S/N$.  The exact $M=3,4$ centered operators differ
+  by 0.498\%.}
   \label{fig:validation}
 \end{figure}
 
-The current numerical summary is
-\begin{center}
+The current numerical summary is given in Table~\ref{tab:note_qmc_summary}.
+\begin{table}[htbp]
+\caption{Thermodynamic comparison with the Huang \emph{et al.} QMC data.}
+\label{tab:note_qmc_summary}
+\centering
 \begin{tabular}{lccc}
 \toprule
-quantity & bare cubic-16 & clean cubic-16 & QMC\\
+quantity & periodic cubic-16 & winding-free cubic-16 & QMC\\
 \midrule
 low $T_{\rm p}/\Jzz$ & 0.02554 & 0.001463 & 0.001100\\
 low-$T$ $C/N$ RMSE & 0.0859 & 0.02327 & 0\\
@@ -452,12 +520,42 @@ high $T_{\rm p}/\Jzz$ & 0.2549 & 0.2549 & 0.2105\\
 $S/N$ RMSE & 0.0514 & 0.04509 & 0\\
 \bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 The converged $M=4$ low-temperature heat-capacity RMSE is reduced by 72.9\%,
 but $0.02327$ remains above the threshold 0.02.  Its entropy RMSE $0.04509$
 also fails.  Removing winding transfer does not guarantee correct
 finite-cluster state counting or degeneracy, so these failures diagnose the
 cluster rather than a lack of character convergence.
+
+\section{Internal winding-free dynamics}
+
+The longitudinal comparison holds the physical probe fixed.  With $W_0$ the
+exact zero-source canonical map, define
+\begin{equation}
+ \widetilde S_a^z(\bq)=W_0^\dagger
+ \left(\sum_{j\in a}e^{-2\pi i\bq\cdot\bm r_j}S_j^z\right)W_0 .
+\end{equation}
+The same operator is evaluated with the periodic Hamiltonian $h(\bm0)$ and
+the winding-free Hamiltonian $h_{M=4}$.  Thus the comparison changes the band
+Hamiltonian, not the probe convention.  Cubic-16 supports only $\Gamma$ and
+the three symmetry-related $X$ momenta.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.68\textwidth]{fig_dssf.pdf}
+  \caption{Periodic and winding-free four-sublattice-traced
+  $S^{zz}(\bq,\omega)$ on common linear scales.  The periodic line begins at
+  $0.08065\Jzz$; winding-free weight occurs near zero at $\Gamma$ and at
+  $0.005354\Jzz$ at each $X$ point.}
+  \label{fig:dssf}
+\end{figure}
+
+The campaign script reconstructs $W_0$ from the full fixed-$S^z$ eigenvectors,
+checks its isometry, verifies the cached periodic operator, pulls back the
+sixteen microscopic $S_i^z$ operators, and then evaluates the exact Lehmann
+sum in each 90-dimensional band Hamiltonian.  Gaussian broadening is
+$6\times10^{-4}\Jzz$.  The saved output contains both unbroadened transition
+lines and broadened spectra.
 
 The same QMC paper supplies a future dynamical benchmark from stochastic
 analytic continuation.  It reports the sublattice traces
@@ -478,15 +576,16 @@ The production data path is short enough to audit directly:
 \begin{lstlisting}[language=Python]
 T = geomspace(1e-4, 2.0, 1400)
 
-H0, Psi0 = exact_low_band(H(theta=0), dimension=90)
-h0 = polar_pullback(H0, Psi0, ice_basis)
+d = rank(P_ice)
+E0, Psi0 = exact_band_connected_to_P_ice(H(theta=0), count=d)
+h0 = polar_pullback(E0, Psi0, P_ice_basis)
 h2 = average(exact_gauge_orbit(h0, M=2))
 
 for M in [3, 4]:
     for conjugation representative theta in Z_M^3:
-        E, Psi = eigsh(H(theta), lowest=91)
+        E, Psi = eigsh(H(theta), lowest=d+1)
         verify gap, Ritz residual, and ice overlap
-        h[theta] = polar_pullback(E[:90], Psi[:, :90], ice_basis)
+        h[theta] = polar_pullback(E[:d], Psi[:, :d], P_ice_basis)
         h[-theta] = conjugate(h[theta])
     hM = average(h over Z_M^3)
 
@@ -505,6 +604,10 @@ the production operator.
 
 \section{Code map}
 
+\begin{table}[htbp]
+\caption{Repository components used by the winding-free calculation.}
+\label{tab:note_code_map}
+\centering
 \begin{tabularx}{\textwidth}{p{0.32\textwidth}X}
 \toprule
 file or function & responsibility\\
@@ -517,8 +620,9 @@ and ice states\\
 \code{apply\_v} & spin exchange, amplitude sign, and image-transport update\\
 \code{merge\_rows} & coherent sum at fixed source, target, and image vector\\
 \code{sw\_order23} & explicit $PVRVP$ and $PVRVRVP$ row construction\\
-\code{transport\_delta} & integer form of Eq.~\eqref{eq:delta}\\
-\code{assemble} & bare or direct zero-transport order-three matrix\\
+\code{transport\_delta} & integer completed-path transport in
+Eq.~\eqref{eq:pathphase}\\
+\code{assemble} & periodic or direct winding-free order-three matrix\\
 \nolinkurl{src/qsi_campaign/protocol.py} & polar pullback, character average,
 centered operator error, and low-band spectral replacement\\
 \nolinkurl{src/qsi_campaign/exact_band.py} & fixed-magnetization basis,
@@ -536,16 +640,21 @@ restartable point cache, thermodynamics, and gate report\\
 products\\
 \bottomrule
 \end{tabularx}
+\end{table}
 
 \section{Current gates and their interpretation}
 
-\begin{center}
+\begin{table}[htbp]
+\caption{Current validation gates and their interpretation.}
+\label{tab:note_gates}
+\centering
 \small
 \begin{tabularx}{\textwidth}{p{0.25\textwidth}p{0.16\textwidth}X}
 \toprule
 gate & status & interpretation\\
 \midrule
 loop topology & pass & winding four-loops removed; contractible hexagons retained\\
+internal $S^{zz}$ dynamics & pass & common $W_0$-dressed probe used for periodic and winding-free bands\\
 all-temperature stability & pass & high-$T$ peak position unchanged on cubic-16\\
 QMC heat capacity & fail & exact $M=4$ low-$T$ RMSE $0.02327>0.02$\\
 QMC entropy & fail & exact $M=4$ RMSE $0.04509>0.02$\\
@@ -558,7 +667,7 @@ FCC-32 full Hamiltonian & pending & current FCC-32 result is ice-manifold order 
 \bottomrule
 \end{tabularx}
 \normalsize
-\end{center}
+\end{table}
 
 All active grids use the same primitive $\bq=2\bm\delta$ source.  The large
 $M=1\to2$ and 6.78\% $M=2\to3$ changes show why a single parity mask is not
@@ -577,10 +686,11 @@ character gate.
 \section{Common implementation mistakes}
 
 \begin{enumerate}
- \item \textbf{Discarding image transport too early.}  Rows must remain keyed
- by Eq.~\eqref{eq:mergekey} until after projection.
+ \item \textbf{Discarding image transport too early.}  Diagnostic rows must
+ remain keyed by source, target, and image vector until after transport is
+ evaluated.
  \item \textbf{Calling the order-three block ``exact ED.''}  Its diagonalization
- is exact only for that truncated 90- or 2970-dimensional operator.
+ is exact only for that truncated operator on the ice-rule subspace.
  \item \textbf{Calling FCC-32 a full-Hamiltonian result.}  The active FCC-32
  spectrum contains only the order-three ice block; the $2^{32}$ complement is
  absent.

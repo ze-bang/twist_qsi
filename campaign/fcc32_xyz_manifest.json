@@ -1,0 +1,17 @@
+{
+  "cluster": {"basis": "fcc", "shape": [2, 2, 2], "sites": 32, "ice_rank": 2970},
+  "hamiltonian": "Ja SaSa - Jpm(S+S- + h.c.) + Jpmpm(S+S+ + h.c.)",
+  "mapping": {"Jpm": "-(Jb+Jc)/4", "Jpmpm": "(Jb-Jc)/4"},
+  "character_grids": [2, 3, 4],
+  "required_convergence": {
+    "centered_operator_relative_change_max": 0.05,
+    "heat_capacity_relative_change_max": 0.02,
+    "stochastic_trace_relative_error_max": 0.01
+  },
+  "figure_1_outputs": [
+    "FCC-32 loop geometry and transport census",
+    "periodic and winding-free full-temperature heat capacity and entropy",
+    "periodic and winding-free Szz at the eight FCC-32 translation momenta"
+  ],
+  "production_note": "Jpmpm breaks total Sa conservation. Cubic-16 now uses the full spin basis; FCC-32 still requires a scalable matrix-free backend."
+}

@@ -38,6 +38,13 @@ def fixed_magnetization_basis(n_sites: int, n_up: int) -> np.ndarray:
     return np.asarray(states, dtype=np.uint64)
 
 
+def full_spin_basis(n_sites: int) -> np.ndarray:
+    """Return the complete spin-1/2 bit basis for ``n_sites`` sites."""
+    if not 0 <= n_sites < 64:
+        raise ValueError("n_sites must lie between zero and 63")
+    return np.arange(1 << n_sites, dtype=np.uint64)
+
+
 def cubic16_translation_permutations(cluster) -> list[np.ndarray]:
     """Site permutations for the four FCC translations in the cubic cell."""
     if cluster.n_sites != 16:
@@ -126,7 +133,7 @@ def translation_sector_bases(
             dtype=np.complex128,
         ).tocsc()
     if sum(sector.shape[1] for sector in sectors.values()) != len(states):
-        raise RuntimeError("translation sectors do not span the fixed-magnetization basis")
+        raise RuntimeError("translation sectors do not span the supplied basis")
     return sectors
 
 
@@ -152,13 +159,16 @@ def microscopic_character_hamiltonian(
     states: np.ndarray,
     jpm: float,
     theta: np.ndarray,
+    *,
+    jpmpm: float = 0.0,
 ) -> csc_matrix:
-    """Build H(theta) with the primitive ice-band character q=2*delta.
+    """Build the sourced XXZ/XYZ Hamiltonian in a closed spin basis.
 
-    A completed virtual path acquires ``exp(-i theta.q)``. For
-    ``S_i^+ S_j^-``, delta = r_i-r_j+nL = -d_ij, so its microscopic phase is
-    ``exp(+i theta.(2 d_ij))``. Individual hops can carry half-integer
-    components; completed paths between ice states have integer q.
+    Every microscopic move with lifted polarization change ``delta_p`` carries
+    ``exp(-2i theta.delta_p)``.  Thus ``S_i^+ S_j^-`` has
+    ``delta_p=-d_ij`` and ``S_i^+ S_j^+`` has
+    ``delta_p=r_i+r_j-n_ij^T L``.  Completed ice-to-ice paths acquire
+    ``exp(-i theta.q)`` with ``q=2 sum(delta_p)``.
     """
     theta = np.asarray(theta, dtype=float)
     if theta.shape != (3,):
@@ -179,17 +189,27 @@ def microscopic_character_hamiltonian(
             right_bit = one << np.uint64(right)
             left_up = bool(state & left_bit)
             right_up = bool(state & right_bit)
-            if left_up == right_up:
+            lifted_right = cluster.positions[right] - np.asarray(image) @ cluster.Lvecs
+            if left_up != right_up:
+                displacement = lifted_right - cluster.positions[left]
+                phase = np.exp(2j * float(theta @ displacement))
+                amplitude = -jpm * (
+                    phase if (not left_up and right_up) else phase.conjugate()
+                )
+            elif jpmpm != 0.0:
+                pair_center = cluster.positions[left] + lifted_right
+                phase = np.exp(-2j * float(theta @ pair_center))
+                amplitude = jpmpm * (phase if not left_up else phase.conjugate())
+            else:
                 continue
-            displacement = (
-                cluster.positions[right]
-                - cluster.positions[left]
-                - np.asarray(image) @ cluster.Lvecs
-            )
-            phase = np.exp(1j * float(theta @ (2.0 * displacement)))
-            amplitude = -jpm * (phase if (not left_up and right_up) else phase.conjugate())
             target_state = int(state ^ (left_bit | right_bit))
-            rows.append(state_index[target_state])
+            target_index = state_index.get(target_state)
+            if target_index is None:
+                raise ValueError(
+                    "the supplied basis is not closed under J_pm_pm pair flips; "
+                    "use full_spin_basis when jpmpm is nonzero"
+                )
+            rows.append(target_index)
             columns.append(column)
             values.append(amplitude)
     hamiltonian = coo_matrix(

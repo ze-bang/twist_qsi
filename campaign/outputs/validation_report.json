@@ -20,6 +20,42 @@
           "(0, 1, 1)": 48
         }
       },
+      "transport_channels": {
+        "H2": {
+          "4_loop_wrapping": {
+            "masks": 36,
+            "corner_mean": 0.5,
+            "corner_min": 0.5,
+            "corner_max": 0.5,
+            "n0_mean": 0.5,
+            "delta0_mean": 0.0,
+            "delta0_min": 0.0,
+            "delta0_max": 0.0
+          }
+        },
+        "H3": {
+          "hexagon_contractible": {
+            "masks": 16,
+            "corner_mean": 1.0,
+            "corner_min": 1.0,
+            "corner_max": 1.0,
+            "n0_mean": 1.0,
+            "delta0_mean": 1.0,
+            "delta0_min": 1.0,
+            "delta0_max": 1.0
+          },
+          "hexagon_wrapping": {
+            "masks": 48,
+            "corner_mean": 0.5,
+            "corner_min": 0.5,
+            "corner_max": 0.5,
+            "n0_mean": 0.5,
+            "delta0_mean": 0.0,
+            "delta0_min": 0.0,
+            "delta0_max": 0.0
+          }
+        }
+      },
       "bare_low_peak": [
         0.025540187370845818,
         0.2690057694228309
@@ -46,6 +82,42 @@
           "(0, 0, 0)": 32,
           "(0, 0, 1)": 48,
           "(0, 1, 1)": 48
+        }
+      },
+      "transport_channels": {
+        "H2": {
+          "4_loop_wrapping": {
+            "masks": 24,
+            "corner_mean": 0.5,
+            "corner_min": 0.5,
+            "corner_max": 0.5,
+            "n0_mean": 0.5,
+            "delta0_mean": 0.0,
+            "delta0_min": 0.0,
+            "delta0_max": 0.0
+          }
+        },
+        "H3": {
+          "hexagon_contractible": {
+            "masks": 32,
+            "corner_mean": 1.0,
+            "corner_min": 1.0,
+            "corner_max": 1.0,
+            "n0_mean": 1.0,
+            "delta0_mean": 1.0,
+            "delta0_min": 1.0,
+            "delta0_max": 1.0
+          },
+          "hexagon_wrapping": {
+            "masks": 96,
+            "corner_mean": 0.5,
+            "corner_min": 0.5,
+            "corner_max": 0.5,
+            "n0_mean": 0.5,
+            "delta0_mean": 0.0,
+            "delta0_min": 0.0,
+            "delta0_max": 0.0
+          }
         }
       },
       "bare_low_peak_order3_band": [
@@ -144,7 +216,7 @@
     },
     "fcc32_full_hamiltonian": {
       "status": "pending",
-      "reason": "current FCC-32 calculation is order-three ice-manifold only"
+      "reason": "current FCC-32 calculation is order three on Ran(P_ice) only"
     }
   }
 }

@@ -1,4 +1,4 @@
-# Validation plan: a convergent projected-band protocol
+# Validation plan: a convergent winding-free band protocol
 
 ## Scientific question
 
@@ -10,103 +10,223 @@ asserting that a low-order effective Hamiltonian is the microscopic model.
 
 ## Definition
 
-Write `H(lambda) = H0 + lambda V` and let `P` project onto the ice manifold.
-The canonical Schrieffer-Wolff/Kato gauge chooses an off-diagonal,
-anti-Hermitian generator
+For tetrahedron `t`, define `Q_t = sum_{i in t} S_i^z`.  The fixed reference
+operator is the ice-rule projector
 
 ```text
-S_N(lambda) = sum_{n=1}^N lambda^n S_n,
-P S_n P = Q S_n Q = 0,
-Q exp(-S_N) H exp(S_N) P = O(lambda^(N+1)).
+P_ice = product_t 1_{0}(Q_t) = 1_{E_ice}(H0).
 ```
 
-This convention removes the unitary ambiguity inside `P`.  The two blocks are
+Its rank is cluster dependent, but the protocol is defined by `P_ice`, not by
+enumerating or naming that number of states.  `Ran(P_ice)` means the range of
+the projector, `{|psi>: P_ice |psi> = |psi>}`: the complete subspace satisfying
+the ice rule on every tetrahedron.
+
+For oriented bond `(i,j)`, let
+`d_ij = r_j - r_i - n_ij^T L` and
+`c_ij = r_i + r_j - n_ij^T L`.  The source is an explicit phase in every
+microscopic exchange and pair-flip matrix element:
 
 ```text
-H_P^(N) = P exp(-S_N) H exp(S_N) P,
-H_Q^(N) = Q exp(-S_N) H exp(S_N) Q.
+H(theta) = H0 - Jpm sum_<ij> [
+    exp(+2 i theta.d_ij) S_i^+ S_j^-
+  + exp(-2 i theta.d_ij) S_i^- S_j^+
+] + Jpmpm sum_<ij> [
+    exp(-2 i theta.c_ij) S_i^+ S_j^+
+  + exp(+2 i theta.c_ij) S_i^- S_j^-
+].
 ```
 
-Resolve every completed row of `H_P^(N)` by its integer transported dipole
-`q in Z^3`.  The `M^3` character average
+This is the full finite-cluster microscopic Hamiltonian.  No effective
+Hamiltonian, energy denominator, or coupling expansion has been introduced.
+
+For a microscopic move, define its lifted polarization increment as `-d_ij`,
+`+d_ij`, `+c_ij`, or `-c_ij` for `S_i^+S_j^-`, `S_i^-S_j^+`,
+`S_i^+S_j^+`, or `S_i^-S_j^-`, respectively.  The phases multiply to
+`exp(-i theta.q_gamma)`, where
+`q_gamma = 2 sum_l Delta p_l`.  A completed contractible path has
+`q_gamma = 0`; a path closed only through a periodic image has nonzero
+integer transport.
+
+`P_theta` is not the ice projector.  It is the exact spectral projector of
+`H(theta)` onto the isolated band continuously connected to `Ran(P_ice)`:
 
 ```text
-Pi_M[H_P] = M^-3 sum_{m in Z_M^3} H_P(theta_m),
-theta_m = 2 pi m / M,
+P_theta = (1 / 2 pi i) contour_integral (z - H(theta))^-1 dz,
+rank(P_theta) = rank(P_ice).
 ```
 
-keeps `q = 0 mod M`.  At fixed order, choosing `M` above the largest possible
-transport gives the exact zero-transport operator.  Otherwise the residual is
-measured by the `M -> 2M` ladder.  The finite-order cleaned Hamiltonian is
+The contour encloses that band and no other eigenvalues.  If the band gap
+closes, the protocol fails.  If
+`G_theta = P_ice P_theta P_ice` is nonsingular on `Ran(P_ice)`, the polar map
 
 ```text
-H_clean^(N,M) = exp(S_N) [Pi_M H_P^(N) + H_Q^(N)] exp(-S_N).
+W_theta = P_theta P_ice G_theta^(-1/2)
+h(theta) = W_theta^dagger H(theta) W_theta
 ```
 
-No counterterm is fitted.  No thermal observable is averaged over boundary
-conditions.  Both operations were tested and rejected because they do not
-project completed virtual paths.
+puts every exact band operator in the same ice-rule reference space.  The
+winding-free operator is the continuous zero-transport Fourier coefficient
 
-## Exact-band limit
+```text
+h_0 = (2 pi)^-3 integral_[0,2pi)^3 h(theta) d^3 theta.
+```
 
-If an isolated band of dimension `dim(P)` exists, let `P_lambda` be its
-spectral projector.  Kato parallel transport, equivalently the polar map of
-`P P_lambda P`, defines a canonical unitary from `P` to `P_lambda`.  Pulling
-the exact band back with this unitary resums the canonical series as
-`N -> infinity`.  Loss of invertibility of `P P_lambda P` is a failed
-isolated-band gate, not a reason to extrapolate the protocol.
+The implemented character rule
+
+```text
+h_M = M^-3 sum_{m in Z_M^3} h(2 pi m / M)
+```
+
+keeps `q = 0 mod M`; finite `M` aliases `q = M k`.  The residual is measured
+by the `M -> 2M` ladder.
+
+## Why this is nonperturbative
+
+At each character point, the production calculation diagonalizes the
+microscopic `H(theta)` at the physical coupling.  It does not expand the
+eigenvalues, `P_theta`, `G_theta^(-1/2)`, or `h(theta)` in either transverse
+coupling.
+Formally, an analytic band could be written as
+
+```text
+h(theta; lambda) = sum_n lambda^n sum_q h[n,q] exp(-i theta.q).
+```
+
+The continuous character integral would give `sum_n lambda^n h[n,0]`.
+Low-order perturbation theory computes a few terms in that series; production
+instead evaluates `h(theta; lambda=1)` directly and then takes its zero
+Fourier component.  Perturbative rows are retained only to verify that the
+source removes the winding four-loop and retains the contractible hexagon.
+
+The nonperturbative claim is finite-cluster and selected-band specific.  It
+still requires an isolated band, nonsingular polar overlap, eigensolver
+convergence, character-grid convergence, and separate cluster-size tests.
 
 For full-temperature observables the complement is retained exactly:
 
 ```text
-spec(H_clean) = spec(Pi_M H_band) union spec(H outside the selected band).
+spec(H_replacement) = spec(h_M) union spec(H outside the selected band).
 ```
 
 Equivalently, partition-function moments of the bare band are subtracted from
-the microscopic trace and clean-band moments are added.  This defines one
-temperature-independent Hermitian Hamiltonian and preserves the spinon and
-high-temperature sectors.
+the microscopic trace and winding-free band moments are added.  This defines a
+temperature-independent hybrid diagnostic spectrum and preserves the
+microscopic complement; it is not the spectrum of the original `H(0)`.
 
-## Required gates
+## Frozen validation
 
-| Gate | Quantity | Pass criterion | Current status |
-|---|---|---|---|
-| topology | row-resolved transport | all winding four-loops removed; all contractible hexagons retained | passed at orders 2/3 on cubic-16 and FCC-32 |
-| order | low-order rows reproduce exact-band weak-coupling mechanism | qualitative/topological agreement | order 2/3 is diagnostic only; no production `N` limit required |
-| character | successive `M` centered operators and spectra | change below 5% | passed on exact cubic-16: `M=3 -> 4` is 0.498% |
-| band | minimum ice overlap and separation from complement | nonsingular pullback and stable band identity | passed in fixed `Sz=0`; minimum overlap 0.762 at `Jpm/Jzz=0.046` |
-| all temperature | high peak and entropy after exact-band replacement | stable high-temperature complement | high peak stable; entropy comparison fails |
-| cluster | cubic-16 vs FCC-32 | controlled drift toward bulk | order-three low peak still drifts strongly |
-| external | zero-flux QMC `C`, `S`, dynamics | cleaner approaches QMC and meets fixed tolerances | exact `M=4` improves heat RMSE 72.9% but heat and entropy both fail; dynamics pending |
+The mechanism and cubic exact implementation are now fixed rather than open
+campaign stages:
 
-Only observables whose gates pass can enter a physics claim.  FCC-32
-material fitting and dynamics require full-Hamiltonian low-band extraction,
-`N/M` convergence, and the zero-flux QMC gate first.
+| Quantity | Frozen evidence |
+|---|---|
+| topology | all audited winding four-loops and wrapping hexagons are removed; all contractible hexagons remain on cubic-16 and FCC-32 |
+| nonperturbative construction | each cubic source point uses the microscopic Hamiltonian and exact polar pullback |
+| pair-flip implementation | cubic-16 finite `Jpmpm` uses the full 65,536-state basis; the M=2 gauge identity holds to `2.5e-16` |
+| character resolution | cubic `M=3 -> 4` centered operator change is 0.498% |
+| band identity | minimum cubic ice overlap is 0.762 and Ritz residuals are below `4e-12` |
+| thermal complement | cubic high-temperature microscopic crossover survives band replacement |
+| external check | QMC heat comparison improves strongly, while the remaining heat/entropy mismatch is explicitly identified as a size limitation |
 
-## Campaign stages
+The order-two/order-three rows remain topology audits only.  They are never
+eligible as FCC-32 thermodynamics, dynamics, or material-fit curves.
 
-1. **Analytic/topological unit tests.** Enumerate loops and verify the
-   zero-transport row selector on both clusters.
-2. **Weak-coupling mechanism check.** Compare order 2/3 rows with the exact
-   pulled-back band; do not use the truncated block for production curves.
-3. **Character convergence.** Run matched exact-band grids with the primitive
-   `q=2 delta` source.  The active `M=3,4` cubic-16 sequence passes at 0.498%.
-4. **All-temperature check.** Combine the clean low band with exact ED on
-   cubic-16 and FTLM/SLQ on larger clusters.
-5. **Zero-flux benchmark.** At `Jpm/Jzz=0.046`, compare `C` and `S` with the
-   vector thermodynamic curves of Huang et al.  Then match their QMC-SAC
-   `Szz` and `S+-` at `T/Jzz=0.001, 0.04, 0.1` on the momentum paths actually
-   represented by each finite cluster.
-6. **FCC-32 deployment.** Compute the exact isolated band and stochastic
-   complement.  Order-three ice-manifold data alone are not a deployment.
-7. **Pi-flux/material application.** Only after stages 1-6, fit static and
-   dynamic observables.  Ce2Hf2O7 is motivation, not a current result.
+## Remaining deliverable A: FCC-32 Figure 1
+
+Figure 1 must be regenerated entirely on the `2 x 2 x 2` FCC cluster.  This is
+not a mechanical cluster-name change.
+
+1. **XYZ source.** The cubic-16 implementation is complete.  Scale the same
+   dominant-`a` convention to FCC-32,
+
+   ```text
+   Jpm   = -(Jb + Jc) / 4
+   Jpmpm =  (Jb - Jc) / 4.
+   ```
+
+   with both exchange channels sourced by the microscopic polarization change.
+   The FCC-32 path phase and zero-character selector must still be tested
+   independently for `S+S-` and `S+S+` sequences.
+
+2. **Scalable band extraction.** FCC-32 has `rank(P_ice)=2970`, but the full
+   `Sa=0` XXZ sector has dimension 601,080,390 and `Jpmpm` removes even that
+   conservation law.  The dense cubic backend is invalid.  Production needs a
+   distributed matrix-free eigensolver or another exact sparse backend with
+   restartable source points, residuals, band gaps, and polar-overlap spectra.
+
+3. **Character convergence.** Evaluate matched `M=2,3,4` grids.  Require less
+   than 5% centered operator change and less than 2% change in the plotted heat
+   capacity between the final two grids.  `M=2` alone only proves removal of
+   the shortest audited paths.
+
+4. **Microscopic complement.** Estimate the untouched thermal complement with
+   a stochastic trace method and require less than 1% relative trace error in
+   the plotted range.  Replacing an ice-space spectrum without this complement
+   is not an all-temperature result.
+
+5. **Figure products.** Save FCC-32 loop geometry, periodic and winding-free
+   `C` and `S`, and `Szz` at all eight translation momenta.  Periodic and
+   winding-free dynamics must use one dressed probe and pass zeroth-moment sum
+   rules.  The NPZ metadata contract is recorded in `campaign/README.md` and
+   numerical gates in `campaign/fcc32_xyz_manifest.json`.
+
+The existing cubic QMC discrepancy is not deleted.  The FCC-32 result must show
+that the drift is reduced before the cluster is presented as a bulk surrogate.
+
+## Remaining deliverable B: Ce2Hf2O7 parameter fit
+
+The fit uses the nearest-neighbor ABC Hamiltonian, not the XXZ slice.  For the
+published NLC-A parameters `(0.050, 0.021, 0.004)` meV,
+`Jpm=-0.00625` meV and `Jpmpm=0.00425` meV, so omitting `Jpmpm` is not a
+controlled material approximation.
+
+1. **Data.** The active v5 raster extraction and provenance are in
+   `campaign/data/`.  It supports visual comparison and exploratory ranking.
+   Submission-quality confidence intervals require author-provided tabulated
+   `Cmag` values and uncertainties.
+
+2. **Seeds and domain.** Start adaptive sampling around published NLC minima A
+   and B and the ordered-regime QMC minimum.  Enforce
+   `abs(Ja)>=abs(Jb),abs(Jc)` and `Jb>=Jc`; do not silently choose a permutation
+   of `(Jx~,Jy~,Jz~)` when comparing neutron observables.
+
+3. **Objective.** With raw uncertainties, reproduce the published weighted
+   high-temperature fit over 1.5--3 K and the shape fit over 0.1--1.5 K, then
+   add the FCC-32 winding-free low-temperature range down to 0.025 K.  Until
+   uncertainties are available, report only the unweighted RMSE ranking from
+   `run_ce2hf2o7_fit.py`, never a chi-square or confidence interval.
+
+4. **Refinement.** Rank the converged grid, refine every local minimum, and
+   profile all three exchanges.  Report temperature-window sensitivity,
+   character/complement numerical errors, and parameter correlations.
+
+5. **Holdout tests.** Entropy and neutron scattering are validation data, not
+   additional free normalization parameters.  A heat-capacity minimum becomes
+   a material candidate only if these holdout observables are consistent.
+
+The old `A*` moment-matched point is a useful seed, not a fit: it used a
+third-order FCC ring scale and no experimental likelihood.
+
+## Definition of done
+
+The campaign is complete when (i) Figure 1 contains only converged FCC-32
+products satisfying the manifest, and (ii) the fit report contains at least
+one refined ABC minimum with numerical error bars, experimental uncertainty
+provenance, and holdout checks.  Neither requirement can be met by relabeling
+the archived 2,970-state order-three calculation.
 
 ## Reproducibility
 
 `campaign/run_nonperturbative.py --max-grid 4` writes the exact pulled-back
 operators, thermodynamics, and gate report to `campaign/outputs/`; individual
 source points are restartable under `campaign/cache/nonperturbative_points/`.
+Passing `--jpmpm VALUE` selects the complete cubic-16 spin basis and emits
+selected-band products; all-temperature products additionally require a
+matching microscopic complement.
 `campaign/run_validation.py` retains the order-three topology diagnostics.
-`campaign/make_figures.py` reads only those products.  `legacy/` contains
-rejected approaches and preliminary claims; active code never imports it.
+`campaign/run_dssf.py` computes the frozen cubic-16 longitudinal validation.
+`campaign/make_figures.py` reads saved products.  The FCC-32 contract is in
+`campaign/fcc32_xyz_manifest.json`; `campaign/run_ce2hf2o7_fit.py` ranks only
+converged files satisfying that contract.  `legacy/` contains rejected
+approaches and preliminary claims; active code never imports it.

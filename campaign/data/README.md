@@ -37,3 +37,26 @@ the figure.
 The copyrighted source figure is not redistributed.  The extracted curve is
 used only for numerical verification and should be replaced by author data if
 available.
+
+# Ce2Hf2O7 material-fit input
+
+`ce2hf2o7_smith2025_digitized.csv` contains the experimental and published
+NLC-A traces extracted from Fig. 2(a) of Smith et al., *Phys. Rev. Lett.*
+**135**, 086702 (2025), arXiv:2501.08327v5.  The source archive was downloaded
+from arXiv and had SHA256
+`e536b26af0088f6de2e5047bca18410a213b89c026b7f5d6f8c6fb3a8aedcedd`;
+its `Figure2.png` had SHA256
+`cc2f9ea660b8c26320557734d337c7513be6073be95143750412e0d6c87646a9`.
+
+Regenerate the extraction with:
+
+```bash
+python campaign/data/extract_smith2025.py /path/to/Figure2.png
+```
+
+The raster does not provide the experimental uncertainties used in the
+published NLC objective.  Active code may use these points for exploratory
+curve ranking, but a submission-quality fit requires tabulated author data
+with uncertainties.  Published parameter seeds are A = `(0.050, 0.021,
+0.004)` meV, B = `(0.051, 0.008, -0.018)` meV, and the ordered-regime QMC
+fit = `(0.046, -0.003, -0.010)` meV.

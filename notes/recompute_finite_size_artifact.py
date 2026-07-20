@@ -395,6 +395,14 @@ def transport_delta(cl: Cluster, rows) -> np.ndarray:
     return rho + rows["N"] @ L4
 
 
+def transport_character(cl: Cluster, rows) -> np.ndarray:
+    """Return the integer source character q=2*delta for completed paths."""
+    twice_character = transport_delta(cl, rows)
+    if np.any(twice_character % 2):
+        raise RuntimeError("completed ice-to-ice path has noninteger character")
+    return twice_character // 2
+
+
 def assemble(cl: Cluster, pt, jpm: float, mode: str) -> np.ndarray:
     H = np.zeros((cl.n_ice, cl.n_ice), dtype=float)
     for key, power in (("H2", 2), ("H3", 3)):
@@ -471,11 +479,23 @@ def channel_survival(cl: Cluster, pt):
         rows = pt[key]
         if len(rows["c"]) == 0:
             continue
-        d0 = (transport_delta(cl, rows) == 0).all(axis=1)
+        character = transport_character(cl, rows)
+        d0 = (character == 0).all(axis=1)
         even = (rows["N"] % 2 == 0).all(axis=1)
+        finite_grid = {
+            size: (character % size == 0).all(axis=1) for size in (2, 3, 4)
+        }
         diff = ice[rows["s"]] ^ ice[rows["t"]]
         offdiag = rows["s"] != rows["t"]
-        stats = defaultdict(lambda: {"masks": 0, "corner": [], "delta0": [], "n0": []})
+        stats = defaultdict(
+            lambda: {
+                "masks": 0,
+                "corner": [],
+                "delta0": [],
+                "n0": [],
+                "finite_grid": {size: [] for size in (2, 3, 4)},
+            }
+        )
         for mask in sorted(set(int(x) for x in diff[offdiag])):
             if mask.bit_count() != nbits or mask not in known:
                 continue
@@ -491,10 +511,17 @@ def channel_survival(cl: Cluster, pt):
             stats[label]["delta0"].append(float(np.sum(np.abs(rows["c"][select & d0])) / total))
             n0 = (rows["N"] == 0).all(axis=1)
             stats[label]["n0"].append(float(np.sum(np.abs(rows["c"][select & n0])) / total))
+            for size, keep in finite_grid.items():
+                retained = np.sum(np.abs(rows["c"][select & keep])) / total
+                stats[label]["finite_grid"][size].append(float(retained))
         out[key] = {}
         for label, vals in sorted(stats.items()):
             out[key][label] = {
                 "masks": vals["masks"],
+                "finite_grid_terms": {
+                    f"M{size}": int(np.count_nonzero(np.asarray(retained) > 1.0e-12))
+                    for size, retained in vals["finite_grid"].items()
+                },
                 "corner_mean": float(np.mean(vals["corner"])),
                 "corner_min": float(np.min(vals["corner"])),
                 "corner_max": float(np.max(vals["corner"])),
@@ -502,6 +529,10 @@ def channel_survival(cl: Cluster, pt):
                 "delta0_mean": float(np.mean(vals["delta0"])),
                 "delta0_min": float(np.min(vals["delta0"])),
                 "delta0_max": float(np.max(vals["delta0"])),
+                "finite_grid_retained": {
+                    f"M{size}": float(np.mean(retained))
+                    for size, retained in vals["finite_grid"].items()
+                },
             }
     return out
 

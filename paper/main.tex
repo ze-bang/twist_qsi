@@ -1,21 +1,23 @@
-\documentclass[reprint,amsmath,amssymb,aps,prl,superscriptaddress]{revtex4-2}
+\documentclass[onecolumn,amsmath,amssymb,aps,prl,superscriptaddress]{revtex4-2}
 
 \usepackage{bm}
 \usepackage{graphicx}
-\usepackage{float}
 \usepackage{xcolor}
 \usepackage[colorlinks=true,citecolor=blue!55!black,urlcolor=blue!55!black]{hyperref}
 \graphicspath{{figs/}}
+\setlength{\emergencystretch}{2em}
 
 \newcommand{\Jzz}{J_{zz}}
 \newcommand{\Jpm}{J_{\pm}}
+\newcommand{\Jpp}{J_{\pm\pm}}
 \newcommand{\bq}{\bm q}
 \newcommand{\btheta}{\bm\theta}
 \newcommand{\PP}{\mathcal P}
+\newcommand{\Pice}{P_{\mathrm{ice}}}
 
 \begin{document}
 
-\title{Transport-projected exact diagonalization of quantum spin ice:
+\title{Winding-free exact diagonalization of quantum spin ice:
 benchmarks and convergence criteria}
 
 \author{Z.-B. Zhou}
@@ -26,21 +28,42 @@ benchmarks and convergence criteria}
 \begin{abstract}
 Exact diagonalization of quantum spin ice on a periodic cluster can generate
 noncontractible four-spin tunneling at second order, parametrically before
-the physical six-spin ring exchange.  We formulate a nonperturbative remedy:
+the physical six-spin ring exchange.  We formulate a nonperturbative
+winding-free remedy:
 exactly diagonalize a transported-dipole source family, canonically pull its
 isolated ice-descended band to a common basis, and project its zero Fourier
-component.  At $\Jpm/\Jzz=0.046$, the character sequence converges from
+component.  At $(\Jpm,\Jpp)/\Jzz=(0.046,0)$, the character sequence converges from
 $M=3$ to $M=4$ within $0.50\%$ in centered operator norm, with minimum ice
-overlap $0.762$.  Projection moves the cubic-16 heat-capacity peak from
+overlap $0.762$.  The winding-free band moves the cubic-16 heat-capacity peak from
 $0.0255\Jzz$ to $0.00146\Jzz$, compared with the quantum Monte Carlo value
 $0.00110\Jzz$, while retaining the exact microscopic complement.  The
-low-temperature heat-capacity error is reduced by $72.9\%$ but remains just
-outside our preregistered tolerance, and entropy also fails.  Thus the method
-is nonperturbatively converged on cubic-16, but the cluster is not yet a
-quantitative surrogate for bulk quantum spin ice.
+longitudinal response simultaneously moves from $0.08065\Jzz$ to a near-zero
+$\Gamma$ line and $0.00535\Jzz$ at the three allowed $X$ points.  Thus the
+method is nonperturbatively converged on cubic-16, but the cluster is not yet
+a quantitative surrogate for bulk quantum spin ice.
 \end{abstract}
 
 \maketitle
+\twocolumngrid
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_summary.pdf}
+\caption{Finite-torus transport and its winding-free removal on cubic-16.
+i.a) The contractible hexagon, viewed normal to its plane, has exact $D_6$
+geometry and $\bq_\gamma=0$.  i.b), i.c) Axial and diagonal winding four-loops
+close through periodic bonds (dashed) and carry $\bq_\gamma\ne0$.  Gray sites
+and bonds show the hosting pyrochlore cluster; colored arrows are spin
+transfers and the dark marker or arrow is their resultant
+$\bq_\gamma=2\sum_\ell\Delta\bm p_\ell$.  ii) Specific heat (solid, left
+axis) and entropy (dashed, right axis) at $(\Jpm,\Jpp)/\Jzz=(0.046,0)$; vertical lines
+mark $g_6$ and $g_4$.  iii.a), iii.b) Periodic and winding-free longitudinal
+response on common linear scales, with $X$ averaged over its three
+symmetry-equivalent representatives.  The same canonically dressed
+microscopic $S^z$ probe is used in both panels.}
+\label{fig:geometry}
+\label{fig:validation}
+\end{figure*}
 
 \emph{Motivation.}---Quantum spin ice (QSI) realizes a compact $U(1)$ gauge
 theory in a pyrochlore magnet: the two-in--two-out constraint is Gauss's law,
@@ -60,52 +83,104 @@ by an effective Hamiltonian.  Perturbation theory is used only to identify
 the offending path and test its topology; production results come from exact
 microscopic eigenspaces.  The controlled numerical limit is the
 transport-character resolution $M\to\infty$.  On the sign-free side,
-cleaning must also improve convergence toward QMC.  Exact removal of a known
+winding removal must also improve convergence toward QMC.  Exact removal of a known
 artifact is not by itself proof of convergence to the bulk.
 
 \emph{The finite torus changes the leading process.}---We study
 \begin{equation}
- H=\Jzz\sum_{\langle ij\rangle}S_i^zS_j^z
- -\Jpm\sum_{\langle ij\rangle}(S_i^+S_j^-+S_i^-S_j^+),
- \qquad \Jzz>0 .
+ \begin{aligned}
+ H={}&\Jzz\sum_{\langle ij\rangle}S_i^zS_j^z
+ -\Jpm\sum_{\langle ij\rangle}(S_i^+S_j^-+S_i^-S_j^+)\\
+ &+\Jpp\sum_{\langle ij\rangle}(S_i^+S_j^++S_i^-S_j^-),
+ \end{aligned}
+ \quad \Jzz>0 .
 \label{eq:model}
 \end{equation}
-The Ising ground states form the ice manifold $P$.  In the infinite
-pyrochlore lattice the shortest contractible ice-preserving cycle is a
-hexagon.  Its third-order matrix element has scale
+For an $S^z$ basis state $|s\rangle$, let
+$Q_t(s)=\sum_{i\in t}S_i^z(s)$.  The ice-rule projector is simply
+\begin{equation}
+ \Pice=\sum_{\substack{s:\,Q_t(s)=0\\\text{for every }t}}
+ |s\rangle\langle s| .
+\label{eq:ice_projector}
+\end{equation}
+Thus $\Pice$ is the orthogonal projector onto the subspace satisfying the ice
+rule on every tetrahedron.  In the infinite pyrochlore lattice the shortest
+contractible process acting within this subspace is a hexagon.  The protocol
+below includes both transverse couplings; the analytic scales quoted next and
+all present benchmark curves use the QMC-matched slice $\Jpp=0$.
+Its third-order matrix element has scale
 $g_6=12|\Jpm|^3/\Jzz^2$~\cite{Hermele2004}.  On a torus, however, a path may
 close through a periodic image.  Cubic-16 contains 36 winding four-cycles in
-two winding classes [Figs.~\ref{fig:geometry}(a) and \ref{fig:geometry}(b)]
-and 16 contractible hexagons [Fig.~\ref{fig:geometry}(c)].  The four-spin
+two winding classes [Figs.~\ref{fig:geometry}i.b) and
+\ref{fig:geometry}i.c)] and 16 contractible hexagons
+[Fig.~\ref{fig:geometry}i.a)].  The four-spin
 process enters at second order with $g_4=4\Jpm^2/\Jzz$, so
 $g_4/g_6=\Jzz/(3|\Jpm|)$ diverges in the nominally controlled limit.  FCC-32
 reduces but does not eliminate the problem: it has 24 winding four-cycles,
 32 contractible hexagons, and 96 wrapping hexagons.
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=0.94\textwidth]{fig_geometry.pdf}
-\caption{Representative gauge processes hosted on the periodic cubic-16
-pyrochlore cluster.  (a),(b) The two classes of ice-preserving four-spin loops
-close only through periodic identification.  (c) The physical six-spin
-hexagon closes in the covering lattice.  Dashed colored bonds cross the
-chosen cell boundary; the winding vector $\bm w$ is basis dependent, while
-its vanishing is not.}
-\label{fig:geometry}
-\end{figure*}
+The distinction is visible before assigning any perturbative amplitude.
+Lift each exchange sequence $\gamma$ to the periodic covering lattice and add
+its signed spin-transfer displacements.  The two four-loops transport a finite
+dipole $\bq_\gamma\ne0$ across the torus, although they return to the same
+finite-cell spin configuration.  By contrast, the alternating transfers on a
+contractible hexagon sum to $\bq_\gamma=0$.  Our protocol projects the exact
+ice-connected band onto this winding-free ($\bq=0$) character, and therefore removes
+the former while retaining the latter.
 
-\emph{Nonperturbative transport projection.}---Let $P$ project onto the
-90-state cubic-16 ice manifold.  Attach a microscopic source to every spin
-exchange so that a completed path carries $e^{-i\btheta\cdot\bq}$, where the
-primitive integer transported dipole is $\bq=2\bm\delta$.  For every
-$\btheta$, we diagonalize the microscopic $H(\btheta)$ in the $S^z=0$
-sector.  If $P_{\btheta}$ is the isolated 90-state spectral projector, the
-polar map
+\emph{Winding-free construction.}---For an oriented bond, let
+$\bm d_{ij}=\bm r_j-\bm r_i-\bm n_{ij}^{T}L$ be its displacement and
+$\bm c_{ij}=\bm r_i+\bm r_j-\bm n_{ij}^{T}L$ its pair-flip coordinate in the
+periodic covering lattice.  We diagonalize the explicitly sourced microscopic
+Hamiltonian
+\begin{align}
+ H(\btheta)=H_0-\Jpm\sum_{\langle ij\rangle}
+ \left(e^{2i\btheta\cdot\bm d_{ij}}S_i^+S_j^-
+ +e^{-2i\btheta\cdot\bm d_{ij}}S_i^-S_j^+\right)\nonumber\\
+ {}+\Jpp\sum_{\langle ij\rangle}
+ \left(e^{-2i\btheta\cdot\bm c_{ij}}S_i^+S_j^+
+ +e^{2i\btheta\cdot\bm c_{ij}}S_i^-S_j^-\right).
+\label{eq:sourced}
+\end{align}
+Equation~(\ref{eq:sourced}) is the full microscopic finite-cluster
+Hamiltonian, not an effective Hamiltonian.  No expansion or virtual-state
+denominator enters its definition.
+For a sequence $\gamma$ of microscopic moves, each step $\ell$ acts on the
+stored oriented bond $(i_\ell,j_\ell)$.  Its lifted polarization increment is
 \begin{equation}
- W_{\btheta}=P_{\btheta}P(PP_{\btheta}P)^{-1/2}
+ \Delta\bm p_\ell=\begin{cases}
+ -\bm d_{ij},&T_\ell=S_i^+S_j^-,\\
+ +\bm d_{ij},&T_\ell=S_i^-S_j^+,\\
+ +\bm c_{ij},&T_\ell=S_i^+S_j^+,\\
+ -\bm c_{ij},&T_\ell=S_i^-S_j^-.
+ \end{cases}
+\label{eq:polarization_increment}
+\end{equation}
+Multiplication of the source phases gives $e^{-i\btheta\cdot\bq_\gamma}$ with
+$\bq_\gamma=2\sum_{\ell\in\gamma}\Delta\bm p_\ell$.
+Completed ice-to-ice paths have integer $\bq_\gamma$: contractible paths have
+$\bq_\gamma=0$, whereas the targeted paths with nonzero net winding transport
+have $\bq_\gamma\ne0$.  This phase-product statement is an exact identity
+between microscopic matrix elements.
+
+The symbol $P_{\btheta}$ denotes the exact spectral projector of
+$H(\btheta)$ onto the isolated band continuously connected to
+the ice-rule subspace as the transverse couplings are turned on,
+\begin{equation}
+ P_{\btheta}=\frac{1}{2\pi i}\oint_{\Gamma_{\btheta}}
+ (z-H(\btheta))^{-1}dz,\qquad
+ \operatorname{rank}P_{\btheta}=\operatorname{rank}\Pice.
+\label{eq:spectral}
+\end{equation}
+It is distinct from the fixed ice projector.  The polar map
+\begin{equation}
+ W_{\btheta}=P_{\btheta}\Pice
+ (\Pice P_{\btheta}\Pice)^{-1/2}
 \label{eq:polar}
 \end{equation}
-canonically identifies it with $P$.  The exact pulled-back band is
+canonically identifies the exact band with the fixed ice-rule reference
+subspace.  The
+pulled-back operator is
 $h(\btheta)=W_{\btheta}^{\dagger}H(\btheta)W_{\btheta}$.  We define
 \begin{equation}
  h_M=\frac{1}{M^3}
@@ -113,28 +188,38 @@ $h(\btheta)=W_{\btheta}^{\dagger}H(\btheta)W_{\btheta}$.  We define
  h(2\pi\bm m/M).
 \label{eq:character}
 \end{equation}
-Equation~(\ref{eq:character}) retains $\bq=0\pmod M$; nonperturbatively,
-$M\to\infty$ is required.  A singular $PP_{\btheta}P$ is an explicit failure
-of the method.  The canonical Schrieffer--Wolff series~\cite{Bravyi2011}
-recovers this construction order by order and supplies the loop topology
-test, but it is not used to construct the reported spectrum.  Thus the
-operation is neither a fitted counterterm nor an average of partition
-functions.  For thermal
-observables we replace only the bare band by the projected band,
+Equation~(\ref{eq:character}) retains $\bq=0\pmod M$ and converges to the
+continuous zero-character integral as $M\to\infty$.  A closing band gap or a
+singular $\Pice P_{\btheta}\Pice$ is an explicit failure of the method.  The
+construction is nonperturbative on the finite cluster because
+$H(\btheta)$, $P_{\btheta}$, and the inverse square root in
+Eq.~(\ref{eq:polar}) are evaluated at the physical couplings, without a
+$\Jpm/\Jzz$ or $\Jpp/\Jzz$ expansion.  A formal expansion would recover all
+mixed orders in the two transverse couplings; the production
+calculation instead evaluates this function directly and projects its zero
+Fourier coefficient.  Low-order Schrieffer--Wolff rows~\cite{Bravyi2011}
+only audit the loop interpretation.  For thermal observables we define the
+hybrid replacement spectrum
 \begin{equation}
- Z_{\rm clean}=Z_{\rm full}-Z_{\rm bare\ band}+Z_{\rm clean\ band},
+ Z_{\rm wf}=Z_{\rm full}-Z_{\rm periodic\ band}+Z_{\rm wf\ band},
 \label{eq:replacement}
 \end{equation}
-and apply the same identity to the first two energy moments.  This is the
-spectrum of one Hermitian, temperature-independent operator and leaves the
-microscopic complement intact.  Derivations and numerical details are given
-in the Supplemental Material~\cite{supp}.
+and apply the same identity to the first two energy moments.  It leaves the
+microscopic complement intact, but it is a diagnostic spectrum rather than
+the spectrum of the original $H(0)$.  Derivations and numerical details are
+given in the Supplemental Material~\cite{supp}.
 
 \emph{Internal tests.}---Direct row enumeration through third order gives a
 binary topology test.  On both clusters, Eq.~(\ref{eq:character}) removes
 100\% of winding four-loop weight and wrapping-hexagon weight and retains
-100\% of contractible-hexagon weight.  At $\Jpm/\Jzz=0.046$, cubic-16 moves
-from the unprojected $T_{\rm p}/\Jzz=0.02554$ to $0.001252$.  FCC-32 gives
+100\% of contractible-hexagon weight.  The row classification and retained
+weight are defined explicitly in the Supplemental Material~\cite{supp}.  This
+is an order-two/order-three audit of the transport label; the exact-band
+projection itself is not truncated at either order.  At
+$(\Jpm,\Jpp)/\Jzz=(0.046,0)$,
+cubic-16 moves
+from the periodic $T_{\rm p}/\Jzz=0.02554$ to the winding-free value
+$0.001252$.  FCC-32 gives
 $0.008770$ and $0.000608$ respectively within the same third-order diagnostic.
 These FCC-32 values are not production thermodynamics.
 
@@ -143,40 +228,62 @@ The zero-source band has minimum ice overlap 0.762 and fixed-$S^z$ gap
 $0.627\Jzz$.  All $M=3,4$ source points have larger overlaps and gaps, with
 maximum Ritz residual $3.7\times10^{-12}$.  The centered operator changes by
 6.78\% from $M=2$ to 3, but only 0.498\% from $M=3$ to 4, passing the 5\%
-character gate [Fig.~\ref{fig:validation}(c)].
+character gate.  The low-order audit shows that $M=2$ already removes the
+shortest winding four-loops while retaining every contractible hexagon
+[the retained-weight table in the Supplemental Material~\cite{supp}].  It is
+not an all-order zero-transport projector:
+every nonzero $\bq=2\bm k$ is still aliased with zero.  The sizable $M=2$ to 3
+change and subsequent $M=3$ to 4 agreement therefore test higher-order
+characters, not additional removal of the audited shortest loops.
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=\columnwidth]{fig_nonperturbative_column.pdf}
-\caption{Nonperturbative validation at $\Jpm/\Jzz=0.046$ against Huang
-\emph{et al.}~\cite{Huang2018}.  (a) Exact character-projected heat capacity
-after retaining the microscopic complement.  (b) Entropy remains discrepant.
-(c) The $M=3\to4$ centered-operator change passes the 5\% gate.}
-\label{fig:validation}
-\end{figure}
+\emph{Winding-free dynamics.}---We hold the physical probe fixed while
+changing the band Hamiltonian.  Let $W_0$ be the exact zero-source isometry in
+Eq.~(\ref{eq:polar}) and define
+\begin{equation}
+ \widetilde S_a^z(\bq)=W_0^\dagger
+ \left(\sum_{j\in a}e^{-2\pi i\bq\cdot\bm r_j}S_j^z\right)W_0 .
+\label{eq:dssf_source}
+\end{equation}
+For either $h(\bm0)$ or $h_{M=4}$, we compute
+\begin{align}
+ S^{zz}(\bq,\omega)&=\frac{1}{Nd_0}
+ \sum_{g\in\mathcal G}\sum_{n\notin\mathcal G}\sum_{a=0}^3
+ |\langle n|\widetilde S_a^z(\bq)|g\rangle|^2 \nonumber\\[-2pt]
+ &\hspace{2.5cm}\times G_\eta[\omega-(E_n-E_g)],
+\label{eq:dssf}
+\end{align}
+where $\mathcal G$ is the ground multiplet and
+$\eta=6\times10^{-4}\Jzz$.  Cubic-16 has only four translation momenta,
+$\Gamma$ and three symmetry-related $X$ points, which reduce to the two
+classes shown below.
+
+The zero-source canonical isometry reproduces the cached periodic operator to
+$2.7\times10^{-14}$ relative error.  The periodic ground state is unique;
+the winding-free ground multiplet has dimension three.  The $X$-point
+centroid moves from $0.08069\Jzz$ to $0.005372\Jzz$, demonstrating that the
+construction reorganizes both energies and matrix elements rather than merely
+shifting a thermodynamic peak.
 
 \emph{External QMC gate.}---Huang \emph{et al.} simulate precisely
-Eq.~(\ref{eq:model}) at $\Jpm/\Jzz=0.046$ using continuous-time worm QMC and
+Eq.~(\ref{eq:model}) at $(\Jpm,\Jpp)/\Jzz=(0.046,0)$ using continuous-time worm QMC and
 report thermodynamics together with QMC-SAC dynamics on $8^3$ primitive
 cells~\cite{Huang2018}.  A vector extraction of their curves gives low- and
 high-temperature peaks at $T/\Jzz=0.001100$ and $0.2105$.  The converged
 $M=4$ result places the low peak at $0.001463\Jzz$ and reduces the
 low-temperature heat-capacity RMSE from 0.0859 to 0.02327, a 72.9\%
-improvement.  It nevertheless misses the preregistered 0.02 tolerance.
+improvement [Fig.~\ref{fig:validation}ii)].  It nevertheless misses the
+preregistered 0.02 tolerance.
 Entropy also fails: its RMSE is 0.04509, again above 0.02
-[Fig.~\ref{fig:validation}(b)].
+[Fig.~\ref{fig:validation}ii)].
 The same paper provides the next dynamics gate, $S^{zz}$ and $S^{+-}$ at
 $T/\Jzz=0.001$, 0.04, and 0.1; matching its momentum points, normalization,
 and SAC resolution remains to be done.
 
-\emph{Outlook.}---Transport projection solves a sharply defined problem: it
-removes nonzero-winding processes from a canonically identified gauge band.
-The exact $M=3,4$ agreement demonstrates that this correction is not merely
-a low-order perturbative construction.  It also shows why convergence of the
-method must be separated from convergence of the cluster: cubic-16 remains
-outside the QMC heat and entropy tolerances.  A material application therefore
-requires a full-Hamiltonian FCC-32 calculation, cluster convergence, and
-matched $S^{zz}$ and $S^{+-}$ dynamics before entering the $\pi$-flux regime.
+\emph{Outlook.}---The exact $M=3,4$ agreement establishes winding removal
+beyond low-order perturbation theory, but cubic-16 remains outside the QMC
+heat and entropy tolerances.  The remaining campaign is a character-converged
+FCC-32 ABC/XYZ calculation followed by a Ce$_2$Hf$_2$O$_7$ heat-capacity fit;
+entropy and matched neutron channels are holdout tests, not fit normalizations.
 
 \bibliography{references}
 
