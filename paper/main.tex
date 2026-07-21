@@ -365,12 +365,27 @@ Z_{\rm full}(\beta)
 e^{-\beta h(\bm0)}
 +
 \operatorname{Tr}_{\rm ice}
-e^{-\beta h_M},
+e^{-\beta\bar h_M},
 \label{eq:replacement}
 \end{equation}
 and perform the analogous substitution for the first two energy moments that
 give the internal energy and heat capacity; the microscopic spectrum outside
-the selected band is left unchanged. Equation~(\ref{eq:replacement}) defines
+the selected band is left unchanged. Here
+\begin{equation}
+\bar h_M
+=
+h_M+\frac{\operatorname{Tr}\left[h(\bm0)-h_M\right]}{d}I,
+\qquad
+d=\operatorname{rank}\Pice ,
+\label{eq:trace_match}
+\end{equation}
+fixes the scalar placement of the corrected band relative to the microscopic
+spectrum. The band Hamiltonians of Eq.~(\ref{eq:polar}) are referred to the
+ice manifold and therefore carry no absolute energy origin, which the
+character average of Eq.~(\ref{eq:character}) does not supply; matching the
+band trace to $h(\bm0)$ supplies it. Because a uniform shift of an isolated
+band cancels in both $C$ and $S$, this choice leaves the reported
+low-temperature observables unchanged. Equation~(\ref{eq:replacement}) defines
 a finite-size diagnostic rather than the partition function of the original
 periodic Hamiltonian. Derivations and numerical details are given in the
 Supplemental Material~\cite{supp}.
@@ -397,7 +412,11 @@ grid. At $\btheta=\bm0$ the smallest overlap between the selected band and
 the ice manifold is $0.762$, and the gap to the remaining spectrum in the
 working total-$S^z$ sector is $0.627\Jzz$; every point on the $M=3$ and $M=4$
 grids has both a larger overlap and a larger gap, with a largest Ritz
-residual of $3.7\times10^{-12}$. After subtracting the scalar component of
+residual of $3.7\times10^{-12}$. The band is also the lowest $d=90$ levels of
+the complete $65\,536$-state spectrum, separated from the rest of it by
+$0.3874\Jzz$; this is the gap that isolates the replaced band in
+Eq.~(\ref{eq:replacement}), and it exceeds the low-temperature peak scale by
+more than two orders of magnitude. After subtracting the scalar component of
 the band Hamiltonian, the relative change is $6.78\%$ between $M=2$ and
 $M=3$, but only $0.498\%$ between $M=3$ and $M=4$, establishing sub-percent
 convergence of the projected band. The larger discrepancy at $M=2$ is
