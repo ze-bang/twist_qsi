@@ -313,8 +313,10 @@ remain open.  None of these conditions implies cluster-size convergence.
 The order of operations cannot be changed.  Averaging $H(\btheta)$ before
 diagonalization removes individual hops before they compose.  Averaging
 $\operatorname{Tr}e^{-\beta H(\btheta)}$ averages a nonlinear observable,
-not the operator in Eq.~(\ref{eq:continuous_si}).  A counterterm cancels
-selected amplitudes but does not perform the Fourier projection.
+not the operator in Eq.~(\ref{eq:continuous_si}).  Likewise, a counterterm
+guessed before the character projection would cancel selected amplitudes
+rather than transport sectors.  Equation~(\ref{eq:full_hamiltonian_si}) instead
+embeds the correction only after the exact character projection is complete.
 
 \section{Perturbative path enumeration as a topology audit}
 
@@ -425,12 +427,34 @@ preassigned 5\% gate.}
 
 \section{Full-temperature thermodynamics}
 
-Let $\{E_i\}$ be the full microscopic spectrum, $B$ the indices of the bare
-selected band, and $\{\widetilde E_a\}$ the winding-free band spectrum.  The current
-thermodynamic diagnostic explicitly shifts the winding-free band to match the
-bare-band trace, thereby fixing its scalar energy relative to the untouched
-complement.  This trace match is a convention of the replacement spectrum,
-not part of the zero-character projection.  Define, for $k=0,1,2$,
+The final method is defined on the complete microscopic Hilbert space, not on
+the ice reference space.  The projectors construct its counterterm; they do
+not restrict the thermodynamic trace.  Set $d=\operatorname{rank}\Pice$ and fix the
+otherwise undetermined scalar placement of the corrected band by
+\begin{equation}
+ \bar h_M=h_M+\frac{\operatorname{Tr}[h(\bm0)-h_M]}{d}I_d.
+\label{eq:trace_match_si}
+\end{equation}
+The full-Hilbert winding-free Hamiltonian is
+\begin{equation}
+ H_{\rm wf}^{(M)}=H(\bm0)+W_0[\bar h_M-h(\bm0)]W_0^\dagger.
+\label{eq:full_hamiltonian_si}
+\end{equation}
+It is one temperature-independent Hermitian operator.  Since
+$W_0W_0^\dagger=P_0$, it equals $H(\bm0)$ exactly on the spectral complement
+of the ice-descended band.  The correction therefore acts in the microscopic
+Hilbert space but is generally a nonlocal, band-supported counterterm;
+the low-order projected rows only verify its loop content.
+
+The partition function is the ordinary full trace
+\begin{equation}
+ Z_{\rm wf}=\operatorname{Tr}_{\mathcal H}e^{-\beta H_{\rm wf}^{(M)}}.
+\label{eq:full_partition_si}
+\end{equation}
+For computation, let $\{E_i\}$ be the full periodic spectrum, $B$ the indices
+of its selected band, and $\{\widetilde E_a\}$ the eigenvalues of $\bar h_M$.
+The exact spectral decomposition of Eq.~(\ref{eq:full_partition_si}) gives,
+for $k=0,1,2$,
 \begin{equation}
  M_k^{\rm wf}(\beta)=
  \sum_{i\notin B}E_i^k e^{-\beta E_i}
@@ -443,8 +467,9 @@ Then
  C&=\beta^2\left(M_2/M_0-(M_1/M_0)^2\right),\\
  S&=\ln M_0+\beta E.
 \end{align}
-Equation~(\ref{eq:moments}) is equivalent to diagonalizing one Hermitian
-operator whose selected block is replaced and whose complement is unchanged.
+Equation~(\ref{eq:moments}) is thus an evaluation identity for the full
+Hamiltonian in Eq.~(\ref{eq:full_hamiltonian_si}), not a separate
+thermodynamic prescription.
 For the present $\Jpp=0$ cubic-16 benchmark we use the complete
 65,536-level spectrum.  For FCC-32 the same
 identity requires stochastic trace estimation of the complement; that
@@ -452,8 +477,12 @@ calculation has not yet been performed.
 
 \section{Longitudinal winding-free dynamics}
 
-The dynamical comparison changes only the selected-band Hamiltonian.  The
-microscopic spin probe is held fixed by the exact zero-source canonical map.
+The full response is defined using $H_{\rm wf}^{(M)}$ and the unchanged
+microscopic spin operator.  The plotted range lies below the minimum
+$0.440\Jzz$ excitation into the exact band complement, so no complement state
+can occur as a final state in that window.  The full Lehmann representation
+therefore reduces exactly to the following band restriction.  The
+microscopic spin probe is pulled back with the exact zero-source canonical map.
 Let $W_0$ denote Eq.~(\ref{eq:polar_si}) at $\btheta=0$ and define
 \begin{equation}
  \widetilde S_a^z(\bq)=W_0^\dagger
@@ -465,7 +494,7 @@ $\widetilde S_a^z$ with the periodic operator $h(\bm0)$ and the winding-free
 operator $h_{M=4}$.  This avoids attributing a change of probe convention to
 the winding-free Hamiltonian.
 
-For eigenstates of either operator,
+For the low-energy eigenstates of either full Hamiltonian,
 \begin{equation}
  S^{zz}(\bq,\omega)=\frac{1}{Nd_0}
  \sum_{g\in\mathcal G}\sum_{n\notin\mathcal G}\sum_{a=0}^{3}
@@ -488,8 +517,8 @@ The four characters of the cubic-16 translation group are represented by
 in reciprocal cubic units.  No interpolated momenta are plotted.  The complete
 line summary is given in Table~\ref{tab:dssf_lines}.
 \begin{table}[htbp]
-\caption{Cubic-16 longitudinal spectral lines for the periodic and
-winding-free band Hamiltonians.}
+\caption{Low-energy cubic-16 longitudinal spectral lines for the periodic and
+full-Hilbert winding-free Hamiltonians.}
 \label{tab:dssf_lines}
 \centering
 \begin{tabular}{llrrr}

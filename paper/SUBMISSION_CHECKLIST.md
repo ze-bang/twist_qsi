@@ -6,10 +6,12 @@
   cubic-16 and FCC-32.
 - [x] Cubic-16 exact-band character convergence passes at `M=3 -> 4` with
   0.498% centered operator change.
-- [x] Full-spectrum cubic-16 thermodynamics retains the microscopic
-  high-temperature complement.
-- [x] Periodic and winding-free cubic-16 `Szz` use one dressed microscopic
-  probe and only allowed momenta.
+- [x] Full-Hilbert cubic-16 thermodynamics uses
+  `H_wf = H(0) + W0 [hbar_M - h(0)] W0^dagger` and retains the microscopic
+  high-temperature complement exactly.
+- [x] Periodic and winding-free cubic-16 low-frequency `Szz` use one
+  microscopic probe and only allowed momenta; the omitted complement begins
+  above the plotted window.
 - [x] Huang et al. QMC thermodynamic provenance and the residual cubic-size
   discrepancy are reported rather than hidden.
 

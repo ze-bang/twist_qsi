@@ -100,22 +100,34 @@ def centered_relative_error(left: np.ndarray, right: np.ndarray) -> float:
     return float(np.linalg.norm(left - right) / max(np.linalg.norm(right), 1.0e-15))
 
 
+def full_hilbert_counterterm_spectrum(
+    full_spectrum: np.ndarray,
+    winding_free_band: np.ndarray,
+    *,
+    match_trace: bool = True,
+) -> np.ndarray:
+    """Return the spectrum of the full-Hilbert counterterm Hamiltonian.
+
+    The band-supported correction changes the exact low-energy block and is
+    zero on its microscopic complement.  ``match_trace`` fixes the scalar
+    placement of the corrected block relative to that complement.
+    """
+    full = np.sort(np.asarray(full_spectrum, dtype=float))
+    clean = np.sort(np.asarray(winding_free_band, dtype=float))
+    if len(clean) >= len(full):
+        raise ValueError("the corrected band must be smaller than the full spectrum")
+    if match_trace:
+        clean = clean + full[: len(clean)].mean() - clean.mean()
+    return np.sort(np.concatenate((clean, full[len(clean) :])))
+
+
 def replace_low_band(
     full_spectrum: np.ndarray,
     clean_band: np.ndarray,
     *,
     match_trace: bool = True,
 ) -> np.ndarray:
-    """Replace the lowest microscopic band while retaining its complement.
-
-    Character projection preserves the model-space trace.  `match_trace`
-    enforces that identity when the clean band comes from a truncated series,
-    which also fixes its energy relative to the untouched complement.
-    """
-    full = np.sort(np.asarray(full_spectrum, dtype=float))
-    clean = np.sort(np.asarray(clean_band, dtype=float))
-    if len(clean) >= len(full):
-        raise ValueError("the replacement band must be smaller than the full spectrum")
-    if match_trace:
-        clean = clean + full[: len(clean)].mean() - clean.mean()
-    return np.sort(np.concatenate((clean, full[len(clean) :])))
+    """Compatibility alias for :func:`full_hilbert_counterterm_spectrum`."""
+    return full_hilbert_counterterm_spectrum(
+        full_spectrum, clean_band, match_trace=match_trace
+    )

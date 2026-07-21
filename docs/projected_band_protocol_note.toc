@@ -5,7 +5,7 @@
 \contentsline {section}{\numberline {5}In what sense is the construction nonperturbative?}{6}{section.5}%
 \contentsline {section}{\numberline {6}Production algorithm}{7}{section.6}%
 \contentsline {section}{\numberline {7}Low-order path enumeration is an audit}{7}{section.7}%
-\contentsline {section}{\numberline {8}Full-temperature spectral replacement}{8}{section.8}%
+\contentsline {section}{\numberline {8}Full-Hilbert Hamiltonian and thermodynamics}{8}{section.8}%
 \contentsline {section}{\numberline {9}External verification against Huang et al.}{8}{section.9}%
 \contentsline {section}{\numberline {10}Internal winding-free dynamics}{9}{section.10}%
 \contentsline {section}{\numberline {11}How the campaign runner fits together}{10}{section.11}%

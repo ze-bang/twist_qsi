@@ -36,7 +36,7 @@ from qsi_campaign.exact_band import (  # noqa: E402
 from qsi_campaign.protocol import (  # noqa: E402
     centered_relative_error,
     character_project,
-    replace_low_band,
+    full_hilbert_counterterm_spectrum,
 )
 from qsi_campaign.thermodynamics import peak_in_window, thermal_observables  # noqa: E402
 
@@ -212,10 +212,10 @@ def thermodynamic_metrics(
     qmc_heat,
     qmc_entropy,
 ):
-    replaced = replace_low_band(full_spectrum, clean_spectrum)
-    thermal = thermal_observables(replaced, temperatures, n_sites=16)
+    corrected = full_hilbert_counterterm_spectrum(full_spectrum, clean_spectrum)
+    thermal = thermal_observables(corrected, temperatures, n_sites=16)
     low_mask = qmc_temperature <= 2.0e-2
-    return replaced, thermal, {
+    return corrected, thermal, {
         "low_temperature_heat_rmse": log_grid_rmse(
             qmc_temperature[low_mask],
             qmc_heat[low_mask],

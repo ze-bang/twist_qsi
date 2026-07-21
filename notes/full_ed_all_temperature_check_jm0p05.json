@@ -1,5 +1,5 @@
 {
-  "method": "exact full spectrum plus ice-band spectral replacement",
+  "method": "full-Hilbert winding-free counterterm Hamiltonian",
   "jpm": -0.05,
   "n_sites": 16,
   "n_full_eigenvalues": 65536,

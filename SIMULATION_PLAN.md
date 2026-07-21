@@ -103,16 +103,20 @@ The nonperturbative claim is finite-cluster and selected-band specific.  It
 still requires an isolated band, nonsingular polar overlap, eigensolver
 convergence, character-grid convergence, and separate cluster-size tests.
 
-For full-temperature observables the complement is retained exactly:
+For final observables, embed the winding-free band difference into the full
+microscopic Hilbert space:
 
 ```text
-spec(H_replacement) = spec(h_M) union spec(H outside the selected band).
+bar_h_M = trace_matched(h_M, h(0))
+H_wf = H(0) + W_0 [bar_h_M - h(0)] W_0^dagger
+Z_wf = Tr_full exp(-beta H_wf).
 ```
 
 Equivalently, partition-function moments of the bare band are subtracted from
-the microscopic trace and winding-free band moments are added.  This defines a
-temperature-independent hybrid diagnostic spectrum and preserves the
-microscopic complement; it is not the spectrum of the original `H(0)`.
+the microscopic trace and winding-free band moments are added.  This is an
+evaluation identity for one temperature-independent full-Hilbert Hamiltonian,
+which equals `H(0)` on the exact band complement.  The embedded correction is
+band-supported and generally nonlocal.
 
 ## Frozen validation
 
@@ -126,7 +130,7 @@ campaign stages:
 | pair-flip implementation | cubic-16 finite `Jpmpm` uses the full 65,536-state basis; the M=2 gauge identity holds to `2.5e-16` |
 | character resolution | cubic `M=3 -> 4` centered operator change is 0.498% |
 | band identity | minimum cubic ice overlap is 0.762 and Ritz residuals are below `4e-12` |
-| thermal complement | cubic high-temperature microscopic crossover survives band replacement |
+| thermal complement | cubic high-temperature microscopic crossover is retained by the full-Hilbert embedding |
 | external check | QMC heat comparison improves strongly, while the remaining heat/entropy mismatch is explicitly identified as a size limitation |
 
 The order-two/order-three rows remain topology audits only.  They are never

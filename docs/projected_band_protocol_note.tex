@@ -450,23 +450,28 @@ FCC-32 & 24 & 32 & 96\\
 \end{table}
 Neither cluster contains a contractible four-cycle.
 
-\section{Full-temperature spectral replacement}
+\section{Full-Hilbert Hamiltonian and thermodynamics}
 
-The nonperturbative construction above returns a selected band, not a full
-spectrum.  For the cubic-16 thermodynamic diagnostic, let
-$d=\operatorname{rank}\Pice$, let
-$E_1\le\cdots\le E_D$ be the exact unsourced microscopic spectrum, and let
-$\widetilde E_1,\ldots,\widetilde E_d$ be the eigenvalues of $h_M$.  After
-matching the band trace, the diagnostic spectrum is defined as
+The pulled-back band is an intermediate construction that determines the
+counterterm.  It is not the state space used for thermodynamics: final
+observables use one Hermitian operator on the complete microscopic Hilbert
+space.  Define
 \begin{equation}
- \mathrm{spec}(H_{\rm replacement})=
- \{\widetilde E_a\}_{a=1}^{d}\cup\{E_i\}_{i=d+1}^{D}.
- \label{eq:replacement}
+ \bar h_M=h_M+\frac{\operatorname{Tr}[h(\bm0)-h_M]}{d}I_d,
+ \qquad d=\operatorname{rank}\Pice,
 \end{equation}
-This is a temperature-independent hybrid spectrum that leaves the microscopic
-complement unchanged.  It is useful for testing whether making the selected band winding-free
-band improves all-temperature observables, but it is not the spectrum of the
-original $H(0)$ and should not be described as such.
+and embed its difference from the periodic band with the exact zero-source
+isometry:
+\begin{equation}
+ H_{\rm wf}^{(M)}=H(\bm0)+W_0[\bar h_M-h(\bm0)]W_0^\dagger.
+ \label{eq:fullhamiltonian}
+\end{equation}
+Because $W_0W_0^\dagger=P_0$, this full-Hilbert Hamiltonian equals $H(\bm0)$
+on the exact band complement.  Its correction is generally nonlocal, but no
+state outside the selected band is discarded.  The partition function is the
+ordinary trace $Z_{\rm wf}=\operatorname{Tr}_{\mathcal H}
+e^{-\beta H_{\rm wf}^{(M)}}$.  Replacing the lowest $d$ eigenvalues in the
+stored spectrum is merely an efficient evaluation of this operator identity.
 
 For any finite spectrum, the thermodynamics are evaluated after shifting by
 the ground-state energy to stabilize the Boltzmann weights:
@@ -590,8 +595,8 @@ for M in [3, 4]:
     hM = average(h over Z_M^3)
 
 E_full = load cached exact cubic16 spectrum
-E_replacement = replace_low_band(E_full, eigvalsh(hM))
-compute C/N and S/N from E_full and E_replacement
+E_wf = spectrum_of_full_Hwf(E_full, eigvalsh(hM), trace_match=True)
+compute C/N and S/N from E_full and E_wf
 
 load Huang vector-extracted C/N and S/N
 evaluate fixed gates
@@ -624,7 +629,7 @@ and ice states\\
 Eq.~\eqref{eq:pathphase}\\
 \code{assemble} & periodic or direct winding-free order-three matrix\\
 \nolinkurl{src/qsi_campaign/protocol.py} & polar pullback, character average,
-centered operator error, and low-band spectral replacement\\
+centered operator error, and full-Hilbert counterterm embedding\\
 \nolinkurl{src/qsi_campaign/exact_band.py} & fixed-magnetization basis,
 microscopic character Hamiltonian, sparse exact-band extraction, gauge orbit,
 and overlap/Ritz diagnostics\\

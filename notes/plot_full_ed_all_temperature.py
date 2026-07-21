@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 """All-temperature full-ED check for the 16-site twist protocol.
 
-The low-band twist projection is not a full-Hilbert thermal trace.  This
-script therefore computes the exact microscopic spectrum and then performs a
-minimal spectral replacement: only the ice-band eigenvalues are replaced by the
-twist-projected clean band, while every higher-energy state is kept from the
-untwisted full ED spectrum.
+The script evaluates the spectrum of the full-Hilbert counterterm Hamiltonian:
+the exact ice-descended block is changed by the winding-free correction, while
+the microscopic complement is retained exactly.
 """
 from __future__ import annotations
 
@@ -99,7 +97,9 @@ def peak_in_window(temps: np.ndarray, curve: np.ndarray, lo: float, hi: float) -
     return float(temps[k0]), float(curve[k0])
 
 
-def shifted_replacement_band(e_full: np.ndarray, e_clean: np.ndarray) -> np.ndarray:
+def full_hilbert_counterterm_spectrum(
+    e_full: np.ndarray, e_clean: np.ndarray
+) -> np.ndarray:
     n = len(e_clean)
     clean = np.sort(np.asarray(e_clean, dtype=float))
     shift = float(np.mean(e_full[:n]) - np.mean(clean))
@@ -122,21 +122,21 @@ def main() -> None:
     n_band = len(e_low_clean)
 
     low_match = float(np.max(np.abs(np.sort(e_full[:n_band]) - e_low_phi0)))
-    e_replaced = shifted_replacement_band(e_full, e_low_clean)
+    e_wf = full_hilbert_counterterm_spectrum(e_full, e_low_clean)
 
     temps = np.geomspace(1.0e-4, 5.0, 1600)
     c_full = specific_heat_batched(e_full, temps)
-    c_replaced = specific_heat_batched(e_replaced, temps)
+    c_wf = specific_heat_batched(e_wf, temps)
     c_low_phi0 = R.specific_heat(e_low_phi0, temps)
     c_low_clean = R.specific_heat(e_low_clean, temps)
 
     low_full = peak_in_window(temps, c_full, 2.0e-3, 8.0e-2)
-    low_replaced = peak_in_window(temps, c_replaced, 2.0e-4, 8.0e-2)
+    low_replaced = peak_in_window(temps, c_wf, 2.0e-4, 8.0e-2)
     high_full = peak_in_window(temps, c_full, 8.0e-2, 3.0)
-    high_replaced = peak_in_window(temps, c_replaced, 8.0e-2, 3.0)
+    high_replaced = peak_in_window(temps, c_wf, 8.0e-2, 3.0)
 
     summary = {
-        "method": "exact full spectrum plus ice-band spectral replacement",
+        "method": "full-Hilbert winding-free counterterm Hamiltonian",
         "jpm": jpm,
         "n_sites": int(cl.n_sites),
         "n_full_eigenvalues": int(len(e_full)),
@@ -158,11 +158,11 @@ def main() -> None:
         out_path,
         T=temps,
         E_full=e_full,
-        E_replaced=e_replaced,
+        E_wf=e_wf,
         E_low_phi0=e_low_phi0,
         E_low_clean=e_low_clean,
         C_full=c_full,
-        C_replaced=c_replaced,
+        C_wf=c_wf,
         C_low_phi0=c_low_phi0,
         C_low_clean=c_low_clean,
         summary=json.dumps(summary),
@@ -179,10 +179,10 @@ def main() -> None:
     ax.plot(temps, c_full / cl.n_sites, color="black", lw=2.0, label="full ED")
     ax.plot(
         temps,
-        c_replaced / cl.n_sites,
+        c_wf / cl.n_sites,
         color="#1b9e77",
         lw=1.8,
-        label="full ED with clean ice-band replacement",
+        label="full-Hilbert winding-free",
     )
     ax.scatter([high_full[0]], [high_full[1] / cl.n_sites], color="black", s=18, zorder=3)
     ax.scatter([high_replaced[0]], [high_replaced[1] / cl.n_sites], color="#1b9e77", s=18, zorder=3)
@@ -192,7 +192,7 @@ def main() -> None:
 
     mask_low = temps <= 0.12
     ax_zoom.plot(temps, c_full / cl.n_sites, color="black", lw=1.8, label="full ED")
-    ax_zoom.plot(temps, c_replaced / cl.n_sites, color="#1b9e77", lw=1.8)
+    ax_zoom.plot(temps, c_wf / cl.n_sites, color="#1b9e77", lw=1.8)
     ax_zoom.plot(
         temps[mask_low],
         c_low_phi0[mask_low] / cl.n_sites,

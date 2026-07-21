@@ -4,7 +4,7 @@ from qsi_campaign.protocol import (
     band_operator_from_eigenvectors,
     band_operator_from_projected_vectors,
     character_project,
-    replace_low_band,
+    full_hilbert_counterterm_spectrum,
 )
 
 
@@ -40,7 +40,7 @@ def test_projected_band_pullback_is_invariant_to_column_phases():
     assert diagnostics["pullback_unitarity_error"] < 1.0e-12
 
 
-def test_band_replacement_preserves_complement_and_trace():
+def test_full_hilbert_counterterm_preserves_complement_and_trace():
     full = np.array([-4.0, -3.0, 1.0, 2.0])
-    replaced = replace_low_band(full, np.array([-1.0, 1.0]))
-    np.testing.assert_allclose(replaced, np.array([-4.5, -2.5, 1.0, 2.0]))
+    corrected = full_hilbert_counterterm_spectrum(full, np.array([-1.0, 1.0]))
+    np.testing.assert_allclose(corrected, np.array([-4.5, -2.5, 1.0, 2.0]))

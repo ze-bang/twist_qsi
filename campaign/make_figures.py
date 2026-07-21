@@ -46,8 +46,9 @@ QMC = "#111111"
 
 
 def save(figure: plt.Figure, name: str) -> None:
-    for extension in ("pdf", "png"):
-        figure.savefig(FIGURES / f"{name}.{extension}", bbox_inches="tight")
+    # PDF only: the manuscripts include the vector version, and nothing
+    # references a raster copy.
+    figure.savefig(FIGURES / f"{name}.pdf", bbox_inches="tight")
     plt.close(figure)
 
 
@@ -74,6 +75,28 @@ def _edge_wrap(cluster, left: int, right: int) -> tuple[int, int, int]:
     raise ValueError(f"sites {left}, {right} are not adjacent")
 
 
+def _transport_walk(cluster, path: tuple[int, ...]) -> np.ndarray:
+    """Running partial sums 2*sum_l Delta p_l along a loop.
+
+    Row n is the transport accumulated after n moves, so row 0 is the origin
+    and the final row is q_gamma.  Only alternating edges carry a move: the
+    intervening edges are the return legs of the same exchange.
+    """
+    total = np.zeros(3, dtype=float)
+    points = [total.copy()]
+    for edge_index, (left, right) in enumerate(zip(path, path[1:] + path[:1])):
+        if edge_index % 2:
+            continue
+        image = np.asarray(_edge_wrap(cluster, left, right), dtype=float)
+        total = total + 2.0 * (
+            cluster.positions[right]
+            - cluster.positions[left]
+            - image @ cluster.Lvecs
+        )
+        points.append(total.copy())
+    return np.array(points)
+
+
 def _projection_basis(view: np.ndarray) -> np.ndarray:
     normal = np.asarray(view, dtype=float)
     normal /= np.linalg.norm(normal)
@@ -94,6 +117,7 @@ def _draw_cluster_loop(
     color: str,
     view: np.ndarray,
     title: str,
+    annotate_moves: bool = False,
 ) -> None:
     basis = _projection_basis(view)
     projected = cluster.positions @ basis.T
@@ -117,7 +141,10 @@ def _draw_cluster_loop(
     )
 
     loop = projected[list(path)]
-    transported_dipole = np.zeros(3, dtype=float)
+    walk = _transport_walk(cluster, path)
+    transported_dipole = walk[-1]
+    increments = np.diff(walk, axis=0)
+    loop_center = loop.mean(axis=0)
     for edge_index, (left, right) in enumerate(zip(path, path[1:] + path[:1])):
         edge = projected[[left, right]]
         image = np.asarray(_edge_wrap(cluster, left, right), dtype=float)
@@ -132,11 +159,36 @@ def _draw_cluster_loop(
         )
         if edge_index % 2 == 0:
             _draw_exchange_arrow(ax, edge[0], edge[1], color)
-            transported_dipole += 2.0 * (
-                cluster.positions[right]
-                - cluster.positions[left]
-                - image @ cluster.Lvecs
-            )
+            if annotate_moves:
+                # Each move contributes 2*Delta p_l; on these clusters that is
+                # always a half-integer vector, so print it as (n)/2.
+                doubled = np.rint(2.0 * increments[edge_index // 2]).astype(int)
+                anchor = 0.5 * (edge[0] + edge[1])
+                # Sit beside the arrow, on the side facing away from the loop
+                # centre, so parallel moves do not stack on the same spot.
+                along = edge[1] - edge[0]
+                perpendicular = np.array([-along[1], along[0]])
+                norm = np.linalg.norm(perpendicular)
+                perpendicular = (
+                    perpendicular / norm if norm > 1.0e-9 else np.array([0.0, 1.0])
+                )
+                if np.dot(perpendicular, anchor - loop_center) < 0.0:
+                    perpendicular = -perpendicular
+                ax.text(
+                    *(anchor + 0.195 * perpendicular),
+                    rf"$({doubled[0]},{doubled[1]},{doubled[2]})/2$",
+                    color=color,
+                    fontsize=5.4,
+                    ha="center",
+                    va="center",
+                    zorder=7,
+                    bbox={
+                        "boxstyle": "round,pad=0.10",
+                        "facecolor": "white",
+                        "edgecolor": "none",
+                        "alpha": 0.9,
+                    },
+                )
     faces = [color if index % 2 == 0 else "white" for index in range(len(path))]
     ax.scatter(
         loop[:, 0],
@@ -200,9 +252,9 @@ def _geometry_panel_data():
     hex_points = cluster.positions[list(hexagon[0])]
     _, _, right_vectors = np.linalg.svd(hex_points - hex_points.mean(axis=0))
     panels = (
-        (*hexagon, CLEAN, right_vectors[-1], r"(a) $D_6$ hexagon"),
-        (*axial, BARE, np.array([1.25, -1.45, 1.0]), r"(b) axial four-loop"),
-        (*diagonal, "#cc79a7", np.array([1.25, -1.45, 1.0]), r"(c) diagonal four-loop"),
+        (*hexagon, CLEAN, right_vectors[-1], r"(a) hexagon"),
+        (*axial, BARE, np.array([1.25, -1.45, 1.0]), r"(b) axial"),
+        (*diagonal, "#cc79a7", np.array([1.25, -1.45, 1.0]), r"(c) diagonal"),
     )
     return cluster, panels
 
@@ -210,6 +262,7 @@ def _geometry_panel_data():
 def geometry_figure() -> None:
     cluster, panels = _geometry_panel_data()
 
+    # Single-column variant: too narrow for the per-move labels of Fig. 1.
     figure, axes = plt.subplots(1, 3, figsize=(3.35, 1.48))
     for ax, (path, winding, color, view, title) in zip(axes, panels):
         _draw_cluster_loop(ax, cluster, path, winding, color, view, title)
@@ -346,67 +399,24 @@ def dssf_figure() -> None:
     save(figure, "fig_dssf")
 
 
-def combined_results_figure(exact, exact_report: dict) -> None:
-    figure = plt.figure(figsize=(3.35, 4.05))
-    grid = figure.add_gridspec(
-        2,
-        2,
-        height_ratios=(1.12, 0.88),
-        left=0.15,
-        right=0.88,
-        top=0.94,
-        bottom=0.10,
-        hspace=0.58,
-        wspace=0.10,
-    )
-    thermodynamics_axis = figure.add_subplot(grid[0, :])
-    _draw_thermodynamic_benchmark(thermodynamics_axis, exact, exact_report)
-    thermodynamics_axis.text(
-        0.015,
-        0.94,
-        "(a)",
-        transform=thermodynamics_axis.transAxes,
-        ha="left",
-        va="top",
-    )
-
-    dssf_axes = (
-        figure.add_subplot(grid[1, 0]),
-        figure.add_subplot(grid[1, 1]),
-    )
-    dssf_axes[1].sharey(dssf_axes[0])
-    dssf_axes[1].tick_params(labelleft=False)
-    image = _draw_dssf_panels(
-        dssf_axes,
-        ("(b) periodic ED", "(c) winding-free"),
-    )
-    if image is None:
-        plt.close(figure)
-        return
-    colorbar_axis = figure.add_axes((0.91, 0.10, 0.025, 0.31))
-    colorbar = figure.colorbar(image, cax=colorbar_axis, orientation="vertical")
-    colorbar.set_label(r"$S^{zz}(\mathbf{q},\omega)$")
-    save(figure, "fig_winding_free_results")
-
-
 def summary_figure(exact, exact_report: dict) -> None:
-    figure = plt.figure(figsize=(7.0, 3.60))
+    figure = plt.figure(figsize=(7.0, 3.80))
     outer = figure.add_gridspec(
         1,
         2,
-        width_ratios=(1.23, 0.95),
-        left=0.075,
+        width_ratios=(1.45, 0.88),
+        left=0.055,
         right=0.98,
         top=0.95,
-        bottom=0.19,
-        wspace=0.30,
+        bottom=0.15,
+        wspace=0.26,
     )
 
     left_grid = outer[0, 0].subgridspec(
         2,
         1,
-        height_ratios=(1.18, 0.82),
-        hspace=0.24,
+        height_ratios=(1.0, 1.26),
+        hspace=0.26,
     )
     cluster, panels = _geometry_panel_data()
     geometry_grid = left_grid[0, 0].subgridspec(1, 3, wspace=0.03)
@@ -419,7 +429,9 @@ def summary_figure(exact, exact_report: dict) -> None:
     for ax, (path, winding, color, view, _), title in zip(
         geometry_axes, panels, summary_titles
     ):
-        _draw_cluster_loop(ax, cluster, path, winding, color, view, title)
+        _draw_cluster_loop(
+            ax, cluster, path, winding, color, view, title, annotate_moves=True
+        )
 
     thermodynamics_axis = figure.add_subplot(left_grid[1, 0])
     _draw_thermodynamic_benchmark(thermodynamics_axis, exact, exact_report)
@@ -541,101 +553,8 @@ def character_convergence_figure(exact_report: dict) -> None:
 def main() -> None:
     geometry_figure()
     dssf_figure()
-    curves = np.load(OUTPUT / "validation_curves.npz")
     report = json.loads((OUTPUT / "validation_report.json").read_text())
-    temperature = curves["temperature"]
 
-    figure, axes = plt.subplots(1, 3, figsize=(7.0, 2.45))
-    ax = axes[0]
-    ax.plot(
-        temperature,
-        curves["bare_full_c"],
-        color=BARE,
-        lw=1.35,
-        label="cubic-16 microscopic",
-    )
-    ax.plot(
-        temperature,
-        curves["clean_full_c"],
-        color=CLEAN,
-        lw=1.6,
-        label="cubic-16 winding-free band",
-    )
-    ax.plot(
-        temperature,
-        curves["fcc_clean_band_c"],
-        color=FCC,
-        lw=1.2,
-        ls="--",
-        label="FCC-32 winding-free order-3 band",
-    )
-    ax.errorbar(
-        curves["qmc_temperature"],
-        curves["qmc_heat_capacity"],
-        yerr=0.0015,
-        fmt="o",
-        ms=1.8,
-        mew=0,
-        elinewidth=0.35,
-        color=QMC,
-        alpha=0.8,
-        label="QMC, Huang et al.",
-    )
-    ax.set_xscale("log")
-    ax.set_xlim(4.5e-4, 2.0e-2)
-    ax.set_ylim(bottom=0)
-    ax.set_xlabel(r"$T/J_{zz}$")
-    ax.set_ylabel(r"$C/N$")
-    ax.set_title(r"(a) low-$T$ heat capacity", loc="left")
-    ax.legend(frameon=False, loc="upper right")
-
-    ax = axes[1]
-    ax.plot(temperature, curves["bare_full_s"], color=BARE, lw=1.2, label="microscopic")
-    ax.plot(temperature, curves["clean_full_s"], color=CLEAN, lw=1.45, label="winding-free")
-    ax.errorbar(
-        curves["qmc_temperature"],
-        curves["qmc_entropy"],
-        yerr=0.002,
-        fmt="o",
-        ms=1.5,
-        mew=0,
-        elinewidth=0.3,
-        color=QMC,
-        alpha=0.75,
-        label="QMC",
-    )
-    ax.set_xscale("log")
-    ax.set_xlim(6.0e-4, 2.0)
-    ax.set_ylim(0.0, 0.72)
-    ax.set_xlabel(r"$T/J_{zz}$")
-    ax.set_ylabel(r"$S/N$")
-    ax.set_title("(b) entropy", loc="left")
-    ax.legend(frameon=False, loc="lower right")
-
-    ax = axes[2]
-    ax.plot(temperature, curves["bare_full_c"], color=BARE, lw=1.35, label="microscopic")
-    ax.plot(temperature, curves["clean_full_c"], color=CLEAN, lw=1.55, label="winding-free")
-    ax.set_xscale("log")
-    ax.set_xlim(1.0e-4, 2.0)
-    ax.set_ylim(bottom=0)
-    ax.set_xlabel(r"$T/J_{zz}$")
-    ax.set_ylabel(r"$C/N$")
-    shift = 100.0 * report["all_temperature"]["relative_high_peak_temperature_change"]
-    height = 100.0 * report["all_temperature"]["relative_high_peak_height_change"]
-    ax.text(
-        0.04,
-        0.20,
-        rf"high-$T$ peak: $\Delta T={shift:.2f}\%$, $\Delta C={height:.2f}\%$",
-        transform=ax.transAxes,
-        va="bottom",
-    )
-    ax.set_title("(c) all-temperature stability", loc="left")
-    ax.legend(frameon=False, loc="upper right")
-    for axis in axes:
-        axis.spines[["top", "right"]].set_visible(False)
-    figure.suptitle(r"zero-flux verification at $J_\pm/J_{zz}=0.046$", y=1.01, fontsize=8)
-    figure.tight_layout(w_pad=1.0)
-    save(figure, "fig_validation")
 
     figure, ax = plt.subplots(figsize=(3.35, 2.45))
     labels = ["QMC", "cubic periodic", "cubic winding-free", "FCC winding-free\n(order 3)"]
@@ -666,12 +585,6 @@ def main() -> None:
         figure.tight_layout()
         save(figure, "fig_nonperturbative")
 
-        figure, ax = plt.subplots(figsize=(3.35, 2.45))
-        _draw_thermodynamic_benchmark(ax, exact, exact_report)
-        figure.tight_layout()
-        save(figure, "fig_nonperturbative_column")
-
-        combined_results_figure(exact, exact_report)
         summary_figure(exact, exact_report)
         character_convergence_figure(exact_report)
 

@@ -18,7 +18,10 @@ from qsi_campaign.benchmarks import (  # noqa: E402
     load_digitized_thermodynamics,
     log_grid_rmse,
 )
-from qsi_campaign.protocol import centered_relative_error, replace_low_band  # noqa: E402
+from qsi_campaign.protocol import (  # noqa: E402
+    centered_relative_error,
+    full_hilbert_counterterm_spectrum,
+)
 from qsi_campaign.thermodynamics import peak_in_window, thermal_observables  # noqa: E402
 
 
@@ -67,7 +70,9 @@ def main() -> None:
         )
     full_spectrum = np.asarray(np.load(full_cache)["E_full"], dtype=float)
     bare_band_gap = float(full_spectrum[cubic.n_ice] - full_spectrum[cubic.n_ice - 1])
-    clean_full_spectrum = replace_low_band(full_spectrum, cubic_data["clean_spectrum"])
+    clean_full_spectrum = full_hilbert_counterterm_spectrum(
+        full_spectrum, cubic_data["clean_spectrum"]
+    )
     bare_full = thermal_observables(full_spectrum, temperatures, n_sites=16)
     clean_full = thermal_observables(clean_full_spectrum, temperatures, n_sites=16)
 
