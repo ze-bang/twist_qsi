@@ -544,15 +544,16 @@ Hamiltonian & momentum & $d_0$ & first $\omega/\Jzz$ & integrated weight\\
 \midrule
 periodic ED & $\Gamma$ & 1 & 0.0806529 & 0.318193\\
 periodic ED & each $X$ & 1 & 0.0806529 & 0.212129\\
-winding-free & $\Gamma$ & 3 & 0.0000351 & 0.239899\\
-winding-free & each $X$ & 3 & 0.0053542 & 0.240562\\
+winding-free & $\Gamma$ & 6 & 0.0053438 & $2.05\times10^{-6}$\\
+winding-free & each $X$ & 6 & 0.0053335 & 0.240607\\
 \bottomrule
 \end{tabular}
 \end{table}
-The three winding-free $X$ channels agree to $7\times10^{-16}$ in integrated
-weight.  Reconstructing $W_0$ reproduces the cached periodic operator with
-relative error $2.64\times10^{-14}$; its isometry residual is
-$5.30\times10^{-14}$.  The arrays, unbroadened lines, and diagnostics are
+The three winding-free $X$ channels agree to $5\times10^{-16}$ in integrated
+weight.  The $\Gamma$ weight is suppressed by the projection from $0.3182$ to
+$2.05\times10^{-6}$.  Reconstructing $W_0$ reproduces the cached periodic operator with
+relative error $2.84\times10^{-14}$; its isometry residual is
+$6.32\times10^{-14}$.  The arrays, unbroadened lines, and diagnostics are
 stored in \texttt{campaign/outputs/dssf\_cubic16\_p0p046000.npz} and the
 companion JSON report.
 

@@ -1,6 +1,6 @@
 \documentclass[aps,prl,twocolumn,amsmath,amssymb,superscriptaddress]{revtex4-2}
 
-\usepackage{CJK}
+% \usepackage{CJK}
 \usepackage{bm}
 \usepackage{graphicx}
 \usepackage{xcolor}
@@ -19,11 +19,11 @@
 \newcommand{\Pice}{P_{\mathrm{ice}}}
 
 \begin{document}
-\begin{CJK*}{UTF8}{gbsn}
+% \begin{CJK*}{UTF8}{gbsn}
 
 \title{Winding-Free Exact Diagonalization of Quantum Spin Ice}
 
-\author{Zhengbang Zhou ({\CJKfamily{gbsn}周政邦})}
+\author{Zhengbang Zhou}
 \email{zhengbang.zhou@mail.utoronto.ca}
 \affiliation{Department of Physics, University of Toronto, Toronto, Ontario M5S 1A7, Canada}
 
@@ -499,14 +499,17 @@ consideration.
 Cubic-16 resolves only the $\Gamma$ point and three symmetry-related $X$
 points. As an internal consistency check, the operator obtained from the
 zero-source isometry agrees with an independently constructed periodic-band
-operator to a relative error of $2.7\times10^{-14}$. The periodic band has a
+operator to a relative error of $2.8\times10^{-14}$. The periodic band has a
 unique ground state, whereas the projected band has a sixfold one: the six
 polarization sectors $\bm p=(\pm\tfrac12,0,0)$, $(0,\pm\tfrac12,0)$,
 $(0,0,\pm\tfrac12)$ can no longer tunnel into one another and stay exactly
 degenerate. At $X$, the spectral centroid shifts from $0.08069\Jzz$ in the
 periodic band to $0.005362\Jzz$ after projection
-[Figs.~\ref{fig:summary}(iii.a) and \ref{fig:summary}(iii.b)], while the
-$\Gamma$ response vanishes identically in both bands. The projection
+[Figs.~\ref{fig:summary}(iii.a) and \ref{fig:summary}(iii.b)]. At $\Gamma$ the
+projection instead removes the response almost entirely, suppressing the
+integrated weight from $0.3182$ to $2.1\times10^{-6}$: the sublattice
+magnetization commutes with $\bm p$, so once the sectors are decoupled it can
+no longer carry the ground manifold outside itself. The projection
 therefore reorganizes both the excitation energies and their spectral
 weights, rather than merely rescaling the periodic spectrum.
 
@@ -545,5 +548,5 @@ simulation torus to determine the leading low-energy process.
 
 \bibliography{references,references_additions}
 
-\end{CJK*}
+% \end{CJK*}
 \end{document}

@@ -128,7 +128,7 @@ campaign stages:
 | topology | all audited winding four-loops and wrapping hexagons are removed; all contractible hexagons remain on cubic-16 and FCC-32 |
 | nonperturbative construction | each cubic source point uses the microscopic Hamiltonian and exact polar pullback |
 | pair-flip implementation | cubic-16 finite `Jpmpm` uses the full 65,536-state basis; the M=2 gauge identity holds to `2.5e-16` |
-| character resolution | cubic `M=3 -> 4` centered operator change is 0.498% |
+| character resolution | cubic `M=3 -> 4` centered operator change is 0.013% |
 | band identity | minimum cubic ice overlap is 0.762 and Ritz residuals are below `4e-12` |
 | thermal complement | cubic high-temperature microscopic crossover is retained by the full-Hilbert embedding |
 | external check | QMC heat comparison improves strongly, while the remaining heat/entropy mismatch is explicitly identified as a size limitation |
