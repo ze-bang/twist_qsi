@@ -32,61 +32,61 @@
     "$X_z$"
   ],
   "periodic_ground_multiplicity": 1,
-  "winding_free_ground_multiplicity": 3,
+  "winding_free_ground_multiplicity": 6,
   "periodic_channels": [
     {
       "integrated_weight": 0.31819304936620935,
-      "first_active_frequency": 0.08065289281128246,
-      "centroid": 0.08068557870614843
+      "first_active_frequency": 0.08065289281128057,
+      "centroid": 0.08068557870614645
     },
     {
-      "integrated_weight": 0.21212869957747382,
-      "first_active_frequency": 0.08065289281128246,
-      "centroid": 0.08068557870614929
+      "integrated_weight": 0.21212869957747355,
+      "first_active_frequency": 0.08065289281128057,
+      "centroid": 0.08068557870614809
     },
     {
-      "integrated_weight": 0.21212869957747554,
-      "first_active_frequency": 0.08065289281128246,
-      "centroid": 0.08068557870614741
+      "integrated_weight": 0.21212869957747338,
+      "first_active_frequency": 0.08065289281128057,
+      "centroid": 0.08068557870614648
     },
     {
-      "integrated_weight": 0.2121286995774752,
-      "first_active_frequency": 0.08065289281128246,
-      "centroid": 0.08068557870614845
+      "integrated_weight": 0.21212869957747255,
+      "first_active_frequency": 0.08065289281128057,
+      "centroid": 0.08068557870615005
     }
   ],
   "winding_free_channels": [
     {
-      "integrated_weight": 0.2398986230522287,
-      "first_active_frequency": 3.5057878079933213e-05,
-      "centroid": 3.5111418208582534e-05
+      "integrated_weight": 2.052231888967134e-06,
+      "first_active_frequency": 0.0053438285575937855,
+      "centroid": 0.005535045793674979
     },
     {
-      "integrated_weight": 0.24056234037543714,
-      "first_active_frequency": 0.0053541810591221095,
-      "centroid": 0.005371857012336453
+      "integrated_weight": 0.24060659004574428,
+      "first_active_frequency": 0.005333531580751311,
+      "centroid": 0.005361688123108093
     },
     {
-      "integrated_weight": 0.2405623403754377,
-      "first_active_frequency": 0.0053541810591221095,
-      "centroid": 0.005371857012336584
+      "integrated_weight": 0.24060659004574475,
+      "first_active_frequency": 0.005333531580751408,
+      "centroid": 0.0053616881231082405
     },
     {
-      "integrated_weight": 0.2405623403754365,
-      "first_active_frequency": 0.0053541810591221095,
-      "centroid": 0.005371857012336339
+      "integrated_weight": 0.24060659004574453,
+      "first_active_frequency": 0.005333531580751311,
+      "centroid": 0.005361688123108097
     }
   ],
   "frame_diagnostics": {
-    "band_gap": 0.6268363074664092,
-    "model_overlap_min": 0.7619676391967685,
-    "isometry_error": 5.299359438331057e-14,
+    "band_gap": 0.6268363074664081,
+    "model_overlap_min": 0.7619676391967684,
+    "isometry_error": 6.316820184775379e-14,
     "sector_counts": {
       "++": 36,
       "+-": 18,
       "-+": 18,
       "--": 18
     },
-    "cached_operator_relative_error": 2.6410695324323698e-14
+    "cached_operator_relative_error": 2.842608670122167e-14
   }
 }

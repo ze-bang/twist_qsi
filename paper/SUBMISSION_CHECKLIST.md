@@ -5,7 +5,7 @@
 - [x] Loop enumeration and transported-dipole classification are tested on
   cubic-16 and FCC-32.
 - [x] Cubic-16 exact-band character convergence passes at `M=3 -> 4` with
-  0.498% centered operator change.
+  0.013% centered operator change.
 - [x] Full-Hilbert cubic-16 thermodynamics uses
   `H_wf = H(0) + W0 [hbar_M - h(0)] W0^dagger` and retains the microscopic
   high-temperature complement exactly.

@@ -2,8 +2,10 @@
   "method": "exact microscopic bands, polar pullback, primitive q=2*delta character",
   "qualification": "nonperturbative finite-character calculation; bulk use requires M convergence and cluster convergence",
   "jpm": 0.046,
+  "jpmpm": 0.0,
   "n_sites": 16,
-  "fixed_sz_dimension": 12870,
+  "basis": "fixed-Sz=0",
+  "basis_dimension": 12870,
   "band_dimension": 90,
   "sector_dimensions_at_zero_source": {
     "++": 3270,
@@ -12,10 +14,10 @@
     "--": 3200
   },
   "zero_source": {
-    "model_overlap_min": 0.7619676391967728,
-    "model_overlap_mean": 0.9269011246970857,
-    "model_overlap_max": 0.9757830469677228,
-    "pullback_unitarity_error": 2.7356223065717668e-14,
+    "model_overlap_min": 0.7619676391967714,
+    "model_overlap_mean": 0.9269011246970842,
+    "model_overlap_max": 0.9757830469677226,
+    "pullback_unitarity_error": 2.4387995353898835e-14,
     "sector_counts": {
       "++": 36,
       "+-": 18,
@@ -28,10 +30,10 @@
       "-+": 31,
       "--": 31
     },
-    "band_minimum": -0.22469422788356752,
-    "band_maximum": -0.02569100775346477,
-    "fixed_sz_gap_above_band": 0.6268363074664087,
-    "solve_seconds": 2.709455219010124
+    "band_minimum": -0.2246942278835662,
+    "band_maximum": -0.025691007753464487,
+    "gap_above_band": 0.6268363074664024,
+    "solve_seconds": 3.010812285996508
   },
   "grids": {
     "M2": {
@@ -42,7 +44,7 @@
       "n_characters": 27,
       "n_solved_representatives": 13,
       "n_exact_gauge_corners": 1,
-      "minimum_fixed_sz_gap": 0.663591134553109,
+      "minimum_gap_above_band": 0.663591134553109,
       "minimum_model_overlap": 0.7948122237085763,
       "maximum_ritz_residual": 3.6579810881133204e-12,
       "maximum_conjugation_identity_residual": 0.0
@@ -51,58 +53,58 @@
       "n_characters": 64,
       "n_solved_representatives": 28,
       "n_exact_gauge_corners": 8,
-      "minimum_fixed_sz_gap": 0.684435504640065,
+      "minimum_gap_above_band": 0.684435504640065,
       "minimum_model_overlap": 0.8135555490250347,
       "maximum_ritz_residual": 5.423972116563034e-13,
       "maximum_conjugation_identity_residual": 0.0
     }
   },
   "convergence": {
-    "M1_to_M2_centered_operator_relative_error": 19.356999790811933,
-    "M2_to_M3_centered_operator_relative_error": 0.06783637287147058,
-    "M3_to_M4_centered_operator_relative_error": 0.004983067873683687
+    "M1_to_M2_centered_operator_relative_error": 19.359567143293837,
+    "M2_to_M3_centered_operator_relative_error": 0.06357728064937829,
+    "M3_to_M4_centered_operator_relative_error": 0.00012637561834183221
   },
   "qmc_thermodynamics": {
     "source": "Huang et al., PRL 120, 167202 (2018), Fig. 1(b)",
     "bare_low_temperature_heat_rmse": 0.08591012789031392,
     "M2": {
-      "low_temperature_heat_rmse": 0.022377061091880115,
-      "entropy_rmse": 0.045269909338174784,
+      "low_temperature_heat_rmse": 0.02239764900622472,
+      "entropy_rmse": 0.04528527261582254,
       "low_peak": [
         0.0014422276445609492,
-        0.15773076928170013
+        0.15760066257302913
       ],
       "high_peak": [
         0.25491251727984787,
-        0.2798277792698146
+        0.2798277773662534
       ],
-      "heat_rmse_reduction_fraction": 0.7395294170618614
+      "heat_rmse_reduction_fraction": 0.7392897722743352
     },
     "M3": {
-      "low_temperature_heat_rmse": 0.023266856986492605,
-      "entropy_rmse": 0.04508826655156006,
+      "low_temperature_heat_rmse": 0.02327251033967447,
+      "entropy_rmse": 0.04509012530477303,
       "low_peak": [
         0.0014627918647106021,
-        0.15834694305834587
+        0.1583420301534953
       ],
       "high_peak": [
         0.25491251727984787,
-        0.2798277779062784
+        0.2798277762681097
       ],
-      "heat_rmse_reduction_fraction": 0.729172129551493
+      "heat_rmse_reduction_fraction": 0.7291063241182956
     },
     "M4": {
-      "low_temperature_heat_rmse": 0.023265763685506185,
-      "entropy_rmse": 0.04508896898377919,
+      "low_temperature_heat_rmse": 0.02327279489730533,
+      "entropy_rmse": 0.045090076024487516,
       "low_peak": [
         0.0014627918647106021,
-        0.1583459200217563
+        0.1583424737735056
       ],
       "high_peak": [
         0.25491251727984787,
-        0.27982777787669044
+        0.27982777644222073
       ],
-      "heat_rmse_reduction_fraction": 0.7291848556527487
+      "heat_rmse_reduction_fraction": 0.7291030118472299
     }
   },
   "pending": {
@@ -116,17 +118,17 @@
     "character_convergence": {
       "status": "pass",
       "threshold": 0.05,
-      "error": 0.004983067873683687
+      "error": 0.00012637561834183221
     },
     "qmc_heat_capacity": {
       "status": "fail",
       "threshold": 0.02,
-      "rmse": 0.023265763685506185
+      "rmse": 0.02327279489730533
     },
     "qmc_entropy": {
       "status": "fail",
       "threshold": 0.02,
-      "rmse": 0.04508896898377919
+      "rmse": 0.045090076024487516
     },
     "fcc32_full_hamiltonian": {
       "status": "pending",

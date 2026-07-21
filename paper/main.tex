@@ -45,14 +45,14 @@ physical third-order hexagon tunneling. We eliminate this finite-torus
 artifact by coupling microscopic spin transfers to a source that records
 their transport on the covering lattice and projecting the exact
 ice-descended band onto its zero-transport Fourier component. On cubic-16,
-the $M=3$ and $M=4$ projected operators agree within $0.50\%$ in centered
+the $M=3$ and $M=4$ projected operators agree within $0.013\%$ in centered
 operator norm, and a third-order path classification removes every winding
 four-loop while retaining every contractible hexagon. At
 $(\Jpm,\Jpp)/\Jzz=(0.046,0)$, the low-temperature heat-capacity peak shifts
 from $0.02554\Jzz$ in ordinary exact diagonalization to $0.001463\Jzz$, close
 to the quantum Monte Carlo value $0.001100\Jzz$. The longitudinal $X$-point
 excitation centroid simultaneously shifts from $0.08069\Jzz$ to
-$0.005372\Jzz$. The residual thermodynamic discrepancies isolate finite-size
+$0.005362\Jzz$. The residual thermodynamic discrepancies isolate finite-size
 effects beyond the removed winding process.
 \end{abstract}
 
@@ -350,7 +350,14 @@ h\!\left(
 The continuous average selects $\bq_\gamma=0$ exactly, removing every process
 that carries nonzero covering-lattice transport; the discrete grid instead
 retains all characters with $\bq_\gamma=\bm 0\pmod M$, so convergence in $M$
-is an essential diagnostic. The construction ceases to be well defined if the
+is an essential diagnostic. One consequence of the continuous average is
+available exactly at any $M$: since $\bq_\gamma=2\Delta\bm p$, a surviving
+matrix element cannot change $\bm p$, so $h_{\rm wf}$ is block diagonal in the
+polarization coordinate of Eq.~(\ref{eq:polarization}). We therefore impose
+that block structure directly on $h_M$. The residual inter-sector coupling it
+discards is only $1.6\times10^{-5}\Jzz$ at $M=4$, but it is comparable to the
+splittings within the low-lying manifold and would otherwise lift
+degeneracies that the exact projection protects. The construction ceases to be well defined if the
 selected band closes its spectral gap or if $\Pice P_{\btheta}\Pice$ becomes
 singular.
 
@@ -417,9 +424,8 @@ the complete $65\,536$-state spectrum, separated from the rest of it by
 $0.3874\Jzz$; this is the gap that isolates the replaced band in
 Eq.~(\ref{eq:replacement}), and it exceeds the low-temperature peak scale by
 more than two orders of magnitude. After subtracting the scalar component of
-the band Hamiltonian, the relative change is $6.78\%$ between $M=2$ and
-$M=3$, but only $0.498\%$ between $M=3$ and $M=4$, establishing sub-percent
-convergence of the projected band. The larger discrepancy at $M=2$ is
+the band Hamiltonian, the relative change is $6.36\%$ between $M=2$ and
+$M=3$, but only $0.013\%$ between $M=3$ and $M=4$. The larger discrepancy at $M=2$ is
 character aliasing: although the $M=2$ grid removes the shortest winding
 four-cycles, it folds every transport sector with $\bq_\gamma=2\bm\ell$,
 $\bm\ell\in\mathbb Z^3$, into the zero character. Increasing $M$ separates
@@ -494,13 +500,23 @@ Cubic-16 resolves only the $\Gamma$ point and three symmetry-related $X$
 points. As an internal consistency check, the operator obtained from the
 zero-source isometry agrees with an independently constructed periodic-band
 operator to a relative error of $2.7\times10^{-14}$. The periodic band has a
-unique ground state, whereas the projected band has a threefold ground-state
-manifold. At $X$, the spectral centroid shifts from $0.08069\Jzz$ in the
-periodic band to $0.005372\Jzz$ after projection, and at $\Gamma$ the
-projected spectrum additionally develops a near-zero-energy peak
-[Figs.~\ref{fig:summary}(iii.a) and \ref{fig:summary}(iii.b)]. The projection
+unique ground state, whereas the projected band has a sixfold one: the six
+polarization sectors $\bm p=(\pm\tfrac12,0,0)$, $(0,\pm\tfrac12,0)$,
+$(0,0,\pm\tfrac12)$ can no longer tunnel into one another and stay exactly
+degenerate. At $X$, the spectral centroid shifts from $0.08069\Jzz$ in the
+periodic band to $0.005362\Jzz$ after projection
+[Figs.~\ref{fig:summary}(iii.a) and \ref{fig:summary}(iii.b)], while the
+$\Gamma$ response vanishes identically in both bands. The projection
 therefore reorganizes both the excitation energies and their spectral
 weights, rather than merely rescaling the periodic spectrum.
+
+That sixfold degeneracy leaves a residual entropy $\ln6$ per cluster, or
+$0.1120$ per site, which the winding-free band never releases: the projection
+makes $\bm p$ exactly conserved, so the sectors cannot mix at any
+temperature. The count of such sectors grows only polynomially with linear
+size, so this contribution is subextensive and vanishes per site in the
+thermodynamic limit, but on cubic-16 it is a floor under the low-temperature
+entropy and accounts for part of the residual discrepancy with QMC.
 
 \emph{Discussion.}---Periodic ED can replace the physical hexagon dynamics of
 QSI with a parametrically larger noncontractible four-spin process.
@@ -508,7 +524,7 @@ Transport-character projection removes this winding contribution from the
 exact ice-descended band while preserving contractible processes, microscopic
 virtual dressing, and the spectrum outside the selected band. It is supported
 by the exact source-phase identity, the exhaustive classification of short
-ice-to-ice paths, and sub-percent convergence between the $M=3$ and $M=4$
+ice-to-ice paths, and agreement to $0.013\%$ between the $M=3$ and $M=4$
 grids.
 
 The QMC comparison also clarifies what the projection does not correct.

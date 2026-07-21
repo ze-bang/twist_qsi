@@ -405,9 +405,26 @@ character integral.  Centering removes only the identity component, which
 changes no level spacing, heat capacity, or spectral transition frequency
 within the band.
 
+One consequence of the continuous character integral is available exactly at
+finite $M$.  Because $\bq_\gamma=2\Delta\bm p$, a matrix element that survives
+the continuous average cannot change the polarization coordinate, so
+$h_{\rm wf}$ is block diagonal in $\bm p$.  We therefore impose that block
+structure on $h_M$, discarding the inter-sector elements that a finite grid
+retains through $\bq_\gamma=\bm0\pmod M$.  On cubic-16 the discarded coupling
+is $1.6\times10^{-5}\Jzz$ at $M=4$.  This is small in operator norm but not in
+its consequences: left in place, it splits the sixfold ground-state manifold
+by $3.5\times10^{-5}\Jzz$, which introduces a spurious Schottky peak at
+$T/\Jzz\simeq1.5\times10^{-5}$, drives the residual entropy from $\ln6$ down
+to $\ln3$ below that temperature, and moves spectral weight to
+$\omega\simeq0$ at $\Gamma$.  The splitting tracks the discarded coupling
+across $M$ and is not a floating-point effect: states within each degenerate
+multiplet agree to $4\times10^{-16}$, eleven orders of magnitude below it.
+Imposing the block structure is exact at any $M$ and removes all three
+artifacts.
+
 At $(\Jpm,\Jpp)/\Jzz=(0.046,0)$,
-Eq.~(\ref{eq:centered_change_si}) gives 6.78\% from
-$M=2$ to 3 and 0.498\% from $M=3$ to 4, as shown in
+Eq.~(\ref{eq:centered_change_si}) gives 6.36\% from
+$M=2$ to 3 and 0.013\% from $M=3$ to 4, as shown in
 Fig.~\ref{fig:character_convergence}.  The latter passes the 5\%
 character-convergence gate.  The zero-source minimum ice overlap is 0.762,
 and every generic $M=3,4$ point has a larger overlap.  These grids are
@@ -604,7 +621,7 @@ internal $S^{zz}$ dynamics & pass & periodic and winding-free bands use the same
 all-temperature stability & pass & cubic-16 high-$T$ peak position unchanged\\
 QMC heat capacity & fail & exact $M=4$ low-$T$ RMSE $0.02327>0.02$\\
 QMC entropy & fail & exact $M=4$ RMSE $0.04509>0.02$\\
-character resolution & pass & centered $M=3\to4$ error 0.498\%\\
+character resolution & pass & centered $M=3\to4$ error 0.013\%\\
 band overlap & pass & source-resolved minimum is 0.762\\
 order convergence & diagnostic only & production spectrum is exact-band\\
 QMC-SAC dynamics & pending & matched $S^{zz}$ and $S^{+-}$ required\\

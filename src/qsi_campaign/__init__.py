@@ -5,7 +5,10 @@ from .protocol import (
     centered_relative_error,
     character_project,
     full_hilbert_counterterm_spectrum,
+    polarization_sector_labels,
     replace_low_band,
+    sector_leakage,
+    sector_project,
 )
 from .thermodynamics import thermal_observables
 
@@ -14,6 +17,9 @@ __all__ = [
     "centered_relative_error",
     "character_project",
     "full_hilbert_counterterm_spectrum",
+    "polarization_sector_labels",
     "replace_low_band",
+    "sector_leakage",
+    "sector_project",
     "thermal_observables",
 ]

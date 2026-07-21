@@ -90,6 +90,51 @@ def character_project(operators: np.ndarray) -> np.ndarray:
     return _hermitian(matrices.mean(axis=0))
 
 
+def polarization_sector_labels(cluster) -> np.ndarray:
+    """Label each ice basis state by its polarization coordinate.
+
+    The polarization ``p(C) = sum_i S_i^z r_i`` is the bookkeeping coordinate
+    whose change along a microscopic sequence is the transported dipole.  A
+    move therefore connects two ice configurations only if it transports
+    ``q = 2 dp``, so the exact zero-character Hamiltonian is block diagonal in
+    ``p``.  Labels index distinct ``p`` values in sorted order and follow the
+    ordering of ``cluster.ice_states``.
+    """
+    states = np.asarray(cluster.ice_states)
+    n_sites = int(cluster.n_sites)
+    bits = np.array(
+        [[(int(state) >> site) & 1 for site in range(n_sites)] for state in states]
+    )
+    polarization = (bits - 0.5) @ np.asarray(cluster.positions, dtype=float)
+    keys = [tuple(np.round(row, 6)) for row in polarization]
+    order = {key: index for index, key in enumerate(sorted(set(keys)))}
+    return np.array([order[key] for key in keys], dtype=np.int64)
+
+
+def sector_project(operator: np.ndarray, labels: np.ndarray) -> np.ndarray:
+    """Discard matrix elements between distinct polarization sectors.
+
+    A finite ``M^3`` grid only annihilates transport with ``q != 0 (mod M)``,
+    so it leaves a residual coupling between sectors that a continuous source
+    average removes exactly.  Imposing the block structure directly is exact at
+    any ``M`` and restores the sector degeneracies the grid would otherwise
+    split.
+    """
+    matrix = _hermitian(np.asarray(operator, dtype=np.complex128))
+    labels = np.asarray(labels, dtype=np.int64)
+    if matrix.shape[0] != len(labels):
+        raise ValueError("operator dimension must match the number of labels")
+    return _hermitian(np.where(labels[:, None] == labels[None, :], matrix, 0.0))
+
+
+def sector_leakage(operator: np.ndarray, labels: np.ndarray) -> float:
+    """Largest matrix element the sector projection removes."""
+    matrix = _hermitian(np.asarray(operator, dtype=np.complex128))
+    labels = np.asarray(labels, dtype=np.int64)
+    off = np.abs(matrix[labels[:, None] != labels[None, :]])
+    return float(off.max()) if off.size else 0.0
+
+
 def centered_relative_error(left: np.ndarray, right: np.ndarray) -> float:
     """Frobenius error after removing physically irrelevant scalar shifts."""
     left = _hermitian(left)

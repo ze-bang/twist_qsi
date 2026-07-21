@@ -37,6 +37,9 @@ from qsi_campaign.protocol import (  # noqa: E402
     centered_relative_error,
     character_project,
     full_hilbert_counterterm_spectrum,
+    polarization_sector_labels,
+    sector_leakage,
+    sector_project,
 )
 from qsi_campaign.thermodynamics import peak_in_window, thermal_observables  # noqa: E402
 
@@ -310,6 +313,29 @@ def main() -> None:
         operators[grid_size] = grid_operator
         operators_by_grid[grid_size] = grid_points
         grid_diagnostics[grid_size] = diagnostics
+
+    # The exact zero-character Hamiltonian is block diagonal in the transported
+    # polarization; a finite M^3 grid retains q = 0 (mod M) and so leaves a
+    # residual coupling between sectors.  Impose the block structure directly,
+    # which is exact at any M.  M=1 is the periodic band itself and is left
+    # alone: its inter-sector coupling is the artifact under study.
+    sector_labels = polarization_sector_labels(cluster)
+    sector_leakage_removed = {}
+    for grid_size in sorted(operators):
+        if grid_size == 1:
+            continue
+        sector_leakage_removed[grid_size] = sector_leakage(
+            operators[grid_size], sector_labels
+        )
+        operators[grid_size] = sector_project(operators[grid_size], sector_labels)
+    print(
+        "sector leakage removed: "
+        + ", ".join(
+            f"M={grid}: {value:.3e}"
+            for grid, value in sorted(sector_leakage_removed.items())
+        ),
+        flush=True,
+    )
 
     temperatures = np.geomspace(1.0e-4, 2.0, 1400)
     qmc_matched = args.jpmpm == 0.0 and np.isclose(args.jpm, 0.046)
