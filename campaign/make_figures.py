@@ -264,12 +264,12 @@ def _charge_trajectory(cluster, path, seed_raised=None, lifted: bool = True):
 
 
 def _draw_tetrahedron_frames(ax, cluster, path, basis, center, scale,
-                             normal=None, charged=(), unrolled=False) -> None:
+                             normal=None, charged=()) -> None:
     """Outline the loop's tetrahedra, plus any image a charge has been carried to."""
     def to_plot(point):
         return (np.asarray(point) @ basis.T - center) / scale
 
-    frames = [] if unrolled else [
+    frames = [
         (_tetrahedron_frame(cluster, t, anchor), False)
         for t, anchor in _loop_tetrahedra(cluster, path)
     ]
@@ -381,7 +381,6 @@ def _draw_cluster_loop(
     caption: str | None = None,
     pbc: bool = False,
     hop: bool = False,
-    unroll: bool = False,
 ) -> None:
     """One loop on the cluster; with `stage`, one step of its ring exchange.
 
@@ -410,9 +409,7 @@ def _draw_cluster_loop(
         zorder=2,
     )
 
-    walk = _lift_path(cluster, path)
-    seats = np.array([(p @ basis.T - center) / scale for p in walk])
-    loop = seats[:-1] if unroll else projected[list(path)]
+    loop = projected[list(path)]
     transported_dipole = _transport_walk(cluster, path)[-1]
     steps = None
     if stage is not None:
@@ -444,7 +441,6 @@ def _draw_cluster_loop(
             ax, cluster, path, basis, center, scale,
             normal=np.cross(basis[0], basis[1]),
             charged=occupied,
-            unrolled=unroll,
         )
         carried = {tuple(np.round(e["position"], 6)) for e in occupied}
         # only a genuine hop leaves a ghost behind; when the pair has been
@@ -532,7 +528,7 @@ def _draw_cluster_loop(
                 )
 
     for edge_index, (left, right) in enumerate(zip(path, path[1:] + path[:1])):
-        edge = seats[[edge_index, edge_index + 1]] if unroll else projected[[left, right]]
+        edge = projected[[left, right]]
         image = np.asarray(_edge_wrap(cluster, left, right), dtype=float)
         wraps = np.any(image)
         # in the hop panel the boundary-crossing leg is the active one: it is
@@ -566,11 +562,7 @@ def _draw_cluster_loop(
                     (steps[stage]["raised"], r"$S^{+}$"),
                     (steps[stage]["lowered"], r"$S^{-}$"),
                 ):
-                    if unroll:
-                        offsets = {path[k % 4]: seats[k] for k in range(len(path))}
-                        seat = offsets.get(site, projected[site])
-                    else:
-                        seat = projected[site]
+                    seat = projected[site]
                     outward = seat - loop.mean(axis=0)
                     norm = np.linalg.norm(outward)
                     outward = outward / norm if norm > 1e-9 else np.array([0.0, 1.0])
