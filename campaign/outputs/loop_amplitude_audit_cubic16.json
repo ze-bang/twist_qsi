@@ -1,0 +1,70 @@
+{
+  "coupling": 0.046,
+  "g6": 0.0011680319999999998,
+  "g4": 0.008464,
+  "n_zero_spinon": 90,
+  "channel_supports": {
+    "hexagon_contractible": 16,
+    "hexagon_wrapping": 48,
+    "four_loop_winding": 36
+  },
+  "amplitudes": {
+    "h(0)": {
+      "hexagon_contractible": {
+        "mean": 0.0013142079195615046,
+        "max": 0.0013142079195617826
+      },
+      "hexagon_wrapping": {
+        "mean": 0.0013142079195615952,
+        "max": 0.0013142079195619528
+      },
+      "four_loop_winding": {
+        "mean": 0.01045899526703385,
+        "max": 0.010601539498576265
+      }
+    },
+    "h_M=2": {
+      "hexagon_contractible": {
+        "mean": 0.0013142079195615046,
+        "max": 0.0013142079195617824
+      },
+      "hexagon_wrapping": {
+        "mean": 1.3244937887761535e-36,
+        "max": 1.2037062152420224e-35
+      },
+      "four_loop_winding": {
+        "mean": 4.425959165348374e-19,
+        "max": 7.806945615951388e-19
+      }
+    },
+    "h_M=3": {
+      "hexagon_contractible": {
+        "mean": 0.0013245846068666953,
+        "max": 0.0013245846068668595
+      },
+      "hexagon_wrapping": {
+        "mean": 1.4228729777071922e-07,
+        "max": 2.0206052248749286e-07
+      },
+      "four_loop_winding": {
+        "mean": 7.302210605642916e-07,
+        "max": 1.1079293223944354e-06
+      }
+    },
+    "h_M=4": {
+      "hexagon_contractible": {
+        "mean": 0.0013246091378418875,
+        "max": 0.0013246091378420065
+      },
+      "hexagon_wrapping": {
+        "mean": 2.8672103353407436e-17,
+        "max": 1.0288062177350732e-16
+      },
+      "four_loop_winding": {
+        "mean": 3.3475002676444e-17,
+        "max": 1.1782569900797065e-16
+      }
+    }
+  },
+  "bare_four_loop_over_hexagon": 7.958402252303862
+}

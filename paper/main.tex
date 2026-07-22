@@ -403,60 +403,67 @@ a finite-size diagnostic rather than the partition function of the original
 periodic Hamiltonian. Derivations and numerical details are given in the
 Supplemental Material~\cite{supp}.
 
-\emph{Topology and convergence.}---We first test the transport label by
-explicitly enumerating all ice-to-ice sequences through third order. On both
-cubic-16 and FCC-32, the zero-character projection removes every winding
-four-cycle and wrapping hexagon while retaining every contractible hexagon.
-This perturbative enumeration serves only to verify the topological
-classification; the projected band itself is constructed nonperturbatively
-from the exact eigenvectors of $H(\btheta)$. At the sign-free benchmark point
+\emph{Validation against perturbation theory.}---The projection is defined
+nonperturbatively, but wherever the loop expansion is controlled the
+projected band must reduce to pure hexagon ring exchange. This is a
+quantitative test, because the band Hamiltonian is written in the fixed
+reference space spanned by the $d=90$ zero-spinon configurations of cubic-16:
+the matrix element between two configurations that differ by the spins of a
+given loop is that loop's amplitude, and can be read off and compared with
+Eqs.~(\ref{eq:g6}) and (\ref{eq:g4}). We do this at the sign-free benchmark
+point
 \begin{equation}
 (\Jpm,\Jpp)/\Jzz=(0.046,0),
 \label{eq:benchmark_point}
 \end{equation}
-this third-order path diagnostic shifts the cubic-16 heat-capacity maximum
-from $T_{\rm p}/\Jzz=0.02554$ to $0.001252$, and the FCC-32 maximum from
-$0.008770$ to $0.000608$. The FCC-32 values follow from the path-based
-effective description rather than from the complete finite-temperature
-spectrum.
+where $g_6=1.168\times10^{-3}\Jzz$ and $g_4=8.464\times10^{-3}\Jzz$.
 
-For cubic-16, the exact projected band is well resolved throughout the source
-grid. At $\btheta=\bm0$ the smallest overlap between the selected band and
-the ice manifold is $0.762$, and the gap to the remaining spectrum in the
-working total-$S^z$ sector is $0.627\Jzz$; every point on the $M=3$ and $M=4$
-grids has both a larger overlap and a larger gap, with a largest Ritz
-residual of $3.7\times10^{-12}$. The band is also the lowest $d=90$ levels of
-the complete $65\,536$-state spectrum, separated from the rest of it by
-$0.3874\Jzz$; this is the gap that isolates the replaced band in
-Eq.~(\ref{eq:replacement}), and it exceeds the low-temperature peak scale by
-more than two orders of magnitude. After subtracting the scalar component of
-the band Hamiltonian, the relative change is $6.36\%$ between $M=2$ and
-$M=3$, but only $0.013\%$ between $M=3$ and $M=4$. The larger discrepancy at $M=2$ is
-character aliasing: although the $M=2$ grid removes the shortest winding
-four-cycles, it folds every transport sector with $\bq_\gamma=2\bm\ell$,
-$\bm\ell\in\mathbb Z^3$, into the zero character. Increasing $M$ separates
-these aliased sectors.
+In the periodic band $h(\bm0)$ each of the 36 winding four-loops carries
+$1.046\times10^{-2}\Jzz=1.24\,g_4$, exceeding the contractible hexagon
+amplitude $1.314\times10^{-3}\Jzz=1.13\,g_6$ by a factor of $8.0$: the
+leading ice-to-ice process of ordinary ED is the artifact, not the ring
+exchange. In the projected band $h_{M=4}$ all 36 winding four-loop
+amplitudes and all 48 wrapping-hexagon amplitudes vanish,
+$|h_{ij}|\le1.2\times10^{-16}\Jzz$, fourteen orders of magnitude below $g_4$
+and at the level of the arithmetic. All 16 contractible hexagon amplitudes
+survive at $1.325\times10^{-3}\Jzz=1.13\,g_6$, differing from their periodic
+values by $0.8\%$. Their $13\%$ excess over bare third order is higher-order
+virtual dressing, which the exact-band construction retains by design. The
+same audit on FCC-32 removes all 24 winding four-loops and all 96 wrapping
+hexagons while retaining all 32 contractible hexagons; the full retention
+census for both clusters is given in the Supplemental
+Material~\cite{supp}.
 
-\emph{Thermodynamics and dynamics.}---The sign-free point of
-Eq.~(\ref{eq:benchmark_point}) provides an external thermodynamic benchmark.
-Continuous-time worm-QMC results for Eq.~(\ref{eq:model}) are available on a
-lattice of $8^3$ primitive cells \cite{Huang2018}; digitizing the published
-curve gives heat-capacity maxima at $T/\Jzz\approx0.001100$ and $0.2105$.
-Ordinary cubic-16 ED instead places the low-temperature maximum at
-$T/\Jzz=0.02554$, where it is controlled by the noncontractible four-loop
-scale, whereas the converged $M=4$ replacement shifts it to
-$T/\Jzz=0.001463$ [Fig.~\ref{fig:summary}(ii)]. The projected result is
-therefore close to both the physical hexagon scale and the QMC maximum. Over
-the low-temperature comparison window the heat-capacity root-mean-square
-error decreases from $0.0859$ to $0.02327$, while the entropy error remains
-$0.04509$: removing the winding process corrects the dominant low-energy
-scale without making cubic-16 a quantitatively accurate representation of the
-bulk system.
+Two conditions make the band itself well defined, and both are met. The
+selected band is separated from the rest of the $65\,536$-state spectrum by
+$0.3874\Jzz$, two orders of magnitude above the scales it controls, so the
+contour in Eq.~(\ref{eq:spectral}) is unambiguous; and the smallest overlap
+between a band eigenvector and the zero-spinon manifold is $0.762$ across the
+source grid, so $\Pice P_{\btheta}\Pice$ stays far from singular and the
+polar pullback of Eq.~(\ref{eq:polar}) exists at every source point. Finally,
+the source average is converged: after removing the scalar component of the
+band Hamiltonian, $h_M$ changes by $6.36\%$ from $M=2$ to $M=3$ but only
+$0.013\%$ from $M=3$ to $M=4$. Coarse grids alias transport sectors with
+$\bq_\gamma=\bm0\pmod M$ into the zero character; by $M=4$ that aliasing is
+exhausted, and we use $M=4$ throughout.
 
-We next examine the effect of the projection on the longitudinal dynamical
-response. To use the same microscopic probe in the periodic and projected
-bands, we map the spin operator into the fixed ice reference space with the
-zero-source isometry $W_{\bm0}$, defining for sublattice $a$
+\emph{Thermodynamics and dynamics.}---With the artifact removed we can
+compare against QMC. At the benchmark point of
+Eq.~(\ref{eq:benchmark_point}),
+continuous-time worm QMC on $8^3$ primitive cells \cite{Huang2018} places the
+low-temperature heat-capacity maximum at $T/\Jzz\approx0.001100$. Ordinary
+cubic-16 ED gives $0.02554$, tracking the four-loop scale $g_4$; the
+winding-free replacement gives $0.001463$, tracking $g_6$
+[Fig.~\ref{fig:summary}(ii)]. Over the low-temperature window the
+heat-capacity root-mean-square error drops from $0.0859$ to $0.02327$, while
+the entropy error is essentially unchanged at $0.04509$. The projection thus
+fixes the low-energy scale; it does not make a 16-site torus a quantitative
+model of the bulk.
+
+The same comparison can be made in the spectrum. To probe the periodic and
+projected bands with an identical microscopic operator, we map the spin
+operator into the fixed ice reference space with the zero-source isometry
+$W_{\bm0}$, defining for sublattice $a$
 \begin{equation}
 \widetilde S_a^z(\bk)
 =
@@ -502,62 +509,45 @@ the number of sites, $\eta=6\times10^{-4}\Jzz$ is the spectral broadening,
 and $|g\rangle$, $|n\rangle$ are eigenstates of the band Hamiltonian under
 consideration.
 
-Cubic-16 resolves only the $\Gamma$ point and three symmetry-related $X$
-points. As an internal consistency check, the operator obtained from the
-zero-source isometry agrees with an independently constructed periodic-band
-operator to a relative error of $2.8\times10^{-14}$. The periodic band has a
-unique ground state, whereas the projected band has a sixfold one: the six
-polarization sectors $\bm p=(\pm\tfrac12,0,0)$, $(0,\pm\tfrac12,0)$,
-$(0,0,\pm\tfrac12)$ can no longer tunnel into one another and stay exactly
-degenerate. At $X$, the spectral peak shifts from $0.08069\Jzz$ in the periodic
-band to $0.005362\Jzz$ after projection
-[Figs.~\ref{fig:summary}(iii.a) and \ref{fig:summary}(iii.b)]. Because $X$ is
-a zone-boundary point, this is directly comparable to continuous-time
-QMC with stochastic analytic continuation at the same coupling, which gives a
-photon bandwidth $W_\gamma\approx5\times10^{-3}\Jzz$ from $S^{zz}$ at
-$\Jpm/\Jzz=0.046$ \cite{Huang2018}. The projected peak agrees with that to
-$7\%$, whereas the periodic band overshoots it sixteenfold. At $\Gamma$ the
-projected response vanishes identically: the $\bk=\bm0$ probe is the
-sublattice magnetization, which is constant on a polarization sector and
-therefore a c-number on each block of the winding-free Hamiltonian, so it
-cannot connect distinct eigenstates. The corresponding QMC-SAC spectrum
-likewise carries all of its $\bq=\bm0$ weight at zero excitation energy, which
-Ref.~\cite{Huang2018} attributes to the same conservation law. The projection
-therefore reorganizes both the excitation energies and their spectral
-weights, rather than merely rescaling the periodic spectrum.
+Cubic-16 resolves only $\Gamma$ and three symmetry-related $X$ points. At
+$X$, the spectral peak shifts from $0.08069\Jzz$ in the periodic band to
+$0.005362\Jzz$ after projection [Figs.~\ref{fig:summary}(iii.a) and
+\ref{fig:summary}(iii.b)]. Since $X$ sits on the zone boundary, this is
+directly comparable to the photon bandwidth $W_\gamma\approx5\times10^{-3}
+\Jzz$ extracted from QMC with stochastic analytic continuation at the same
+coupling \cite{Huang2018}: the projected peak agrees to $7\%$, while the
+periodic band overshoots sixteenfold. At $\Gamma$ the projected response
+vanishes identically, because the $\bk=\bm0$ probe is the sublattice
+magnetization, a c-number on each polarization block; the QMC-SAC spectrum
+likewise carries all of its $\bq=\bm0$ weight at zero energy \cite{Huang2018}.
+The projection therefore reorganizes excitation energies and spectral weights
+together, rather than rescaling the periodic spectrum.
 
-That sixfold degeneracy leaves a residual entropy $\ln6$ per cluster, or
-$0.1120$ per site, which the winding-free band never releases: the projection
-makes $\bm p$ exactly conserved, so the sectors cannot mix at any
-temperature. The count of such sectors grows only polynomially with linear
-size, so this contribution is subextensive and vanishes per site in the
-thermodynamic limit, but on cubic-16 it is a floor under the low-temperature
-entropy and accounts for part of the residual discrepancy with QMC.
+One artifact of exact polarization conservation should be noted: the
+projected ground state is sixfold degenerate, the sectors
+$\bm p=(\pm\tfrac12,0,0)$, $(0,\pm\tfrac12,0)$, $(0,0,\pm\tfrac12)$ being
+unable to tunnel into one another. The resulting $\ln6$ per cluster is a
+floor under the low-temperature entropy on cubic-16, and accounts for part of
+the residual entropy discrepancy, but the sector count grows only
+polynomially with linear size and so vanishes per site in the thermodynamic
+limit.
 
-\emph{Discussion.}---Periodic ED can replace the physical hexagon dynamics of
+\emph{Discussion.}---Periodic ED replaces the physical hexagon dynamics of
 QSI with a parametrically larger noncontractible four-spin process.
-Transport-character projection removes this winding contribution from the
-exact ice-descended band while preserving contractible processes, microscopic
-virtual dressing, and the spectrum outside the selected band. It is supported
-by the exact source-phase identity, the exhaustive classification of short
-ice-to-ice paths, and agreement to $0.013\%$ between the $M=3$ and $M=4$
-grids.
+Transport-character projection removes it from the exact ice-descended band
+while preserving contractible processes, microscopic virtual dressing, and
+the spectrum outside the band. Read directly in the zero-spinon basis, the
+projected band has no winding amplitude left at the $10^{-16}$ level and
+retains every hexagon at the ring-exchange scale; with that established, the
+corrected cluster reproduces both the QMC heat-capacity scale and the QMC
+photon bandwidth at the sign-free point. What remains is genuine
+finite-size error: cubic-16 has no long-wavelength photon sector and sparse
+momentum resolution, so the projection is a controlled finite-torus
+correction, not a substitute for thermodynamic extrapolation.
 
-The QMC comparison also clarifies what the projection does not correct.
-Cubic-16 has no long-wavelength photon sector and only sparse momentum
-resolution, so its thermodynamics and dynamical response remain size
-dependent even after the winding scale is removed: the projection is a
-controlled finite-torus correction, not a replacement for thermodynamic
-extrapolation.
-
-A character-converged FCC-32 calculation at the full XYZ parameters relevant
-to Ce$_2$Hf$_2$O$_7$ is the natural next step. There, with sign-free QMC
-unavailable, reliability must be assessed through consistency between cluster
-geometries and across thermodynamic, entropic, and neutron observables. More
-broadly,
-transport-character projection provides a route for extracting local gauge
-dynamics from finite periodic clusters without allowing the topology of the
-simulation torus to determine the leading low-energy process.
+The method is sign unrestricted, so the natural next step is a
+character-converged FCC-32 calculation at the $\pi$-flux XYZ parameters
+relevant to Ce$_2$Hf$_2$O$_7$, where QMC cannot follow.
 
 \bibliography{references,references_additions}
 

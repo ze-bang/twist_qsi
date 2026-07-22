@@ -383,6 +383,71 @@ components with nonzero $\bq=2\bm k$ are aliased with zero by
 Eq.~(\ref{eq:alias}).  The audit establishes the source's topological meaning
 at low order; it is not used to construct the exact-band curves.
 
+\subsection{Loop amplitudes of the produced band operators}
+
+Table~\ref{tab:path_retention} counts terms of the perturbative diagnostic.
+The same classification can be applied directly to the production band
+operators, which is the stronger statement quoted in the main text.  Both
+$h(\bm0)$ and $h_M$ are matrices in the fixed reference space spanned by the
+$d=90$ zero-spinon configurations of cubic-16.  Let $\mu$ be the spin-flip
+support of an enumerated loop.  Every ordered pair of zero-spinon
+configurations $(s,t)$ with $t=s\oplus\mu$ then samples that loop's amplitude
+in a produced operator, and
+\begin{equation}
+ A_{\mathcal A}[h]=
+ \operatorname{mean}\left\{\left|h_{st}\right|:\
+ t=s\oplus\mu_{\mathcal A},\ s,t\ \text{zero spinon}\right\}
+\label{eq:loop_amplitude_si}
+\end{equation}
+is its mean magnitude over the channel $\mathcal A$.  No perturbative input
+enters Eq.~(\ref{eq:loop_amplitude_si}): $h$ is the polar pullback of the
+exact microscopic eigenspaces.  At $(\Jpm,\Jpp)/\Jzz=(0.046,0)$, where
+$g_6=1.168\times10^{-3}\Jzz$ and $g_4=8.464\times10^{-3}\Jzz$, this gives
+Table~\ref{tab:loop_amplitudes}.
+\begin{table}[htbp]
+\caption{Mean loop amplitude, Eq.~(\ref{eq:loop_amplitude_si}), of the
+produced cubic-16 band operators at $(\Jpm,\Jpp)/\Jzz=(0.046,0)$, in units of
+$\Jzz$.  $h(\bm0)$ is the periodic band; $h_{M}$ are the character-projected
+bands.  Contractible entries are means over the channel; winding entries are
+channel maxima, so that no surviving amplitude is hidden by averaging.  All
+projected entries are raw character averages, taken \emph{before} the exact
+$\bm p$-block structure is imposed, which would set every winding entry to
+zero identically and make the test circular.}
+\label{tab:loop_amplitudes}
+\centering
+\begin{tabular}{lrrr}
+\toprule
+operator & contractible hexagon & wrapping hexagon & winding four-loop\\
+\midrule
+$h(\bm0)$ & $1.314\times10^{-3}$ & $1.314\times10^{-3}$ & $1.046\times10^{-2}$\\
+$h_{M=2}$ & $1.314\times10^{-3}$ & $1.2\times10^{-35}$ & $7.8\times10^{-19}$\\
+$h_{M=3}$ & $1.325\times10^{-3}$ & $2.0\times10^{-7}$ & $1.1\times10^{-6}$\\
+$h_{M=4}$ & $1.325\times10^{-3}$ & $1.0\times10^{-16}$ & $1.2\times10^{-16}$\\
+\midrule
+in units of & $1.13\,g_6$ & --- & $1.24\,g_4$ [$h(\bm0)$]\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Four features are worth stating explicitly.  First, in the periodic band the
+winding four-loop amplitude exceeds the contractible hexagon amplitude by a
+factor of $8.0$, so the leading ice-to-ice process of ordinary exact
+diagonalization on this cluster is the artifact rather than the ring
+exchange.  Second, at the production grid $M=4$ the winding amplitudes are
+$\le1.2\times10^{-16}\Jzz$, fourteen orders of magnitude below $g_4$ and at
+the arithmetic precision of the average; the character projection alone
+achieves this, independently of the subsequent $\bm p$-block projection.
+Third, the odd grid $M=3$ leaves a residual winding amplitude of
+$1.1\times10^{-6}\Jzz$.  This is four orders of magnitude below $g_6$ and
+consistent with the $0.013\%$ centered operator agreement between $M=3$ and
+$M=4$ in Eq.~(\ref{eq:centered_change_si}), but it is not at arithmetic
+precision, and it is a further reason to quote $M=4$ as the production grid.
+Fourth, the contractible hexagon amplitude changes by only $0.8\%$ between
+$h(\bm0)$ and $h_{M=4}$, and sits $13\%$ above the bare third-order value
+$g_6$.  That excess is the higher-order virtual dressing of the physical ring
+exchange, which the exact-band construction retains and a truncated
+third-order effective model would discard.
+
 For reference, canonical Schrieffer--Wolff theory~\cite{Bravyi2011} generates
 the Taylor coefficients $h_{n,\bq}$ when the band is analytic.  Agreement
 with the exact-band source dependence at weak coupling is a useful audit, but
