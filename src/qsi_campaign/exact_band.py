@@ -327,8 +327,14 @@ def extract_exact_band_full(
 ) -> ExactBandResult:
     """Extract a generic-source band without assuming translation symmetry."""
     n_required = n_band + 1
+    # Drop to the real symmetric solver whenever the source phases cancel
+    # (theta = 0 and the gauge corners).  This is not only cheaper: ARPACK's
+    # complex Hermitian path fails to converge on the full 2^N basis for this
+    # spectrum, where the real path reaches 5e-14 with the same Krylov budget.
+    imaginary_scale = np.max(np.abs(hamiltonian.data.imag), initial=0.0)
+    operator = hamiltonian.real if imaginary_scale < 1.0e-14 else hamiltonian
     values, vectors = eigsh(
-        hamiltonian,
+        operator,
         k=n_required,
         which="SA",
         tol=tolerance,

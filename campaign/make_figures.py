@@ -408,11 +408,26 @@ def _draw_cluster_loop(
 
     loop = projected[list(path)]
     transported_dipole = _transport_walk(cluster, path)[-1]
-    seed = None
+    steps = None
     if stage is not None:
-        first = projected[[path[0], path[1]]]
-        seed = path[0] if first[0][1] <= first[1][1] else path[1]
-    steps = _charge_trajectory(cluster, path, seed) if stage is not None else None
+        # Two ice patterns are flippable round the loop and they carry opposite
+        # charges.  Choose the one in which the antispinon is the charge the
+        # closing exchange carries away, so the sequence reads: create, move
+        # the minus, then let the boundary map it onto the plus.
+        options = []
+        for candidate in (path[0], path[1]):
+            track = _charge_trajectory(cluster, path, candidate)
+            final, earlier = track[-1]["charges"], track[-2]["charges"] if len(track) > 1 else []
+            seats = {tuple(np.round(e["position"], 6)) for e in earlier}
+            moved = [
+                e for e in final
+                if tuple(np.round(e["position"], 6)) not in seats
+            ]
+            options.append((track, moved[0]["charge"] if moved else 0))
+        steps = next(
+            (track for track, moved_charge in options if moved_charge < 0),
+            options[0][0],
+        )
     if steps is not None:
         occupied = [dict(e) for e in steps[stage]["charges"]]
         previous = [dict(e) for e in steps[stage - 1]["charges"]] if stage else []
@@ -783,9 +798,9 @@ def summary_figure(exact, exact_report: dict) -> None:
         (1, 0, axial, 0, False, r"i.d) create",
          "$S^+_iS^-_j$: pair splits"),
         (1, 1, axial, 1, False, r"i.e) separate",
-         "$+$ carried one period down"),
+         "$S^+_iS^-_j$ moves the $-$"),
         (1, 2, axial, 1, True, r"i.f) annihilate",
-         "the boundary closes it\n$\\mathbf{q}_\\gamma=(0,0,-1)$"),
+         "boundary maps $-$ onto $+$\n$\\mathbf{q}_\\gamma=(0,0,-1)$"),
     )
     for row, column, panel, stage, pbc, title, caption in storyboard:
         path, winding, color, view, _ = panel
