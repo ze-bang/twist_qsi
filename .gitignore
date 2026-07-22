@@ -13,3 +13,6 @@ __pycache__/
 *Notes.bib
 
 # PDFs under paper/ and campaign data products are intentional artifacts.
+campaign/pilot/*.npy
+campaign/pilot/fcc32_dir/
+campaign/cache/fcc32_sym/

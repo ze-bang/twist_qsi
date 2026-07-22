@@ -33,6 +33,14 @@ from qsi_campaign.exact_band import (  # noqa: E402
     translation_sector_bases,
     uniform_character_grid,
 )
+from qsi_campaign.point_group import (  # noqa: E402
+    SpaceGroupOperation,
+    character_orbits,
+    ice_permutations,
+    is_gauge_corner,
+    realised_space_group,
+    reconstruct_operator,
+)
 from qsi_campaign.protocol import (  # noqa: E402
     centered_relative_error,
     character_project,
@@ -152,33 +160,45 @@ def solve_or_load_point(
 def exact_character_grid(
     cluster, states, ice_indices, jpm, jpmpm, tolerance, zero_operator, grid_size
 ):
-    operators = []
+    """Solve one source point per space-group orbit and rebuild the whole grid.
+
+    Operators are returned in lexicographic ``product(range(M), repeat=3)``
+    order, matching :func:`uniform_character_grid`.
+    """
+    grid = list(product(range(grid_size), repeat=3))
+    operators: dict[tuple[int, ...], np.ndarray] = {}
     diagnostics = []
-    visited = set()
-    representatives = []
-    self_conjugate = []
-    for index in product(range(grid_size), repeat=3):
-        if index in visited:
-            continue
-        negative = tuple((-value) % grid_size for value in index)
-        visited.add(index)
-        visited.add(negative)
-        if index == negative:
-            self_conjugate.append(index)
-        else:
-            representatives.append((index, negative))
 
-    for index in self_conjugate:
-        theta = 2.0 * np.pi * np.asarray(index, dtype=float) / grid_size
-        ice_phases = basis_character_phases(cluster, cluster.ice_states, theta)
-        operators.append(
-            ice_phases[:, None]
-            * zero_operator
-            * ice_phases.conjugate()[None, :]
-        )
-        diagnostics.append({"index": list(index), "kind": "exact_gauge_corner"})
+    # Self-conjugate points carry a pure-gauge source: the band there is a
+    # diagonal transformation of the zero-source band and costs no solve.
+    for index in grid:
+        if is_gauge_corner(index, grid_size):
+            theta = 2.0 * np.pi * np.asarray(index, dtype=float) / grid_size
+            ice_phases = basis_character_phases(cluster, cluster.ice_states, theta)
+            operators[index] = (
+                ice_phases[:, None] * zero_operator * ice_phases.conjugate()[None, :]
+            )
+            diagnostics.append({"index": list(index), "kind": "exact_gauge_corner"})
 
-    for count, (index, negative) in enumerate(representatives, start=1):
+    if jpmpm == 0.0:
+        group = realised_space_group(cluster)
+        reduction = f"space group ({len(group)} operations) and conjugation"
+    else:
+        # The pair-flip phase depends on r_i + r_j, which is not covariant under
+        # the operations carrying a non-primitive translation.  Fall back to the
+        # conjugation-only pairing.
+        group = [SpaceGroupOperation(np.eye(3), np.arange(cluster.n_sites))]
+        reduction = "conjugation only (Jpmpm != 0 breaks space-group covariance)"
+    ice_permutation_by_operation = ice_permutations(cluster, group)
+    representatives, recipes = character_orbits(grid_size, group)
+    sourced = [index for index in representatives if not is_gauge_corner(index, grid_size)]
+    print(
+        f"M={grid_size}: {grid_size ** 3} character points reduced by {reduction} "
+        f"to {len(operators)} gauge corners and {len(sourced)} solves",
+        flush=True,
+    )
+
+    for count, index in enumerate(sourced, start=1):
         operator, _, point_diagnostics, cached = solve_or_load_point(
             cluster,
             states,
@@ -189,22 +209,31 @@ def exact_character_grid(
             index,
             tolerance,
         )
-        operators.extend((operator, operator.conjugate()))
+        operators[index] = operator
         diagnostics.append(point_diagnostics)
         timing = "cached" if cached else f"{point_diagnostics['solve_seconds']:.2f}s"
         print(
-            f"M={grid_size} pair {count}/{len(representatives)} "
-            f"index={index},-{negative} "
+            f"M={grid_size} orbit {count}/{len(sourced)} "
+            f"index={index} "
             f"{timing} "
             f"gap={point_diagnostics['fixed_sz_gap_above_band']:.6g} "
             f"overlap_min={point_diagnostics['model_overlap_min']:.6g}",
             flush=True,
         )
+
+    for index in grid:
+        if index in operators:
+            continue
+        representative, _, _ = recipes[index]
+        operators[index] = reconstruct_operator(
+            operators[representative], recipes[index], ice_permutation_by_operation
+        )
     if len(operators) != grid_size**3:
         raise RuntimeError(
             f"M={grid_size} orbit produced {len(operators)} operators"
         )
-    return character_project(np.asarray(operators)), np.asarray(operators), diagnostics
+    ordered = np.asarray([operators[index] for index in grid])
+    return character_project(ordered), ordered, diagnostics
 
 
 def thermodynamic_metrics(
@@ -472,6 +501,12 @@ def main() -> None:
         ]
         if grid >= 2:
             arrays[f"M{grid}_operators_by_character"] = operators_by_grid[grid]
+            # Record the grid index of every stored operator.  The array is in
+            # lexicographic order, but saying so explicitly keeps any consumer
+            # from having to infer it.
+            arrays[f"M{grid}_character_indices"] = np.asarray(
+                list(product(range(grid), repeat=3)), dtype=np.int64
+            )
         if grid >= 2 and qmc_matched:
             replaced, full_thermal, metrics = thermodynamic_metrics(
                 spectrum,
