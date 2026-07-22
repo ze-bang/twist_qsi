@@ -234,7 +234,7 @@ def _draw_exchange_arrow(ax, start, stop, color: str) -> None:
         "",
         xy=head,
         xytext=tail,
-        arrowprops={"arrowstyle": "-|>", "color": color, "lw": 1.35},
+        arrowprops={"arrowstyle": "-|>", "color": color, "lw": 1.9},
         zorder=9,
     )
 
@@ -797,7 +797,7 @@ def _draw_fig1_panel(ax, cluster, panel, colour) -> None:
         live = frozenset((left, right)) in active
         ax.plot(
             *projected[[left, right]].T,
-            color=colour, lw=2.2 if live else 1.1, alpha=1.0 if live else 0.32,
+            color=colour, lw=3.4 if live else 2.3, alpha=1.0 if live else 0.55,
             ls="--" if wraps else "-", solid_capstyle="round", zorder=4,
         )
     loop = projected[list(path)]
