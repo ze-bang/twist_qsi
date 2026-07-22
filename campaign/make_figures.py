@@ -197,54 +197,26 @@ FIG1_VIEWS = {
 FIG1_PANELS = (
     dict(
         cell=(0, 0), path=HEXAGON_PATH, colour="hexagon",
-        title=r"i.a) create", caption="$S^+_iS^-_j$: pair splits",
-        bond=(2, 1),
-        charges=((3, +1, 2, NO_IMAGE), (2, -1, 1, NO_IMAGE)),
-        ghosts=(), arrow=None,
-    ),
-    dict(
-        cell=(0, 1), path=HEXAGON_PATH, colour="hexagon",
-        title=r"i.b) move", caption="$S^+_iS^-_j$: spinon walks",
-        bond=(9, 8),
+        title=r"i.a) contractible hexagon",
+        scale=r"$g_6=12|J_\pm|^3/J_{zz}^2$",
+        caption="$\\mathbf{q}_\\gamma=(0,0,0)$",
+        # all three exchanges of the ring, in order
+        bonds=((2, 1), (9, 8), (4, 6)),
         charges=((4, +1, 9, NO_IMAGE), (2, -1, 1, NO_IMAGE)),
         ghosts=((3, +1, 2, NO_IMAGE),),
-        arrow=("solid", ("ghost", 0), ("charge", 0)),
+        arrows=(("solid", ("ghost", 0), ("charge", 0)),
+                ("solid", ("charge", 0), ("charge", 1))),
     ),
     dict(
-        cell=(0, 2), path=HEXAGON_PATH, colour="hexagon",
-        title=r"i.c) annihilate",
-        caption="$+$ meets $-$\n$\\mathbf{q}_\\gamma=(0,0,0)$",
-        bond=(4, 6),
-        charges=(),
-        ghosts=((4, +1, 9, NO_IMAGE), (2, -1, 1, NO_IMAGE)),
-        arrow=("solid", ("ghost", 0), ("ghost", 1)),
-    ),
-    dict(
-        cell=(1, 0), path=AXIAL_PATH, colour="axial",
-        title=r"i.d) create", caption="$S^+_iS^-_j$: pair splits",
-        bond=(3, 1),
-        charges=((4, +1, 3, NO_IMAGE), (2, -1, 1, NO_IMAGE)),
-        ghosts=(), arrow=None,
-    ),
-    dict(
-        cell=(1, 1), path=AXIAL_PATH, colour="axial",
-        title=r"i.e) apply $S^+_iS^-_j$",
-        caption="carried out of the cell",
-        bond=(4, 6),
-        # S+ on 4 empties t2; S- on 6 puts that charge on the image of t4 that
-        # shares site 6 with t5 -- a different copy from the one holding the +
+        cell=(0, 1), path=AXIAL_PATH, colour="axial",
+        title=r"i.b) winding four-loop",
+        scale=r"$g_4=4J_\pm^2/J_{zz}$",
+        caption="$\\mathbf{q}_\\gamma=(0,0,-1)$",
+        bonds=((3, 1), (4, 6)),
         charges=((4, +1, 3, NO_IMAGE), (4, -1, 6, NO_IMAGE)),
         ghosts=((2, -1, 1, NO_IMAGE),),
-        arrow=("solid", ("ghost", 0), ("charge", 1)),
-    ),
-    dict(
-        cell=(1, 2), path=AXIAL_PATH, colour="axial",
-        title=r"i.f) identify",
-        caption="the boundary returns it\n$\\mathbf{q}_\\gamma=(0,0,-1)$",
-        bond=(4, 6),
-        charges=((4, +1, 3, NO_IMAGE), (4, -1, 6, NO_IMAGE)),
-        ghosts=(),
-        arrow=("dashed", ("charge", 1), ("charge", 0)),
+        arrows=(("solid", ("ghost", 0), ("charge", 1)),
+                ("dashed", ("charge", 1), ("charge", 0))),
     ),
 )
 
@@ -809,8 +781,7 @@ def _draw_fig1_panel(ax, cluster, panel, colour) -> None:
         normal=np.cross(basis[0], basis[1]), charged=charges + ghosts,
     )
 
-    raised, lowered = panel["bond"]
-    active = {frozenset(panel["bond"])}
+    active = {frozenset(b) for b in panel["bonds"]}
     for index, (left, right) in enumerate(zip(path, path[1:] + path[:1])):
         wraps = np.any(np.asarray(_edge_wrap(cluster, left, right)))
         live = frozenset((left, right)) in active
@@ -819,31 +790,31 @@ def _draw_fig1_panel(ax, cluster, panel, colour) -> None:
             color=colour, lw=1.45 if live else 0.9, alpha=1.0 if live else 0.32,
             ls="--" if wraps else "-", solid_capstyle="round", zorder=4,
         )
-    _draw_exchange_arrow(ax, projected[lowered], projected[raised], colour)
-
     loop = projected[list(path)]
-    for site, symbol in ((raised, r"$S^{+}$"), (lowered, r"$S^{-}$")):
-        outward = projected[site] - loop.mean(axis=0)
+    for order, (raised, lowered) in enumerate(panel["bonds"], start=1):
+        _draw_exchange_arrow(ax, projected[lowered], projected[raised], colour)
+        # number the exchanges so the order of the sequence is readable
+        mid = 0.5 * (projected[raised] + projected[lowered])
+        outward = mid - loop.mean(axis=0)
         norm = np.linalg.norm(outward)
         outward = outward / norm if norm > 1e-9 else np.array([0.0, 1.0])
         ax.text(
-            *(projected[site] + 0.23 * outward), symbol, color=colour,
-            fontsize=7.8, ha="center", va="center", zorder=9,
-            bbox={"boxstyle": "round,pad=0.06", "facecolor": "white",
-                  "edgecolor": "none", "alpha": 0.85},
+            *(mid + 0.20 * outward), str(order), color=colour, fontsize=7.6,
+            ha="center", va="center", zorder=9,
+            bbox={"boxstyle": "circle,pad=0.16", "facecolor": "white",
+                  "edgecolor": colour, "linewidth": 0.6, "alpha": 0.95},
         )
 
     _draw_charges(ax, cluster, ghosts, basis, center, scale, faded=True)
     _draw_charges(ax, cluster, charges, basis, center, scale)
 
-    if panel["arrow"] is not None:
-        style, source, target = panel["arrow"]
-        pools = {"charge": charges, "ghost": ghosts}
+    pools = {"charge": charges, "ghost": ghosts}
+    for style, source, target in panel["arrows"]:
         tail = to_plot(pools[source[0]][source[1]]["position"])
         head = to_plot(pools[target[0]][target[1]]["position"])
         span = head - tail
         ax.annotate(
-            "", xy=tail + 0.78 * span, xytext=tail + 0.22 * span,
+            "", xy=tail + 0.80 * span, xytext=tail + 0.20 * span,
             arrowprops={
                 "arrowstyle": "-|>", "color": INK, "lw": 1.1,
                 "shrinkA": 0, "shrinkB": 0,
@@ -852,7 +823,10 @@ def _draw_fig1_panel(ax, cluster, panel, colour) -> None:
             zorder=9,
         )
 
-    ax.text(0.5, -0.03, panel["caption"], color=INK, fontsize=7.4,
+    # energy scale of the process, inside the panel
+    ax.text(0.5, 0.985, panel["scale"], color=colour, fontsize=8.6,
+            ha="center", va="top", transform=ax.transAxes, zorder=10)
+    ax.text(0.5, -0.03, panel["caption"], color=INK, fontsize=7.6,
             ha="center", va="top", linespacing=1.5, transform=ax.transAxes)
     ax.set_title(panel["title"], loc="left", pad=2.0, fontsize=8.6)
     ax.set_xlim(-0.78, 0.78)
@@ -1031,7 +1005,7 @@ def dssf_figure() -> None:
 
 
 def summary_figure(exact, exact_report: dict) -> None:
-    figure = plt.figure(figsize=(7.2, 6.45))
+    figure = plt.figure(figsize=(7.2, 4.95))
     outer = figure.add_gridspec(
         1,
         2,
@@ -1046,11 +1020,11 @@ def summary_figure(exact, exact_report: dict) -> None:
     left_grid = outer[0, 0].subgridspec(
         2,
         1,
-        height_ratios=(2.85, 1.10),
-        hspace=0.40,
+        height_ratios=(1.55, 1.15),
+        hspace=0.34,
     )
     cluster, panels = _geometry_panel_data()
-    geometry_grid = left_grid[0, 0].subgridspec(2, 3, wspace=0.04, hspace=0.72)
+    geometry_grid = left_grid[0, 0].subgridspec(1, 2, wspace=0.06)
     hexagon, axial, diagonal = panels
     # Traversal is not free: the wrap runs opposite to the travel from the first
     # exchange to the second, so whichever bond acts first fixes which way the
@@ -1131,14 +1105,6 @@ def summary_figure(exact, exact_report: dict) -> None:
     colorbar.outline.set_linewidth(0.6)
     colorbar.ax.xaxis.set_label_position("top")
     colorbar.ax.tick_params(pad=1)
-    figure.text(
-        1.025,
-        0.52,
-        r"$\omega/J_{zz}$",
-        rotation=270,
-        ha="center",
-        va="center",
-    )
     save(figure, "fig_summary")
 
 
