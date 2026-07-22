@@ -157,6 +157,95 @@ def save(figure: plt.Figure, name: str) -> None:
     plt.close(figure)
 
 
+
+# ---------------------------------------------------------------------------
+# Fig. 1i, written out by hand.  Nothing below is derived: the highlighted bond
+# is the truth and every charge is placed to match it.  Edit these tuples.
+#
+# Site incidence on cubic-16 (each site lies in exactly two tetrahedra):
+#     1:[0,2]  2:[0,3]  3:[0,4]  4:[2,5]  6:[4,5]  7:[3,5]  8:[3,6]  9:[4,6]
+#     tet0=(0,1,2,3) tet2=(1,4,11,14) tet3=(2,7,8,13) tet4=(3,6,9,12)
+#     tet5=(4,5,6,7) tet6=(8,9,10,11)
+#
+# An exchange on bond (a,b) leaves the tetrahedron holding BOTH sites neutral
+# and charges the other tetrahedron of a and the other of b.  So for bond (1,2):
+# shared tet 0, charged tets are 2 (the other of site 1) and 3 (the other of 2).
+#
+# panel entries
+#   bond    : (raised site, lowered site).  Drawn active, labelled S+ then S-.
+#   charges : ((tetrahedron, sign, near site, image), ...)
+#             `near site` picks which corner images build the tetrahedron, so
+#             the drawn cell sits beside that site.  `image` is an integer
+#             lattice translation applied afterwards -- use it to push a charge
+#             into a neighbouring cell, e.g. (0, 0, -1) for one period down.
+#   ghosts  : same shape, drawn faded (where a charge was a moment ago)
+#   arrow   : (style, from, to) with style "solid" or "dashed"; from/to are
+#             ("charge", i) or ("ghost", i) indices into the lists above
+# ---------------------------------------------------------------------------
+HEXAGON_PATH = (1, 2, 8, 9, 6, 4)
+AXIAL_PATH = (1, 3, 6, 4)
+NO_IMAGE = (0, 0, 0)
+
+# viewing direction per loop; the hexagon is shown face-on, the four-loop from
+# the same angle the cluster panels use
+FIG1_VIEWS = {
+    # normal of the hexagon's own plane, so it is seen face on
+    "hexagon": np.array([0.57735, 0.57735, -0.57735]),
+    "axial": np.array([1.25, -1.45, 1.0]),
+}
+
+FIG1_PANELS = (
+    dict(
+        cell=(0, 0), path=HEXAGON_PATH, colour="hexagon",
+        title=r"i.a) create", caption="$S^+_iS^-_j$: pair splits",
+        bond=(2, 1),
+        charges=((3, +1, 2, NO_IMAGE), (2, -1, 1, NO_IMAGE)),
+        ghosts=(), arrow=None,
+    ),
+    dict(
+        cell=(0, 1), path=HEXAGON_PATH, colour="hexagon",
+        title=r"i.b) move", caption="$S^+_iS^-_j$: spinon walks",
+        bond=(9, 8),
+        charges=((4, +1, 9, NO_IMAGE), (2, -1, 1, NO_IMAGE)),
+        ghosts=((3, +1, 2, NO_IMAGE),),
+        arrow=("solid", ("ghost", 0), ("charge", 0)),
+    ),
+    dict(
+        cell=(0, 2), path=HEXAGON_PATH, colour="hexagon",
+        title=r"i.c) annihilate",
+        caption="$+$ meets $-$\n$\\mathbf{q}_\\gamma=(0,0,0)$",
+        bond=(4, 6),
+        charges=(),
+        ghosts=((4, +1, 9, NO_IMAGE), (2, -1, 1, NO_IMAGE)),
+        arrow=("solid", ("ghost", 0), ("ghost", 1)),
+    ),
+    dict(
+        cell=(1, 0), path=AXIAL_PATH, colour="axial",
+        title=r"i.d) create", caption="$S^+_iS^-_j$: pair splits",
+        bond=(3, 1),
+        charges=((4, +1, 3, NO_IMAGE), (2, -1, 1, NO_IMAGE)),
+        ghosts=(), arrow=None,
+    ),
+    dict(
+        cell=(1, 1), path=AXIAL_PATH, colour="axial",
+        title=r"i.e) apply $S^+_iS^-_j$", caption="$+$ carried out of the cell",
+        bond=(4, 6),
+        charges=((2, +1, 4, (0, 0, -1)), (2, -1, 1, NO_IMAGE)),
+        ghosts=((4, +1, 3, NO_IMAGE),),
+        arrow=("solid", ("ghost", 0), ("charge", 0)),
+    ),
+    dict(
+        cell=(1, 2), path=AXIAL_PATH, colour="axial",
+        title=r"i.f) identify",
+        caption="PBC maps it onto $-$\n$\\mathbf{q}_\\gamma=(0,0,-1)$",
+        bond=(4, 6),
+        charges=((2, +1, 4, (0, 0, -1)), (2, -1, 1, NO_IMAGE)),
+        ghosts=(),
+        arrow=("dashed", ("charge", 0), ("charge", 1)),
+    ),
+)
+
+
 def _draw_exchange_arrow(ax, start, stop, color: str) -> None:
     start = np.asarray(start, dtype=float)
     stop = np.asarray(stop, dtype=float)
@@ -666,6 +755,109 @@ def _draw_cluster_loop(
     ax.set_axis_off()
 
 
+
+def _placed_charge(cluster, spec):
+    """Turn one (tetrahedron, sign, near site, image) tuple into a drawable."""
+    tetrahedron, sign, near, image = spec
+    anchor = np.asarray(cluster.positions[near], dtype=float)
+    corners = np.array(
+        [
+            _nearest_image(cluster, cluster.positions[corner], anchor)
+            for corner in cluster.tets[tetrahedron]
+        ]
+    )
+    shift = np.asarray(image, dtype=float) @ cluster.Lvecs
+    corners = corners + shift
+    return {
+        "tetrahedron": tetrahedron,
+        "charge": 2 * sign,
+        "corners": corners,
+        "position": corners.mean(axis=0),
+    }
+
+
+def _draw_fig1_panel(ax, cluster, panel, colour) -> None:
+    """Draw one hand-written panel of Fig. 1i.  See FIG1_PANELS."""
+    path = panel["path"]
+    view = FIG1_VIEWS[panel["colour"]]
+    basis = _projection_basis(view)
+    projected = cluster.positions @ basis.T
+    center = projected.mean(axis=0)
+    scale = max(np.ptp(projected[:, 0]), np.ptp(projected[:, 1]))
+    projected = (projected - center) / scale
+
+    def to_plot(point):
+        return (np.asarray(point) @ basis.T - center) / scale
+
+    for (left, right), wrap in zip(cluster.bonds, cluster.bond_wrap):
+        if np.any(wrap):
+            continue
+        ax.plot(*projected[[left, right]].T, color=RULE, lw=0.48, zorder=1)
+    ax.scatter(
+        projected[:, 0], projected[:, 1], s=8, facecolor=INK_FAINT,
+        edgecolor="white", linewidth=0.25, zorder=2,
+    )
+
+    charges = [_placed_charge(cluster, c) for c in panel["charges"]]
+    ghosts = [_placed_charge(cluster, c) for c in panel["ghosts"]]
+
+    _draw_tetrahedron_frames(
+        ax, cluster, path, basis, center, scale,
+        normal=np.cross(basis[0], basis[1]), charged=charges + ghosts,
+    )
+
+    raised, lowered = panel["bond"]
+    active = {frozenset(panel["bond"])}
+    for index, (left, right) in enumerate(zip(path, path[1:] + path[:1])):
+        wraps = np.any(np.asarray(_edge_wrap(cluster, left, right)))
+        live = frozenset((left, right)) in active
+        ax.plot(
+            *projected[[left, right]].T,
+            color=colour, lw=1.45 if live else 0.9, alpha=1.0 if live else 0.32,
+            ls="--" if wraps else "-", solid_capstyle="round", zorder=4,
+        )
+    _draw_exchange_arrow(ax, projected[lowered], projected[raised], colour)
+
+    loop = projected[list(path)]
+    for site, symbol in ((raised, r"$S^{+}$"), (lowered, r"$S^{-}$")):
+        outward = projected[site] - loop.mean(axis=0)
+        norm = np.linalg.norm(outward)
+        outward = outward / norm if norm > 1e-9 else np.array([0.0, 1.0])
+        ax.text(
+            *(projected[site] + 0.23 * outward), symbol, color=colour,
+            fontsize=6.8, ha="center", va="center", zorder=9,
+            bbox={"boxstyle": "round,pad=0.06", "facecolor": "white",
+                  "edgecolor": "none", "alpha": 0.85},
+        )
+
+    _draw_charges(ax, cluster, ghosts, basis, center, scale, faded=True)
+    _draw_charges(ax, cluster, charges, basis, center, scale)
+
+    if panel["arrow"] is not None:
+        style, source, target = panel["arrow"]
+        pools = {"charge": charges, "ghost": ghosts}
+        tail = to_plot(pools[source[0]][source[1]]["position"])
+        head = to_plot(pools[target[0]][target[1]]["position"])
+        span = head - tail
+        ax.annotate(
+            "", xy=tail + 0.78 * span, xytext=tail + 0.22 * span,
+            arrowprops={
+                "arrowstyle": "-|>", "color": INK, "lw": 1.1,
+                "shrinkA": 0, "shrinkB": 0,
+                **({"linestyle": (0, (2.6, 1.8))} if style == "dashed" else {}),
+            },
+            zorder=9,
+        )
+
+    ax.text(0.0, -1.16, panel["caption"], color=INK, fontsize=6.0,
+            ha="center", va="center", linespacing=1.5)
+    ax.set_title(panel["title"], loc="left", pad=1.0, fontsize=7.4)
+    ax.set_xlim(-0.76, 0.76)
+    ax.set_ylim(-1.34, 0.80)
+    ax.set_aspect("equal")
+    ax.set_axis_off()
+
+
 def _geometry_panel_data():
     cluster = geometry.build_cluster("cubic", (1, 1, 1))
     axial = next(
@@ -861,41 +1053,13 @@ def summary_figure(exact, exact_report: dict) -> None:
     # exchange to the second, so whichever bond acts first fixes which way the
     # surviving charge is carried.  This order carries the spinon one period
     # *down*, onto the tetrahedron below the cell and inside the frame.
-    # [1] WHICH STAGE EACH PANEL SHOWS.
-    #   (row, column, loop, stage, pbc, hop, title, caption)
-    #   stage : index of the exchange -- 0 is the first S+S-, 1 the second
-    #   pbc   : draw the dashed identification arrow closing the pair
-    #   hop   : highlight the boundary-crossing leg instead of the exchange bond
-    # The hexagon has three exchanges, the four-loop two, so the four-loop
-    # repeats stage 1 in i.e and i.f and distinguishes them with `pbc`.
-    storyboard = (
-        (0, 0, hexagon, 0, False, False, r"i.a) create", "$S^+_iS^-_j$: pair splits"),
-        (0, 1, hexagon, 1, False, False, r"i.b) move", "$S^+_iS^-_j$: spinon walks"),
-        (0, 2, hexagon, 2, False, False, r"i.c) annihilate",
-         "$S^+_iS^-_j$: $+$ meets $-$\n$\\mathbf{q}_\\gamma=(0,0,0)$"),
-        (1, 0, axial, 0, False, False, r"i.d) create",
-         "$S^+_iS^-_j$: pair splits"),
-        (1, 1, axial, 1, False, False, r"i.e) apply $S^+_iS^-_j$",
-         "$+$ carried out of the cell"),
-        (1, 2, axial, 1, True, False, r"i.f) identify",
-         "PBC maps it onto $-$\n$\\mathbf{q}_\\gamma=(0,0,-1)$"),
-    )
-    for row, column, panel, stage, pbc, hop, title, caption in storyboard:
-        path, winding, color, view, _ = panel
+    # Fig. 1i is drawn from the hand-written FIG1_PANELS table at the top of
+    # this file.  To move a spinon, edit that table; nothing here derives it.
+    tones = {"hexagon": CLEAN, "axial": BARE}
+    for panel in FIG1_PANELS:
+        row, column = panel["cell"]
         ax = figure.add_subplot(geometry_grid[row, column])
-        _draw_cluster_loop(
-            ax,
-            cluster,
-            path,
-            winding,
-            color,
-            view,
-            title,
-            stage=stage,
-            caption=caption,
-            pbc=pbc,
-            hop=hop,
-        )
+        _draw_fig1_panel(ax, cluster, panel, tones[panel["colour"]])
 
     thermodynamics_axis = figure.add_subplot(left_grid[1, 0])
     _draw_thermodynamic_benchmark(thermodynamics_axis, exact, exact_report)
