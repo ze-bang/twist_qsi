@@ -170,61 +170,6 @@ def _tetrahedron_center(cluster, tetrahedron: int, anchor_site: int) -> np.ndarr
     return np.mean(corners, axis=0)
 
 
-def _charge_trajectory(cluster, path, seed_raised: int | None = None):
-    """Tetrahedral charges after each exchange of a ring-exchange sequence.
-
-    Every exchange flips both ends of one bond.  The two spins share a
-    tetrahedron whose charge is therefore unchanged, so the move acts on the
-    two *outer* tetrahedra: it creates a spinon-antispinon pair, or moves an
-    existing one, or annihilates the pair.  Returns one entry per exchange,
-    each listing the charged tetrahedra that survive it.
-    """
-    def charges(state: int) -> np.ndarray:
-        return np.array(
-            [sum(1 if (state >> s) & 1 else -1 for s in tet) for tet in cluster.tets]
-        )
-
-    def flippable(state: int) -> bool:
-        return all(
-            ((state >> path[k]) & 1) != ((state >> path[(k + 1) % len(path)]) & 1)
-            for k in range(len(path))
-        )
-
-    candidates = [int(s) for s in cluster.ice_states if flippable(int(s))]
-    if seed_raised is not None:
-        # prefer the pattern in which `seed_raised` is down, so the first
-        # exchange raises it and the transfer arrow points that way
-        candidates.sort(key=lambda c: (c >> seed_raised) & 1)
-    state = candidates[0]
-    if np.any(charges(state)):
-        raise RuntimeError("the seed configuration is not an ice state")
-
-    steps: list[list[dict]] = []
-    for k in range(0, len(path), 2):
-        left, right = path[k], path[(k + 1) % len(path)]
-        # the down spin is raised, the up spin lowered
-        raised, lowered = (left, right) if not (state >> left) & 1 else (right, left)
-        state ^= (1 << left) | (1 << right)
-        occupied = []
-        for tet in np.flatnonzero(charges(state)):
-            on_bond = [s for s in cluster.tets[tet] if s in (left, right)]
-            anchor = on_bond[0] if on_bond else next(
-                s for s in cluster.tets[tet] if s in path
-            )
-            occupied.append(
-                {
-                    "tetrahedron": int(tet),
-                    "charge": int(charges(state)[tet]),
-                    "anchor": int(anchor),
-                    "position": _tetrahedron_center(cluster, int(tet), anchor),
-                }
-            )
-        steps.append({"charges": occupied, "raised": raised, "lowered": lowered})
-    if steps[-1]["charges"]:
-        raise RuntimeError(f"sequence {path} does not return to the ice manifold")
-    return steps
-
-
 def _loop_tetrahedra(cluster, path):
     """Every tetrahedron the loop passes through, anchored to a loop site."""
     found = []
@@ -235,28 +180,112 @@ def _loop_tetrahedra(cluster, path):
     return found
 
 
+def _tetrahedra_of(cluster, site: int):
+    return [t for t, tet in enumerate(cluster.tets) if site in tet]
+
+
+def _lift_path(cluster, path):
+    """Covering-lattice positions of the loop sites, walked from path[0]."""
+    lifted = [np.asarray(cluster.positions[path[0]], dtype=float)]
+    for k in range(len(path)):
+        left, right = path[k], path[(k + 1) % len(path)]
+        image = np.asarray(_edge_wrap(cluster, left, right), dtype=float)
+        step = (
+            cluster.positions[right] - cluster.positions[left] - image @ cluster.Lvecs
+        )
+        lifted.append(lifted[-1] + step)
+    return lifted
+
+
+def _charge_trajectory(cluster, path, seed_raised: int | None = None):
+    """The lifted spinon configuration after each exchange of a ring exchange.
+
+    Charges are tracked on the covering lattice, not on the torus: an exchange
+    charges the two tetrahedra its bond does not straddle, each placed beside
+    the *lifted* position of its site.  A contractible loop empties the field
+    at the end; a winding loop leaves a pair on two images of one tetrahedron,
+    separated by the loop's closure vector.
+    """
+    def flippable(state: int) -> bool:
+        return all(
+            ((state >> path[k]) & 1) != ((state >> path[(k + 1) % len(path)]) & 1)
+            for k in range(len(path))
+        )
+
+    candidates = [int(s) for s in cluster.ice_states if flippable(int(s))]
+    if seed_raised is not None:
+        candidates.sort(key=lambda c: (c >> seed_raised) & 1)
+    state = candidates[0]
+
+    lifted = _lift_path(cluster, path)
+    field: dict[tuple, dict] = {}
+    steps = []
+    for k in range(0, len(path), 2):
+        left, right = path[k], path[(k + 1) % len(path)]
+        raised = left if not (state >> left) & 1 else right
+        state ^= (1 << left) | (1 << right)
+        straddled = set(_tetrahedra_of(cluster, left)) & set(
+            _tetrahedra_of(cluster, right)
+        )
+        for site, seat in ((left, lifted[k]), (right, lifted[k + 1])):
+            tetrahedron = next(
+                t for t in _tetrahedra_of(cluster, site) if t not in straddled
+            )
+            corners = np.array(
+                [
+                    _nearest_image(cluster, cluster.positions[corner], seat)
+                    for corner in cluster.tets[tetrahedron]
+                ]
+            )
+            center = corners.mean(axis=0)
+            key = tuple(np.round(center, 6))
+            entry = field.setdefault(
+                key,
+                {
+                    "tetrahedron": tetrahedron,
+                    "position": center,
+                    "corners": corners,
+                    "charge": 0,
+                },
+            )
+            entry["charge"] += 2 if site == raised else -2
+        steps.append(
+            {
+                "raised": raised,
+                "lowered": right if raised == left else left,
+                "charges": [
+                    dict(entry) for entry in field.values() if entry["charge"]
+                ],
+            }
+        )
+    return steps
+
+
 def _draw_tetrahedron_frames(ax, cluster, path, basis, center, scale,
                              normal=None, charged=()) -> None:
-    """Outline all tetrahedra of the loop so the scaffold never blinks."""
+    """Outline the loop's tetrahedra, plus any image a charge has been carried to."""
     def to_plot(point):
         return (np.asarray(point) @ basis.T - center) / scale
 
-    seats = {entry["tetrahedron"]: entry for entry in charged}
-    for tetrahedron, anchor in _loop_tetrahedra(cluster, path):
-        raw = _tetrahedron_frame(cluster, tetrahedron, anchor)
-        corners = np.array([to_plot(corner) for corner in raw])
-        holds_charge = tetrahedron in seats
-        depth = raw @ np.asarray(normal) if normal is not None else np.zeros(4)
+    frames = [
+        (_tetrahedron_frame(cluster, t, anchor), False)
+        for t, anchor in _loop_tetrahedra(cluster, path)
+    ]
+    frames += [(entry["corners"], True) for entry in charged]
+    for corners3d, holds_charge in frames:
+        corners = np.array([to_plot(corner) for corner in corners3d])
+        depth = (
+            np.asarray(corners3d) @ np.asarray(normal)
+            if normal is not None else np.zeros(4)
+        )
         middle = float(np.mean(depth))
         for a, b in combinations(range(4), 2):
-            # an edge nearer the viewer than the tetrahedron centre is drawn
-            # over the charge, so the sphere reads as sitting inside the cell
             in_front = holds_charge and 0.5 * (depth[a] + depth[b]) > middle
             ax.plot(
                 *np.array([corners[a], corners[b]]).T,
                 color=INK_MUTED,
                 lw=0.75 if holds_charge else 0.6,
-                alpha=(0.85 if holds_charge else 0.38),
+                alpha=0.85 if holds_charge else 0.38,
                 zorder=8 if in_front else 3,
                 solid_capstyle="round",
             )
@@ -291,18 +320,6 @@ def _draw_charges(ax, cluster, occupied, basis, center, scale, faded=False,
             alpha=0.55 if faded else 1.0,
             zorder=7,
         )
-
-
-def _lift_offset(cluster, path, index: int) -> np.ndarray:
-    """Displacement between the lifted image of `path[index]` and its cell copy."""
-    lifted = np.asarray(cluster.positions[path[0]], dtype=float)
-    for k in range(index):
-        left, right = path[k], path[(k + 1) % len(path)]
-        image = np.asarray(_edge_wrap(cluster, left, right), dtype=float)
-        lifted = lifted + (
-            cluster.positions[right] - cluster.positions[left] - image @ cluster.Lvecs
-        )
-    return lifted - np.asarray(cluster.positions[path[index]], dtype=float)
 
 
 def _charge_seat(cluster, entry, basis, center, scale):
@@ -397,81 +414,63 @@ def _draw_cluster_loop(
         seed = path[0] if first[0][1] <= first[1][1] else path[1]
     steps = _charge_trajectory(cluster, path, seed) if stage is not None else None
     if steps is not None:
+        occupied = [dict(e) for e in steps[stage]["charges"]]
+        previous = [dict(e) for e in steps[stage - 1]["charges"]] if stage else []
+
+        # The lift is only defined up to a lattice translation, so slide the
+        # surviving pair by whole periods into the frame; this is what puts the
+        # transported charge on the tetrahedron below rather than off the top.
+        closure = _lift_path(cluster, path)[-1] - _lift_path(cluster, path)[0]
+        if np.linalg.norm(closure) > 1.0e-9 and occupied:
+            def spread(entries, shift3):
+                seats = [
+                    ((e["position"] + shift3) @ basis.T - center) / scale
+                    for e in entries
+                ]
+                return max(max(abs(p[0]), abs(p[1])) for p in seats)
+            best = min((0.0, 1.0, -1.0), key=lambda m: spread(occupied, m * closure))
+            if best:
+                for entry in occupied:
+                    entry["position"] = entry["position"] + best * closure
+                    entry["corners"] = entry["corners"] + best * closure
+
         _draw_tetrahedron_frames(
             ax, cluster, path, basis, center, scale,
             normal=np.cross(basis[0], basis[1]),
-            charged=steps[stage]["charges"],
+            charged=occupied,
         )
-        occupied = steps[stage]["charges"]
-        previous = steps[stage - 1]["charges"] if stage > 0 else []
-        carried = {e["tetrahedron"] for e in occupied}
-        winding_close = not occupied and bool(
-            np.any(np.rint(_transport_walk(cluster, path)[-1]).astype(int))
-        )
-        vacated = [] if winding_close else (
-            previous if not occupied else
-            [e for e in previous if e["tetrahedron"] not in carried]
-        )
-        arrived = [e for e in occupied if e["tetrahedron"] not in
-                   {e["tetrahedron"] for e in previous}]
+        carried = {tuple(np.round(e["position"], 6)) for e in occupied}
+        # only a genuine hop leaves a ghost behind; when the pair has been
+        # carried across the boundary the earlier seats are not meaningful
+        hopped = len(occupied) == len(previous) == 2 and len(
+            carried & {tuple(np.round(e["position"], 6)) for e in previous}
+        ) == 1
+        vacated = [
+            e for e in previous
+            if tuple(np.round(e["position"], 6)) not in carried
+        ] if (hopped or not occupied) else []
         _draw_charges(ax, cluster, vacated, basis, center, scale, faded=True)
         _draw_charges(ax, cluster, occupied, basis, center, scale)
-        winds = np.any(np.rint(_transport_walk(cluster, path)[-1]).astype(int))
-        if not occupied and winds and len(previous) == 2:
-            # On the torus the pair is gone.  Lifted, the closing exchange
-            # reaches its tetrahedra from the far side of the boundary, so
-            # re-anchor each charge to that bond: the wrapping tetrahedron
-            # then lands one period away, at the bottom of the cell, which is
-            # where the transported charge actually is.
-            closing = (steps[stage]["raised"], steps[stage]["lowered"])
-            moved = []
-            for entry in previous:
-                corners = cluster.tets[entry["tetrahedron"]]
-                anchor = next((site for site in closing if site in corners), None)
-                if anchor is None:
-                    moved.append(entry)
-                    continue
-                moved.append(
-                    {
-                        **entry,
-                        "anchor": anchor,
-                        "position": _tetrahedron_center(
-                            cluster, entry["tetrahedron"], anchor
-                        ),
-                    }
-                )
-            transported = [
-                new for new, old in zip(moved, previous)
-                if not np.allclose(new["position"], old["position"])
-            ]
-            settled = [
-                new for new, old in zip(moved, previous)
-                if np.allclose(new["position"], old["position"])
-            ]
-            _draw_tetrahedron_frames(
-                ax, cluster, path, basis, center, scale,
-                normal=np.cross(basis[0], basis[1]), charged=moved,
+
+        pair = occupied if len(occupied) == 2 else (
+            previous if not occupied and len(previous) == 2 else []
+        )
+        if pbc and len(pair) == 2:
+            plus = next(e for e in pair if e["charge"] > 0)
+            minus = next(e for e in pair if e["charge"] < 0)
+            tail = _charge_seat(cluster, plus, basis, center, scale)
+            head = _charge_seat(cluster, minus, basis, center, scale)
+            span = head - tail
+            ax.annotate(
+                "",
+                xy=tail + 0.80 * span,
+                xytext=tail + 0.20 * span,
+                arrowprops={
+                    "arrowstyle": "-|>", "color": INK, "lw": 1.1,
+                    "linestyle": (0, (2.6, 1.8)), "shrinkA": 0, "shrinkB": 0,
+                },
+                zorder=9,
             )
-            _draw_charges(ax, cluster, settled, basis, center, scale)
-            _draw_charges(ax, cluster, transported, basis, center, scale)
-            if pbc and transported and settled:
-                here = _charge_seat(cluster, settled[0], basis, center, scale)
-                there = _charge_seat(cluster, transported[0], basis, center, scale)
-                span = there - here
-                ax.annotate(
-                    "",
-                    xy=here + 0.80 * span,
-                    xytext=here + 0.20 * span,
-                    arrowprops={
-                        "arrowstyle": "-|>",
-                        "color": INK,
-                        "lw": 1.1,
-                        "linestyle": (0, (2.6, 1.8)),
-                        "shrinkA": 0,
-                        "shrinkB": 0,
-                    },
-                    zorder=9,
-                )
         elif not occupied and len(previous) == 2:
             plus = next(e for e in previous if e["charge"] > 0)
             minus = next(e for e in previous if e["charge"] < 0)
@@ -483,32 +482,31 @@ def _draw_cluster_loop(
                 xy=tail + 0.80 * span,
                 xytext=tail + 0.20 * span,
                 arrowprops={
-                    "arrowstyle": "-|>",
-                    "color": INK,
-                    "lw": 1.0,
-                    "shrinkA": 0,
-                    "shrinkB": 0,
+                    "arrowstyle": "-|>", "color": INK, "lw": 1.0,
+                    "shrinkA": 0, "shrinkB": 0,
                 },
-                zorder=8,
+                zorder=9,
             )
-        # a charge that changed tetrahedron gets an explicit movement arrow
-        if vacated and arrived:
-            tail = _charge_seat(cluster, vacated[0], basis, center, scale)
-            head = _charge_seat(cluster, arrived[0], basis, center, scale)
-            offset = head - tail
-            ax.annotate(
-                "",
-                xy=tail + 0.70 * offset,
-                xytext=tail + 0.30 * offset,
-                arrowprops={
-                    "arrowstyle": "-|>",
-                    "color": INK,
-                    "lw": 0.9,
-                    "shrinkA": 0,
-                    "shrinkB": 0,
-                },
-                zorder=8,
-            )
+        elif vacated and len(occupied) == 2:
+            moved = [
+                e for e in occupied
+                if tuple(np.round(e["position"], 6))
+                not in {tuple(np.round(v["position"], 6)) for v in previous}
+            ]
+            if moved:
+                tail = _charge_seat(cluster, vacated[0], basis, center, scale)
+                head = _charge_seat(cluster, moved[0], basis, center, scale)
+                span = head - tail
+                ax.annotate(
+                    "",
+                    xy=tail + 0.78 * span,
+                    xytext=tail + 0.22 * span,
+                    arrowprops={
+                        "arrowstyle": "-|>", "color": INK, "lw": 1.0,
+                        "shrinkA": 0, "shrinkB": 0,
+                    },
+                    zorder=9,
+                )
 
     for edge_index, (left, right) in enumerate(zip(path, path[1:] + path[:1])):
         edge = projected[[left, right]]
@@ -582,7 +580,7 @@ def _draw_cluster_loop(
     if caption:
         ax.text(
             0.0,
-            -0.76,
+            -1.16,
             caption,
             color=INK,
             fontsize=6.0,
@@ -592,7 +590,7 @@ def _draw_cluster_loop(
         )
     ax.set_title(title, loc="left", pad=1.0, fontsize=7.4)
     ax.set_xlim(-0.76, 0.76)
-    ax.set_ylim(-0.98, 0.80)
+    ax.set_ylim(-1.34, 0.80)
     ax.set_aspect("equal")
     ax.set_axis_off()
 
@@ -730,14 +728,6 @@ def _draw_dssf_panels(axes, titles):
             shading="flat",
             rasterized=True,
         )
-        for value, tone in ((12.0 * 0.046**3, G6), (4.0 * 0.046**2, G4)):
-            ax.axhline(
-                value,
-                color=tone,
-                lw=0.75,
-                ls=(0, (2.4, 2.0)),
-                zorder=4,
-            )
         ax.set_xticks(np.arange(len(labels)), labels)
         ax.set_xlim(-0.5, len(labels) - 0.5)
         ax.set_ylim(0.0, 0.09)
