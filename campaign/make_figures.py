@@ -46,14 +46,20 @@ GRID = "#e6e8ec"
 DSSF_CMAP = "gnuplot"
 DSSF_LABEL = "#ffffff"
 
-BARE = "#c05621"       # periodic ED
-CLEAN = "#2b6cb0"      # winding-free
-FCC = "#1a7f4f"        # FCC-32
-DIAGONAL = "#9c4f7c"   # third loop class in the geometry panels
+# Yongzheng-porcelain enamels, opaque rather than washed.  Celadon is absent
+# on purpose: it is a low-chroma grey-green that reads as grey, and green
+# against iron red collapses to dE 5 under deuteranopia.
+BARE = "#ab4a3c"       # periodic ED, iron red
+CLEAN = "#2f5d96"      # winding-free, doucai cobalt
+FCC = "#b0871e"        # FCC-32, imperial yellow
+DIAGONAL = "#b0871e"   # third loop class in the geometry panels
 QMC = INK
 
-G4 = "#d47b42"         # artifact scale, tinted toward periodic ED
-G6 = "#4a8ace"         # ring-exchange scale, tinted toward winding-free
+G4 = "#c67157"         # artifact scale, tinted toward periodic ED
+G6 = "#5484bf"         # ring-exchange scale, tinted toward winding-free
+
+CHARGE_FILL = "#e8dcc8"   # biscuit ground inside a charged tetrahedron
+CHARGE_EDGE = "#a8977c"
 
 plt.rcParams.update(
     {
@@ -185,6 +191,7 @@ def _charge_trajectory(cluster, path: tuple[int, ...]) -> list[list[dict]]:
                 {
                     "tetrahedron": int(tet),
                     "charge": int(charges(state)[tet]),
+                    "anchor": int(anchor),
                     "position": _tetrahedron_center(cluster, int(tet), anchor),
                 }
             )
@@ -194,66 +201,65 @@ def _charge_trajectory(cluster, path: tuple[int, ...]) -> list[list[dict]]:
     return steps
 
 
-def _draw_charge_trajectory(ax, cluster, path, basis, center, scale) -> None:
-    """Mark the spinon-antispinon pair that the ring exchange must annihilate.
+def _tetrahedron_polygon(cluster, tetrahedron: int, anchor_site: int):
+    """The four corners of a tetrahedron, lifted to sit beside `anchor_site`."""
+    anchor = cluster.positions[anchor_site]
+    return np.array(
+        [
+            _nearest_image(cluster, cluster.positions[site], anchor)
+            for site in cluster.tets[tetrahedron]
+        ]
+    )
 
-    The first exchange splits a pair onto the two tetrahedra flanking the bond;
-    intermediate exchanges walk one charge along the loop; the last one has to
-    bring them back together.  We draw the configuration just before that final
-    exchange, so the panel poses the question the loop class answers: on the
-    contractible hexagon the two charges are neighbours outright, whereas on a
-    winding four-loop they are neighbours only across a boundary-crossing bond,
-    so the pair meets an image of itself rather than annihilating on the
-    covering lattice.
-    """
+
+def _convex_order(points: np.ndarray) -> np.ndarray:
+    """Order 2D points counter-clockwise so they fill as a simple polygon."""
+    centroid = points.mean(axis=0)
+    angles = np.arctan2(points[:, 1] - centroid[1], points[:, 0] - centroid[0])
+    return points[np.argsort(angles)]
+
+
+def _draw_charges(ax, cluster, occupied, basis, center, scale, faded=False) -> None:
+    """Shade each charged tetrahedron and set its spinon inside it."""
     def to_plot(point):
         return (np.asarray(point) @ basis.T - center) / scale
 
-    steps = _charge_trajectory(cluster, path)
-    if len(steps) < 2 or not steps[-2]:
-        return
-    for entry in steps[-2]:
-        point = to_plot(entry["position"])
-        ax.plot(
-            *point,
-            marker="o",
-            ms=7.0,
-            mfc="white",
-            mec=INK,
-            mew=0.8,
-            zorder=7,
+    for entry in occupied:
+        corners = _convex_order(
+            np.array(
+                [
+                    to_plot(corner)
+                    for corner in _tetrahedron_polygon(
+                        cluster, entry["tetrahedron"], entry["anchor"]
+                    )
+                ]
+            )
         )
+        # draw the tetrahedron shrunk about its centroid: at full size the
+        # projected wedge swamps the cluster and reads as a background shape
+        # rather than as the cell the charge sits in
+        seat_center = corners.mean(axis=0)
+        corners = seat_center + 0.66 * (corners - seat_center)
+        ax.fill(
+            corners[:, 0],
+            corners[:, 1],
+            facecolor=CHARGE_FILL,
+            edgecolor=CHARGE_EDGE,
+            linewidth=0.5,
+            alpha=0.45 if faded else 1.0,
+            zorder=3,
+            joinstyle="round",
+        )
+        seat = seat_center
         ax.text(
-            *point,
+            *seat,
             "$+$" if entry["charge"] > 0 else r"$-$",
-            color=INK,
-            fontsize=6.4,
+            color=INK if not faded else INK_MUTED,
+            fontsize=5.8,
             ha="center",
             va="center",
-            zorder=8,
+            zorder=6,
         )
-    # if a charge walked to get here, show the leg it travelled
-    if len(steps) > 2:
-        previous = {e["tetrahedron"] for e in steps[-3]}
-        current = {e["tetrahedron"] for e in steps[-2]}
-        arrived = [e for e in steps[-2] if e["tetrahedron"] not in previous]
-        departed = [e for e in steps[-3] if e["tetrahedron"] not in current]
-        if arrived and departed:
-            start_point = to_plot(departed[0]["position"])
-            stop_point = to_plot(arrived[0]["position"])
-            offset = stop_point - start_point
-            ax.annotate(
-                "",
-                xy=start_point + 0.72 * offset,
-                xytext=start_point + 0.28 * offset,
-                arrowprops={
-                    "arrowstyle": "-|>",
-                    "color": INK_MUTED,
-                    "lw": 0.8,
-                    "linestyle": (0, (2.2, 1.6)),
-                },
-                zorder=6,
-            )
 
 
 def _edge_wrap(cluster, left: int, right: int) -> tuple[int, int, int]:
@@ -305,8 +311,15 @@ def _draw_cluster_loop(
     color: str,
     view: np.ndarray,
     title: str,
-    annotate_charges: bool = False,
+    stage: int | None = None,
+    caption: str | None = None,
 ) -> None:
+    """One loop on the cluster; with `stage`, one step of its ring exchange.
+
+    A stage highlights the exchange acting at that step and shades the
+    tetrahedra left charged by it, so the sequence reads as create, move,
+    annihilate rather than as a single crowded snapshot.
+    """
     basis = _projection_basis(view)
     projected = cluster.positions @ basis.T
     center = projected.mean(axis=0)
@@ -321,7 +334,7 @@ def _draw_cluster_loop(
     ax.scatter(
         projected[:, 0],
         projected[:, 1],
-        s=7,
+        s=6,
         facecolor=INK_FAINT,
         edgecolor="white",
         linewidth=0.25,
@@ -330,51 +343,72 @@ def _draw_cluster_loop(
 
     loop = projected[list(path)]
     transported_dipole = _transport_walk(cluster, path)[-1]
+    steps = _charge_trajectory(cluster, path) if stage is not None else None
+    if steps is not None:
+        occupied = steps[stage]
+        # the pair the *previous* step left behind, faded, so a move is legible
+        if stage > 0:
+            carried = {e["tetrahedron"] for e in occupied}
+            _draw_charges(
+                ax,
+                cluster,
+                [e for e in steps[stage - 1] if e["tetrahedron"] not in carried],
+                basis,
+                center,
+                scale,
+                faded=True,
+            )
+        _draw_charges(ax, cluster, occupied, basis, center, scale)
+
     for edge_index, (left, right) in enumerate(zip(path, path[1:] + path[:1])):
         edge = projected[[left, right]]
         image = np.asarray(_edge_wrap(cluster, left, right), dtype=float)
         wraps = np.any(image)
+        active = stage is None or edge_index // 2 == stage
         ax.plot(
             *edge.T,
             color=color,
-            lw=1.45,
+            lw=1.45 if active else 0.9,
+            alpha=1.0 if active else 0.32,
             ls="--" if wraps else "-",
             solid_capstyle="round",
             zorder=4,
         )
-        if edge_index % 2 == 0:
+        if edge_index % 2 == 0 and active:
             _draw_exchange_arrow(ax, edge[0], edge[1], color)
-    if annotate_charges:
-        _draw_charge_trajectory(ax, cluster, path, basis, center, scale)
 
     faces = [color if index % 2 == 0 else "white" for index in range(len(path))]
     ax.scatter(
         loop[:, 0],
         loop[:, 1],
-        s=18,
+        s=16,
         facecolors=faces,
         edgecolors=color,
-        linewidths=0.75,
+        linewidths=0.7,
         zorder=5,
     )
 
     dipole_integer = np.rint(transported_dipole).astype(int)
     if (winding == (0, 0, 0)) != bool(np.all(dipole_integer == 0)):
         raise RuntimeError(f"loop winding and transported dipole disagree for {path}")
-    # the transported-dipole arrow is dropped: the charge markers now carry the
-    # geometry, and the printed triple carries the exact label
-    ax.text(
-        0.0,
-        -0.72,
-        rf"$\mathbf{{q}}_\gamma=({dipole_integer[0]},{dipole_integer[1]},{dipole_integer[2]})$",
-        color=INK,
-        fontsize=5.2,
-        ha="center",
-        va="center",
-    )
+    if caption is None:
+        caption = (
+            rf"$\mathbf{{q}}_\gamma=({dipole_integer[0]},"
+            rf"{dipole_integer[1]},{dipole_integer[2]})$"
+        )
+    if caption:
+        ax.text(
+            0.0,
+            -0.74,
+            caption,
+            color=INK,
+            fontsize=5.6,
+            ha="center",
+            va="center",
+        )
     ax.set_title(title, loc="left", pad=0.5, fontsize=6.2)
-    ax.set_xlim(-0.74, 0.74)
-    ax.set_ylim(-0.80, 0.66)
+    ax.set_xlim(-0.76, 0.76)
+    ax.set_ylim(-0.86, 0.66)
     ax.set_aspect("equal")
     ax.set_axis_off()
 
@@ -549,7 +583,7 @@ def dssf_figure() -> None:
 
 
 def summary_figure(exact, exact_report: dict) -> None:
-    figure = plt.figure(figsize=(7.0, 3.80))
+    figure = plt.figure(figsize=(7.0, 4.55))
     outer = figure.add_gridspec(
         1,
         2,
@@ -564,23 +598,47 @@ def summary_figure(exact, exact_report: dict) -> None:
     left_grid = outer[0, 0].subgridspec(
         2,
         1,
-        height_ratios=(1.0, 1.26),
+        height_ratios=(1.62, 1.26),
         hspace=0.26,
     )
     cluster, panels = _geometry_panel_data()
-    geometry_grid = left_grid[0, 0].subgridspec(1, 3, wspace=0.03)
-    geometry_axes = [figure.add_subplot(geometry_grid[0, index]) for index in range(3)]
-    summary_titles = (
-        r"i.a) hexagon",
-        r"i.b) axial",
-        r"i.c) diagonal",
+    geometry_grid = left_grid[0, 0].subgridspec(2, 3, wspace=0.02, hspace=0.30)
+    hexagon, axial, diagonal = panels
+    storyboard = (
+        (0, 0, hexagon, 0, r"i.a) create", r"pair splits"),
+        (0, 1, hexagon, 1, r"i.b) move", r"spinon walks"),
+        (0, 2, hexagon, 2, r"i.c) annihilate", r"$\mathbf{q}_\gamma=(0,0,0)$"),
+        (1, 0, axial, 0, r"i.d) create", r"pair splits"),
+        (1, 2, axial, 1, r"i.e) annihilate", r"$\mathbf{q}_\gamma=(0,0,-1)$"),
     )
-    for ax, (path, winding, color, view, _), title in zip(
-        geometry_axes, panels, summary_titles
-    ):
+    for row, column, panel, stage, title, caption in storyboard:
+        path, winding, color, view, _ = panel
+        ax = figure.add_subplot(geometry_grid[row, column])
         _draw_cluster_loop(
-            ax, cluster, path, winding, color, view, title, annotate_charges=True
+            ax,
+            cluster,
+            path,
+            winding,
+            color,
+            view,
+            title,
+            stage=stage,
+            caption=caption,
         )
+    # the winding loop has no middle stage: it closes at second order, which is
+    # exactly why its scale is g_4 and not g_6
+    gap = figure.add_subplot(geometry_grid[1, 1])
+    gap.set_axis_off()
+    gap.text(
+        0.5,
+        0.5,
+        "no walk:\nthe loop closes\nat second order",
+        color=INK_MUTED,
+        fontsize=5.8,
+        ha="center",
+        va="center",
+        transform=gap.transAxes,
+    )
 
     thermodynamics_axis = figure.add_subplot(left_grid[1, 0])
     _draw_thermodynamic_benchmark(thermodynamics_axis, exact, exact_report)
