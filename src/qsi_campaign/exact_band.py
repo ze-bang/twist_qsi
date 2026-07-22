@@ -333,22 +333,49 @@ def extract_exact_band_full(
     # spectrum, where the real path reaches 5e-14 with the same Krylov budget.
     imaginary_scale = np.max(np.abs(hamiltonian.data.imag), initial=0.0)
     operator = hamiltonian.real if imaginary_scale < 1.0e-14 else hamiltonian
-    values, vectors = eigsh(
-        operator,
-        k=n_required,
-        which="SA",
-        tol=tolerance,
-        ncv=min(hamiltonian.shape[0], max(3 * n_required + 1, 300)),
-        maxiter=max_iterations,
-    )
-    order = np.argsort(values)
-    values = np.asarray(values[order], dtype=float)
-    vectors = np.asarray(vectors[:, order], dtype=np.complex128)
-    band_values = values[:n_band]
-    band_vectors = vectors[:, :n_band]
-    operator, polar_diagnostics = band_operator_from_eigenvectors(
-        band_values, band_vectors, np.asarray(ice_indices)
-    )
+    # ARPACK is started from a random vector unless v0 is given, and on a large
+    # basis with a tightly clustered target band it intermittently converges to
+    # the wrong invariant subspace: it drops one band state and admits one from
+    # above the gap.  The same 65,536-state matrix failed two of three calls.
+    # The symptom is a rank-deficient model-space Gram, so seed deterministically
+    # (results must be reproducible) and escalate the Krylov space until the
+    # band actually spans the model space.
+    tolerance = min(tolerance, 1.0e-13)
+    dimension = hamiltonian.shape[0]
+    ice_indices = np.asarray(ice_indices)
+    seed = np.random.default_rng(20260722).normal(size=dimension)
+    base = max(3 * n_required + 1, 300)
+    failure = None
+    for attempt, factor in enumerate((1, 2, 4)):
+        values, vectors = eigsh(
+            operator,
+            k=n_required,
+            which="SA",
+            tol=tolerance,
+            ncv=min(dimension, base * factor),
+            maxiter=max_iterations * factor,
+            v0=seed,
+        )
+        order = np.argsort(values)
+        values = np.asarray(values[order], dtype=float)
+        vectors = np.asarray(vectors[:, order], dtype=np.complex128)
+        band_values = values[:n_band]
+        band_vectors = vectors[:, :n_band]
+        try:
+            operator_out, polar_diagnostics = band_operator_from_eigenvectors(
+                band_values, band_vectors, ice_indices
+            )
+        except ValueError as error:  # rank-deficient Gram: subspace is wrong
+            failure = error
+            continue
+        polar_diagnostics["krylov_attempts"] = attempt + 1
+        break
+    else:
+        raise RuntimeError(
+            "band extraction did not converge to a subspace spanning the model "
+            f"space after escalating the Krylov dimension: {failure}"
+        )
+    operator = operator_out
     residual = hamiltonian @ band_vectors - band_vectors * band_values[None, :]
     diagnostics: dict[str, object] = {
         **polar_diagnostics,

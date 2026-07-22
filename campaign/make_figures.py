@@ -197,7 +197,7 @@ def _lift_path(cluster, path):
     return lifted
 
 
-def _charge_trajectory(cluster, path, seed_raised: int | None = None):
+def _charge_trajectory(cluster, path, seed_raised=None, lifted: bool = True):
     """The lifted spinon configuration after each exchange of a ring exchange.
 
     Charges are tracked on the covering lattice, not on the torus: an exchange
@@ -217,7 +217,7 @@ def _charge_trajectory(cluster, path, seed_raised: int | None = None):
         candidates.sort(key=lambda c: (c >> seed_raised) & 1)
     state = candidates[0]
 
-    lifted = _lift_path(cluster, path)
+    walk = _lift_path(cluster, path)
     field: dict[tuple, dict] = {}
     steps = []
     for k in range(0, len(path), 2):
@@ -227,7 +227,7 @@ def _charge_trajectory(cluster, path, seed_raised: int | None = None):
         straddled = set(_tetrahedra_of(cluster, left)) & set(
             _tetrahedra_of(cluster, right)
         )
-        for site, seat in ((left, lifted[k]), (right, lifted[k + 1])):
+        for site, seat in ((left, walk[k]), (right, walk[k + 1])):
             tetrahedron = next(
                 t for t in _tetrahedra_of(cluster, site) if t not in straddled
             )
@@ -238,7 +238,9 @@ def _charge_trajectory(cluster, path, seed_raised: int | None = None):
                 ]
             )
             center = corners.mean(axis=0)
-            key = tuple(np.round(center, 6))
+            # On the torus a tetrahedron is one object however the loop reaches
+            # it, so key by index; lifted, its images are distinct places.
+            key = tuple(np.round(center, 6)) if lifted else tetrahedron
             entry = field.setdefault(
                 key,
                 {
@@ -378,6 +380,7 @@ def _draw_cluster_loop(
     stage: int | None = None,
     caption: str | None = None,
     pbc: bool = False,
+    hop: bool = False,
 ) -> None:
     """One loop on the cluster; with `stage`, one step of its ring exchange.
 
@@ -411,23 +414,18 @@ def _draw_cluster_loop(
     steps = None
     if stage is not None:
         # Two ice patterns are flippable round the loop and they carry opposite
-        # charges.  Choose the one in which the antispinon is the charge the
-        # closing exchange carries away, so the sequence reads: create, move
-        # the minus, then let the boundary map it onto the plus.
+        # charges.  Take the one whose spinon starts on the lower tetrahedron,
+        # so it is the charge that hops upward to meet the fixed antispinon.
+        def seat_y(entry):
+            return float(((entry["position"] @ basis.T - center) / scale)[1])
+
         options = []
         for candidate in (path[0], path[1]):
-            track = _charge_trajectory(cluster, path, candidate)
-            final, earlier = track[-1]["charges"], track[-2]["charges"] if len(track) > 1 else []
-            seats = {tuple(np.round(e["position"], 6)) for e in earlier}
-            moved = [
-                e for e in final
-                if tuple(np.round(e["position"], 6)) not in seats
-            ]
-            options.append((track, moved[0]["charge"] if moved else 0))
-        steps = next(
-            (track for track, moved_charge in options if moved_charge < 0),
-            options[0][0],
-        )
+            track = _charge_trajectory(cluster, path, candidate, lifted=False)
+            plus = next(e for e in track[0]["charges"] if e["charge"] > 0)
+            options.append((track, seat_y(plus)))
+        steps = min(options, key=lambda o: o[1])[0]
+
     if steps is not None:
         occupied = [dict(e) for e in steps[stage]["charges"]]
         previous = [dict(e) for e in steps[stage - 1]["charges"]] if stage else []
@@ -450,6 +448,22 @@ def _draw_cluster_loop(
         _draw_charges(ax, cluster, vacated, basis, center, scale, faded=True)
         _draw_charges(ax, cluster, occupied, basis, center, scale)
 
+        if hop and len(occupied) == 2:
+            plus = next(e for e in occupied if e["charge"] > 0)
+            minus = next(e for e in occupied if e["charge"] < 0)
+            tail = _charge_seat(cluster, plus, basis, center, scale)
+            head = _charge_seat(cluster, minus, basis, center, scale)
+            span = head - tail
+            ax.annotate(
+                "",
+                xy=tail + 0.74 * span,
+                xytext=tail + 0.26 * span,
+                arrowprops={
+                    "arrowstyle": "-|>", "color": INK, "lw": 1.1,
+                    "linestyle": (0, (2.6, 1.8)), "shrinkA": 0, "shrinkB": 0,
+                },
+                zorder=9,
+            )
         pair = occupied if len(occupied) == 2 else (
             previous if not occupied and len(previous) == 2 else []
         )
@@ -510,9 +524,12 @@ def _draw_cluster_loop(
         edge = projected[[left, right]]
         image = np.asarray(_edge_wrap(cluster, left, right), dtype=float)
         wraps = np.any(image)
-        # highlight exactly the bond the exchange acts on, not the
-        # return leg that follows it round the loop
-        active = stage is None or edge_index == 2 * stage
+        # in the hop panel the boundary-crossing leg is the active one: it is
+        # the leg the charge travels along
+        if hop:
+            active = bool(wraps)
+        else:
+            active = stage is None or edge_index == 2 * stage
         ax.plot(
             *edge.T,
             color=color,
@@ -522,7 +539,7 @@ def _draw_cluster_loop(
             solid_capstyle="round",
             zorder=4,
         )
-        if edge_index % 2 == 0 and active:
+        if edge_index % 2 == 0 and active and not hop:
             if steps is not None:
                 # point the arrow the way S^z actually moves: lowered -> raised
                 _draw_exchange_arrow(
@@ -791,18 +808,18 @@ def summary_figure(exact, exact_report: dict) -> None:
     # surviving charge is carried.  This order carries the spinon one period
     # *down*, onto the tetrahedron below the cell and inside the frame.
     storyboard = (
-        (0, 0, hexagon, 0, False, r"i.a) create", "$S^+_iS^-_j$: pair splits"),
-        (0, 1, hexagon, 1, False, r"i.b) move", "$S^+_iS^-_j$: spinon walks"),
-        (0, 2, hexagon, 2, False, r"i.c) annihilate",
+        (0, 0, hexagon, 0, False, False, r"i.a) create", "$S^+_iS^-_j$: pair splits"),
+        (0, 1, hexagon, 1, False, False, r"i.b) move", "$S^+_iS^-_j$: spinon walks"),
+        (0, 2, hexagon, 2, False, False, r"i.c) annihilate",
          "$S^+_iS^-_j$: $+$ meets $-$\n$\\mathbf{q}_\\gamma=(0,0,0)$"),
-        (1, 0, axial, 0, False, r"i.d) create",
+        (1, 0, axial, 0, False, False, r"i.d) create",
          "$S^+_iS^-_j$: pair splits"),
-        (1, 1, axial, 1, False, r"i.e) separate",
-         "$S^+_iS^-_j$ moves the $-$"),
-        (1, 2, axial, 1, True, r"i.f) annihilate",
-         "boundary maps $-$ onto $+$\n$\\mathbf{q}_\\gamma=(0,0,-1)$"),
+        (1, 1, axial, 0, False, True, r"i.e) transport",
+         "$+$ hops across the boundary"),
+        (1, 2, axial, 1, False, False, r"i.f) annihilate",
+         "they meet: $\\mathbf{q}_\\gamma=(0,0,-1)$"),
     )
-    for row, column, panel, stage, pbc, title, caption in storyboard:
+    for row, column, panel, stage, pbc, hop, title, caption in storyboard:
         path, winding, color, view, _ = panel
         ax = figure.add_subplot(geometry_grid[row, column])
         _draw_cluster_loop(
@@ -816,6 +833,7 @@ def summary_figure(exact, exact_report: dict) -> None:
             stage=stage,
             caption=caption,
             pbc=pbc,
+            hop=hop,
         )
 
     thermodynamics_axis = figure.add_subplot(left_grid[1, 0])
