@@ -495,7 +495,9 @@ def _draw_cluster_loop(
         edge = projected[[left, right]]
         image = np.asarray(_edge_wrap(cluster, left, right), dtype=float)
         wraps = np.any(image)
-        active = stage is None or edge_index // 2 == stage
+        # highlight exactly the bond the exchange acts on, not the
+        # return leg that follows it round the loop
+        active = stage is None or edge_index == 2 * stage
         ax.plot(
             *edge.T,
             color=color,
