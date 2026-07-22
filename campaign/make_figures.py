@@ -416,15 +416,22 @@ def _draw_cluster_loop(
         # Two ice patterns are flippable round the loop and they carry opposite
         # charges.  Take the one whose spinon starts on the lower tetrahedron,
         # so it is the charge that hops upward to meet the fixed antispinon.
-        def seat_y(entry):
-            return float(((entry["position"] @ basis.T - center) / scale)[1])
-
+        # Track on the covering lattice, so applying S+S- and applying the
+        # periodic identification are two separate steps.  Of the two flippable
+        # ice patterns take the one whose *spinon* is the charge carried away.
         options = []
         for candidate in (path[0], path[1]):
-            track = _charge_trajectory(cluster, path, candidate, lifted=False)
-            plus = next(e for e in track[0]["charges"] if e["charge"] > 0)
-            options.append((track, seat_y(plus)))
-        steps = min(options, key=lambda o: o[1])[0]
+            track = _charge_trajectory(cluster, path, candidate)
+            seats = {tuple(np.round(e["position"], 6)) for e in track[-2]["charges"]}
+            moved = [
+                e for e in track[-1]["charges"]
+                if tuple(np.round(e["position"], 6)) not in seats
+            ]
+            options.append((track, moved[0]["charge"] if moved else 0))
+        steps = next(
+            (track for track, moved_charge in options if moved_charge > 0),
+            options[0][0],
+        )
 
     if steps is not None:
         occupied = [dict(e) for e in steps[stage]["charges"]]
@@ -814,10 +821,10 @@ def summary_figure(exact, exact_report: dict) -> None:
          "$S^+_iS^-_j$: $+$ meets $-$\n$\\mathbf{q}_\\gamma=(0,0,0)$"),
         (1, 0, axial, 0, False, False, r"i.d) create",
          "$S^+_iS^-_j$: pair splits"),
-        (1, 1, axial, 0, False, True, r"i.e) transport",
-         "$+$ hops across the boundary"),
-        (1, 2, axial, 1, False, False, r"i.f) annihilate",
-         "they meet: $\\mathbf{q}_\\gamma=(0,0,-1)$"),
+        (1, 1, axial, 1, False, False, r"i.e) apply $S^+_iS^-_j$",
+         "$+$ carried out of the cell"),
+        (1, 2, axial, 1, True, False, r"i.f) identify",
+         "PBC maps it onto $-$\n$\\mathbf{q}_\\gamma=(0,0,-1)$"),
     )
     for row, column, panel, stage, pbc, hop, title, caption in storyboard:
         path, winding, color, view, _ = panel
