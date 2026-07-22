@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import json
 import sys
-from itertools import product
+from itertools import combinations, product
 from pathlib import Path
 
 import matplotlib as mpl
@@ -143,6 +143,17 @@ def _nearest_image(cluster, position, anchor):
     return best[1]
 
 
+def _tetrahedron_frame(cluster, tetrahedron: int, anchor_site: int) -> np.ndarray:
+    """The four corners of a tetrahedron, lifted to sit beside `anchor_site`."""
+    anchor = cluster.positions[anchor_site]
+    return np.array(
+        [
+            _nearest_image(cluster, cluster.positions[site], anchor)
+            for site in cluster.tets[tetrahedron]
+        ]
+    )
+
+
 def _tetrahedron_center(cluster, tetrahedron: int, anchor_site: int) -> np.ndarray:
     """Centre of a tetrahedron, lifted to sit beside `anchor_site`."""
     anchor = cluster.positions[anchor_site]
@@ -204,31 +215,47 @@ def _charge_trajectory(cluster, path: tuple[int, ...]) -> list[list[dict]]:
 
 
 def _draw_charges(ax, cluster, occupied, basis, center, scale, faded=False) -> None:
-    """Seat a spinon at the centre of each charged tetrahedron."""
+    """Draw each charged tetrahedron as a frame with its spinon at the centre."""
     def to_plot(point):
         return (np.asarray(point) @ basis.T - center) / scale
 
     for entry in occupied:
+        corners = np.array(
+            [
+                to_plot(corner)
+                for corner in _tetrahedron_frame(
+                    cluster, entry["tetrahedron"], entry["anchor"]
+                )
+            ]
+        )
+        for a, b in combinations(range(4), 2):
+            ax.plot(
+                *np.array([corners[a], corners[b]]).T,
+                color=INK_MUTED,
+                lw=0.65,
+                alpha=0.30 if faded else 0.85,
+                zorder=3,
+                solid_capstyle="round",
+            )
         seat = to_plot(entry["position"])
         positive = entry["charge"] > 0
         ax.plot(
             *seat,
             marker="o",
-            ms=6.4,
+            ms=9.0,
             mfc=SPINON if positive else ANTISPINON,
-            mec=INK,
-            mew=0.55,
-            alpha=0.35 if faded else 1.0,
+            mec="none",
+            alpha=0.32 if faded else 1.0,
             zorder=6,
         )
         ax.text(
             *seat,
             "$+$" if positive else r"$-$",
             color=INK if positive else "white",
-            fontsize=5.4,
+            fontsize=7.4,
             ha="center",
             va="center",
-            alpha=0.35 if faded else 1.0,
+            alpha=0.32 if faded else 1.0,
             zorder=7,
         )
 
@@ -288,6 +315,7 @@ def _draw_cluster_loop(
     title: str,
     stage: int | None = None,
     caption: str | None = None,
+    boundary: bool = False,
 ) -> None:
     """One loop on the cluster; with `stage`, one step of its ring exchange.
 
@@ -309,7 +337,7 @@ def _draw_cluster_loop(
     ax.scatter(
         projected[:, 0],
         projected[:, 1],
-        s=6,
+        s=8,
         facecolor=INK_FAINT,
         edgecolor="white",
         linewidth=0.25,
@@ -323,11 +351,33 @@ def _draw_cluster_loop(
         occupied = steps[stage]["charges"]
         previous = steps[stage - 1]["charges"] if stage > 0 else []
         carried = {e["tetrahedron"] for e in occupied}
-        vacated = [e for e in previous if e["tetrahedron"] not in carried]
+        vacated = previous if not occupied else [
+            e for e in previous if e["tetrahedron"] not in carried
+        ]
         arrived = [e for e in occupied if e["tetrahedron"] not in
                    {e["tetrahedron"] for e in previous}]
         _draw_charges(ax, cluster, vacated, basis, center, scale, faded=True)
         _draw_charges(ax, cluster, occupied, basis, center, scale)
+        # when the stage clears the pair, show it collapsing: + into -
+        if not occupied and len(previous) == 2:
+            plus = next(e for e in previous if e["charge"] > 0)
+            minus = next(e for e in previous if e["charge"] < 0)
+            tail = _charge_seat(cluster, plus, basis, center, scale)
+            head = _charge_seat(cluster, minus, basis, center, scale)
+            span = head - tail
+            ax.annotate(
+                "",
+                xy=tail + 0.80 * span,
+                xytext=tail + 0.20 * span,
+                arrowprops={
+                    "arrowstyle": "-|>",
+                    "color": INK,
+                    "lw": 1.0,
+                    "shrinkA": 0,
+                    "shrinkB": 0,
+                },
+                zorder=8,
+            )
         # a charge that changed tetrahedron gets an explicit movement arrow
         if vacated and arrived:
             tail = _charge_seat(cluster, vacated[0], basis, center, scale)
@@ -351,7 +401,10 @@ def _draw_cluster_loop(
         edge = projected[[left, right]]
         image = np.asarray(_edge_wrap(cluster, left, right), dtype=float)
         wraps = np.any(image)
-        active = stage is None or edge_index // 2 == stage
+        if boundary:
+            active = bool(wraps)
+        else:
+            active = stage is None or edge_index // 2 == stage
         ax.plot(
             *edge.T,
             color=color,
@@ -361,7 +414,61 @@ def _draw_cluster_loop(
             solid_capstyle="round",
             zorder=4,
         )
-        if edge_index % 2 == 0 and active:
+        if boundary and wraps:
+            # the leg that leaves the cell: carry the positive charge out along it
+            lifted = (
+                cluster.positions[right]
+                - image @ cluster.Lvecs
+                - cluster.positions[left]
+            )
+            heading = lifted @ basis.T
+            norm = np.linalg.norm(heading)
+            if norm > 1.0e-9 and steps is not None:
+                heading = heading / norm
+                plus = next(
+                    (e for e in steps[stage]["charges"] if e["charge"] > 0), None
+                )
+                if plus is not None:
+                    tail = _charge_seat(cluster, plus, basis, center, scale)
+                    # run the arrow out to the panel edge so it reads as leaving
+                    reach = 0.66
+                    b = float(tail @ heading)
+                    c = float(tail @ tail) - reach**2
+                    span = -b + np.sqrt(max(b * b - c, 0.0))
+                    ax.annotate(
+                        "",
+                        xy=tail + 0.86 * span * heading,
+                        xytext=tail + 0.16 * span * heading,
+                        arrowprops={
+                            "arrowstyle": "-|>",
+                            "color": INK,
+                            "lw": 1.0,
+                            "shrinkA": 0,
+                            "shrinkB": 0,
+                        },
+                        zorder=8,
+                    )
+                    ghost = tail + span * heading
+                    ax.plot(
+                        *ghost,
+                        marker="o",
+                        ms=9.0,
+                        mfc=SPINON,
+                        mec="none",
+                        alpha=0.34,
+                        zorder=6,
+                    )
+                    ax.text(
+                        *ghost,
+                        "$+$",
+                        color=INK,
+                        fontsize=7.4,
+                        ha="center",
+                        va="center",
+                        alpha=0.34,
+                        zorder=7,
+                    )
+        if edge_index % 2 == 0 and active and not boundary:
             _draw_exchange_arrow(ax, edge[0], edge[1], color)
             if steps is not None:
                 for site, symbol in (
@@ -376,7 +483,7 @@ def _draw_cluster_loop(
                         *(seat + 0.23 * outward),
                         symbol,
                         color=color,
-                        fontsize=5.6,
+                        fontsize=6.8,
                         ha="center",
                         va="center",
                         zorder=9,
@@ -392,7 +499,7 @@ def _draw_cluster_loop(
     ax.scatter(
         loop[:, 0],
         loop[:, 1],
-        s=16,
+        s=22,
         facecolors=faces,
         edgecolors=color,
         linewidths=0.7,
@@ -413,12 +520,12 @@ def _draw_cluster_loop(
             -0.76,
             caption,
             color=INK,
-            fontsize=5.2,
+            fontsize=6.4,
             ha="center",
             va="center",
             linespacing=1.5,
         )
-    ax.set_title(title, loc="left", pad=0.5, fontsize=6.2)
+    ax.set_title(title, loc="left", pad=1.0, fontsize=7.4)
     ax.set_xlim(-0.76, 0.76)
     ax.set_ylim(-0.96, 0.66)
     ax.set_aspect("equal")
@@ -595,7 +702,7 @@ def dssf_figure() -> None:
 
 
 def summary_figure(exact, exact_report: dict) -> None:
-    figure = plt.figure(figsize=(7.0, 4.55))
+    figure = plt.figure(figsize=(7.2, 5.15))
     outer = figure.add_gridspec(
         1,
         2,
@@ -610,22 +717,24 @@ def summary_figure(exact, exact_report: dict) -> None:
     left_grid = outer[0, 0].subgridspec(
         2,
         1,
-        height_ratios=(1.62, 1.26),
+        height_ratios=(2.02, 1.20),
         hspace=0.26,
     )
     cluster, panels = _geometry_panel_data()
     geometry_grid = left_grid[0, 0].subgridspec(2, 3, wspace=0.02, hspace=0.30)
     hexagon, axial, diagonal = panels
     storyboard = (
-        (0, 0, hexagon, 0, r"i.a) create", "$S^+_iS^-_j$: pair splits"),
-        (0, 1, hexagon, 1, r"i.b) move", "$S^+_iS^-_j$: spinon walks"),
-        (0, 2, hexagon, 2, r"i.c) annihilate",
-         "$S^+_iS^-_j$: annihilate\n$\\mathbf{q}_\\gamma=(0,0,0)$"),
-        (1, 0, axial, 0, r"i.d) create", "$S^+_iS^-_j$: pair splits"),
-        (1, 2, axial, 1, r"i.e) annihilate",
-         "$S^+_iS^-_j$: on an image\n$\\mathbf{q}_\\gamma=(0,0,-1)$"),
+        (0, 0, hexagon, 0, False, r"i.a) create", "$S^+_iS^-_j$: pair splits"),
+        (0, 1, hexagon, 1, False, r"i.b) move", "$S^+_iS^-_j$: spinon walks"),
+        (0, 2, hexagon, 2, False, r"i.c) annihilate",
+         "$S^+_iS^-_j$: $+$ meets $-$\n$\\mathbf{q}_\\gamma=(0,0,0)$"),
+        (1, 0, axial, 0, False, r"i.d) create", "$S^+_iS^-_j$: pair splits"),
+        (1, 1, axial, 0, True, r"i.e) transport",
+         "$+$ carried out of the cell"),
+        (1, 2, axial, 1, False, r"i.f) annihilate",
+         "the boundary returns it\n$\\mathbf{q}_\\gamma=(0,0,-1)$"),
     )
-    for row, column, panel, stage, title, caption in storyboard:
+    for row, column, panel, stage, boundary, title, caption in storyboard:
         path, winding, color, view, _ = panel
         ax = figure.add_subplot(geometry_grid[row, column])
         _draw_cluster_loop(
@@ -638,21 +747,8 @@ def summary_figure(exact, exact_report: dict) -> None:
             title,
             stage=stage,
             caption=caption,
+            boundary=boundary,
         )
-    # the winding loop has no middle stage: it closes at second order, which is
-    # exactly why its scale is g_4 and not g_6
-    gap = figure.add_subplot(geometry_grid[1, 1])
-    gap.set_axis_off()
-    gap.text(
-        0.5,
-        0.5,
-        "no walk:\nthe loop closes\nat second order",
-        color=INK_MUTED,
-        fontsize=5.8,
-        ha="center",
-        va="center",
-        transform=gap.transAxes,
-    )
 
     thermodynamics_axis = figure.add_subplot(left_grid[1, 0])
     _draw_thermodynamic_benchmark(thermodynamics_axis, exact, exact_report)

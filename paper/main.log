@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.5.1)  21 JUL 2026 22:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.5.1)  21 JUL 2026 22:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -459,11 +459,11 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 37.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<figs/fig_summary.pdf, id=18, 544.83543pt x 312.02084pt>
+<figs/fig_summary.pdf, id=18, 554.21924pt x 346.71043pt>
 File: figs/fig_summary.pdf Graphic file (type pdf)
 <use figs/fig_summary.pdf>
 Package pdftex.def Info: figs/fig_summary.pdf  used on input line 63.
-(pdftex.def)             Requested size: 510.0pt x 292.08078pt.
+(pdftex.def)             Requested size: 510.0pt x 319.0621pt.
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 Underfull \hbox (badness 1163) in paragraph at lines 180--191
 \OT1/cmr/m/n/10 This transport-character pro-jec-tion re-moves non-con-
@@ -503,15 +503,15 @@ Package rerunfilecheck Info: File `main.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  12183 strings out of 476106
- 179703 string characters out of 5793934
+ 179702 string characters out of 5793934
  1968975 words of memory out of 5000000
  34006 multiletter control sequences out of 15000+600000
  568769 words of font info for 75 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 75i,15n,79p,2576b,519s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,15n,79p,2566b,519s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx5.pfb></usr/share/texli
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/t
@@ -539,10 +539,10 @@ ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/te
 xmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on main.pdf (5 pages, 639162 bytes).
+Output written on main.pdf (5 pages, 683516 bytes).
 PDF statistics:
- 354 PDF objects out of 1000 (max. 8388607)
- 264 compressed objects within 3 object streams
+ 364 PDF objects out of 1000 (max. 8388607)
+ 272 compressed objects within 3 object streams
  39 named destinations out of 1000 (max. 500000)
  30 words of extra memory for PDF output out of 10000 (max. 10000000)
 
