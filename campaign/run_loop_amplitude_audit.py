@@ -46,10 +46,34 @@ def channel_pairs(supports, ice_states, ice_index) -> list[tuple[int, int]]:
     ]
 
 
+def channel_amplitudes(stored, pairs) -> dict[str, dict[str, dict[str, float]]]:
+    """Mean and max loop amplitude per operator, per channel."""
+    # h(0) is the M=1 entry; the projected operators are read before the exact
+    # p-block structure is imposed, so that the winding entries measure the
+    # character average itself rather than the block projection.
+    operators = {"h(0)": stored["M1_operator"]}
+    for grid in (2, 3, 4):
+        key = f"M{grid}_operators_by_character"
+        if key in stored.files:
+            operators[f"h_M={grid}"] = stored[key].mean(axis=0)
+
+    amplitudes = {}
+    for label, operator in operators.items():
+        entry = {}
+        for name, channel in pairs.items():
+            values = np.abs(np.array([operator[i, j] for i, j in channel]))
+            entry[name] = {"mean": float(values.mean()), "max": float(values.max())}
+        amplitudes[label] = entry
+    return amplitudes
+
+
 def main() -> None:
     jpm = 0.046
     run = ROOT / "campaign/outputs/nonperturbative_cubic16_p0p046000.npz"
     stored = np.load(run)
+    # Optional second coupling: enables the power-law exponent of each channel.
+    reference_jpm = 0.030
+    reference_run = ROOT / "campaign/outputs/nonperturbative_cubic16_p0p030000.npz"
 
     cluster = geometry.build_cluster("cubic", (1, 1, 1))
     ice_states = np.asarray(cluster.ice_states)
@@ -65,27 +89,35 @@ def main() -> None:
         for name, supports in channels.items()
     }
 
-    # h(0) is the M=1 entry; the projected operators are compared before the
-    # exact p-block structure is imposed, so that the winding entries measure
-    # the character average itself rather than the block projection.
-    operators = {"h(0)": stored["M1_operator"]}
-    for grid in (2, 3, 4):
-        operators[f"h_M={grid}"] = stored[f"M{grid}_operators_by_character"].mean(axis=0)
-
     report = {
         "coupling": jpm,
         "g6": 12.0 * abs(jpm) ** 3,
         "g4": 4.0 * jpm**2,
         "n_zero_spinon": int(cluster.n_ice),
         "channel_supports": {name: len(s) for name, s in channels.items()},
-        "amplitudes": {},
+        "amplitudes": channel_amplitudes(stored, pairs),
     }
-    for label, operator in operators.items():
-        entry = {}
-        for name, channel in pairs.items():
-            values = np.abs(np.array([operator[i, j] for i, j in channel]))
-            entry[name] = {"mean": float(values.mean()), "max": float(values.max())}
-        report["amplitudes"][label] = entry
+
+    # Effective exponent nu of each channel, A ~ |Jpm|^nu.  This separates a
+    # surviving process from the rounding image of a cancelled one, and dates
+    # each residual to a perturbative order without assuming one.
+    if reference_run.exists():
+        reference = channel_amplitudes(np.load(reference_run), pairs)
+        ratio = reference_jpm / jpm
+        exponents = {}
+        for label, entry in report["amplitudes"].items():
+            if label not in reference:
+                continue
+            exponents[label] = {
+                name: float(
+                    np.log(reference[label][name]["mean"] / values["mean"])
+                    / np.log(ratio)
+                )
+                for name, values in entry.items()
+                if values["mean"] > 0.0 and reference[label][name]["mean"] > 0.0
+            }
+        report["reference_coupling"] = reference_jpm
+        report["exponents"] = exponents
 
     bare = report["amplitudes"]["h(0)"]
     report["bare_four_loop_over_hexagon"] = (
@@ -105,6 +137,10 @@ def main() -> None:
             f"loop4={entry['four_loop_winding']['max']:.2e}"
         )
     print(f"bare four-loop / hexagon = {report['bare_four_loop_over_hexagon']:.3f}")
+    for label, entry in report.get("exponents", {}).items():
+        print(f"{label:8s} exponents " + " ".join(
+            f"{name}={value:.2f}" for name, value in entry.items()
+        ))
     print(f"wrote {destination}")
 
 

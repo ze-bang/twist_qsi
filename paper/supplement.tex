@@ -287,9 +287,23 @@ The implemented $M^3$ character rule is
 \label{eq:alias}
 \end{equation}
 The last equality follows from discrete Fourier orthogonality.  A finite grid
-aliases nonzero transports $M\bm k$, so convergence in $M$ is mandatory.
-In particular, $M=2$ is only a parity selector: it retains every Fourier
-component with $\bq=2\bm k$.  It cannot by itself establish zero transport.
+aliases the nonzero transports $M\bm k$, and does not by itself establish zero
+transport at all orders: $M=2$ is a parity selector, retaining every Fourier
+component with $\bq=2\bm k$.
+
+The order at which that aliasing can first act is bounded.  Each exchange in a
+sequence traverses one bond and therefore crosses the periodic boundary at
+most once, contributing at most one period vector to $\bq_\gamma$ through
+Eq.~(\ref{eq:path_phase_si}).  A sequence of $n$ exchanges thus obeys
+\begin{equation}
+ \left\|\bq_\gamma\right\|_{\infty}\le n ,
+\label{eq:transport_bound_si}
+\end{equation}
+so a nonzero character can satisfy $\bq_\gamma=\bm0\bmod M$ only at order
+$n\ge M$.  Every $M^3$ grid is exact through order $M-1$, and the first
+aliased contribution to $h_M$ enters at order $M$.  Convergence in $M$ is
+accordingly a statement about progressively higher-order sequences, not about
+whether the leading winding processes are removed.
 
 This construction is nonperturbative for the selected finite-cluster band in
 a precise sense.  At every $\btheta$, the code diagonalizes the microscopic
@@ -378,10 +392,48 @@ projection, whereas every contractible hexagon term remains.  These support
 counts are not matrix ranks: rank is a property of the summed operator in a
 specified basis and need not equal the number of geometric terms.  The $M=2$
 grid already makes the same classification for these shortest paths, and
-$M=3,4$ leave it unchanged.  This does not make $M=2$ an all-order projector:
-components with nonzero $\bq=2\bm k$ are aliased with zero by
-Eq.~(\ref{eq:alias}).  The audit establishes the source's topological meaning
-at low order; it is not used to construct the exact-band curves.
+$M=3,4$ leave it unchanged.  The audit establishes the source's topological
+meaning at low order; it is not used to construct the exact-band curves.
+
+The reason $M=2$ suffices here is stronger than the general bound
+(\ref{eq:transport_bound_si}), and is worth stating separately, since it
+determines the grid actually required to remove the artifact.  Histogramming
+$\bq_r$ over the same enumeration gives the census of
+Table~\ref{tab:transport_census}: on both clusters, at both orders, every
+transport character has components in $\{0,\pm1\}$.  The bound
+(\ref{eq:transport_bound_si}) is therefore saturated at $n=1$ rather than at
+$n=3$, and no third-order sequence transports more than a single period in any
+direction.
+\begin{table}[htbp]
+\caption{Census of transport characters $\bq_r$ over the second- and
+third-order ice-to-ice enumeration.  ``Nonzero'' counts rows with
+$\bq_r\ne\bm0$, which the continuous average removes; the remainder are the
+zero-transport rows it keeps.  Every character encountered has components in
+$\{0,\pm1\}$.}
+\label{tab:transport_census}
+\centering
+\begin{tabular}{llrrr}
+\toprule
+cluster & order & rows & nonzero $\bq_r$ &
+$\left\|\bq_r\right\|_{\infty}^{\max}$\\
+\midrule
+cubic-16 & $h^{(2)}$ & $2394$ & $2304$ & 1\\
+cubic-16 & $h^{(3)}$ & $4506$ & $4224$ & 1\\
+FCC-32 & $h^{(2)}$ & $55\,578$ & $52\,608$ & 1\\
+FCC-32 & $h^{(3)}$ & $164\,634$ & $146\,304$ & 1\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A character with unit components is never $\bm0\bmod2$.  Consequently the
+$M=2$ grid annihilates every winding process available at second and third
+order exactly, with no appeal to convergence, and in particular removes the
+entire four-loop artifact that motivates this work.  This is visible in
+Table~\ref{tab:loop_amplitudes}, where the $M=2$ winding amplitudes are the
+smallest of any grid.  Larger $M$ is not needed for the artifact; it is needed
+only to suppress higher-order sequences whose transport is commensurate with
+the grid, which is what the residual $M$ dependence of the band operator
+measures.
 
 \subsection{Loop amplitudes of the produced band operators}
 
@@ -433,20 +485,68 @@ Four features are worth stating explicitly.  First, in the periodic band the
 winding four-loop amplitude exceeds the contractible hexagon amplitude by a
 factor of $8.0$, so the leading ice-to-ice process of ordinary exact
 diagonalization on this cluster is the artifact rather than the ring
-exchange.  Second, at the production grid $M=4$ the winding amplitudes are
-$\le1.2\times10^{-16}\Jzz$, fourteen orders of magnitude below $g_4$ and at
-the arithmetic precision of the average; the character projection alone
-achieves this, independently of the subsequent $\bm p$-block projection.
-Third, the odd grid $M=3$ leaves a residual winding amplitude of
-$1.1\times10^{-6}\Jzz$.  This is four orders of magnitude below $g_6$ and
-consistent with the $0.013\%$ centered operator agreement between $M=3$ and
-$M=4$ in Eq.~(\ref{eq:centered_change_si}), but it is not at arithmetic
-precision, and it is a further reason to quote $M=4$ as the production grid.
-Fourth, the contractible hexagon amplitude changes by only $0.8\%$ between
-$h(\bm0)$ and $h_{M=4}$, and sits $13\%$ above the bare third-order value
-$g_6$.  That excess is the higher-order virtual dressing of the physical ring
-exchange, which the exact-band construction retains and a truncated
-third-order effective model would discard.
+exchange.  Second, the even grids remove the winding channels at the
+arithmetic precision of the average, $7.8\times10^{-19}\Jzz$ at $M=2$ and
+$1.2\times10^{-16}\Jzz$ at $M=4$; this is the character projection alone,
+independently of the subsequent $\bm p$-block projection.  Third, the odd grid
+$M=3$ leaves a residual winding amplitude of $1.1\times10^{-6}\Jzz$, four
+orders of magnitude below $g_6$ but well above arithmetic precision.  This is
+the expected behavior and not a defect of the calculation, as the coupling
+scaling below establishes.  Fourth, the contractible hexagon amplitude changes
+by only $0.8\%$ between $h(\bm0)$ and $h_{M=4}$, and sits $13\%$ above the
+bare third-order value $g_6$.  That excess is the higher-order virtual
+dressing of the physical ring exchange, which the exact-band construction
+retains and a truncated third-order effective model would discard.
+
+\subsection{Coupling scaling of the retained and residual channels}
+
+The perturbative order of each channel in Table~\ref{tab:loop_amplitudes} can
+be measured rather than assumed, by repeating the entire exact-band
+calculation at a second coupling and fitting a power law.  Repeating at
+$\Jpm/\Jzz=0.030$ and comparing with $0.046$ gives the effective exponents
+$\nu$ of Table~\ref{tab:loop_scaling}, defined by
+$A_{\mathcal A}\propto\left|\Jpm\right|^{\nu}$.
+\begin{table}[htbp]
+\caption{Effective exponent $\nu$ of each loop channel, from the exact band
+operators at $\Jpm/\Jzz=0.046$ and $0.030$.  Amplitudes are the channel means
+at $\Jpm/\Jzz=0.046$, in units of $\Jzz$.  The projected entries are raw
+character averages.}
+\label{tab:loop_scaling}
+\centering
+\begin{tabular}{llrr}
+\toprule
+operator & channel & amplitude & $\nu$\\
+\midrule
+$h(\bm0)$ & winding four-loop & $1.046\times10^{-2}$ & $2.13$\\
+$h(\bm0)$ & contractible hexagon & $1.314\times10^{-3}$ & $3.01$\\
+$h_{M=3}$ & contractible hexagon & $1.325\times10^{-3}$ & $3.02$\\
+$h_{M=3}$ & winding four-loop & $7.30\times10^{-7}$ & $6.25$\\
+$h_{M=3}$ & wrapping hexagon & $1.42\times10^{-7}$ & $7.29$\\
+$h_{M=2}$ & winding four-loop & $4.43\times10^{-19}$ & $2.15$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Every entry is accounted for.  The periodic four-loop channel scales as
+$\Jpm^2$ and the contractible hexagon channel as $\Jpm^3$, identifying them
+with $g_4=4\Jpm^2/\Jzz$ and $g_6=12|\Jpm|^3/\Jzz^2$ without perturbative
+input, and the hexagon exponent is unchanged by the projection.
+The $M=3$ winding residual scales as $\Jpm^6$.  This is the shortest sequence
+that the bound (\ref{eq:transport_bound_si}) permits an $M=3$ grid to alias
+into the flip support of a single winding four-loop: three traversals of that
+loop, which reproduce the support because the traversal count is odd, and
+carry $\bq_\gamma=\pm3\equiv\bm0\bmod3$.  Even grids cannot alias it, because
+an odd number of traversals carries odd transport, which is never
+$\bm0\bmod2$ or $\bm0\bmod4$; this is why the $M=2$ and $M=4$ entries sit at
+machine precision while $M=3$ does not.  Consistently, the $M=2$ residual
+itself scales as $\Jpm^{2}$ at a relative size of $10^{-16}$, i.e.\ it is the
+rounding image of the second-order amplitude being cancelled rather than a
+surviving process.  The odd-order alias of the wrapping-hexagon channel
+appears at $\nu\simeq7$, likewise beyond any order relevant here.
+
+The practical consequence is that the grid required to remove the artifact is
+$M=2$, and the production choice $M=4$ is a margin against sixth- and
+higher-order aliasing, not a requirement of the topological argument.
 
 For reference, canonical Schrieffer--Wolff theory~\cite{Bravyi2011} generates
 the Taylor coefficients $h_{n,\bq}$ when the band is analytic.  Agreement
@@ -491,11 +591,26 @@ At $(\Jpm,\Jpp)/\Jzz=(0.046,0)$,
 Eq.~(\ref{eq:centered_change_si}) gives 6.36\% from
 $M=2$ to 3 and 0.013\% from $M=3$ to 4, as shown in
 Fig.~\ref{fig:character_convergence}.  The latter passes the 5\%
-character-convergence gate.  The zero-source minimum ice overlap is 0.762,
-and every generic $M=3,4$ point has a larger overlap.  These grids are
-successive character resolutions: $M=3$ removes the parity alias left by
-$M=2$, while comparison with the independent $M=4$ grid tests the remaining
-finite-$M$ aliases.
+character-convergence gate.  These grids are successive character
+resolutions: $M=3$ removes the parity alias left by $M=2$, while comparison
+with the independent $M=4$ grid tests the remaining finite-$M$ aliases.
+
+Two conditions make the band construction itself well defined at every source
+point, and both are met on cubic-16.  First, the selected band must be
+spectrally isolated, so that the contour $\Gamma_{\btheta}$ in
+Eq.~(\ref{eq:spectral_projector_si}) encloses it and nothing else: the $d=90$
+zero-spinon band is separated from the remainder of the $65\,536$-level
+spectrum by $0.3874\Jzz$, more than two orders of magnitude above the
+low-temperature peak scale it controls, and the minimum gap above the band is
+$0.627\Jzz$ at $\btheta=\bm0$, rising to $0.664\Jzz$ on the $M=3$ grid and
+$0.684\Jzz$ on $M=4$.  Second, $\Pice P_{\btheta}\Pice$ must be nonsingular,
+so that the inverse square root in the polar map of
+Eq.~(\ref{eq:polar_si}) exists.  The zero-source minimum overlap between a
+band eigenvector and the zero-spinon manifold is $0.762$, and every generic
+$M=3,4$ point has a larger overlap, the grid minima being $0.795$ and
+$0.814$; the smallest value is therefore bounded far from the $10^{-8}$
+singularity cutoff.  The largest Ritz residual over the production grids is
+$5.4\times10^{-13}$.
 
 \begin{figure}[htbp]
 \centering

@@ -1,0 +1,94 @@
+{
+  "method": "exact microscopic bands, polar pullback, primitive q=2*delta character",
+  "qualification": "nonperturbative finite-character calculation; bulk use requires M convergence and cluster convergence",
+  "jpm": 0.03,
+  "jpmpm": 0.0,
+  "n_sites": 16,
+  "basis": "fixed-Sz=0",
+  "basis_dimension": 12870,
+  "band_dimension": 90,
+  "sector_dimensions_at_zero_source": {
+    "++": 3270,
+    "+-": 3200,
+    "-+": 3200,
+    "--": 3200
+  },
+  "zero_source": {
+    "model_overlap_min": 0.9004808824115355,
+    "model_overlap_mean": 0.9688070618959802,
+    "model_overlap_max": 0.9892763903546845,
+    "pullback_unitarity_error": 2.5615833987575966e-14,
+    "sector_counts": {
+      "++": 36,
+      "+-": 18,
+      "-+": 18,
+      "--": 18
+    },
+    "sector_eigenpairs": {
+      "++": 62,
+      "+-": 31,
+      "-+": 31,
+      "--": 31
+    },
+    "band_minimum": -0.08956565957443795,
+    "band_maximum": -0.011000073564838366,
+    "gap_above_band": 0.7653778329156032,
+    "solve_seconds": 2.971828348992858
+  },
+  "grids": {
+    "M2": {
+      "n_characters": 8,
+      "maximum_microscopic_gauge_identity_residual": 1.4695761589768237e-17
+    },
+    "M3": {
+      "n_characters": 27,
+      "n_solved_representatives": 13,
+      "n_exact_gauge_corners": 1,
+      "minimum_gap_above_band": 0.7809352873955806,
+      "minimum_model_overlap": 0.9146582834359981,
+      "maximum_ritz_residual": 2.3468242493204712e-14,
+      "maximum_conjugation_identity_residual": 0.0
+    }
+  },
+  "convergence": {
+    "M1_to_M2_centered_operator_relative_error": 28.313511704007464,
+    "M2_to_M3_centered_operator_relative_error": 0.03516193128538828
+  },
+  "qmc_thermodynamics": {
+    "status": "not_applicable",
+    "reason": "the available QMC curve has J_pm_pm=0 and J_pm/J_zz=0.046"
+  },
+  "pending": {
+    "full_hilbert_gap": "reported gaps are within Sz=0; other conserved magnetization sectors are required for an unrestricted spectral gap",
+    "microscopic_complement": "only selected-band thermodynamics are emitted; a matching full-spectrum or stochastic complement is required for all-temperature observables"
+  },
+  "gates": {
+    "exact_band_overlap": {
+      "status": "pass",
+      "singularity_cutoff": 1e-08
+    },
+    "character_convergence": {
+      "status": "pass",
+      "threshold": 0.05,
+      "error": 0.03516193128538828
+    },
+    "qmc_heat_capacity": {
+      "status": "not_applicable",
+      "threshold": 0.02,
+      "rmse": null
+    },
+    "qmc_entropy": {
+      "status": "not_applicable",
+      "threshold": 0.02,
+      "rmse": null
+    },
+    "fcc32_full_hamiltonian": {
+      "status": "pending",
+      "reason": "current exact-band campaign is cubic-16 only"
+    },
+    "qmc_sac_dynamics": {
+      "status": "pending",
+      "reason": "matched finite-cluster momenta and spectral normalization required"
+    }
+  }
+}

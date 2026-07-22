@@ -355,8 +355,13 @@ h\!\left(
 \end{equation}
 The continuous average selects $\bq_\gamma=0$ exactly, removing every process
 that carries nonzero covering-lattice transport; the discrete grid instead
-retains all characters with $\bq_\gamma=\bm 0\pmod M$, so convergence in $M$
-is an essential diagnostic. One consequence of the continuous average is
+retains all characters with $\bq_\gamma=\bm 0\pmod M$. A sequence of $n$
+exchanges crosses the boundary at most $n$ times, so
+$\|\bq_\gamma\|_{\infty}\le n$ and a nonzero character can survive an $M^3$
+grid only at order $n\ge M$. Finite $M$ is therefore exact through order
+$M-1$, with a leading alias of known onset rather than an uncontrolled
+truncation.
+One consequence of the continuous average is
 available exactly at any $M$: since $\bq_\gamma=2\Delta\bm p$, a surviving
 matrix element cannot change $\bm p$, so $h_{\rm wf}$ is block diagonal in the
 polarization coordinate of Eq.~(\ref{eq:polarization}). We therefore impose
@@ -428,24 +433,29 @@ $|h_{ij}|\le1.2\times10^{-16}\Jzz$, fourteen orders of magnitude below $g_4$
 and at the level of the arithmetic. All 16 contractible hexagon amplitudes
 survive at $1.325\times10^{-3}\Jzz=1.13\,g_6$, differing from their periodic
 values by $0.8\%$. Their $13\%$ excess over bare third order is higher-order
-virtual dressing, which the exact-band construction retains by design. The
-same audit on FCC-32 removes all 24 winding four-loops and all 96 wrapping
-hexagons while retaining all 32 contractible hexagons; the full retention
-census for both clusters is given in the Supplemental
-Material~\cite{supp}.
+virtual dressing, which the exact-band construction retains by design.
+Repeating at $\Jpm/\Jzz=0.030$ assigns the two channels without perturbative
+input: they scale as $\Jpm^{2.13}$ and $\Jpm^{3.01}$, matching $g_4$ and
+$g_6$. The same audit on FCC-32 removes all 24 winding four-loops and all 96
+wrapping hexagons while retaining all 32 contractible hexagons. The band is
+well isolated throughout, and the retention census, band gap, and pullback
+diagnostics are given in the Supplemental Material~\cite{supp}.
 
-Two conditions make the band itself well defined, and both are met. The
-selected band is separated from the rest of the $65\,536$-state spectrum by
-$0.3874\Jzz$, two orders of magnitude above the scales it controls, so the
-contour in Eq.~(\ref{eq:spectral}) is unambiguous; and the smallest overlap
-between a band eigenvector and the zero-spinon manifold is $0.762$ across the
-source grid, so $\Pice P_{\btheta}\Pice$ stays far from singular and the
-polar pullback of Eq.~(\ref{eq:polar}) exists at every source point. Finally,
-the source average is converged: after removing the scalar component of the
-band Hamiltonian, $h_M$ changes by $6.36\%$ from $M=2$ to $M=3$ but only
-$0.013\%$ from $M=3$ to $M=4$. Coarse grids alias transport sectors with
-$\bq_\gamma=\bm0\pmod M$ into the zero character; by $M=4$ that aliasing is
-exhausted, and we use $M=4$ throughout.
+The source grid needed to remove the artifact is not a matter of convergence.
+Enumerating every ice-to-ice sequence through third order, on both cubic-16
+and FCC-32, we find that all transport characters have components in
+$\{0,\pm1\}$, saturating the bound below Eq.~(\ref{eq:character}) at $n=1$
+rather than $n=3$. A character with unit components is never
+$\bm0\bmod2$, so the $M=2$ grid already annihilates every winding process
+available at the orders where the artifact lives, exactly and with no
+extrapolation: the four-loop amplitudes above are $10^{-19}\Jzz$ at $M=2$.
+Larger $M$ addresses only higher-order sequences whose transport is
+commensurate with the grid, and the residual $M$ dependence measures them:
+the centered band operator changes by $6.36\%$ from $M=2$ to $M=3$ and
+$0.013\%$ from $M=3$ to $M=4$, and the winding amplitude that the odd grid
+$M=3$ retains is a sixth-order alias, scaling as $\Jpm^{6.25}$. We quote
+$M=4$ throughout as a margin against such higher-order aliasing, but the
+removal of the artifact itself requires only $M=2$.
 
 \emph{Thermodynamics and dynamics.}---With the artifact removed we can
 compare against QMC. At the benchmark point of

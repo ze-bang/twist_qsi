@@ -66,5 +66,23 @@
       }
     }
   },
+  "reference_coupling": 0.03,
+  "exponents": {
+    "h(0)": {
+      "hexagon_contractible": 3.006308001264217,
+      "hexagon_wrapping": 3.0063080012644336,
+      "four_loop_winding": 2.128784573881286
+    },
+    "h_M=2": {
+      "hexagon_contractible": 3.006308001264217,
+      "hexagon_wrapping": 3.6492278168666203,
+      "four_loop_winding": 2.148524435111623
+    },
+    "h_M=3": {
+      "hexagon_contractible": 3.016495309722773,
+      "hexagon_wrapping": 7.291404361512428,
+      "four_loop_winding": 6.252316584192005
+    }
+  },
   "bare_four_loop_over_hexagon": 7.958402252303862
 }
