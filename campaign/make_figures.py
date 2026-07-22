@@ -12,7 +12,6 @@ import matplotlib as mpl
 mpl.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.lines import Line2D
 
 
@@ -41,10 +40,10 @@ INK_FAINT = "#9aa1a9"
 RULE = "#c8ced6"
 GRID = "#e6e8ec"
 
-SEQUENTIAL = LinearSegmentedColormap.from_list(
-    "windingfree",
-    ["#ffffff", "#dbe6f2", "#9dbcdd", "#4a8ace", "#2b6cb0", "#1b4470", "#16181d"],
-)
+# gnuplot's default pm3d palette (rgbformulae 7,5,15), the convention for
+# spectral-weight maps.  Zero maps to black, so in-panel labels invert.
+DSSF_CMAP = "gnuplot"
+DSSF_LABEL = "#ffffff"
 
 BARE = "#c05621"       # periodic ED
 CLEAN = "#2b6cb0"      # winding-free
@@ -417,7 +416,7 @@ def _draw_dssf_panels(axes, titles):
             momentum_edges,
             frequency_edges,
             spectrum,
-            cmap=SEQUENTIAL,
+            cmap=DSSF_CMAP,
             vmin=0.0,
             vmax=maximum,
             shading="flat",
@@ -533,7 +532,7 @@ def summary_figure(exact, exact_report: dict) -> None:
         ax.text(
             *position,
             title,
-            color=INK,
+            color=DSSF_LABEL,
             fontsize=7.2,
             ha="left",
             va="top",
