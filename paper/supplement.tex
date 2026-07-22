@@ -551,7 +551,18 @@ winding-free & each $X$ & 6 & 0.0053335 & 0.240607\\
 \end{tabular}
 \end{table}
 The three winding-free $X$ channels agree to $5\times10^{-16}$ in integrated
-weight.  The $\Gamma$ weight is suppressed by the projection from $0.3182$ to
+weight.  The vanishing of the $\Gamma$ response is exact, not numerical.  At
+$\bk=\bm0$ the probe is the sublattice magnetization
+$M_a=\sum_{j\in a}S^z_j$, and on the ice manifold $M_a$ takes a single value on
+each polarization sector: we find the variation of $M_a$ within a sector to be
+identically zero, both on cubic-16 (90 ice states, 25 sectors) and on FCC-32
+(2970 ice states, 85 sectors).  Since the winding-free Hamiltonian is block
+diagonal in $\bm p$, its eigenvectors lie in a single sector, on which $M_a$
+acts as a c-number and therefore has no off-diagonal element.  Evaluated with
+the bare ice-manifold operator the $\Gamma$ weight is $1.3\times10^{-27}$
+against $5.33$ for the periodic band; the $2.05\times10^{-6}$ quoted above is
+the residue left by the canonical dressing $W_{\bm0}^\dagger M_aW_{\bm0}$,
+whose band has ice overlap $0.762$.  The $\Gamma$ weight is suppressed by the projection from $0.3182$ to
 $2.05\times10^{-6}$.  Reconstructing $W_0$ reproduces the cached periodic operator with
 relative error $2.84\times10^{-14}$; its isometry residual is
 $6.32\times10^{-14}$.  The arrays, unbroadened lines, and diagnostics are
