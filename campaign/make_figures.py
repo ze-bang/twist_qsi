@@ -49,17 +49,23 @@ DSSF_LABEL = "#ffffff"
 # Yongzheng-porcelain enamels, opaque rather than washed.  Celadon is absent
 # on purpose: it is a low-chroma grey-green that reads as grey, and green
 # against iron red collapses to dE 5 under deuteranopia.
-BARE = "#ab4a3c"       # periodic ED, iron red
-CLEAN = "#2f5d96"      # winding-free, doucai cobalt
-FCC = "#b0871e"        # FCC-32, imperial yellow
-DIAGONAL = "#b0871e"   # third loop class in the geometry panels
+# Low-saturation throughout.  The chroma floor (0.10) is the hard stop: below
+# it a hue stops reading as a colour, so these are the most muted steps that
+# still carry identity.  The gold is kept light rather than deep -- desaturating
+# it downward collides with the muted red (normal-vision dE 13).
+BARE = "#a95a45"       # periodic ED, muted iron red
+CLEAN = "#356399"      # winding-free, muted cobalt
+FCC = "#c9a53a"        # FCC-32, light gold
+DIAGONAL = "#c9a53a"   # third loop class in the geometry panels
 QMC = INK
 
-G4 = "#c67157"         # artifact scale, tinted toward periodic ED
-G6 = "#5484bf"         # ring-exchange scale, tinted toward winding-free
+G4 = "#c47a5f"         # artifact scale, tinted toward periodic ED
+G6 = "#5182bd"         # ring-exchange scale, tinted toward winding-free
 
-SPINON = "#cfa032"        # Q_t > 0, at the tetrahedron centre
-ANTISPINON = "#845d09"    # Q_t < 0, the darker enamel of the same hue
+# Charge fills are annotation, not identity: they are light and low-saturation
+# by request, and the sign glyph inside each one carries the distinction.
+SPINON = "#e4d3a2"        # Q_t > 0
+ANTISPINON = "#a68f5c"    # Q_t < 0
 
 plt.rcParams.update(
     {
@@ -127,8 +133,8 @@ def _draw_exchange_arrow(ax, start, stop, color: str) -> None:
         "",
         xy=head,
         xytext=tail,
-        arrowprops={"arrowstyle": "-|>", "color": color, "lw": 1.15},
-        zorder=5,
+        arrowprops={"arrowstyle": "-|>", "color": color, "lw": 1.35},
+        zorder=9,
     )
 
 
@@ -164,7 +170,7 @@ def _tetrahedron_center(cluster, tetrahedron: int, anchor_site: int) -> np.ndarr
     return np.mean(corners, axis=0)
 
 
-def _charge_trajectory(cluster, path: tuple[int, ...]) -> list[list[dict]]:
+def _charge_trajectory(cluster, path, seed_raised: int | None = None):
     """Tetrahedral charges after each exchange of a ring-exchange sequence.
 
     Every exchange flips both ends of one bond.  The two spins share a
@@ -184,7 +190,12 @@ def _charge_trajectory(cluster, path: tuple[int, ...]) -> list[list[dict]]:
             for k in range(len(path))
         )
 
-    state = next(int(s) for s in cluster.ice_states if flippable(int(s)))
+    candidates = [int(s) for s in cluster.ice_states if flippable(int(s))]
+    if seed_raised is not None:
+        # prefer the pattern in which `seed_raised` is down, so the first
+        # exchange raises it and the transfer arrow points that way
+        candidates.sort(key=lambda c: (c >> seed_raised) & 1)
+    state = candidates[0]
     if np.any(charges(state)):
         raise RuntimeError("the seed configuration is not an ice state")
 
@@ -224,25 +235,29 @@ def _loop_tetrahedra(cluster, path):
     return found
 
 
-def _draw_tetrahedron_frames(ax, cluster, path, basis, center, scale) -> None:
+def _draw_tetrahedron_frames(ax, cluster, path, basis, center, scale,
+                             normal=None, charged=()) -> None:
     """Outline all tetrahedra of the loop so the scaffold never blinks."""
     def to_plot(point):
         return (np.asarray(point) @ basis.T - center) / scale
 
+    seats = {entry["tetrahedron"]: entry for entry in charged}
     for tetrahedron, anchor in _loop_tetrahedra(cluster, path):
-        corners = np.array(
-            [
-                to_plot(corner)
-                for corner in _tetrahedron_frame(cluster, tetrahedron, anchor)
-            ]
-        )
+        raw = _tetrahedron_frame(cluster, tetrahedron, anchor)
+        corners = np.array([to_plot(corner) for corner in raw])
+        holds_charge = tetrahedron in seats
+        depth = raw @ np.asarray(normal) if normal is not None else np.zeros(4)
+        middle = float(np.mean(depth))
         for a, b in combinations(range(4), 2):
+            # an edge nearer the viewer than the tetrahedron centre is drawn
+            # over the charge, so the sphere reads as sitting inside the cell
+            in_front = holds_charge and 0.5 * (depth[a] + depth[b]) > middle
             ax.plot(
                 *np.array([corners[a], corners[b]]).T,
                 color=INK_MUTED,
-                lw=0.6,
-                alpha=0.42,
-                zorder=3,
+                lw=0.75 if holds_charge else 0.6,
+                alpha=(0.85 if holds_charge else 0.38),
+                zorder=8 if in_front else 3,
                 solid_capstyle="round",
             )
 
@@ -260,7 +275,7 @@ def _draw_charges(ax, cluster, occupied, basis, center, scale, faded=False,
         ax.plot(
             *seat,
             marker="o",
-            ms=11.0,
+            ms=7.6,
             mfc=SPINON if positive else ANTISPINON,
             mec="none",
             alpha=0.55 if faded else 1.0,
@@ -270,7 +285,7 @@ def _draw_charges(ax, cluster, occupied, basis, center, scale, faded=False,
             *seat,
             "$+$" if positive else r"$-$",
             color=INK if positive else "white",
-            fontsize=8.6,
+            fontsize=6.2,
             ha="center",
             va="center",
             alpha=0.55 if faded else 1.0,
@@ -376,9 +391,17 @@ def _draw_cluster_loop(
 
     loop = projected[list(path)]
     transported_dipole = _transport_walk(cluster, path)[-1]
-    steps = _charge_trajectory(cluster, path) if stage is not None else None
+    seed = None
+    if stage is not None:
+        first = projected[[path[0], path[1]]]
+        seed = path[0] if first[0][1] <= first[1][1] else path[1]
+    steps = _charge_trajectory(cluster, path, seed) if stage is not None else None
     if steps is not None:
-        _draw_tetrahedron_frames(ax, cluster, path, basis, center, scale)
+        _draw_tetrahedron_frames(
+            ax, cluster, path, basis, center, scale,
+            normal=np.cross(basis[0], basis[1]),
+            charged=steps[stage]["charges"],
+        )
         occupied = steps[stage]["charges"]
         previous = steps[stage - 1]["charges"] if stage > 0 else []
         carried = {e["tetrahedron"] for e in occupied}
@@ -408,14 +431,25 @@ def _draw_cluster_loop(
             length = np.linalg.norm(shift)
             if length > 1.0e-9:
                 shift = shift / length * 0.46
-            here = _charge_seat(cluster, plus, basis, center, scale)
-            there = _charge_seat(cluster, minus, basis, center, scale) + shift
-            _draw_charges(ax, cluster, [plus], basis, center, scale)
+            # either partner may be called the image; displace whichever one
+            # stays inside the frame, and flip the sign of the period if needed
+            plus_seat = _charge_seat(cluster, plus, basis, center, scale)
+            minus_seat = _charge_seat(cluster, minus, basis, center, scale)
+            top = 0.74
+            options = (
+                (minus, plus, minus_seat + shift, plus_seat, shift),
+                (plus, minus, plus_seat - shift, minus_seat, -shift),
+            )
+            imaged, resident, there, here, applied = next(
+                (o for o in options if abs(o[2][1]) < top and abs(o[2][0]) < top),
+                options[0],
+            )
+            _draw_charges(ax, cluster, [resident], basis, center, scale)
             # the partner is an image, so it is drawn lighter than a charge
             # that actually sits in this cell
             _draw_charges(
-                ax, cluster, [minus], basis, center, scale, faded=True,
-                offset=shift,
+                ax, cluster, [imaged], basis, center, scale, faded=True,
+                offset=applied,
             )
             if pbc:
                 span = there - here
@@ -486,7 +520,16 @@ def _draw_cluster_loop(
             zorder=4,
         )
         if edge_index % 2 == 0 and active:
-            _draw_exchange_arrow(ax, edge[0], edge[1], color)
+            if steps is not None:
+                # point the arrow the way S^z actually moves: lowered -> raised
+                _draw_exchange_arrow(
+                    ax,
+                    projected[steps[stage]["lowered"]],
+                    projected[steps[stage]["raised"]],
+                    color,
+                )
+            else:
+                _draw_exchange_arrow(ax, edge[0], edge[1], color)
             if steps is not None:
                 for site, symbol in (
                     (steps[stage]["raised"], r"$S^{+}$"),
@@ -682,6 +725,14 @@ def _draw_dssf_panels(axes, titles):
             shading="flat",
             rasterized=True,
         )
+        for value, tone in ((12.0 * 0.046**3, G6), (4.0 * 0.046**2, G4)):
+            ax.axhline(
+                value,
+                color=tone,
+                lw=0.75,
+                ls=(0, (2.4, 2.0)),
+                zorder=4,
+            )
         ax.set_xticks(np.arange(len(labels)), labels)
         ax.set_xlim(-0.5, len(labels) - 0.5)
         ax.set_ylim(0.0, 0.09)
@@ -806,7 +857,7 @@ def summary_figure(exact, exact_report: dict) -> None:
     for ax, title, position in zip(
         dssf_axes,
         ("iii.a) periodic ED", "iii.b) winding-free"),
-        ((0.03, 0.90), (0.03, 0.90)),
+        ((0.03, 0.74), (0.03, 0.90)),
     ):
         ax.set_title("", loc="left")
         ax.text(
