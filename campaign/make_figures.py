@@ -1,5 +1,40 @@
 #!/usr/bin/env python3
-"""Generate manuscript figures only from active campaign products."""
+"""Generate manuscript figures only from active campaign products.
+
+WHERE THE SPINONS IN FIG. 1i COME FROM
+--------------------------------------
+Nothing about the charges is hand-placed; they are derived.  If a spinon is in
+the wrong place, one of these five is the reason, in the order worth checking:
+
+  [1] WHICH STAGE a panel shows        -> `storyboard` in summary_figure()
+      Each row is (row, col, loop, stage, pbc, hop, title, caption).  `stage`
+      indexes the exchange: 0 is the first S+S-, 1 the second, and so on.
+
+  [2] WHICH CHARGE IS + AND WHICH -    -> seed selection in _draw_cluster_loop()
+      The loop admits two flippable ice patterns carrying opposite charges.
+      The seed picks one, so flipping it swaps every + and - in the row.
+
+  [3] WHERE A CHARGE SITS              -> `center` in _charge_trajectory()
+      A charge sits at the centroid of the tetrahedron the exchange charged.
+      Its tetrahedron is forced (the two the bond does not straddle); only the
+      *image* is a choice, made by `lifted`.
+
+  [4] TORUS OR COVERING LATTICE        -> `lifted` argument of _charge_trajectory()
+      lifted=True  keys charges by lifted position, so one tetrahedron has
+                   several images and a winding loop ends with the pair a
+                   period apart.  Needed to separate "apply S+S-" from
+                   "apply PBC" -- on the torus those are one event.
+      lifted=False keys by tetrahedron index, so the cluster is a torus, the
+                   pair simply annihilates, and nothing is drawn outside
+                   the cell.
+
+  [5] HOW A CHARGE IS DRAWN            -> _draw_charges()
+      Marker size, the two yellows, the +/- glyph.  Position only via `offset`.
+
+The traversal direction is NOT free: the boundary-crossing leg runs opposite to
+the travel between the two exchanges, so whichever bond acts first fixes which
+way the surviving charge is carried.  Reversing `path` swaps both at once.
+"""
 
 from __future__ import annotations
 
@@ -237,9 +272,14 @@ def _charge_trajectory(cluster, path, seed_raised=None, lifted: bool = True):
                     for corner in cluster.tets[tetrahedron]
                 ]
             )
+            # [3] SPINON POSITION.  This centroid is the drawn seat of the
+            # charge.  `tetrahedron` above is forced by the exchange; to move a
+            # charge you change which image is used, not this average.
             center = corners.mean(axis=0)
-            # On the torus a tetrahedron is one object however the loop reaches
-            # it, so key by index; lifted, its images are distinct places.
+            # [4] TORUS vs COVERING LATTICE.  On the torus a tetrahedron is one
+            # object however the loop reaches it, so key by index; lifted, its
+            # images are distinct places and a winding loop ends with the pair
+            # one period apart.
             key = tuple(np.round(center, 6)) if lifted else tetrahedron
             entry = field.setdefault(
                 key,
@@ -295,7 +335,12 @@ def _draw_tetrahedron_frames(ax, cluster, path, basis, center, scale,
 
 def _draw_charges(ax, cluster, occupied, basis, center, scale, faded=False,
                   offset=None) -> None:
-    """Seat a spinon at the centre of each charged tetrahedron."""
+    """Seat a spinon at the centre of each charged tetrahedron.
+
+    [5] APPEARANCE ONLY.  `entry["position"]` arrives already decided by
+    _charge_trajectory; `offset` is the one hook for nudging a drawn charge
+    off its computed seat, in axis units after projection.
+    """
     def to_plot(point):
         return (np.asarray(point) @ basis.T - center) / scale
 
@@ -413,8 +458,10 @@ def _draw_cluster_loop(
     transported_dipole = _transport_walk(cluster, path)[-1]
     steps = None
     if stage is not None:
-        # Two ice patterns are flippable round the loop and they carry opposite
-        # charges.  Take the one whose spinon starts on the lower tetrahedron,
+        # [2] WHICH CHARGE IS + AND WHICH -.  Two ice patterns are flippable
+        # round the loop and they carry opposite charges.  Change the test
+        # below (moved_charge > 0) to swap which charge is the one carried
+        # away; every + and - in the row swaps with it.  Take the one whose spinon starts on the lower tetrahedron,
         # so it is the charge that hops upward to meet the fixed antispinon.
         # Track on the covering lattice, so applying S+S- and applying the
         # periodic identification are two separate steps.  Of the two flippable
@@ -814,6 +861,13 @@ def summary_figure(exact, exact_report: dict) -> None:
     # exchange to the second, so whichever bond acts first fixes which way the
     # surviving charge is carried.  This order carries the spinon one period
     # *down*, onto the tetrahedron below the cell and inside the frame.
+    # [1] WHICH STAGE EACH PANEL SHOWS.
+    #   (row, column, loop, stage, pbc, hop, title, caption)
+    #   stage : index of the exchange -- 0 is the first S+S-, 1 the second
+    #   pbc   : draw the dashed identification arrow closing the pair
+    #   hop   : highlight the boundary-crossing leg instead of the exchange bond
+    # The hexagon has three exchanges, the four-loop two, so the four-loop
+    # repeats stage 1 in i.e and i.f and distinguishes them with `pbc`.
     storyboard = (
         (0, 0, hexagon, 0, False, False, r"i.a) create", "$S^+_iS^-_j$: pair splits"),
         (0, 1, hexagon, 1, False, False, r"i.b) move", "$S^+_iS^-_j$: spinon walks"),
