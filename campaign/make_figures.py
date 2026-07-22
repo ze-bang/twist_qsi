@@ -48,6 +48,7 @@ import matplotlib as mpl
 mpl.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.patches as mpatches
 from matplotlib.lines import Line2D
 
 
@@ -99,6 +100,7 @@ G6 = "#5182bd"         # ring-exchange scale, tinted toward winding-free
 
 # Charge fills are annotation, not identity: they are light and low-saturation
 # by request, and the sign glyph inside each one carries the distinction.
+GHOST_RADIUS = 0.062      # dotted-outline marker, data units
 SPINON = "#e4d3a2"        # Q_t > 0
 ANTISPINON = "#a68f5c"    # Q_t < 0
 
@@ -204,8 +206,8 @@ FIG1_PANELS = (
         bonds=((2, 1), (9, 8), (4, 6)),
         charges=((4, +1, 9, NO_IMAGE), (2, -1, 1, NO_IMAGE)),
         ghosts=((3, +1, 2, NO_IMAGE),),
-        arrows=(("solid", ("ghost", 0), ("charge", 0)),
-                ("solid", ("charge", 0), ("charge", 1))),
+        arrows=(("solid", ("ghost", 0), ("charge", 0), 0.30),
+                ("solid", ("charge", 0), ("charge", 1), 0.30)),
     ),
     dict(
         cell=(0, 1), path=AXIAL_PATH, colour="axial",
@@ -215,8 +217,8 @@ FIG1_PANELS = (
         bonds=((3, 1), (4, 6)),
         charges=((4, +1, 3, NO_IMAGE), (4, -1, 6, NO_IMAGE)),
         ghosts=((2, -1, 1, NO_IMAGE),),
-        arrows=(("solid", ("ghost", 0), ("charge", 1)),
-                ("dashed", ("charge", 1), ("charge", 0))),
+        arrows=(("solid", ("ghost", 0), ("charge", 1), 0.28),
+                ("dashed", ("charge", 1), ("charge", 0), -0.34)),
     ),
 )
 
@@ -412,14 +414,23 @@ def _draw_charges(ax, cluster, occupied, basis, center, scale, faded=False,
     for entry in occupied:
         seat = to_plot(entry["position"]) + shift
         positive = entry["charge"] > 0
+        tone = SPINON if positive else ANTISPINON
+        if faded:
+            # the seat a charge has left: dotted outline, so the pair of
+            # markers reads as the path the charge took
+            ax.add_patch(
+                mpatches.Circle(
+                    seat, GHOST_RADIUS, facecolor="white", edgecolor=tone,
+                    linewidth=1.0, linestyle=(0, (1.0, 1.3)), zorder=6,
+                )
+            )
+            ax.text(
+                *seat, "$+$" if positive else r"$-$", color=tone,
+                fontsize=7.2, ha="center", va="center", zorder=7,
+            )
+            continue
         ax.plot(
-            *seat,
-            marker="o",
-            ms=9.4,
-            mfc=SPINON if positive else ANTISPINON,
-            mec="none",
-            alpha=0.55 if faded else 1.0,
-            zorder=6,
+            *seat, marker="o", ms=9.4, mfc=tone, mec="none", zorder=6,
         )
         ax.text(
             *seat,
@@ -428,7 +439,6 @@ def _draw_charges(ax, cluster, occupied, basis, center, scale, faded=False,
             fontsize=7.2,
             ha="center",
             va="center",
-            alpha=0.55 if faded else 1.0,
             zorder=7,
         )
 
@@ -787,37 +797,29 @@ def _draw_fig1_panel(ax, cluster, panel, colour) -> None:
         live = frozenset((left, right)) in active
         ax.plot(
             *projected[[left, right]].T,
-            color=colour, lw=1.45 if live else 0.9, alpha=1.0 if live else 0.32,
+            color=colour, lw=2.2 if live else 1.1, alpha=1.0 if live else 0.32,
             ls="--" if wraps else "-", solid_capstyle="round", zorder=4,
         )
     loop = projected[list(path)]
-    for order, (raised, lowered) in enumerate(panel["bonds"], start=1):
+    for raised, lowered in panel["bonds"]:
         _draw_exchange_arrow(ax, projected[lowered], projected[raised], colour)
-        # number the exchanges so the order of the sequence is readable
-        mid = 0.5 * (projected[raised] + projected[lowered])
-        outward = mid - loop.mean(axis=0)
-        norm = np.linalg.norm(outward)
-        outward = outward / norm if norm > 1e-9 else np.array([0.0, 1.0])
-        ax.text(
-            *(mid + 0.20 * outward), str(order), color=colour, fontsize=7.6,
-            ha="center", va="center", zorder=9,
-            bbox={"boxstyle": "circle,pad=0.16", "facecolor": "white",
-                  "edgecolor": colour, "linewidth": 0.6, "alpha": 0.95},
-        )
 
     _draw_charges(ax, cluster, ghosts, basis, center, scale, faded=True)
     _draw_charges(ax, cluster, charges, basis, center, scale)
 
     pools = {"charge": charges, "ghost": ghosts}
-    for style, source, target in panel["arrows"]:
+    for style, source, target, bend in panel["arrows"]:
         tail = to_plot(pools[source[0]][source[1]]["position"])
         head = to_plot(pools[target[0]][target[1]]["position"])
         span = head - tail
+        # `bend` arcs the arrow away from the straight line so it clears the
+        # loop bonds; sign picks the side.
         ax.annotate(
-            "", xy=tail + 0.80 * span, xytext=tail + 0.20 * span,
+            "", xy=tail + 0.82 * span, xytext=tail + 0.18 * span,
             arrowprops={
-                "arrowstyle": "-|>", "color": INK, "lw": 1.1,
+                "arrowstyle": "-|>", "color": INK, "lw": 1.2,
                 "shrinkA": 0, "shrinkB": 0,
+                "connectionstyle": f"arc3,rad={bend}",
                 **({"linestyle": (0, (2.6, 1.8))} if style == "dashed" else {}),
             },
             zorder=9,
