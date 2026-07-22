@@ -127,8 +127,8 @@ def _draw_exchange_arrow(ax, start, stop, color: str) -> None:
     stop = np.asarray(stop, dtype=float)
     midpoint = 0.5 * (start + stop)
     direction = stop - start
-    tail = midpoint - 0.18 * direction
-    head = midpoint + 0.18 * direction
+    tail = midpoint - 0.34 * direction
+    head = midpoint + 0.34 * direction
     ax.annotate(
         "",
         xy=head,
@@ -418,45 +418,50 @@ def _draw_cluster_loop(
         _draw_charges(ax, cluster, occupied, basis, center, scale)
         winds = np.any(np.rint(_transport_walk(cluster, path)[-1]).astype(int))
         if not occupied and winds and len(previous) == 2:
-            # on the torus the pair is gone; lifted, the partner sits one
-            # period away, and only the identification closes it
-            plus = next(e for e in previous if e["charge"] > 0)
-            minus = next(e for e in previous if e["charge"] < 0)
-            shift = (
-                np.asarray(_lift_offset(cluster, path, 2)) @ basis.T
-            ) / scale
-            # a full period is wider than the panel, so draw the image charge
-            # at the frame edge along the true direction; the caption and the
-            # dashed identification arrow carry the actual distance
-            length = np.linalg.norm(shift)
-            if length > 1.0e-9:
-                shift = shift / length * 0.46
-            # either partner may be called the image; displace whichever one
-            # stays inside the frame, and flip the sign of the period if needed
-            plus_seat = _charge_seat(cluster, plus, basis, center, scale)
-            minus_seat = _charge_seat(cluster, minus, basis, center, scale)
-            top = 0.74
-            options = (
-                (minus, plus, minus_seat + shift, plus_seat, shift),
-                (plus, minus, plus_seat - shift, minus_seat, -shift),
+            # On the torus the pair is gone.  Lifted, the closing exchange
+            # reaches its tetrahedra from the far side of the boundary, so
+            # re-anchor each charge to that bond: the wrapping tetrahedron
+            # then lands one period away, at the bottom of the cell, which is
+            # where the transported charge actually is.
+            closing = (steps[stage]["raised"], steps[stage]["lowered"])
+            moved = []
+            for entry in previous:
+                corners = cluster.tets[entry["tetrahedron"]]
+                anchor = next((site for site in closing if site in corners), None)
+                if anchor is None:
+                    moved.append(entry)
+                    continue
+                moved.append(
+                    {
+                        **entry,
+                        "anchor": anchor,
+                        "position": _tetrahedron_center(
+                            cluster, entry["tetrahedron"], anchor
+                        ),
+                    }
+                )
+            transported = [
+                new for new, old in zip(moved, previous)
+                if not np.allclose(new["position"], old["position"])
+            ]
+            settled = [
+                new for new, old in zip(moved, previous)
+                if np.allclose(new["position"], old["position"])
+            ]
+            _draw_tetrahedron_frames(
+                ax, cluster, path, basis, center, scale,
+                normal=np.cross(basis[0], basis[1]), charged=moved,
             )
-            imaged, resident, there, here, applied = next(
-                (o for o in options if abs(o[2][1]) < top and abs(o[2][0]) < top),
-                options[0],
-            )
-            _draw_charges(ax, cluster, [resident], basis, center, scale)
-            # the partner is an image, so it is drawn lighter than a charge
-            # that actually sits in this cell
-            _draw_charges(
-                ax, cluster, [imaged], basis, center, scale, faded=True,
-                offset=applied,
-            )
-            if pbc:
+            _draw_charges(ax, cluster, settled, basis, center, scale)
+            _draw_charges(ax, cluster, transported, basis, center, scale)
+            if pbc and transported and settled:
+                here = _charge_seat(cluster, settled[0], basis, center, scale)
+                there = _charge_seat(cluster, transported[0], basis, center, scale)
                 span = there - here
                 ax.annotate(
                     "",
-                    xy=here + 0.84 * span,
-                    xytext=here + 0.16 * span,
+                    xy=here + 0.80 * span,
+                    xytext=here + 0.20 * span,
                     arrowprops={
                         "arrowstyle": "-|>",
                         "color": INK,
@@ -465,7 +470,7 @@ def _draw_cluster_loop(
                         "shrinkA": 0,
                         "shrinkB": 0,
                     },
-                    zorder=8,
+                    zorder=9,
                 )
         elif not occupied and len(previous) == 2:
             plus = next(e for e in previous if e["charge"] > 0)
