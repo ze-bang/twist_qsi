@@ -12,37 +12,95 @@ import matplotlib as mpl
 mpl.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.lines import Line2D
 
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "notes"))
+sys.path.insert(0, str(ROOT / "src"))
 import recompute_finite_size_artifact as geometry  # noqa: E402
+from qsi_campaign.protocol import (  # noqa: E402
+    full_hilbert_counterterm_spectrum,
+)
+from qsi_campaign.thermodynamics import thermal_observables  # noqa: E402
 
 OUTPUT = ROOT / "campaign" / "outputs"
 FIGURES = ROOT / "paper" / "figs"
 FIGURES.mkdir(parents=True, exist_ok=True)
 
+# --- theme ---------------------------------------------------------------
+# Palette validated with the data-viz six checks (adjacent pairlist, the
+# correct gate for line charts): worst normal-vision dE 27.3, worst protan
+# dE 20.9 for the two data identities.  Guide lines are lighter steps of the
+# series hue whose peak they explain, so the annotation carries meaning
+# instead of spending a new identity slot.
+INK = "#16181d"
+INK_MUTED = "#5c6169"
+INK_FAINT = "#9aa1a9"
+RULE = "#c8ced6"
+GRID = "#e6e8ec"
+
+SEQUENTIAL = LinearSegmentedColormap.from_list(
+    "windingfree",
+    ["#ffffff", "#dbe6f2", "#9dbcdd", "#4a8ace", "#2b6cb0", "#1b4470", "#16181d"],
+)
+
+BARE = "#c05621"       # periodic ED
+CLEAN = "#2b6cb0"      # winding-free
+FCC = "#1a7f4f"        # FCC-32
+DIAGONAL = "#9c4f7c"   # third loop class in the geometry panels
+QMC = INK
+
+G4 = "#d47b42"         # artifact scale, tinted toward periodic ED
+G6 = "#4a8ace"         # ring-exchange scale, tinted toward winding-free
+
 plt.rcParams.update(
     {
         "font.family": "serif",
+        "font.serif": ["Computer Modern Roman"],
         "mathtext.fontset": "cm",
         "text.usetex": True,
+        "text.latex.preamble": r"\usepackage{amsmath}",
         "font.size": 8,
         "axes.labelsize": 8,
         "axes.titlesize": 8,
         "legend.fontsize": 6.8,
         "xtick.labelsize": 7,
         "ytick.labelsize": 7,
-        "axes.linewidth": 0.7,
-        "savefig.dpi": 320,
+        "text.color": INK,
+        "axes.labelcolor": INK,
+        "axes.edgecolor": RULE,
+        "axes.linewidth": 0.6,
+        "axes.spines.top": False,
+        "axes.spines.right": False,
+        "xtick.color": RULE,
+        "ytick.color": RULE,
+        "xtick.labelcolor": INK,
+        "ytick.labelcolor": INK,
+        "xtick.major.width": 0.6,
+        "ytick.major.width": 0.6,
+        "xtick.minor.width": 0.5,
+        "ytick.minor.width": 0.5,
+        "xtick.major.size": 2.6,
+        "ytick.major.size": 2.6,
+        "xtick.minor.size": 1.4,
+        "ytick.minor.size": 1.4,
+        "xtick.direction": "out",
+        "ytick.direction": "out",
+        "legend.frameon": False,
+        "legend.labelcolor": INK,
+        "legend.handlelength": 1.6,
+        "legend.handletextpad": 0.6,
+        "legend.columnspacing": 1.2,
+        "grid.color": GRID,
+        "grid.linewidth": 0.5,
+        "lines.solid_capstyle": "round",
+        "figure.facecolor": "white",
+        "savefig.facecolor": "white",
+        "savefig.dpi": 400,
     }
 )
-
-BARE = "#d55e00"
-CLEAN = "#0072b2"
-FCC = "#009e73"
-QMC = "#111111"
 
 
 def save(figure: plt.Figure, name: str) -> None:
@@ -129,12 +187,12 @@ def _draw_cluster_loop(
         if np.any(wrap):
             continue
         edge = projected[[left, right]]
-        ax.plot(*edge.T, color="#c9ced3", lw=0.48, zorder=1)
+        ax.plot(*edge.T, color=RULE, lw=0.48, zorder=1)
     ax.scatter(
         projected[:, 0],
         projected[:, 1],
         s=7,
-        facecolor="#aeb5bb",
+        facecolor=INK_FAINT,
         edgecolor="white",
         linewidth=0.25,
         zorder=2,
@@ -211,16 +269,16 @@ def _draw_cluster_loop(
             "",
             xy=vector_center + 0.5 * direction,
             xytext=vector_center - 0.5 * direction,
-            arrowprops={"arrowstyle": "-|>", "color": "#31363b", "lw": 0.9},
+            arrowprops={"arrowstyle": "-|>", "color": INK, "lw": 0.9},
             zorder=6,
         )
     else:
-        ax.plot(*vector_center, marker="o", ms=1.8, color="#31363b", zorder=6)
+        ax.plot(*vector_center, marker="o", ms=1.8, color=INK, zorder=6)
     ax.text(
         0.0,
         -0.72,
         rf"$\mathbf{{q}}_\gamma=({dipole_integer[0]},{dipole_integer[1]},{dipole_integer[2]})$",
-        color="#31363b",
+        color=INK,
         fontsize=5.2,
         ha="center",
         va="center",
@@ -254,7 +312,7 @@ def _geometry_panel_data():
     panels = (
         (*hexagon, CLEAN, right_vectors[-1], r"(a) hexagon"),
         (*axial, BARE, np.array([1.25, -1.45, 1.0]), r"(b) axial"),
-        (*diagonal, "#cc79a7", np.array([1.25, -1.45, 1.0]), r"(c) diagonal"),
+        (*diagonal, DIAGONAL, np.array([1.25, -1.45, 1.0]), r"(c) diagonal"),
     )
     return cluster, panels
 
@@ -302,11 +360,9 @@ def _draw_thermodynamic_benchmark(ax, exact, exact_report: dict) -> None:
         lw=1.3,
         ls="--",
     )
-    scale_color = "#737a80"
-    ax.axvline(g6, color=scale_color, lw=0.65, ls=":", zorder=1)
-    ax.axvline(g4, color=scale_color, lw=0.65, ls=":", zorder=1)
-    ax.text(g6, 0.305, r"$g_6$", color=scale_color, ha="center", va="bottom")
-    ax.text(g4, 0.305, r"$g_4$", color=scale_color, ha="center", va="bottom")
+    for value, name, tone in ((g6, r"$g_6$", G6), (g4, r"$g_4$", G4)):
+        ax.axvline(value, color=tone, lw=0.75, ls=(0, (1.2, 1.8)), zorder=1)
+        ax.text(value, 0.305, name, color=tone, ha="center", va="bottom")
     ax.set_xscale("log")
     ax.set_xlim(6.0e-4, 2.0)
     ax.set_ylim(0.0, 0.32)
@@ -316,7 +372,7 @@ def _draw_thermodynamic_benchmark(ax, exact, exact_report: dict) -> None:
     entropy_axis.set_ylabel(r"$S/N$")
     ax.spines["top"].set_visible(False)
     entropy_axis.spines["top"].set_visible(False)
-    ax.grid(axis="y", color="#e5e8ea", lw=0.45, zorder=0)
+    ax.grid(axis="y", color=GRID, lw=0.45, zorder=0)
     method_handles = (
         Line2D([], [], color=BARE, lw=1.5, label="periodic ED"),
         Line2D([], [], color=CLEAN, lw=1.5, label="winding-free"),
@@ -361,7 +417,7 @@ def _draw_dssf_panels(axes, titles):
             momentum_edges,
             frequency_edges,
             spectrum,
-            cmap="magma",
+            cmap=SEQUENTIAL,
             vmin=0.0,
             vmax=maximum,
             shading="flat",
@@ -372,7 +428,9 @@ def _draw_dssf_panels(axes, titles):
         ax.set_ylim(0.0, 0.09)
         ax.set_xlabel(r"$\mathbf{q}$")
         ax.set_title(title, loc="left")
-        ax.spines[["top", "right"]].set_visible(False)
+        for side in ("top", "right"):
+            ax.spines[side].set_visible(True)
+            ax.spines[side].set_color(RULE)
     axes[0].set_ylabel(r"$\omega/J_{zz}$")
     return image
 
@@ -394,8 +452,10 @@ def dssf_figure() -> None:
         pad=0.04,
         aspect=22,
     )
-    colorbar.set_label(r"$S^{zz}(\mathbf{q},\omega)$")
-    figure.subplots_adjust(left=0.15, right=0.88, top=0.90, bottom=0.20, wspace=0.10)
+    colorbar.set_label(r"$S^{zz}(\mathbf{q},\omega)$", labelpad=6)
+    colorbar.outline.set_edgecolor(RULE)
+    colorbar.outline.set_linewidth(0.6)
+    figure.subplots_adjust(left=0.13, right=0.84, top=0.90, bottom=0.20, wspace=0.12)
     save(figure, "fig_dssf")
 
 
@@ -467,28 +527,37 @@ def summary_figure(exact, exact_report: dict) -> None:
     for ax, title, position in zip(
         dssf_axes,
         ("iii.a) periodic ED", "iii.b) winding-free"),
-        ((0.03, 0.08), (0.03, 0.90)),
+        ((0.03, 0.90), (0.03, 0.90)),
     ):
         ax.set_title("", loc="left")
         ax.text(
             *position,
             title,
-            color="white",
+            color=INK,
             fontsize=7.2,
             ha="left",
-            va="bottom" if position[1] < 0.5 else "top",
+            va="top",
             transform=ax.transAxes,
             zorder=5,
         )
         ax.set_ylabel("")
         ax.yaxis.tick_right()
         ax.tick_params(axis="y", labelleft=False, labelright=True, pad=2)
+        ax.yaxis.set_label_position("right")
     dssf_axes[0].set_yticks((0.02, 0.04, 0.06, 0.08))
     dssf_axes[1].set_yticks((0.00, 0.02, 0.04, 0.06))
     dssf_axes[0].tick_params(labelbottom=False)
     dssf_axes[0].set_xlabel("")
+    # matplotlib places the label clear of the right-hand tick labels itself,
+    # which hand-set figure coordinates cannot do reliably across renderers
+    for ax in dssf_axes:
+        ax.yaxis.set_label_position("right")
+        ax.set_ylabel(r"$\omega/J_{zz}$", labelpad=3)
+
     colorbar = figure.colorbar(image, cax=colorbar_axis, orientation="horizontal")
     colorbar.set_label(r"$S^{zz}(\mathbf{q},\omega)$")
+    colorbar.outline.set_edgecolor(RULE)
+    colorbar.outline.set_linewidth(0.6)
     colorbar.ax.xaxis.set_label_position("top")
     colorbar.ax.tick_params(pad=1)
     figure.text(
@@ -522,12 +591,13 @@ def character_convergence_figure(exact_report: dict) -> None:
         linewidth=0.5,
         zorder=3,
     )
-    ax.axhline(5.0, color="#555b60", lw=0.8, ls="--", zorder=2)
+    ax.set_yscale("log")
+    ax.axhline(5.0, color=INK_MUTED, lw=0.8, ls="--", zorder=2)
     ax.text(
         0.98,
-        5.13,
+        5.6,
         r"$5\%$ convergence gate",
-        color="#555b60",
+        color=INK_MUTED,
         fontsize=6.8,
         ha="right",
         va="bottom",
@@ -536,28 +606,90 @@ def character_convergence_figure(exact_report: dict) -> None:
     for bar, value in zip(bars, changes):
         ax.text(
             bar.get_x() + bar.get_width() / 2.0,
-            value + 0.18,
+            value * 1.25,
             rf"${value:.3g}\%$",
             ha="center",
             va="bottom",
         )
     ax.set_xticks(positions, (r"$M=2\to3$", r"$M=3\to4$"))
     ax.set_ylabel(r"centered operator change $\epsilon$ (\%)")
-    ax.set_ylim(0.0, 7.8)
-    ax.grid(axis="y", color="#e5e8ea", lw=0.45, zorder=0)
+    ax.set_ylim(5.0e-3, 40.0)
+    ax.grid(axis="y", color=GRID, lw=0.45, zorder=0)
     ax.spines[["top", "right"]].set_visible(False)
     figure.tight_layout()
     save(figure, "fig_character_convergence")
 
 
+def low_temperature_heat_capacity_figure() -> None:
+    """Heat capacity over the full range, down to the sector-degeneracy floor.
+
+    The decade below the winding-free peak is the diagnostic window: any
+    structure there would signal residual inter-sector coupling rather than
+    physics, since the sixfold ground manifold is exactly degenerate and a
+    degeneracy contributes to the entropy but never to C.
+    """
+    cache = ROOT / "campaign" / "cache" / "full_ed_cubic16_jpm_0p046.npz"
+    exact_path = OUTPUT / "nonperturbative_cubic16_p0p046000.npz"
+    if not (cache.exists() and exact_path.exists()):
+        print("skipping low-temperature heat capacity: inputs missing")
+        return
+    full_spectrum = np.load(cache)["E_full"]
+    band = np.load(exact_path)["M4_spectrum"]
+    spliced = full_hilbert_counterterm_spectrum(full_spectrum, band)
+
+    temperature = np.geomspace(1.0e-5, 2.0, 4000)
+    periodic = thermal_observables(full_spectrum, temperature, n_sites=16)
+    winding_free = thermal_observables(spliced, temperature, n_sites=16)
+
+    jpm = 0.046
+    scales = (
+        (12.0 * abs(jpm) ** 3, r"$g_6$", G6),
+        (4.0 * jpm**2, r"$g_4$", G4),
+    )
+
+    figure, ax = plt.subplots(figsize=(3.35, 2.25))
+    ax.plot(
+        temperature,
+        periodic["heat_capacity_per_site"],
+        color=BARE,
+        lw=1.35,
+        label="periodic ED",
+    )
+    ax.plot(
+        temperature,
+        winding_free["heat_capacity_per_site"],
+        color=CLEAN,
+        lw=1.55,
+        label=r"winding-free ($M=4$)",
+    )
+    for value, name, tone in scales:
+        ax.axvline(value, color=tone, lw=0.75, ls=(0, (1.2, 1.8)), zorder=1)
+        ax.text(value, 0.205, name, color=tone, fontsize=7, ha="center")
+    ax.set_xscale("log")
+    ax.set_xlim(1.0e-5, 2.0)
+    ax.set_ylim(0.0, 0.33)
+    ax.set_xlabel(r"$T/J_{zz}$")
+    ax.set_ylabel(r"$C/N$")
+    ax.legend(frameon=False, loc="upper left")
+    ax.spines[["top", "right"]].set_visible(False)
+    figure.tight_layout()
+    save(figure, "fig_low_temperature_heat")
+
+
 def main() -> None:
     geometry_figure()
     dssf_figure()
+    low_temperature_heat_capacity_figure()
     report = json.loads((OUTPUT / "validation_report.json").read_text())
 
 
     figure, ax = plt.subplots(figsize=(3.35, 2.45))
-    labels = ["QMC", "cubic periodic", "cubic winding-free", "FCC winding-free\n(order 3)"]
+    labels = [
+        "QMC",
+        "cubic\nperiodic",
+        "cubic\nwinding-free",
+        "FCC\nwinding-free",
+    ]
     peaks = [
         report["qmc"]["low_peak"][0],
         report["clusters"]["cubic16"]["bare_low_peak"][0],
