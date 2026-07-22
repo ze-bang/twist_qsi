@@ -228,20 +228,23 @@ FIG1_PANELS = (
     ),
     dict(
         cell=(1, 1), path=AXIAL_PATH, colour="axial",
-        title=r"i.e) apply $S^+_iS^-_j$", caption="$+$ carried out of the cell",
+        title=r"i.e) apply $S^+_iS^-_j$",
+        caption="charge on $t_2$ moves past $t_5$,\nout of the drawn cell",
         bond=(4, 6),
-        charges=((2, +1, 4, (0, 0, -1)), (2, -1, 1, NO_IMAGE)),
-        ghosts=((4, +1, 3, NO_IMAGE),),
-        arrow=("solid", ("ghost", 0), ("charge", 0)),
+        # S+ on 4 empties t2; S- on 6 puts that charge on the image of t4 that
+        # shares site 6 with t5 -- a different copy from the one holding the +
+        charges=((4, +1, 3, NO_IMAGE), (4, -1, 6, NO_IMAGE)),
+        ghosts=((2, -1, 1, NO_IMAGE),),
+        arrow=("solid", ("ghost", 0), ("charge", 1)),
     ),
     dict(
         cell=(1, 2), path=AXIAL_PATH, colour="axial",
         title=r"i.f) identify",
-        caption="PBC maps it onto $-$\n$\\mathbf{q}_\\gamma=(0,0,-1)$",
+        caption="PBC maps it back onto $t_4$\n$\\mathbf{q}_\\gamma=(0,0,-1)$",
         bond=(4, 6),
-        charges=((2, +1, 4, (0, 0, -1)), (2, -1, 1, NO_IMAGE)),
+        charges=((4, +1, 3, NO_IMAGE), (4, -1, 6, NO_IMAGE)),
         ghosts=(),
-        arrow=("dashed", ("charge", 0), ("charge", 1)),
+        arrow=("dashed", ("charge", 1), ("charge", 0)),
     ),
 )
 
