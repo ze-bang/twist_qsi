@@ -90,6 +90,39 @@ def character_project(operators: np.ndarray) -> np.ndarray:
     return _hermitian(matrices.mean(axis=0))
 
 
+LOCAL_AXES = np.array(
+    [[1.0, 1.0, 1.0], [1.0, -1.0, -1.0], [-1.0, 1.0, -1.0], [-1.0, -1.0, 1.0]]
+) / np.sqrt(3.0)
+
+
+def ice_magnetization(cluster) -> np.ndarray:
+    """Total moment sum_i sigma_i zhat_i of each ice configuration.
+
+    On the ice manifold this is exactly ``-16/sqrt(3)`` times the polarization
+    coordinate of Eq. (5), so it is constant on a transport sector: a
+    longitudinal field is a c-number on each block of the winding-free
+    Hamiltonian and cannot mix sectors.
+    """
+    states = np.asarray(cluster.ice_states, dtype=np.uint64)
+    n_sites = int(cluster.n_sites)
+    bits = (states[:, None] >> np.arange(n_sites, dtype=np.uint64)) & np.uint64(1)
+    sigma = 2 * bits.astype(int) - 1
+    return sigma @ LOCAL_AXES[np.arange(n_sites) % 4]
+
+
+def zeeman_band_term(cluster, field) -> np.ndarray:
+    """Diagonal Zeeman operator on the ice reference basis, in units of g_z mu_B.
+
+    ``field`` is the laboratory field vector; the coupling is
+    ``-sum_i (B . zhat_i) S_i^z``, which is diagonal in the S^z basis and so
+    carries no character source phase.
+    """
+    field = np.asarray(field, dtype=float)
+    if field.shape != (3,):
+        raise ValueError("field must have three components")
+    return -0.5 * (ice_magnetization(cluster) @ field)
+
+
 def polarization_sector_labels(cluster) -> np.ndarray:
     """Label each ice basis state by its polarization coordinate.
 

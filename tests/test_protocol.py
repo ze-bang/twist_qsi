@@ -6,9 +6,11 @@ from qsi_campaign.protocol import (
     band_operator_from_projected_vectors,
     character_project,
     full_hilbert_counterterm_spectrum,
+    ice_magnetization,
     polarization_sector_labels,
     sector_leakage,
     sector_project,
+    zeeman_band_term,
 )
 
 
@@ -82,3 +84,38 @@ def test_polarization_sector_labels_match_ice_state_order():
     assert len(labels) == cluster.n_ice == len(cluster.ice_states)
     assert labels.min() == 0
     assert len(set(labels.tolist())) == 25
+
+
+def test_ice_magnetization_matches_the_polarization_coordinate():
+    cluster = geometry.build_cluster("cubic", (1, 1, 1))
+    moment = ice_magnetization(cluster)
+    states = np.asarray(cluster.ice_states)
+    bits = np.array(
+        [[(int(s) >> i) & 1 for i in range(cluster.n_sites)] for s in states]
+    )
+    polarization = (bits - 0.5) @ np.asarray(cluster.positions, dtype=float)
+    # a longitudinal field is a c-number on each transport sector precisely
+    # because these two coincide up to a constant
+    np.testing.assert_allclose(moment, -16.0 / np.sqrt(3.0) * polarization, atol=1e-12)
+
+
+def test_zeeman_term_is_constant_on_each_transport_sector():
+    cluster = geometry.build_cluster("cubic", (1, 1, 1))
+    labels = polarization_sector_labels(cluster)
+    zeeman = zeeman_band_term(cluster, np.array([0.3, -0.7, 0.2]))
+    for sector in set(labels.tolist()):
+        block = zeeman[labels == sector]
+        np.testing.assert_allclose(block, block[0], atol=1e-12)
+
+
+def test_zeeman_term_commutes_with_a_sector_projected_operator():
+    cluster = geometry.build_cluster("cubic", (1, 1, 1))
+    labels = polarization_sector_labels(cluster)
+    rng = np.random.default_rng(0)
+    dimension = len(labels)
+    noise = rng.normal(size=(dimension, dimension))
+    projected = sector_project(noise + noise.T, labels)
+    zeeman = np.diag(zeeman_band_term(cluster, np.array([0.0, 0.0, 1.0])))
+    np.testing.assert_allclose(
+        projected @ zeeman - zeeman @ projected, 0.0, atol=1e-12
+    )

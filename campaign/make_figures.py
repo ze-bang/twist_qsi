@@ -417,23 +417,6 @@ def _draw_cluster_loop(
         occupied = [dict(e) for e in steps[stage]["charges"]]
         previous = [dict(e) for e in steps[stage - 1]["charges"]] if stage else []
 
-        # The lift is only defined up to a lattice translation, so slide the
-        # surviving pair by whole periods into the frame; this is what puts the
-        # transported charge on the tetrahedron below rather than off the top.
-        closure = _lift_path(cluster, path)[-1] - _lift_path(cluster, path)[0]
-        if np.linalg.norm(closure) > 1.0e-9 and occupied:
-            def spread(entries, shift3):
-                seats = [
-                    ((e["position"] + shift3) @ basis.T - center) / scale
-                    for e in entries
-                ]
-                return max(max(abs(p[0]), abs(p[1])) for p in seats)
-            best = min((0.0, 1.0, -1.0), key=lambda m: spread(occupied, m * closure))
-            if best:
-                for entry in occupied:
-                    entry["position"] = entry["position"] + best * closure
-                    entry["corners"] = entry["corners"] + best * closure
-
         _draw_tetrahedron_frames(
             ax, cluster, path, basis, center, scale,
             normal=np.cross(basis[0], basis[1]),
@@ -786,19 +769,19 @@ def summary_figure(exact, exact_report: dict) -> None:
     cluster, panels = _geometry_panel_data()
     geometry_grid = left_grid[0, 0].subgridspec(2, 3, wspace=0.02, hspace=0.30)
     hexagon, axial, diagonal = panels
-    # traverse the four-loop the other way round: this exchanges the upper bond
-    # first and leaves the boundary-crossing leg between the two exchanges, so
-    # the surviving pair really does sit one period apart
-    axial = (tuple(reversed(axial[0])),) + axial[1:]
+    # Traversal is not free: the wrap runs opposite to the travel from the first
+    # exchange to the second, so whichever bond acts first fixes which way the
+    # surviving charge is carried.  This order carries the spinon one period
+    # *down*, onto the tetrahedron below the cell and inside the frame.
     storyboard = (
         (0, 0, hexagon, 0, False, r"i.a) create", "$S^+_iS^-_j$: pair splits"),
         (0, 1, hexagon, 1, False, r"i.b) move", "$S^+_iS^-_j$: spinon walks"),
         (0, 2, hexagon, 2, False, r"i.c) annihilate",
          "$S^+_iS^-_j$: $+$ meets $-$\n$\\mathbf{q}_\\gamma=(0,0,0)$"),
         (1, 0, axial, 0, False, r"i.d) create",
-         "upper bond splits a pair"),
+         "$S^+_iS^-_j$: pair splits"),
         (1, 1, axial, 1, False, r"i.e) separate",
-         "lower bond: one period apart"),
+         "$+$ carried one period down"),
         (1, 2, axial, 1, True, r"i.f) annihilate",
          "the boundary closes it\n$\\mathbf{q}_\\gamma=(0,0,-1)$"),
     )
