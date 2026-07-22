@@ -425,10 +425,10 @@ def _draw_cluster_loop(
         options = []
         for candidate in (path[0], path[1]):
             track = _charge_trajectory(cluster, path, candidate)
-            before = {tuple(np.round(e["position"], 6)) for e in track[-2]["charges"]}
+            seats = {tuple(np.round(e["position"], 6)) for e in track[-2]["charges"]}
             moved = [
                 e for e in track[-1]["charges"]
-                if tuple(np.round(e["position"], 6)) not in before
+                if tuple(np.round(e["position"], 6)) not in seats
             ]
             options.append((track, moved[0]["charge"] if moved else 0))
         steps = next(
@@ -823,20 +823,18 @@ def summary_figure(exact, exact_report: dict) -> None:
     # surviving charge is carried.  This order carries the spinon one period
     # *down*, onto the tetrahedron below the cell and inside the frame.
     storyboard = (
-        (0, 0, hexagon, 0, False, False, False, r"i.a) create",
-         "$S^+_iS^-_j$: pair splits"),
-        (0, 1, hexagon, 1, False, False, False, r"i.b) move",
-         "$S^+_iS^-_j$: spinon walks"),
-        (0, 2, hexagon, 2, False, False, False, r"i.c) annihilate",
+        (0, 0, hexagon, 0, False, False, r"i.a) create", "$S^+_iS^-_j$: pair splits"),
+        (0, 1, hexagon, 1, False, False, r"i.b) move", "$S^+_iS^-_j$: spinon walks"),
+        (0, 2, hexagon, 2, False, False, r"i.c) annihilate",
          "$S^+_iS^-_j$: $+$ meets $-$\n$\\mathbf{q}_\\gamma=(0,0,0)$"),
-        (1, 0, axial, 0, False, False, True, r"i.d) create",
+        (1, 0, axial, 0, False, False, r"i.d) create",
          "$S^+_iS^-_j$: pair splits"),
-        (1, 1, axial, 1, False, False, True, r"i.e) apply $S^+_iS^-_j$",
-         "the $+$ is carried onward"),
-        (1, 2, axial, 1, True, False, True, r"i.f) identify",
-         "PBC closes the open path\n$\\mathbf{q}_\\gamma=(0,0,-1)$"),
+        (1, 1, axial, 1, False, False, r"i.e) apply $S^+_iS^-_j$",
+         "$+$ carried out of the cell"),
+        (1, 2, axial, 1, True, False, r"i.f) identify",
+         "PBC maps it onto $-$\n$\\mathbf{q}_\\gamma=(0,0,-1)$"),
     )
-    for row, column, panel, stage, pbc, hop, unroll, title, caption in storyboard:
+    for row, column, panel, stage, pbc, hop, title, caption in storyboard:
         path, winding, color, view, _ = panel
         ax = figure.add_subplot(geometry_grid[row, column])
         _draw_cluster_loop(
@@ -851,7 +849,6 @@ def summary_figure(exact, exact_report: dict) -> None:
             caption=caption,
             pbc=pbc,
             hop=hop,
-            unroll=unroll,
         )
 
     thermodynamics_axis = figure.add_subplot(left_grid[1, 0])
