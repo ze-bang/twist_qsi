@@ -3,8 +3,11 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
+from scipy.sparse import csc_matrix
+
 from qsi_campaign.exact_band import (
     basis_character_phases,
+    extract_exact_band_full,
     fixed_magnetization_basis,
     full_spin_basis,
     microscopic_character_hamiltonian,
@@ -90,3 +93,35 @@ def test_pair_flip_rejects_nonclosed_fixed_magnetization_basis():
             np.zeros(3),
             jpmpm=0.17,
         )
+
+
+def test_full_band_extraction_is_reproducible_and_spans_the_model_space():
+    """A clustered band on a larger basis must not depend on the RNG state.
+
+    eigsh seeds from a random vector unless v0 is given, and on a spectrum with
+    a tight low-lying cluster it intermittently converges to the wrong
+    invariant subspace: it drops a band state and admits one from above the
+    gap, leaving the model-space Gram rank deficient.  The extractor seeds
+    deterministically and escalates the Krylov dimension until the band spans
+    the model space, so repeated calls must agree exactly.
+    """
+    rng = np.random.default_rng(7)
+    dimension, n_band = 400, 24
+    # a tight cluster of n_band levels, then a clear gap, then a dense bulk
+    spectrum = np.concatenate(
+        [rng.uniform(0.0, 1.0e-3, n_band), rng.uniform(1.0, 6.0, dimension - n_band)]
+    )
+    basis = np.linalg.qr(rng.normal(size=(dimension, dimension)))[0]
+    dense = (basis * spectrum) @ basis.T
+    hamiltonian = csc_matrix(0.5 * (dense + dense.T))
+    model = np.sort(rng.choice(dimension, n_band, replace=False))
+
+    first = extract_exact_band_full(hamiltonian, model, n_band, tolerance=1e-10)
+    second = extract_exact_band_full(hamiltonian, model, n_band, tolerance=1e-10)
+    np.testing.assert_allclose(first.eigenvalues, second.eigenvalues, atol=0.0, rtol=0.0)
+    np.testing.assert_allclose(first.operator, second.operator, atol=0.0, rtol=0.0)
+    np.testing.assert_allclose(
+        np.sort(first.eigenvalues), np.sort(spectrum)[:n_band], atol=1e-10
+    )
+    assert first.diagnostics["model_overlap_min"] > 0.0
+    assert first.diagnostics["krylov_attempts"] >= 1
