@@ -68,15 +68,20 @@ intracell bonds. Colored circles mark the loop, filled and open symbols
 distinguishing the alternating $S^z$ pattern that the collective flip
 reverses, and colored arrows mark the alternate bonds on which the exchange
 acts. Dashed segments are bonds that close only through the periodic
-boundary. Each arrow is labeled by the polarization increment
-$2\Delta\bm p_\ell$ that its move transports
-[Eq.~(\ref{eq:polarization_increment})], in units of the cubic cell edge.
-Below each panel, the dark dot or arrow and the printed triple give the total
-$\bq_\gamma=2\sum_\ell\Delta\bm p_\ell$ [Eq.~(\ref{eq:transport})]. The
-increments cancel for the contractible hexagon (i.a), giving $\bq_\gamma=0$,
-but not for the axial (i.b) or diagonal (i.c) four-loop, which therefore
-wind; the source average of Eq.~(\ref{eq:character}) retains the former and
-removes the latter. (ii) Heat capacity (solid, left axis) and entropy
+boundary. Each exchange leaves the tetrahedron it straddles neutral but
+charges the two outer ones, so the first exchange splits a
+spinon--antispinon pair ($\oplus$, $\ominus$); intermediate exchanges walk one
+charge along the loop, and the last must bring the two back together. Each
+panel shows the pair immediately before that final exchange, with the leg
+already walked dashed. On the hexagon the two charges are neighbors outright
+and annihilate, the whole sequence staying inside one cell. On the four-loops
+they are neighbors only across the periodic boundary: lifting the sequence to
+the covering lattice leaves an open path whose ends differ by exactly
+$\bq_\gamma=2\sum_\ell\Delta\bm p_\ell$
+[Eq.~(\ref{eq:transport}), printed below each panel], so each charge
+annihilates against an image of its partner rather than the partner itself.
+The source average of Eq.~(\ref{eq:character}) keeps the first process and
+removes the other two. (ii) Heat capacity (solid, left axis) and entropy
 (dashed, right axis) at $(\Jpm,\Jpp)/\Jzz=(0.046,0)$, for ordinary periodic
 ED (orange) and the winding-free replacement of Eq.~(\ref{eq:replacement}) at
 $M=4$ (blue). Dotted vertical lines mark the perturbative scales $g_6$ and
@@ -119,7 +124,8 @@ H_0={}&\Jzz\sum_{\langle ij\rangle}S_i^zS_j^z
 \end{equation}
 with $\Jzz>0$. For $|\Jpm|,|\Jpp|\ll\Jzz$ the low-energy states obey the
 spin-ice rule $Q_t\equiv\sum_{i\in t}S_i^z=0$ on every tetrahedron $t$; we
-write $\Pice$ for the orthogonal projector onto that manifold. Transverse
+write $\Pice$ for the orthogonal projector onto that manifold, and call a
+tetrahedron with $Q_t\ne0$ a spinon. Transverse
 exchange first connects distinct ice configurations at third order, through
 collective flips around elementary six-site hexagons, generating the
 ring-exchange scale
@@ -189,8 +195,13 @@ transporting Ising polarization through a periodic boundary: it is closed on
 the torus, but fails to close when lifted continuously to the infinite
 covering lattice. The winding four-cycles transport nonzero polarization,
 whereas a contractible hexagon transports none
-[Figs.~\ref{fig:summary}(i.a)--\ref{fig:summary}(i.c)]. We now promote this
-observation to an exact operator identity.
+[Figs.~\ref{fig:summary}(i.a)--\ref{fig:summary}(i.c)]. Equivalently, each
+exchange creates or moves a spinon--antispinon pair, and the sequence returns
+to the ice manifold only by annihilating it: on a contractible loop the two
+charges genuinely meet, whereas on a winding loop each meets a periodic image
+of its partner, which is why the process survives on the torus but has no
+counterpart on the covering lattice. We now promote this observation to an
+exact operator identity.
 
 A periodic cluster is specified by three period vectors, collected as the
 rows of a $3\times3$ matrix $L$, and each site $i$ is assigned a

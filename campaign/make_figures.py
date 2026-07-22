@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import sys
+from itertools import product
 from pathlib import Path
 
 import matplotlib as mpl
@@ -125,6 +126,136 @@ def _draw_exchange_arrow(ax, start, stop, color: str) -> None:
     )
 
 
+def _nearest_image(cluster, position, anchor):
+    """The periodic image of `position` closest to `anchor`."""
+    best = None
+    for shift in product((-1, 0, 1), repeat=3):
+        candidate = position - np.asarray(shift, dtype=float) @ cluster.Lvecs
+        distance = np.linalg.norm(candidate - anchor)
+        if best is None or distance < best[0]:
+            best = (distance, candidate)
+    return best[1]
+
+
+def _tetrahedron_center(cluster, tetrahedron: int, anchor_site: int) -> np.ndarray:
+    """Centre of a tetrahedron, lifted to sit beside `anchor_site`."""
+    anchor = cluster.positions[anchor_site]
+    corners = [
+        _nearest_image(cluster, cluster.positions[site], anchor)
+        for site in cluster.tets[tetrahedron]
+    ]
+    return np.mean(corners, axis=0)
+
+
+def _charge_trajectory(cluster, path: tuple[int, ...]) -> list[list[dict]]:
+    """Tetrahedral charges after each exchange of a ring-exchange sequence.
+
+    Every exchange flips both ends of one bond.  The two spins share a
+    tetrahedron whose charge is therefore unchanged, so the move acts on the
+    two *outer* tetrahedra: it creates a spinon-antispinon pair, or moves an
+    existing one, or annihilates the pair.  Returns one entry per exchange,
+    each listing the charged tetrahedra that survive it.
+    """
+    def charges(state: int) -> np.ndarray:
+        return np.array(
+            [sum(1 if (state >> s) & 1 else -1 for s in tet) for tet in cluster.tets]
+        )
+
+    def flippable(state: int) -> bool:
+        return all(
+            ((state >> path[k]) & 1) != ((state >> path[(k + 1) % len(path)]) & 1)
+            for k in range(len(path))
+        )
+
+    state = next(int(s) for s in cluster.ice_states if flippable(int(s)))
+    if np.any(charges(state)):
+        raise RuntimeError("the seed configuration is not an ice state")
+
+    steps: list[list[dict]] = []
+    for k in range(0, len(path), 2):
+        left, right = path[k], path[(k + 1) % len(path)]
+        state ^= (1 << left) | (1 << right)
+        occupied = []
+        for tet in np.flatnonzero(charges(state)):
+            on_bond = [s for s in cluster.tets[tet] if s in (left, right)]
+            anchor = on_bond[0] if on_bond else next(
+                s for s in cluster.tets[tet] if s in path
+            )
+            occupied.append(
+                {
+                    "tetrahedron": int(tet),
+                    "charge": int(charges(state)[tet]),
+                    "position": _tetrahedron_center(cluster, int(tet), anchor),
+                }
+            )
+        steps.append(occupied)
+    if steps[-1]:
+        raise RuntimeError(f"sequence {path} does not return to the ice manifold")
+    return steps
+
+
+def _draw_charge_trajectory(ax, cluster, path, basis, center, scale) -> None:
+    """Mark the spinon-antispinon pair that the ring exchange must annihilate.
+
+    The first exchange splits a pair onto the two tetrahedra flanking the bond;
+    intermediate exchanges walk one charge along the loop; the last one has to
+    bring them back together.  We draw the configuration just before that final
+    exchange, so the panel poses the question the loop class answers: on the
+    contractible hexagon the two charges are neighbours outright, whereas on a
+    winding four-loop they are neighbours only across a boundary-crossing bond,
+    so the pair meets an image of itself rather than annihilating on the
+    covering lattice.
+    """
+    def to_plot(point):
+        return (np.asarray(point) @ basis.T - center) / scale
+
+    steps = _charge_trajectory(cluster, path)
+    if len(steps) < 2 or not steps[-2]:
+        return
+    for entry in steps[-2]:
+        point = to_plot(entry["position"])
+        ax.plot(
+            *point,
+            marker="o",
+            ms=7.0,
+            mfc="white",
+            mec=INK,
+            mew=0.8,
+            zorder=7,
+        )
+        ax.text(
+            *point,
+            "$+$" if entry["charge"] > 0 else r"$-$",
+            color=INK,
+            fontsize=6.4,
+            ha="center",
+            va="center",
+            zorder=8,
+        )
+    # if a charge walked to get here, show the leg it travelled
+    if len(steps) > 2:
+        previous = {e["tetrahedron"] for e in steps[-3]}
+        current = {e["tetrahedron"] for e in steps[-2]}
+        arrived = [e for e in steps[-2] if e["tetrahedron"] not in previous]
+        departed = [e for e in steps[-3] if e["tetrahedron"] not in current]
+        if arrived and departed:
+            start_point = to_plot(departed[0]["position"])
+            stop_point = to_plot(arrived[0]["position"])
+            offset = stop_point - start_point
+            ax.annotate(
+                "",
+                xy=start_point + 0.72 * offset,
+                xytext=start_point + 0.28 * offset,
+                arrowprops={
+                    "arrowstyle": "-|>",
+                    "color": INK_MUTED,
+                    "lw": 0.8,
+                    "linestyle": (0, (2.2, 1.6)),
+                },
+                zorder=6,
+            )
+
+
 def _edge_wrap(cluster, left: int, right: int) -> tuple[int, int, int]:
     for neighbor, wrap in cluster.adj[left]:
         if neighbor == right:
@@ -174,7 +305,7 @@ def _draw_cluster_loop(
     color: str,
     view: np.ndarray,
     title: str,
-    annotate_moves: bool = False,
+    annotate_charges: bool = False,
 ) -> None:
     basis = _projection_basis(view)
     projected = cluster.positions @ basis.T
@@ -198,10 +329,7 @@ def _draw_cluster_loop(
     )
 
     loop = projected[list(path)]
-    walk = _transport_walk(cluster, path)
-    transported_dipole = walk[-1]
-    increments = np.diff(walk, axis=0)
-    loop_center = loop.mean(axis=0)
+    transported_dipole = _transport_walk(cluster, path)[-1]
     for edge_index, (left, right) in enumerate(zip(path, path[1:] + path[:1])):
         edge = projected[[left, right]]
         image = np.asarray(_edge_wrap(cluster, left, right), dtype=float)
@@ -216,36 +344,9 @@ def _draw_cluster_loop(
         )
         if edge_index % 2 == 0:
             _draw_exchange_arrow(ax, edge[0], edge[1], color)
-            if annotate_moves:
-                # Each move contributes 2*Delta p_l; on these clusters that is
-                # always a half-integer vector, so print it as (n)/2.
-                doubled = np.rint(2.0 * increments[edge_index // 2]).astype(int)
-                anchor = 0.5 * (edge[0] + edge[1])
-                # Sit beside the arrow, on the side facing away from the loop
-                # centre, so parallel moves do not stack on the same spot.
-                along = edge[1] - edge[0]
-                perpendicular = np.array([-along[1], along[0]])
-                norm = np.linalg.norm(perpendicular)
-                perpendicular = (
-                    perpendicular / norm if norm > 1.0e-9 else np.array([0.0, 1.0])
-                )
-                if np.dot(perpendicular, anchor - loop_center) < 0.0:
-                    perpendicular = -perpendicular
-                ax.text(
-                    *(anchor + 0.195 * perpendicular),
-                    rf"$({doubled[0]},{doubled[1]},{doubled[2]})/2$",
-                    color=color,
-                    fontsize=5.4,
-                    ha="center",
-                    va="center",
-                    zorder=7,
-                    bbox={
-                        "boxstyle": "round,pad=0.10",
-                        "facecolor": "white",
-                        "edgecolor": "none",
-                        "alpha": 0.9,
-                    },
-                )
+    if annotate_charges:
+        _draw_charge_trajectory(ax, cluster, path, basis, center, scale)
+
     faces = [color if index % 2 == 0 else "white" for index in range(len(path))]
     ax.scatter(
         loop[:, 0],
@@ -260,19 +361,8 @@ def _draw_cluster_loop(
     dipole_integer = np.rint(transported_dipole).astype(int)
     if (winding == (0, 0, 0)) != bool(np.all(dipole_integer == 0)):
         raise RuntimeError(f"loop winding and transported dipole disagree for {path}")
-    vector_center = np.array([0.0, -0.59])
-    if np.linalg.norm(transported_dipole) > 1.0e-10:
-        direction = transported_dipole @ basis.T
-        direction = 0.20 * direction / np.linalg.norm(direction)
-        ax.annotate(
-            "",
-            xy=vector_center + 0.5 * direction,
-            xytext=vector_center - 0.5 * direction,
-            arrowprops={"arrowstyle": "-|>", "color": INK, "lw": 0.9},
-            zorder=6,
-        )
-    else:
-        ax.plot(*vector_center, marker="o", ms=1.8, color=INK, zorder=6)
+    # the transported-dipole arrow is dropped: the charge markers now carry the
+    # geometry, and the printed triple carries the exact label
     ax.text(
         0.0,
         -0.72,
@@ -283,8 +373,8 @@ def _draw_cluster_loop(
         va="center",
     )
     ax.set_title(title, loc="left", pad=0.5, fontsize=6.2)
-    ax.set_xlim(-0.62, 0.62)
-    ax.set_ylim(-0.78, 0.62)
+    ax.set_xlim(-0.74, 0.74)
+    ax.set_ylim(-0.80, 0.66)
     ax.set_aspect("equal")
     ax.set_axis_off()
 
@@ -489,7 +579,7 @@ def summary_figure(exact, exact_report: dict) -> None:
         geometry_axes, panels, summary_titles
     ):
         _draw_cluster_loop(
-            ax, cluster, path, winding, color, view, title, annotate_moves=True
+            ax, cluster, path, winding, color, view, title, annotate_charges=True
         )
 
     thermodynamics_axis = figure.add_subplot(left_grid[1, 0])
