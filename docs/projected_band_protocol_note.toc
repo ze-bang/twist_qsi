@@ -13,4 +13,4 @@
 \contentsline {section}{\numberline {13}Current gates and their interpretation}{11}{section.13}%
 \contentsline {section}{\numberline {14}Common implementation mistakes}{12}{section.14}%
 \contentsline {section}{\numberline {15}Reproduction and extension checklist}{12}{section.15}%
-\contentsline {section}{\numberline {16}Takeaway}{14}{section.16}%
+\contentsline {section}{\numberline {16}Takeaway}{13}{section.16}%

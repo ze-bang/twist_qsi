@@ -109,12 +109,12 @@ plt.rcParams.update(
         "mathtext.fontset": "cm",
         "text.usetex": True,
         "text.latex.preamble": r"\usepackage{amsmath}",
-        "font.size": 8,
-        "axes.labelsize": 8,
-        "axes.titlesize": 8,
-        "legend.fontsize": 6.8,
-        "xtick.labelsize": 7,
-        "ytick.labelsize": 7,
+        "font.size": 9.5,
+        "axes.labelsize": 9.5,
+        "axes.titlesize": 9.5,
+        "legend.fontsize": 8.6,
+        "xtick.labelsize": 8.4,
+        "ytick.labelsize": 8.4,
         "text.color": INK,
         "axes.labelcolor": INK,
         "axes.edgecolor": RULE,
@@ -229,7 +229,7 @@ FIG1_PANELS = (
     dict(
         cell=(1, 1), path=AXIAL_PATH, colour="axial",
         title=r"i.e) apply $S^+_iS^-_j$",
-        caption="charge on $t_2$ moves past $t_5$,\nout of the drawn cell",
+        caption="carried out of the cell",
         bond=(4, 6),
         # S+ on 4 empties t2; S- on 6 puts that charge on the image of t4 that
         # shares site 6 with t5 -- a different copy from the one holding the +
@@ -240,7 +240,7 @@ FIG1_PANELS = (
     dict(
         cell=(1, 2), path=AXIAL_PATH, colour="axial",
         title=r"i.f) identify",
-        caption="PBC maps it back onto $t_4$\n$\\mathbf{q}_\\gamma=(0,0,-1)$",
+        caption="the boundary returns it\n$\\mathbf{q}_\\gamma=(0,0,-1)$",
         bond=(4, 6),
         charges=((4, +1, 3, NO_IMAGE), (4, -1, 6, NO_IMAGE)),
         ghosts=(),
@@ -443,7 +443,7 @@ def _draw_charges(ax, cluster, occupied, basis, center, scale, faded=False,
         ax.plot(
             *seat,
             marker="o",
-            ms=7.6,
+            ms=9.4,
             mfc=SPINON if positive else ANTISPINON,
             mec="none",
             alpha=0.55 if faded else 1.0,
@@ -453,7 +453,7 @@ def _draw_charges(ax, cluster, occupied, basis, center, scale, faded=False,
             *seat,
             "$+$" if positive else r"$-$",
             color=INK if positive else "white",
-            fontsize=6.2,
+            fontsize=7.2,
             ha="center",
             va="center",
             alpha=0.55 if faded else 1.0,
@@ -797,7 +797,7 @@ def _draw_fig1_panel(ax, cluster, panel, colour) -> None:
             continue
         ax.plot(*projected[[left, right]].T, color=RULE, lw=0.48, zorder=1)
     ax.scatter(
-        projected[:, 0], projected[:, 1], s=8, facecolor=INK_FAINT,
+        projected[:, 0], projected[:, 1], s=11, facecolor=INK_FAINT,
         edgecolor="white", linewidth=0.25, zorder=2,
     )
 
@@ -828,7 +828,7 @@ def _draw_fig1_panel(ax, cluster, panel, colour) -> None:
         outward = outward / norm if norm > 1e-9 else np.array([0.0, 1.0])
         ax.text(
             *(projected[site] + 0.23 * outward), symbol, color=colour,
-            fontsize=6.8, ha="center", va="center", zorder=9,
+            fontsize=7.8, ha="center", va="center", zorder=9,
             bbox={"boxstyle": "round,pad=0.06", "facecolor": "white",
                   "edgecolor": "none", "alpha": 0.85},
         )
@@ -852,11 +852,11 @@ def _draw_fig1_panel(ax, cluster, panel, colour) -> None:
             zorder=9,
         )
 
-    ax.text(0.0, -1.16, panel["caption"], color=INK, fontsize=6.0,
-            ha="center", va="center", linespacing=1.5)
-    ax.set_title(panel["title"], loc="left", pad=1.0, fontsize=7.4)
-    ax.set_xlim(-0.76, 0.76)
-    ax.set_ylim(-1.34, 0.80)
+    ax.text(0.5, -0.03, panel["caption"], color=INK, fontsize=7.4,
+            ha="center", va="top", linespacing=1.5, transform=ax.transAxes)
+    ax.set_title(panel["title"], loc="left", pad=2.0, fontsize=8.6)
+    ax.set_xlim(-0.78, 0.78)
+    ax.set_ylim(-0.86, 0.86)
     ax.set_aspect("equal")
     ax.set_axis_off()
 
@@ -1031,7 +1031,7 @@ def dssf_figure() -> None:
 
 
 def summary_figure(exact, exact_report: dict) -> None:
-    figure = plt.figure(figsize=(7.2, 5.75))
+    figure = plt.figure(figsize=(7.2, 6.45))
     outer = figure.add_gridspec(
         1,
         2,
@@ -1046,11 +1046,11 @@ def summary_figure(exact, exact_report: dict) -> None:
     left_grid = outer[0, 0].subgridspec(
         2,
         1,
-        height_ratios=(2.55, 1.15),
-        hspace=0.26,
+        height_ratios=(2.85, 1.10),
+        hspace=0.40,
     )
     cluster, panels = _geometry_panel_data()
-    geometry_grid = left_grid[0, 0].subgridspec(2, 3, wspace=0.02, hspace=0.30)
+    geometry_grid = left_grid[0, 0].subgridspec(2, 3, wspace=0.04, hspace=0.72)
     hexagon, axial, diagonal = panels
     # Traversal is not free: the wrap runs opposite to the travel from the first
     # exchange to the second, so whichever bond acts first fixes which way the
@@ -1152,7 +1152,7 @@ def character_convergence_figure(exact_report: dict) -> None:
     )
     positions = np.arange(len(changes))
 
-    figure, ax = plt.subplots(figsize=(3.35, 2.05))
+    figure, ax = plt.subplots(figsize=(3.35, 2.45))
     bars = ax.bar(
         positions,
         changes,
@@ -1254,13 +1254,8 @@ def main() -> None:
     report = json.loads((OUTPUT / "validation_report.json").read_text())
 
 
-    figure, ax = plt.subplots(figsize=(3.35, 2.45))
-    labels = [
-        "QMC",
-        "cubic\nperiodic",
-        "cubic\nwinding-free",
-        "FCC\nwinding-free",
-    ]
+    figure, ax = plt.subplots(figsize=(3.6, 2.45))
+    labels = ["QMC", "cubic\nperiodic", "cubic\nw-free", "FCC\nw-free"]
     peaks = [
         report["qmc"]["low_peak"][0],
         report["clusters"]["cubic16"]["bare_low_peak"][0],
