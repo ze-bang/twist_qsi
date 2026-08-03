@@ -1,0 +1,14 @@
+{
+ "jpm": -0.17,
+ "anchor": -0.7528315646312318,
+ "metric_min_eigenvalue": 0.0362493248264273,
+ "metric_positive_definite": true,
+ "n_reference_roots": 90,
+ "band_width": 0.15618249837879883,
+ "constant_band_error": 0.13624687776407496,
+ "linear_band_error": 0.026513182856252777,
+ "constant_ground_error": 2.9765079290200447e-13,
+ "linear_ground_error": 3.339550858072471e-13,
+ "improvement": 5.138835216532404,
+ "runtime": 177.97689756203908
+}

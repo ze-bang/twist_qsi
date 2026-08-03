@@ -1,0 +1,66 @@
+{
+ "jpm": -0.26,
+ "parity_imaginary_residue": 9.797174393178826e-16,
+ "band_gap": 0.0,
+ "coherence_rank_0p8": 0,
+ "coherence_rank_0p5": 6,
+ "band_coherence_min": 0.136909794874121,
+ "band_coherence_mean": 0.293732820058444,
+ "corner_sigma_min": 0.0003385588034797077,
+ "collective_sigma_min": 0.008232142096836068,
+ "collective_sigma_mean": 0.26303079211299624,
+ "individual_min": 0.004595529184550813,
+ "individual_mean": 0.26225039781180937,
+ "manifold_return_mean": 0.293732820058444,
+ "vector_return_mean": 0.20160737575906604,
+ "vector_return_max": 0.462207801265845,
+ "band_ice_weight": 0.36517500916607604,
+ "band_coherence_mean_over_ice": 0.8043617791075587,
+ "transport_variance_mean": 1.0134187564601567,
+ "transport_variance_max": 1.6744129251879545,
+ "greedy": [
+  {
+   "dropped": 0,
+   "rank": 90,
+   "coherence_min": 0.136909794874121,
+   "coherence_mean": 0.293732820058444,
+   "sigma_min": 0.0003385588034797077
+  },
+  {
+   "dropped": 1,
+   "rank": 89,
+   "coherence_min": 0.13690979487412133,
+   "coherence_mean": 0.29536120022822077,
+   "sigma_min": 0.0003385588034797205
+  },
+  {
+   "dropped": 2,
+   "rank": 88,
+   "coherence_min": 0.13690979487412158,
+   "coherence_mean": 0.29418579370296005,
+   "sigma_min": 0.0003385588034797256
+  },
+  {
+   "dropped": 5,
+   "rank": 85,
+   "coherence_min": 0.1356661565523745,
+   "coherence_mean": 0.2932687999590456,
+   "sigma_min": 0.0002303431157486139
+  },
+  {
+   "dropped": 10,
+   "rank": 80,
+   "coherence_min": 0.13449839581285394,
+   "coherence_mean": 0.29341970630671854,
+   "sigma_min": 0.00023034311574861372
+  },
+  {
+   "dropped": 20,
+   "rank": 70,
+   "coherence_min": 0.1342910599386015,
+   "coherence_mean": 0.2902303372623262,
+   "sigma_min": 0.0002379139237353299
+  }
+ ],
+ "runtime": 22.47251539400895
+}

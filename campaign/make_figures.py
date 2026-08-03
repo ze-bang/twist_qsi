@@ -875,38 +875,44 @@ def geometry_figure() -> None:
     save(figure, "fig_geometry")
 
 
-def _draw_thermodynamic_benchmark(ax, exact, exact_report: dict) -> None:
-    temperature = exact["temperature"]
+SPINE = OUTPUT / "counterterm_spine"
+
+
+def _draw_thermodynamic_benchmark(ax, exact, exact_report: dict,
+                                  legend: bool = True) -> None:
+    """Heat capacity and entropy at the zero-flux benchmark coupling.
+
+    Data comes from the self-consistent counterterm sweep
+    (``run_counterterm_spine.py``) when available: both curves are then the
+    complete 65536-level spectrum of the same cluster, differing only by
+    whether the transport mask was imposed.  The older cached band-splice
+    arrays are the fallback.
+    """
     jpm = float(exact_report["jpm"])
     g4 = 4.0 * jpm**2
     g6 = 12.0 * abs(jpm) ** 3
-    ax.plot(
-        temperature,
-        exact["bare_full_heat_capacity_per_site"],
-        color=BARE,
-        lw=1.25,
-    )
-    ax.plot(
-        temperature,
-        exact["M4_full_heat_capacity_per_site"],
-        color=CLEAN,
-        lw=1.45,
-    )
+
+    spine = SPINE / f"{'spine_' + format(jpm, '+.3f').replace('.', 'p')}.npz"
+    if spine.exists():
+        data = np.load(spine)
+        grid = np.asarray(data["grid"])
+        sgrid = np.asarray(data["sgrid"])
+        heat = {"bare": np.asarray(data["periodic"]),
+                "clean": np.asarray(data["counterterm"])}
+        entropy = {"bare": np.asarray(data["periodic_entropy"]),
+                   "clean": np.asarray(data["counterterm_entropy"])}
+    else:
+        grid = sgrid = np.asarray(exact["temperature"])
+        heat = {"bare": exact["bare_full_heat_capacity_per_site"],
+                "clean": exact["M4_full_heat_capacity_per_site"]}
+        entropy = {"bare": exact["bare_full_entropy_per_site"],
+                   "clean": exact["M4_full_entropy_per_site"]}
+
+    ax.plot(grid, heat["bare"], color=BARE, lw=1.25)
+    ax.plot(grid, heat["clean"], color=CLEAN, lw=1.45)
     entropy_axis = ax.twinx()
-    entropy_axis.plot(
-        temperature,
-        exact["bare_full_entropy_per_site"],
-        color=BARE,
-        lw=1.1,
-        ls="--",
-    )
-    entropy_axis.plot(
-        temperature,
-        exact["M4_full_entropy_per_site"],
-        color=CLEAN,
-        lw=1.3,
-        ls="--",
-    )
+    entropy_axis.plot(sgrid, entropy["bare"], color=BARE, lw=1.1, ls="--")
+    entropy_axis.plot(sgrid, entropy["clean"], color=CLEAN, lw=1.3, ls="--")
     for value, name, tone in ((g6, r"$g_6$", G6), (g4, r"$g_4$", G4)):
         ax.axvline(value, color=tone, lw=0.75, ls=(0, (1.2, 1.8)), zorder=1)
         ax.text(value, 0.305, name, color=tone, ha="center", va="bottom")
@@ -924,18 +930,77 @@ def _draw_thermodynamic_benchmark(ax, exact, exact_report: dict) -> None:
         Line2D([], [], color=BARE, lw=1.5, label="periodic ED"),
         Line2D([], [], color=CLEAN, lw=1.5, label="winding-free"),
     )
-    ax.legend(
-        handles=method_handles,
-        frameon=False,
-        loc="lower center",
-        bbox_to_anchor=(0.5, 1.01),
-        ncol=2,
-        columnspacing=1.6,
-    )
+    if legend:
+        ax.legend(
+            handles=method_handles,
+            frameon=False,
+            loc="lower center",
+            bbox_to_anchor=(0.5, 1.01),
+            ncol=2,
+            columnspacing=1.6,
+        )
+
+
+def _draw_jpm_sweep(ax) -> None:
+    """Lower-peak position against Jpm across both flux sectors (panel iii).
+
+    Reads the scan summary written by ``run_jpm_scan.py``.  Points whose ring
+    peak falls below the temperature floor of the scan are omitted; the region
+    where the ice-descended band is no longer isolated is shaded.  Colour
+    identities are shared with panel ii, so no separate legend is drawn.
+    """
+    summary = SPINE / "spine_summary.json"
+    if not summary.exists():
+        ax.text(0.5, 0.5, "spine sweep\nmissing", transform=ax.transAxes,
+                ha="center", va="center", color=INK_MUTED)
+        return
+    records = sorted(json.loads(summary.read_text()), key=lambda r: r["jpm"])
+    resolved = [r for r in records
+                if r.get("counterterm_ring") and r.get("periodic_gauge")]
+    undefined = []
+
+    dense = np.linspace(-0.32, 0.06, 400)
+    ax.plot(dense, 12.0 * np.abs(dense) ** 3, color=G6, lw=0.75,
+            ls=(0, (1.2, 1.8)), zorder=1)
+    ax.plot(dense, 4.0 * dense**2, color=G4, lw=0.75,
+            ls=(0, (1.2, 1.8)), zorder=1)
+    ax.text(-0.225, 0.30, r"$g_4$", color=G4, fontsize=8.5,
+            ha="center", va="bottom")
+    ax.text(-0.225, 0.085, r"$g_6$", color=G6, fontsize=8.5,
+            ha="center", va="top")
+
+
+    x = np.array([r["jpm"] for r in resolved])
+    winding_free = np.array([r["counterterm_ring"] for r in resolved])
+    periodic = np.array([r["periodic_gauge"] for r in resolved])
+    for sign in (-1, 1):
+        mask = np.sign(x) == sign
+        ax.plot(x[mask], periodic[mask], color=BARE, lw=1.0, marker="s", ms=2.0)
+        ax.plot(x[mask], winding_free[mask], color=CLEAN, lw=1.15, marker="o", ms=2.3)
+
+    ax.axvline(0.0, color=RULE, lw=0.5, zorder=0)
+    ax.set_yscale("log")
+    ax.set_xlim(-0.32, 0.095)
+    ax.set_ylim(3e-5, 0.6)
+    ax.set_xticks((-0.3, -0.2, -0.1, 0.0))
+    ax.set_xlabel(r"$J_\pm/J_{zz}$")
+    # The y axis lives on the right so that panel ii's entropy label owns the
+    # gap between the two panels.
+    ax.yaxis.tick_right()
+    ax.yaxis.set_label_position("right")
+    ax.set_ylabel(r"$T_{\mathrm{pk}}/J_{zz}$", labelpad=2)
+    ax.spines["top"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    ax.spines["right"].set_visible(True)
 
 
 def _draw_dssf_panels(axes, titles):
-    data_path = OUTPUT / "dssf_cubic16_p0p046000.npz"
+    # The counterterm run is frame-free: P S^z_q P is exactly diagonal in the
+    # ice configuration basis, so both panels are the same 90 x 90 eigenvalue
+    # problem fed identical sources, differing only by the transport mask.
+    data_path = OUTPUT / "dssf_counterterm_+0p0460.npz"
+    if not data_path.exists():
+        data_path = OUTPUT / "dssf_cubic16_p0p046000.npz"
     if not data_path.exists():
         return None
     data = np.load(data_path)
@@ -958,21 +1023,27 @@ def _draw_dssf_panels(axes, titles):
     )
     momentum_edges = np.arange(len(labels) + 1, dtype=float) - 0.5
     maximum = max(float(np.max(spectrum)) for spectrum in spectra)
+    # Logarithmic intensity over four decades; values below the floor
+    # (including exact zeros) clip to the bottom of the map, which is black
+    # in this palette, so the background stays black.
+    floor = maximum * 1.0e-4
+    norm = mpl.colors.LogNorm(vmin=floor, vmax=maximum)
     image = None
     for ax, spectrum, title in zip(axes, spectra, titles):
         image = ax.pcolormesh(
             momentum_edges,
             frequency_edges,
-            spectrum,
+            np.clip(spectrum, floor, None),
             cmap=DSSF_CMAP,
-            vmin=0.0,
-            vmax=maximum,
+            norm=norm,
             shading="flat",
             rasterized=True,
         )
         ax.set_xticks(np.arange(len(labels)), labels)
         ax.set_xlim(-0.5, len(labels) - 0.5)
-        ax.set_ylim(0.0, 0.09)
+        # The window must cover both panels: the mask compresses the band by an
+        # order of magnitude, and that compression is one of the results.
+        ax.set_ylim(0.0, float(frequency[-1]))
         ax.set_xlabel(r"$\mathbf{q}$")
         ax.set_title(title, loc="left")
         for side in ("top", "right"):
@@ -986,7 +1057,7 @@ def dssf_figure() -> None:
     figure, axes = plt.subplots(1, 2, figsize=(3.35, 2.05), sharey=True)
     image = _draw_dssf_panels(
         axes,
-        ("(a) periodic ED", "(b) winding-free"),
+        ("(a) mask off", "(b) mask on (winding-free)"),
     )
     if image is None:
         plt.close(figure)
@@ -1011,7 +1082,7 @@ def summary_figure(exact, exact_report: dict) -> None:
     outer = figure.add_gridspec(
         1,
         2,
-        width_ratios=(1.45, 0.88),
+        width_ratios=(1.68, 0.72),
         left=0.055,
         right=0.98,
         top=0.95,
@@ -1040,13 +1111,45 @@ def summary_figure(exact, exact_report: dict) -> None:
         ax = figure.add_subplot(geometry_grid[row, column])
         _draw_fig1_panel(ax, cluster, panel, tones[panel["colour"]])
 
-    thermodynamics_axis = figure.add_subplot(left_grid[1, 0])
-    _draw_thermodynamic_benchmark(thermodynamics_axis, exact, exact_report)
+    bottom_grid = left_grid[1, 0].subgridspec(1, 2, width_ratios=(1.12, 0.88),
+                                              wspace=0.50)
+    thermodynamics_axis = figure.add_subplot(bottom_grid[0, 0])
+    _draw_thermodynamic_benchmark(thermodynamics_axis, exact, exact_report,
+                                  legend=False)
     thermodynamics_axis.text(
         0.015,
         0.94,
         "ii)",
         transform=thermodynamics_axis.transAxes,
+        ha="left",
+        va="top",
+    )
+    sweep_axis = figure.add_subplot(bottom_grid[0, 1])
+    _draw_jpm_sweep(sweep_axis)
+    # One legend for the ii)+iii) pair: same data identities, same tones.
+    pair_handles = (
+        Line2D([], [], color=BARE, lw=1.5, label="periodic ED"),
+        Line2D([], [], color=CLEAN, lw=1.5, label="winding-free"),
+        Line2D([], [], color=G6, lw=1.0, ls=(0, (1.2, 1.8)), label=r"$g_6$"),
+        Line2D([], [], color=G4, lw=1.0, ls=(0, (1.2, 1.8)), label=r"$g_4$"),
+    )
+    left_box = thermodynamics_axis.get_position()
+    right_box = sweep_axis.get_position()
+    figure.legend(
+        handles=pair_handles,
+        frameon=False,
+        loc="lower center",
+        ncol=4,
+        columnspacing=1.4,
+        bbox_to_anchor=(0.5 * (left_box.x0 + right_box.x1),
+                        left_box.y1 + 0.006),
+        bbox_transform=figure.transFigure,
+    )
+    sweep_axis.text(
+        0.03,
+        0.94,
+        "iii)",
+        transform=sweep_axis.transAxes,
         ha="left",
         va="top",
     )
@@ -1066,14 +1169,14 @@ def summary_figure(exact, exact_report: dict) -> None:
     dssf_axes[1].tick_params(labelleft=False)
     image = _draw_dssf_panels(
         dssf_axes,
-        ("iii.a) periodic ED", "iii.b) winding-free"),
+        ("iv.a) mask off", "iv.b) mask on (winding-free)"),
     )
     if image is None:
         plt.close(figure)
         return
     for ax, title, position in zip(
         dssf_axes,
-        ("iii.a) periodic ED", "iii.b) winding-free"),
+        ("iv.a) mask off", "iv.b) mask on (winding-free)"),
         ((0.03, 0.74), (0.03, 0.90)),
     ):
         ax.set_title("", loc="left")

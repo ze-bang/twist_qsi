@@ -57,24 +57,24 @@
   ],
   "winding_free_channels": [
     {
-      "integrated_weight": 2.052231888967134e-06,
-      "first_active_frequency": 0.0053438285575937855,
-      "centroid": 0.005535045793674979
+      "integrated_weight": 2.0522318889667785e-06,
+      "first_active_frequency": 0.00534382855759398,
+      "centroid": 0.005535045793675118
     },
     {
-      "integrated_weight": 0.24060659004574428,
-      "first_active_frequency": 0.005333531580751311,
-      "centroid": 0.005361688123108093
+      "integrated_weight": 0.2406065900457443,
+      "first_active_frequency": 0.00533353158075163,
+      "centroid": 0.0053616881231084365
     },
     {
       "integrated_weight": 0.24060659004574475,
-      "first_active_frequency": 0.005333531580751408,
-      "centroid": 0.0053616881231082405
+      "first_active_frequency": 0.00533353158075163,
+      "centroid": 0.005361688123108355
     },
     {
-      "integrated_weight": 0.24060659004574453,
-      "first_active_frequency": 0.005333531580751311,
-      "centroid": 0.005361688123108097
+      "integrated_weight": 0.24060659004574445,
+      "first_active_frequency": 0.00533353158075163,
+      "centroid": 0.005361688123108285
     }
   ],
   "frame_diagnostics": {

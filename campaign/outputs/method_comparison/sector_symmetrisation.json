@@ -1,0 +1,418 @@
+[
+ {
+  "jpm": -0.3,
+  "k": 6,
+  "g6": 0.32399999999999995,
+  "exact_ring": null,
+  "before": {
+   "ring": 0.12917847498786156,
+   "n_sector": 1,
+   "sector_T": 0.00562967999368049,
+   "spinon": 0.45700327365328125
+  },
+  "after": {
+   "ring": null,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.45700327365328125
+  },
+  "sector_splitting": 0.0578689668344603,
+  "band_width": 0.3523907958069019,
+  "entropy_before": 0.6931044968283809,
+  "entropy_after": 0.6931043009432585,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": null,
+  "dev_after": null
+ },
+ {
+  "jpm": -0.28,
+  "k": 6,
+  "g6": 0.2634240000000001,
+  "exact_ring": null,
+  "before": {
+   "ring": 0.15073438421183305,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.43815252345599454
+  },
+  "after": {
+   "ring": 0.1728493739543847,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.43815252345599454
+  },
+  "sector_splitting": 0.04597013149994034,
+  "band_width": 0.3635756608122902,
+  "entropy_before": 0.6931069105486912,
+  "entropy_after": 0.6931067146739103,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": null,
+  "dev_after": null
+ },
+ {
+  "jpm": -0.25,
+  "k": 6,
+  "g6": 0.1875,
+  "exact_ring": null,
+  "before": {
+   "ring": 0.19160999689371916,
+   "n_sector": 1,
+   "sector_T": 0.0089008378942319,
+   "spinon": 0.4048779066969396
+  },
+  "after": {
+   "ring": 0.20090877555978995,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.4048779066969396
+  },
+  "sector_splitting": 0.030782056683167136,
+  "band_width": 0.36169792521185595,
+  "entropy_before": 0.693110221688738,
+  "entropy_after": 0.6931100257979763,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": null,
+  "dev_after": null
+ },
+ {
+  "jpm": -0.22,
+  "k": 6,
+  "g6": 0.127776,
+  "exact_ring": 0.25440281476815946,
+  "before": {
+   "ring": 0.24390905205975583,
+   "n_sector": 1,
+   "sector_T": 0.007325228396092152,
+   "spinon": 0.37021101994657024
+  },
+  "after": {
+   "ring": 0.25041576380109754,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.37021101994657024
+  },
+  "sector_splitting": 0.018762186390515412,
+  "band_width": 0.2807648283492118,
+  "entropy_before": 0.6931131608075966,
+  "entropy_after": 0.6931129649049738,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": 0.0412486108613489,
+  "dev_after": 0.015672196751027934
+ },
+ {
+  "jpm": -0.2,
+  "k": 6,
+  "g6": 0.09600000000000003,
+  "exact_ring": 0.2952871089221111,
+  "before": {
+   "ring": 0.28610404133956613,
+   "n_sector": 1,
+   "sector_T": 0.006028530312824578,
+   "spinon": 0.3457176897658741
+  },
+  "after": {
+   "ring": 0.2906593112530415,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.3457176897658741
+  },
+  "sector_splitting": 0.018083594782480228,
+  "band_width": 0.22982074118606666,
+  "entropy_before": 0.6931149131424718,
+  "entropy_after": 0.6931147172739651,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": 0.031098775751051133,
+  "dev_after": 0.015672196751028045
+ },
+ {
+  "jpm": -0.18,
+  "k": 6,
+  "g6": 0.06998399999999999,
+  "exact_ring": 0.34224805152294024,
+  "before": {
+   "ring": 0.3351150924300861,
+   "n_sector": 1,
+   "sector_T": 0.003773034428052051,
+   "spinon": 0.32284484949773423
+  },
+  "after": {
+   "ring": 0.33866279308499037,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.32284484949773423
+  },
+  "sector_splitting": 0.015162785787093402,
+  "band_width": 0.18226578208840882,
+  "entropy_before": 0.6931164996333108,
+  "entropy_after": 0.6931163037642127,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": 0.02084148926813112,
+  "dev_after": 0.010475613877116707
+ },
+ {
+  "jpm": -0.15,
+  "k": 6,
+  "g6": 0.040499999999999994,
+  "exact_ring": 0.42893651583984393,
+  "before": {
+   "ring": 0.4244431425221099,
+   "n_sector": 1,
+   "sector_T": 0.0012619638939160302,
+   "spinon": 0.29210946346324335
+  },
+  "after": {
+   "ring": 0.4244431425221099,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.29210946346324335
+  },
+  "sector_splitting": 0.0059259011267474015,
+  "band_width": 0.119187941500555,
+  "entropy_before": 0.6931185678709767,
+  "entropy_after": 0.6931183720098781,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": 0.010475613877116818,
+  "dev_after": 0.010475613877116818
+ },
+ {
+  "jpm": -0.13,
+  "k": 6,
+  "g6": 0.026364000000000002,
+  "exact_ring": 0.49847000617032033,
+  "before": {
+   "ring": 0.4958522427947532,
+   "n_sector": 1,
+   "sector_T": 0.0005406053065837386,
+   "spinon": 0.2771265497464371
+  },
+  "after": {
+   "ring": 0.4958522427947532,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.2771265497464371
+  },
+  "sector_splitting": 0.002592902521726559,
+  "band_width": 0.08382971128400596,
+  "entropy_before": 0.6931197387607572,
+  "entropy_after": 0.6931195428698845,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": 0.005251596571836048,
+  "dev_after": 0.005251596571836048
+ },
+ {
+  "jpm": -0.11,
+  "k": 6,
+  "g6": 0.015972,
+  "exact_ring": 0.5751645165159299,
+  "before": {
+   "ring": 0.5721439845127531,
+   "n_sector": 1,
+   "sector_T": 0.00018369473696173765,
+   "spinon": 0.2670981562985593
+  },
+  "after": {
+   "ring": 0.5721439845127531,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.2670981562985593
+  },
+  "sector_splitting": 0.0009039803914221989,
+  "band_width": 0.05460443873690157,
+  "entropy_before": 0.6931207429608077,
+  "entropy_after": 0.6931205471051483,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": 0.005251596571836159,
+  "dev_after": 0.005251596571836159
+ },
+ {
+  "jpm": -0.09,
+  "k": 6,
+  "g6": 0.008747999999999999,
+  "exact_ring": 0.6572368895070931,
+  "before": {
+   "ring": 0.6572368895070931,
+   "n_sector": 1,
+   "sector_T": 4.479689589102979e-05,
+   "spinon": 0.2601579753638674
+  },
+  "after": {
+   "ring": 0.6572368895070931,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.2601579753638674
+  },
+  "sector_splitting": 0.00023038022247798273,
+  "band_width": 0.03241705100821016,
+  "entropy_before": 0.6931215803584584,
+  "entropy_after": 0.6931213845025297,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": 0.0,
+  "dev_after": 0.0
+ },
+ {
+  "jpm": -0.07,
+  "k": 6,
+  "g6": 0.004116000000000002,
+  "exact_ring": 0.7465040740466274,
+  "before": {
+   "ring": 0.7465040740466274,
+   "n_sector": 1,
+   "sector_T": 6.801296361547355e-06,
+   "spinon": 0.2560807283876153
+  },
+  "after": {
+   "ring": 0.7465040740466274,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.2560807283876153
+  },
+  "sector_splitting": 3.7402957711041296e-05,
+  "band_width": 0.01786618974822396,
+  "entropy_before": 0.6931222507078109,
+  "entropy_after": 0.693122054848469,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": 0.0,
+  "dev_after": 0.0
+ },
+ {
+  "jpm": -0.05,
+  "k": 6,
+  "g6": 0.0015000000000000005,
+  "exact_ring": 0.8413092626106866,
+  "before": {
+   "ring": 0.8368910457713064,
+   "n_sector": 1,
+   "sector_T": 4.914777219180744e-07,
+   "spinon": 0.25339812555565633
+  },
+  "after": {
+   "ring": 0.8368910457713064,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.25339812555565633
+  },
+  "sector_splitting": 2.962379652249325e-06,
+  "band_width": 0.007692587580523269,
+  "entropy_before": 0.6931227537848809,
+  "entropy_after": 0.6931225579288863,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": 0.005251596571836159,
+  "dev_after": 0.005251596571836159
+ },
+ {
+  "jpm": -0.04,
+  "k": 6,
+  "g6": 0.0007680000000000001,
+  "exact_ring": 0.8874339725055429,
+  "before": {
+   "ring": 0.8874339725055429,
+   "n_sector": 1,
+   "sector_T": 8.378303672009187e-08,
+   "spinon": 0.25206738082817853
+  },
+  "after": {
+   "ring": 0.8874339725055429,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.25206738082817853
+  },
+  "sector_splitting": 5.321182538486902e-07,
+  "band_width": 0.004289309728301639,
+  "entropy_before": 0.6931229425340689,
+  "entropy_after": 0.6931227466774661,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": 0.0,
+  "dev_after": 0.0
+ },
+ {
+  "jpm": -0.03,
+  "k": 6,
+  "g6": 0.00032399999999999996,
+  "exact_ring": 0.9300496429314318,
+  "before": {
+   "ring": 0.9300496429314318,
+   "n_sector": 1,
+   "sector_T": 8.48047513098592e-09,
+   "spinon": 0.25074362463514954
+  },
+  "after": {
+   "ring": 0.9300496429314318,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.25074362463514954
+  },
+  "sector_splitting": 5.661201711928965e-08,
+  "band_width": 0.0019730534784208435,
+  "entropy_before": 0.693123086793966,
+  "entropy_after": 0.6931228935291059,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": 0.0,
+  "dev_after": 0.0
+ },
+ {
+  "jpm": -0.02,
+  "k": 6,
+  "g6": 9.600000000000002e-05,
+  "exact_ring": 0.9752626221826112,
+  "before": {
+   "ring": 0.9752626221826112,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.25074362463514954
+  },
+  "after": {
+   "ring": 0.9752626221826112,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.25074362463514954
+  },
+  "sector_splitting": 2.309821446958016e-09,
+  "band_width": 0.0006384547344902517,
+  "entropy_before": 0.6354086806371176,
+  "entropy_after": 0.6931229984568269,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": 0.0,
+  "dev_after": 0.0
+ },
+ {
+  "jpm": -0.01,
+  "k": 6,
+  "g6": 1.2000000000000002e-05,
+  "exact_ring": 1.0221776159214337,
+  "before": {
+   "ring": 1.0221776159214337,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.25074362463514954
+  },
+  "after": {
+   "ring": 1.0221776159214337,
+   "n_sector": 0,
+   "sector_T": null,
+   "spinon": 0.25074362463514954
+  },
+  "sector_splitting": 9.02545876577121e-12,
+  "band_width": 8.736776199498369e-05,
+  "entropy_before": 0.624460075461023,
+  "entropy_after": 0.6931230614335264,
+  "degeneracy_before": 2,
+  "degeneracy_after": 6,
+  "dev_before": 0.0,
+  "dev_after": 0.0
+ }
+]

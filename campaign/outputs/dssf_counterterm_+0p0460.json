@@ -1,0 +1,66 @@
+{
+ "jpm": 0.046,
+ "anchor_periodic": -0.08414864120773514,
+ "anchor_counterterm": -0.08414864120773514,
+ "anchor_residual": 1.0408340855860843e-15,
+ "unmasked_at_anchor_vs_exact_max_error": 0.05503711437684755,
+ "masked_ground_vs_anchor": 1.0851042286930124e-13,
+ "periodic_ground_degeneracy": 1,
+ "winding_free_ground_degeneracy": 6,
+ "periodic_band_width": 0.2554154405062701,
+ "winding_free_band_width": 0.016824704286970735,
+ "periodic": [
+  {
+   "integrated_weight": 0.33333333333333337,
+   "silent": false,
+   "first_active_frequency": 0.12407457331585792,
+   "centroid": 0.12412015181873572
+  },
+  {
+   "integrated_weight": 0.2222222222222222,
+   "silent": false,
+   "first_active_frequency": 0.12407457331585792,
+   "centroid": 0.12412015181873566
+  },
+  {
+   "integrated_weight": 0.2222222222222224,
+   "silent": false,
+   "first_active_frequency": 0.12407457331585792,
+   "centroid": 0.1241201518187356
+  },
+  {
+   "integrated_weight": 0.2222222222222223,
+   "silent": false,
+   "first_active_frequency": 0.12407457331585792,
+   "centroid": 0.12412015181873563
+  }
+ ],
+ "winding_free": [
+  {
+   "integrated_weight": 5.309382230200823e-30,
+   "silent": true,
+   "first_active_frequency": NaN,
+   "centroid": 0.010756820167755145
+  },
+  {
+   "integrated_weight": 0.25000000000000006,
+   "silent": false,
+   "first_active_frequency": 0.01083553965753796,
+   "centroid": 0.011031547509744425
+  },
+  {
+   "integrated_weight": 0.2500000000000001,
+   "silent": false,
+   "first_active_frequency": 0.01083553965753796,
+   "centroid": 0.011031547509744418
+  },
+  {
+   "integrated_weight": 0.24999999999999994,
+   "silent": false,
+   "first_active_frequency": 0.01083553965753796,
+   "centroid": 0.011031547509744428
+  }
+ ],
+ "sum_rule_periodic": 1.0000000000000004,
+ "sum_rule_winding_free": 0.75
+}

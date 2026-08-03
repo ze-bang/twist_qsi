@@ -1,0 +1,77 @@
+{
+ "jpm": -0.3,
+ "trajectory": [
+  {
+   "step": 0,
+   "anchor": -2.0459966474591362,
+   "residual": 0.09550164021655982,
+   "ground_multiplicity": 6,
+   "splitting": 0.06193818473415469,
+   "splitting_over_width": 0.11538382308204978,
+   "band_width": 0.5368012870409942,
+   "schottky_T": 0.025807576972564455
+  },
+  {
+   "step": 1,
+   "anchor": -1.925800777629582,
+   "residual": 0.01542634939025933,
+   "ground_multiplicity": 2,
+   "splitting": 5.3512749786932545e-14,
+   "splitting_over_width": 1.0806902942745334e-13,
+   "band_width": 0.49517192918675756,
+   "schottky_T": 2.229697907788856e-14
+  },
+  {
+   "step": 2,
+   "anchor": -1.9026452765489936,
+   "residual": 0.006947620431233981,
+   "ground_multiplicity": 2,
+   "splitting": 4.285460875053104e-14,
+   "splitting_over_width": 8.672053973533107e-14,
+   "band_width": 0.4941690732244315,
+   "schottky_T": 1.7856086979387935e-14
+  },
+  {
+   "step": 3,
+   "anchor": -1.9098355799992295,
+   "residual": 0.00031456547522790146,
+   "ground_multiplicity": 2,
+   "splitting": 6.439293542825908e-14,
+   "splitting_over_width": 1.3030683442663974e-13,
+   "band_width": 0.4941639148214523,
+   "schottky_T": 2.683038976177462e-14
+  },
+  {
+   "step": 4,
+   "anchor": -1.9095241281511235,
+   "residual": 3.2970880354810106e-06,
+   "ground_multiplicity": 2,
+   "splitting": 3.907985046680551e-14,
+   "splitting_over_width": 7.908326623180547e-14,
+   "band_width": 0.4941608045405754,
+   "schottky_T": 1.628327102783563e-14
+  },
+  {
+   "step": 5,
+   "anchor": -1.9095208291197914,
+   "residual": 1.9233372672289306e-09,
+   "ground_multiplicity": 2,
+   "splitting": 5.5067062021407764e-14,
+   "splitting_over_width": 1.1143551850003303e-13,
+   "band_width": 0.49416077353641463,
+   "schottky_T": 2.294460917558657e-14
+  },
+  {
+   "step": 6,
+   "anchor": -1.9095208310431402,
+   "residual": 4.6629367034256575e-15,
+   "ground_multiplicity": 2,
+   "splitting": 4.418687638008123e-14,
+   "splitting_over_width": 8.941801685763842e-14,
+   "band_width": 0.4941607735545146,
+   "schottky_T": 1.8411198491700514e-14
+  }
+ ],
+ "anchor": -1.9095208310431402,
+ "runtime": 28.97040215699235
+}

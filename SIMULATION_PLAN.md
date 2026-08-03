@@ -1,5 +1,67 @@
 # Validation plan: a convergent winding-free band protocol
 
+## Campaign status and goal (updated 2026-08-03) — remote-cluster phase
+
+The local (cubic-16 + truncated FCC-32) program is complete through the
+`(Jpm, Jpmpm)` plane; the narrative record is `paper/pedagogical.tex`.
+State of the results:
+
+- **Instruments, all calibration-gated**: the two-sided fold
+  (`campaign/run_two_sided_fold.py`, Z-ranked replacement; the weighted
+  variant is falsified), the per-sector bordered-matrix solver
+  (`campaign/run_fcc32_sector_grounds.py`), and the multi-anchor
+  self-consistent band (`campaign/run_multi_anchor_band.py`; ring peak to
+  0.3-1% vs exact on cubic-16 with ~10 F-evaluations).
+- **cubic-16 `(Jpm, Jpmpm)` plane complete** (`run_jpmpm_fold_plane.py`,
+  8x7 grid, `campaign/outputs/jpmpm_fold_plane/`): certified two-peak
+  ratio ceiling ~0.10 at (-0.24, 0.15); one certified gauge-spinon merge
+  cell at (-0.16, 0.25); dissolution boundary is re-entrant in Jpm
+  (pp_c ~ 0.22 / 0.28 / 0.13 at |Jpm| = 0.05 / 0.125-0.16 / 0.30); the
+  near-CHO ratio 0.332 at (-0.125, 0.30) sits in the dissolving region
+  (27/90 band) and is NOT certified.
+- **FCC-32 (XXZ line only)**: no 6->2 sector crossing at any coupling
+  (cubic-16's crossing = host pathology); complete L=1 multi-anchor band
+  at 13 couplings; exact ring-model host coefficients c16 = 1.070,
+  c32 = 0.521; L-truncation error on ring peaks measured (L=1 ~40% low at
+  strong coupling, L=2 11-19%, L=3 <1%).
+
+**Goal of the remote phase: the `(Jpm, Jpmpm)` plane on FCC-32**, scoped
+by what each side can deliver.  The full fold (and hence the spinon peak
+and certified peak ratios) is cubic-16-only: with Jpmpm breaking Sz, the
+FCC-32 raw side is the full 2^32 space.  FCC-32's contributions are:
+
+1. **Extend the truncated-space machinery to Jpmpm** (blocking step):
+   `bfs_space` / `build_hamiltonian` in `campaign/run_truncated_feshbach.py`
+   need pair-raising/lowering moves in the BFS and the `S+S+`/`S-S-` bond
+   terms (complex Hermitian; transport increments `+-c_ij` as defined
+   below).  Gate: rerun the cubic-16 plane with the truncated builder and
+   calibrate the L-ladder against the exact 56-point grid now in
+   `campaign/outputs/jpmpm_fold_plane/`.
+2. **Dissolution boundary on FCC-32** (the headline question: does the
+   re-entrant shape survive on a healthy host?): bordered sector grounds
+   + continuum edge vs `(Jpm, Jpmpm)` on three rows
+   (Jpm = -0.125, -0.20, -0.30) x pp in {0.10..0.30}, L=1 scan + L=2 spot
+   checks.
+3. **Gauge-peak surface** on the same grid, free from the same runs
+   (multi-anchor band; quote the L-drift as the truncation error bar).
+4. Optional: **spinon side via typicality** (mTPQ-style trace on the full
+   2^32 space, ~34 GB per vector, matrix-free) at boundary-adjacent
+   points only, to restore approximate ratios on FCC-32.
+
+**Remote execution notes.**  Every scanner is a standalone script taking
+`(coupling, ...)` pairs on the command line and writing one json+npz per
+point (embarrassingly parallel by grid point; resume = rerun missing
+points).  Dependencies: numpy + scipy only, thread count via
+`OMP_NUM_THREADS`/`OPENBLAS_NUM_THREADS` (8 per job is calibrated).
+Measured per-point costs on a 32-core/125 GB node: cubic-16 plane point
+~15-50 min; FCC-32 L=1 multi-anchor coupling ~70 min; FCC-32 L=2 bordered
+sector ground ~155 s/sector (85 sectors); L=2 spaces are ~2.5 M states
+(XXZ) and will grow several-fold with pair moves — budget accordingly.
+
+The sections below are the frozen protocol definition and the original
+validation ladder; they remain the reference for what "winding-free"
+means microscopically.
+
 ## Scientific question
 
 Periodic QSI clusters contain ice-preserving paths that close only through a

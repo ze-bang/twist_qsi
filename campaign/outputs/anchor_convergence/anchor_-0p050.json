@@ -1,0 +1,67 @@
+{
+ "jpm": -0.05,
+ "trajectory": [
+  {
+   "step": 0,
+   "anchor": -0.07903165928153849,
+   "residual": 0.0019867251251604046,
+   "ground_multiplicity": 6,
+   "splitting": 0.00012945552769326463,
+   "splitting_over_width": 0.016683943185702838,
+   "band_width": 0.007759288451917076,
+   "schottky_T": 5.393980320552693e-05
+  },
+  {
+   "step": 1,
+   "anchor": -0.07699334515578381,
+   "residual": 5.264699599674683e-06,
+   "ground_multiplicity": 6,
+   "splitting": 3.219999934744866e-07,
+   "splitting_over_width": 4.186594757223132e-05,
+   "band_width": 0.007691214749622949,
+   "schottky_T": 1.3416666394770277e-07
+  },
+  {
+   "step": 2,
+   "anchor": -0.07699873228749929,
+   "residual": 3.218540532007319e-07,
+   "ground_multiplicity": 6,
+   "splitting": 2.0967302019614387e-08,
+   "splitting_over_width": 2.726188033497972e-06,
+   "band_width": 0.007691069640824166,
+   "schottky_T": 8.736375841505994e-09
+  },
+  {
+   "step": 3,
+   "anchor": -0.07699842192259715,
+   "residual": 1.8551254782339655e-08,
+   "ground_multiplicity": 6,
+   "splitting": 1.2081501632454916e-09,
+   "splitting_over_width": 1.570850116600864e-07,
+   "band_width": 0.007691059449133106,
+   "schottky_T": 5.033959013522882e-10
+  },
+  {
+   "step": 4,
+   "anchor": -0.07699840293939486,
+   "residual": 4.714562074070727e-13,
+   "ground_multiplicity": 6,
+   "splitting": 4.830164046509822e-13,
+   "splitting_over_width": 6.28023287251773e-11,
+   "band_width": 0.007691058826252442,
+   "schottky_T": 2.0125683527124258e-13
+  },
+  {
+   "step": 5,
+   "anchor": -0.07699840293987728,
+   "residual": 1.2559397966072083e-14,
+   "ground_multiplicity": 6,
+   "splitting": 4.382189056073571e-13,
+   "splitting_over_width": 5.6977708207283165e-11,
+   "band_width": 0.007691058826254121,
+   "schottky_T": 1.8259121066973213e-13
+  }
+ ],
+ "anchor": -0.07699840293987728,
+ "runtime": 22.987388414039742
+}

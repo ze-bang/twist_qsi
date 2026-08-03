@@ -1,0 +1,75 @@
+{
+ "jpm": -0.22,
+ "g4": 0.1936,
+ "g6": 0.127776,
+ "frame_ok": false,
+ "frame_error": "matrix is singular below cutoff: lambda_min=-5.424e-16",
+ "n_roots": 90,
+ "z_mean": 0.44497585222712294,
+ "hc_residue_over_width": 0.17685584810579483,
+ "periodic_n_levels": 65536,
+ "periodic_entropy_released": 0.6931129361911288,
+ "periodic_ground_degeneracy": 1,
+ "periodic_entropy_total": 0.6931129361911288,
+ "periodic_entropy_error": -3.424436881649395e-05,
+ "periodic_peaks": [
+  [
+   0.1212484,
+   0.2624
+  ]
+ ],
+ "periodic_gauge": null,
+ "periodic_spinon": 0.12124836333852729,
+ "periodic_resolved": false,
+ "periodic_grid_shift": null,
+ "periodic_min_C": 0.0,
+ "feshbach_n_levels": 65536,
+ "feshbach_entropy_released": 0.5811277068632226,
+ "feshbach_ground_degeneracy": 6,
+ "feshbach_entropy_total": 0.693112673689976,
+ "feshbach_entropy_error": -3.450686996930852e-05,
+ "feshbach_peaks": [
+  [
+   0.0049208,
+   0.015
+  ],
+  [
+   0.0324188,
+   0.1186
+  ],
+  [
+   0.3696878,
+   0.1901
+  ]
+ ],
+ "feshbach_gauge": 0.03241876048888729,
+ "feshbach_spinon": 0.3696877762825405,
+ "feshbach_resolved": true,
+ "feshbach_grid_shift": 0.0008030080790368821,
+ "feshbach_min_C": 0.0,
+ "hc_n_levels": 65536,
+ "hc_entropy_released": 0.6497911340908304,
+ "hc_ground_degeneracy": 2,
+ "hc_entropy_total": 0.693112832875827,
+ "hc_entropy_error": -3.4347684118252175e-05,
+ "hc_peaks": [
+  [
+   0.0073182,
+   0.0672
+  ],
+  [
+   0.0311209,
+   0.1089
+  ],
+  [
+   0.3718519,
+   0.1903
+  ]
+ ],
+ "hc_gauge": 0.031120914555272636,
+ "hc_spinon": 0.37185185799605175,
+ "hc_resolved": true,
+ "hc_grid_shift": 0.0008098242390093269,
+ "hc_min_C": 9.5007531009227e-22,
+ "runtime": 253.8619808870135
+}

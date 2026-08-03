@@ -1,0 +1,107 @@
+{
+ "jpm": -0.2,
+ "trajectory": [
+  {
+   "step": 0,
+   "anchor": -1.078210733644326,
+   "residual": 0.06210290203425428,
+   "ground_multiplicity": 6,
+   "splitting": 0.03985647166613848,
+   "splitting_over_width": 0.16124968294378214,
+   "band_width": 0.2471724033096796,
+   "schottky_T": 0.01660686319422437
+  },
+  {
+   "step": 1,
+   "anchor": -1.0030924755039,
+   "residual": 0.008112429703959423,
+   "ground_multiplicity": 6,
+   "splitting": 0.011927690737553287,
+   "splitting_over_width": 0.05281655768780219,
+   "band_width": 0.22583241429813872,
+   "schottky_T": 0.004969871140647203
+  },
+  {
+   "step": 2,
+   "anchor": -0.9918054546213998,
+   "residual": 0.00035701700595247576,
+   "ground_multiplicity": 6,
+   "splitting": 0.0005364210705824934,
+   "splitting_over_width": 0.0024132946767731894,
+   "band_width": 0.22227748469562814,
+   "schottky_T": 0.00022350877940937228
+  },
+  {
+   "step": 3,
+   "anchor": -0.9912858615889583,
+   "residual": 2.0104238281914988e-06,
+   "ground_multiplicity": 6,
+   "splitting": 3.023611142460858e-06,
+   "splitting_over_width": 1.3613010119660752e-05,
+   "band_width": 0.22211187062102977,
+   "schottky_T": 1.2598379760253575e-06
+  },
+  {
+   "step": 4,
+   "anchor": -0.9912829191020693,
+   "residual": 4.650465568190043e-10,
+   "ground_multiplicity": 6,
+   "splitting": 6.972923349835014e-10,
+   "splitting_over_width": 3.1393877276139176e-09,
+   "band_width": 0.22211093228470902,
+   "schottky_T": 2.905384729097923e-10
+  },
+  {
+   "step": 5,
+   "anchor": -0.9912829184212626,
+   "residual": 2.1781465520120946e-12,
+   "ground_multiplicity": 6,
+   "splitting": 2.1616042289451798e-12,
+   "splitting_over_width": 9.73209291772488e-12,
+   "band_width": 0.2221109320697391,
+   "schottky_T": 9.006684287271582e-13
+  },
+  {
+   "step": 6,
+   "anchor": -0.9912829184244364,
+   "residual": 2.170263968537256e-12,
+   "ground_multiplicity": 6,
+   "splitting": 1.2998491172311333e-12,
+   "splitting_over_width": 5.8522518685829215e-12,
+   "band_width": 0.22211093206859567,
+   "schottky_T": 5.416037988463056e-13
+  },
+  {
+   "step": 7,
+   "anchor": -0.9912829184228523,
+   "residual": 5.369038547087257e-13,
+   "ground_multiplicity": 6,
+   "splitting": 9.291456493087935e-13,
+   "splitting_over_width": 4.183250417506401e-12,
+   "band_width": 0.22211093206862076,
+   "schottky_T": 3.8714402054533065e-13
+  },
+  {
+   "step": 8,
+   "anchor": -0.9912829184223316,
+   "residual": 3.482769628249116e-13,
+   "ground_multiplicity": 6,
+   "splitting": 1.2332357357536239e-12,
+   "splitting_over_width": 5.552341455083927e-12,
+   "band_width": 0.2221109320689253,
+   "schottky_T": 5.138482232306767e-13
+  },
+  {
+   "step": 9,
+   "anchor": -0.9912829184225365,
+   "residual": 4.884981308350689e-15,
+   "ground_multiplicity": 6,
+   "splitting": 1.1622924844800764e-12,
+   "splitting_over_width": 5.232936864718108e-12,
+   "band_width": 0.22211093206886756,
+   "schottky_T": 4.842885352000319e-13
+  }
+ ],
+ "anchor": -0.9912829184225365,
+ "runtime": 39.04556834104005
+}

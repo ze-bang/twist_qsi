@@ -1,0 +1,94 @@
+{
+ "jpm": -0.02,
+ "g4": 0.0016,
+ "g6": 9.600000000000002e-05,
+ "frame_ok": true,
+ "gram_min": 0.9740166093206117,
+ "gap_above_band": 0.8855030497572176,
+ "mask_convergence": 2.0061175515768623e-05,
+ "band_width_polar": 0.0006757692358880935,
+ "n_roots": 90,
+ "z_mean": 0.9882409833381023,
+ "hc_residue_over_width": 0.0038360209286998842,
+ "periodic_n_levels": 65536,
+ "periodic_entropy_released": 0.693122968102037,
+ "periodic_ground_degeneracy": 1,
+ "periodic_entropy_total": 0.693122968102037,
+ "periodic_entropy_error": -2.4212457908290297e-05,
+ "periodic_peaks": [
+  [
+   0.0027132,
+   0.2439
+  ],
+  [
+   0.250034,
+   0.2946
+  ]
+ ],
+ "periodic_gauge": 0.0027131812130765797,
+ "periodic_spinon": 0.25003404051836686,
+ "periodic_resolved": true,
+ "periodic_grid_shift": 0.0017002469216905736,
+ "periodic_min_C": 0.0,
+ "polar_n_levels": 65536,
+ "polar_entropy_released": 0.5811377383723921,
+ "polar_ground_degeneracy": 6,
+ "polar_entropy_total": 0.6931227051991455,
+ "polar_entropy_error": -2.4475360799747214e-05,
+ "polar_peaks": [
+  [
+   9.41e-05,
+   0.1588
+  ],
+  [
+   0.250034,
+   0.2946
+  ]
+ ],
+ "polar_gauge": 9.40581838536225e-05,
+ "polar_spinon": 0.25003404051836686,
+ "polar_resolved": true,
+ "polar_grid_shift": 0.0011406223176616548,
+ "polar_min_C": 5.659136764788751e-23,
+ "feshbach_n_levels": 65536,
+ "feshbach_entropy_released": 0.5811377383723922,
+ "feshbach_ground_degeneracy": 6,
+ "feshbach_entropy_total": 0.6931227051991457,
+ "feshbach_entropy_error": -2.4475360799636192e-05,
+ "feshbach_peaks": [
+  [
+   9.41e-05,
+   0.1588
+  ],
+  [
+   0.250034,
+   0.2946
+  ]
+ ],
+ "feshbach_gauge": 9.40581838536225e-05,
+ "feshbach_spinon": 0.25003404051836686,
+ "feshbach_resolved": true,
+ "feshbach_grid_shift": 0.0011406223176616548,
+ "feshbach_min_C": 0.0,
+ "hc_n_levels": 65536,
+ "hc_entropy_released": 0.5813141634191656,
+ "hc_ground_degeneracy": 2,
+ "hc_entropy_total": 0.6246358622041622,
+ "hc_entropy_error": -0.06851131835578306,
+ "hc_peaks": [
+  [
+   9.41e-05,
+   0.1588
+  ],
+  [
+   0.250034,
+   0.2946
+  ]
+ ],
+ "hc_gauge": 9.40581838536225e-05,
+ "hc_spinon": 0.25003404051836686,
+ "hc_resolved": true,
+ "hc_grid_shift": 0.0011406223176616548,
+ "hc_min_C": 3.5330083728154493e-10,
+ "runtime": 263.3129056720063
+}

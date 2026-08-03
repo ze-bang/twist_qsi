@@ -88,11 +88,11 @@
       },
       "bare_low_peak": [
         0.025540187370845818,
-        0.2690057694228309
+        0.26900576942274845
       ],
       "clean_low_peak": [
         0.0012518336191648164,
-        0.1587018919761628
+        0.15870189197616208
       ]
     },
     "fcc32": {
@@ -182,11 +182,11 @@
       },
       "bare_low_peak_order3_band": [
         0.008769920988691607,
-        0.19514827078967367
+        0.19514827078967234
       ],
       "clean_low_peak_order3_band": [
         0.0006080816036057466,
-        0.181760660098934
+        0.18176066009894432
       ]
     }
   },
@@ -201,28 +201,28 @@
       0.210517794,
       0.2586358664
     ],
-    "cubic16_bare_low_temperature_heat_rmse": 0.08591012789031392,
-    "cubic16_clean_low_temperature_heat_rmse": 0.018798831234822913,
-    "cubic16_clean_full_heat_rmse": 0.024230876182853807,
-    "cubic16_bare_entropy_rmse": 0.051431954595985326,
-    "cubic16_clean_entropy_rmse": 0.04913680503408909,
+    "cubic16_bare_low_temperature_heat_rmse": 0.08591012789031405,
+    "cubic16_clean_low_temperature_heat_rmse": 0.018798831234826435,
+    "cubic16_clean_full_heat_rmse": 0.024230876182854372,
+    "cubic16_bare_entropy_rmse": 0.05143195459598493,
+    "cubic16_clean_entropy_rmse": 0.04913680503409191,
     "clean_low_peak_log10_error": 0.055977328812123604,
     "clean_high_peak_log10_error": 0.08310235125369893
   },
   "all_temperature": {
     "bare_high_peak": [
       0.25491251727984787,
-      0.28287964905206453
+      0.2828796490520627
     ],
     "clean_high_peak": [
       0.25491251727984787,
-      0.27982610488998666
+      0.27982610488998705
     ],
     "relative_high_peak_temperature_change": 0.0,
-    "relative_high_peak_height_change": 0.0107944992589971
+    "relative_high_peak_height_change": 0.01079449925898932
   },
   "band_separation": {
-    "cubic16_gap_above_lowest_90": 0.3874086812652293,
+    "cubic16_gap_above_lowest_90": 0.38740868126522454,
     "qualification": "spectral gap only; an eigenvector-overlap gate is still required for each exact pullback"
   },
   "character_convergence": {
@@ -260,11 +260,11 @@
     "qmc_entropy": {
       "status": "fail",
       "rmse_threshold": 0.02,
-      "rmse_reduction_fraction": 0.04462497254723019
+      "rmse_reduction_fraction": 0.04462497254716802
     },
     "qmc_relative_improvement": {
       "status": "pass",
-      "low_temperature_heat_rmse_reduction_fraction": 0.7811802671412107
+      "low_temperature_heat_rmse_reduction_fraction": 0.7811802671411701
     },
     "qmc_energy": {
       "status": "pending",

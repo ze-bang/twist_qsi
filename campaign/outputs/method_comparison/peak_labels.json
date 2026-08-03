@@ -1,0 +1,3832 @@
+[
+ {
+  "jpm": -0.3,
+  "g4": 0.36,
+  "g6": 0.32399999999999995,
+  "meta": {
+   "jpm": -0.3,
+   "g4": 0.36,
+   "g6": 0.32399999999999995,
+   "frame_ok": false,
+   "frame_error": "matrix is singular below cutoff: lambda_min=-1.331e-16",
+   "n_roots": 77,
+   "z_mean": 0.26165662589434824,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931042749805056,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931042749805056,
+   "periodic_entropy_error": -4.29055794396449e-05,
+   "periodic_peaks": [
+    [
+     0.1642438,
+     0.3177
+    ]
+   ],
+   "periodic_gauge": null,
+   "periodic_spinon": 0.16424375388801662,
+   "periodic_resolved": false,
+   "periodic_grid_shift": null,
+   "periodic_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6497824701548668,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.6931041689398634,
+   "hc_entropy_error": -4.301162008191195e-05,
+   "hc_peaks": [
+    [
+     0.0056278,
+     0.0353
+    ],
+    [
+     0.0419112,
+     0.0972
+    ],
+    [
+     0.4588018,
+     0.1832
+    ]
+   ],
+   "hc_gauge": 0.04191123551612193,
+   "hc_spinon": 0.4588017799462135,
+   "hc_resolved": false,
+   "hc_grid_shift": 0.0007601647079047424,
+   "hc_min_C": 1.4546258455958707e-21,
+   "runtime": 229.16085450397804
+  },
+  "periodic": [
+   {
+    "T": 0.16368286287011322,
+    "height": 0.31773188620893145,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 26.320288548186305,
+    "collapse_k": null,
+    "f_band": 0.6419215722244865,
+    "f_above": 0.35807842777551313
+   }
+  ],
+  "hc": [
+   {
+    "T": 0.00562967999368049,
+    "height": 0.03526359325036893,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 2.995404369898214,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 1.3819984852631324e-23
+   },
+   {
+    "T": 0.041853825896067134,
+    "height": 0.09721510483286852,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 18.6628154841294,
+    "collapse_k": null,
+    "f_band": 0.9810515885673875,
+    "f_above": 0.018948411432612534
+   },
+   {
+    "T": 0.45700327365328125,
+    "height": 0.18319260964090087,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 1877.8847183222665,
+    "collapse_k": null,
+    "f_band": 0.2618492725903451,
+    "f_above": 0.7381507274096549
+   }
+  ]
+ },
+ {
+  "jpm": -0.28,
+  "g4": 0.31360000000000005,
+  "g6": 0.2634240000000001,
+  "meta": {
+   "jpm": -0.28,
+   "g4": 0.31360000000000005,
+   "g6": 0.2634240000000001,
+   "frame_ok": false,
+   "frame_error": "matrix is singular below cutoff: lambda_min=-1.346e-16",
+   "n_roots": 77,
+   "z_mean": 0.29384388581481635,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931066878607155,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931066878607155,
+   "periodic_entropy_error": -4.0492699229788265e-05,
+   "periodic_peaks": [
+    [
+     0.1558386,
+     0.3081
+    ]
+   ],
+   "periodic_gauge": null,
+   "periodic_spinon": 0.15583861434005378,
+   "periodic_resolved": false,
+   "periodic_grid_shift": null,
+   "periodic_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.649784883878255,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.6931065826632515,
+   "hc_entropy_error": -4.059789669375036e-05,
+   "hc_peaks": [
+    [
+     0.0397664,
+     0.0984
+    ],
+    [
+     0.437871,
+     0.1841
+    ]
+   ],
+   "hc_gauge": 0.03976643685680299,
+   "hc_spinon": 0.4378709913985686,
+   "hc_resolved": false,
+   "hc_grid_shift": 0.0021469441589826443,
+   "hc_min_C": 8.120384458424815e-22,
+   "runtime": 228.70548741600942
+  },
+  "periodic": [
+   {
+    "T": 0.1561070329492094,
+    "height": 0.3080594911197747,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 26.25668338110312,
+    "collapse_k": null,
+    "f_band": 0.6502111088624714,
+    "f_above": 0.3497888911375283
+   }
+  ],
+  "hc": [
+   {
+    "T": 0.03970705442661793,
+    "height": 0.09838994909003085,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.441570976842947,
+    "collapse_k": null,
+    "f_band": 0.9862050846576844,
+    "f_above": 0.013794915342315523
+   },
+   {
+    "T": 0.43815252345599454,
+    "height": 0.18408797786983558,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 1839.574326779761,
+    "collapse_k": null,
+    "f_band": 0.2690622729803415,
+    "f_above": 0.7309377270196585
+   }
+  ]
+ },
+ {
+  "jpm": -0.25,
+  "g4": 0.25,
+  "g6": 0.1875,
+  "meta": {
+   "jpm": -0.25,
+   "g4": 0.25,
+   "g6": 0.1875,
+   "frame_ok": false,
+   "frame_error": "matrix is singular below cutoff: lambda_min=-4.140e-16",
+   "n_roots": 89,
+   "z_mean": 0.37161406286171045,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931099979174266,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931099979174266,
+   "periodic_entropy_error": -3.718264251872938e-05,
+   "periodic_peaks": [
+    [
+     0.1419441,
+     0.2884
+    ]
+   ],
+   "periodic_gauge": null,
+   "periodic_spinon": 0.14194406510337287,
+   "periodic_resolved": false,
+   "periodic_grid_shift": null,
+   "periodic_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6497881949925762,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.6931098937775728,
+   "hc_entropy_error": -3.728678237246985e-05,
+   "hc_peaks": [
+    [
+     0.0089247,
+     0.0582
+    ],
+    [
+     0.0358005,
+     0.1021
+    ],
+    [
+     0.4058756,
+     0.1863
+    ]
+   ],
+   "hc_gauge": 0.03580050147305948,
+   "hc_spinon": 0.40587558734752666,
+   "hc_resolved": false,
+   "hc_grid_shift": 0.0007864547409488498,
+   "hc_min_C": 8.57850976414097e-22,
+   "runtime": 232.84457889699843
+  },
+  "periodic": [
+   {
+    "T": 0.141991054124439,
+    "height": 0.2884039178520572,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 24.434574470481117,
+    "collapse_k": null,
+    "f_band": 0.6818875847375352,
+    "f_above": 0.3181124152624646
+   }
+  ],
+  "hc": [
+   {
+    "T": 0.0089008378942319,
+    "height": 0.05822958300952854,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 4.040058710529949,
+    "collapse_k": null,
+    "f_band": 0.9999999999999981,
+    "f_above": 2.2619126118287622e-15
+   },
+   {
+    "T": 0.03592687441757234,
+    "height": 0.10207337699347256,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 20.61208753180775,
+    "collapse_k": null,
+    "f_band": 0.9951600239658636,
+    "f_above": 0.004839976034136559
+   },
+   {
+    "T": 0.4048779066969396,
+    "height": 0.18632935560482783,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 1705.0081707012862,
+    "collapse_k": null,
+    "f_band": 0.2879881988584513,
+    "f_above": 0.7120118011415487
+   }
+  ]
+ },
+ {
+  "jpm": -0.22,
+  "g4": 0.1936,
+  "g6": 0.127776,
+  "meta": {
+   "jpm": -0.22,
+   "g4": 0.1936,
+   "g6": 0.127776,
+   "frame_ok": false,
+   "frame_error": "matrix is singular below cutoff: lambda_min=-5.424e-16",
+   "n_roots": 90,
+   "z_mean": 0.44497585222712294,
+   "hc_residue_over_width": 0.17685584810579483,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931129361911288,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931129361911288,
+   "periodic_entropy_error": -3.424436881649395e-05,
+   "periodic_peaks": [
+    [
+     0.1212484,
+     0.2624
+    ]
+   ],
+   "periodic_gauge": null,
+   "periodic_spinon": 0.12124836333852729,
+   "periodic_resolved": false,
+   "periodic_grid_shift": null,
+   "periodic_min_C": 0.0,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811277068632226,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.693112673689976,
+   "feshbach_entropy_error": -3.450686996930852e-05,
+   "feshbach_peaks": [
+    [
+     0.0049208,
+     0.015
+    ],
+    [
+     0.0324188,
+     0.1186
+    ],
+    [
+     0.3696878,
+     0.1901
+    ]
+   ],
+   "feshbach_gauge": 0.03241876048888729,
+   "feshbach_spinon": 0.3696877762825405,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0008030080790368821,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6497911340908304,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.693112832875827,
+   "hc_entropy_error": -3.4347684118252175e-05,
+   "hc_peaks": [
+    [
+     0.0073182,
+     0.0672
+    ],
+    [
+     0.0311209,
+     0.1089
+    ],
+    [
+     0.3718519,
+     0.1903
+    ]
+   ],
+   "hc_gauge": 0.031120914555272636,
+   "hc_spinon": 0.37185185799605175,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0008098242390093269,
+   "hc_min_C": 9.5007531009227e-22,
+   "runtime": 253.8619808870135
+  },
+  "periodic": [
+   {
+    "T": 0.12124351165465379,
+    "height": 0.26238251768872933,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 18.837349074278904,
+    "collapse_k": null,
+    "f_band": 0.7758016620939007,
+    "f_above": 0.2241983379060992
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.004909397863257802,
+    "height": 0.0150201109701487,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 7.085827325219456,
+    "collapse_k": null,
+    "f_band": 1.0000000000000007,
+    "f_above": 9.604399533938156e-31
+   },
+   {
+    "T": 0.03250657405981634,
+    "height": 0.11861243348968518,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 23.363037044709998,
+    "collapse_k": null,
+    "f_band": 0.9991080999726268,
+    "f_above": 0.000891900027372996
+   },
+   {
+    "T": 0.37021101994657024,
+    "height": 0.19006378418645495,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 1536.6625916369642,
+    "collapse_k": null,
+    "f_band": 0.3137127626862547,
+    "f_above": 0.6862872373137456
+   }
+  ],
+  "hc": [
+   {
+    "T": 0.007325228396092152,
+    "height": 0.0672057613788578,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 3.857883994660234,
+    "collapse_k": null,
+    "f_band": 1.0000000000000002,
+    "f_above": 6.769472201066874e-21
+   },
+   {
+    "T": 0.031165723035987362,
+    "height": 0.10893754951548139,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 21.321602950416843,
+    "collapse_k": null,
+    "f_band": 0.9994143239505422,
+    "f_above": 0.0005856760494575029
+   },
+   {
+    "T": 0.37021101994657024,
+    "height": 0.19034446871040686,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 1526.857221587936,
+    "collapse_k": null,
+    "f_band": 0.3126578456747674,
+    "f_above": 0.6873421543252326
+   }
+  ]
+ },
+ {
+  "jpm": -0.2,
+  "g4": 0.16000000000000003,
+  "g6": 0.09600000000000003,
+  "meta": {
+   "jpm": -0.2,
+   "g4": 0.16000000000000003,
+   "g6": 0.09600000000000003,
+   "frame_ok": true,
+   "gram_min": 0.27185572602544,
+   "gap_above_band": 0.04323138813909411,
+   "mask_convergence": 0.052514066171539975,
+   "band_width_polar": 0.20919121897544934,
+   "n_roots": 90,
+   "z_mean": 0.4984689186921933,
+   "hc_residue_over_width": 0.17390270086338994,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931146881235611,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931146881235611,
+   "periodic_entropy_error": -3.249243638414612e-05,
+   "periodic_peaks": [
+    [
+     0.1011801,
+     0.2457
+    ],
+    [
+     0.2414293,
+     0.2327
+    ]
+   ],
+   "periodic_gauge": 0.10118009236008157,
+   "periodic_spinon": 0.24142928564681354,
+   "periodic_resolved": false,
+   "periodic_grid_shift": 0.0023022702541529716,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.6497928880032765,
+   "polar_ground_degeneracy": 2,
+   "polar_entropy_total": 0.6931145867882731,
+   "polar_entropy_error": -3.259377167219579e-05,
+   "polar_peaks": [
+    [
+     0.0174623,
+     0.1717
+    ],
+    [
+     0.3466982,
+     0.1935
+    ]
+   ],
+   "polar_gauge": 0.017462270883467596,
+   "polar_spinon": 0.34669819163705,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.0009062291869068595,
+   "polar_min_C": 2.1935957361194833e-24,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811294587647167,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931144255914701,
+   "feshbach_entropy_error": -3.275496847521264e-05,
+   "feshbach_peaks": [
+    [
+     0.0283462,
+     0.1234
+    ],
+    [
+     0.3466982,
+     0.1935
+    ]
+   ],
+   "feshbach_gauge": 0.0283461781306069,
+   "feshbach_spinon": 0.34669819163705,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0008254042075497292,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6497928864541993,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.6931145852391959,
+   "hc_entropy_error": -3.259532074939564e-05,
+   "hc_peaks": [
+    [
+     0.0060361,
+     0.0598
+    ],
+    [
+     0.0275309,
+     0.1155
+    ],
+    [
+     0.3466982,
+     0.1946
+    ]
+   ],
+   "hc_gauge": 0.02753088594249626,
+   "hc_spinon": 0.34669819163705,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0020857778738450072,
+   "hc_min_C": 5.811433668992187e-22,
+   "runtime": 265.26719394000247
+  },
+  "periodic": [
+   {
+    "T": 0.10083754965138267,
+    "height": 0.24572725559567055,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 12.6418913364753,
+    "collapse_k": null,
+    "f_band": 0.891030018313991,
+    "f_above": 0.1089699816860091
+   },
+   {
+    "T": 0.24166995152555756,
+    "height": 0.23270023257454756,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 331.4863635870398,
+    "collapse_k": null,
+    "f_band": 0.3590687370845229,
+    "f_above": 0.6409312629154773
+   }
+  ],
+  "polar": [
+   {
+    "T": 0.017463640888133576,
+    "height": 0.17171100904164394,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 11.264133533790783,
+    "collapse_k": null,
+    "f_band": 0.9999999644101312,
+    "f_above": 3.558986880165542e-08
+   },
+   {
+    "T": 0.34754284457702095,
+    "height": 0.19349737637395173,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 1411.9604152704653,
+    "collapse_k": null,
+    "f_band": 0.32882034936093874,
+    "f_above": 0.6711796506390613
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.02834756245652267,
+    "height": 0.12339553107383545,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 22.653230490657204,
+    "collapse_k": null,
+    "f_band": 0.9998978034633952,
+    "f_above": 0.00010219653660481955
+   },
+   {
+    "T": 0.3457176897658741,
+    "height": 0.1934898940008225,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 1389.3400243945657,
+    "collapse_k": null,
+    "f_band": 0.32900337966359555,
+    "f_above": 0.6709966203364046
+   }
+  ],
+  "hc": [
+   {
+    "T": 0.006028530312824578,
+    "height": 0.05978643246048103,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 3.886891674307172,
+    "collapse_k": null,
+    "f_band": 0.9999999999999997,
+    "f_above": 1.4112699237731198e-27
+   },
+   {
+    "T": 0.027465987968598355,
+    "height": 0.11545195895478665,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 21.377231490253926,
+    "collapse_k": null,
+    "f_band": 0.9999393045580798,
+    "f_above": 6.069544192003165e-05
+   },
+   {
+    "T": 0.3457176897658741,
+    "height": 0.1945993243407757,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 1372.3859009728633,
+    "collapse_k": null,
+    "f_band": 0.3301022854812545,
+    "f_above": 0.6698977145187456
+   }
+  ]
+ },
+ {
+  "jpm": -0.18,
+  "g4": 0.1296,
+  "g6": 0.06998399999999999,
+  "meta": {
+   "jpm": -0.18,
+   "g4": 0.1296,
+   "g6": 0.06998399999999999,
+   "frame_ok": true,
+   "gram_min": 0.3596680460652171,
+   "gap_above_band": 0.1209347344712638,
+   "mask_convergence": 0.039083315159048726,
+   "band_width_polar": 0.15690961031300088,
+   "n_roots": 90,
+   "z_mean": 0.5550150256350883,
+   "hc_residue_over_width": 0.17501159490508347,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931162742630759,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931162742630759,
+   "periodic_entropy_error": -3.090629686941515e-05,
+   "periodic_peaks": [
+    [
+     0.0834535,
+     0.2359
+    ],
+    [
+     0.2589455,
+     0.2335
+    ]
+   ],
+   "periodic_gauge": 0.08345349473280224,
+   "periodic_spinon": 0.2589454765210064,
+   "periodic_resolved": false,
+   "periodic_grid_shift": 0.002270236226256883,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.6497944740969143,
+   "polar_ground_degeneracy": 2,
+   "polar_entropy_total": 0.6931161728819109,
+   "polar_entropy_error": -3.100767803443372e-05,
+   "polar_peaks": [
+    [
+     0.005371,
+     0.0652
+    ],
+    [
+     0.0159984,
+     0.1292
+    ],
+    [
+     0.323246,
+     0.1989
+    ]
+   ],
+   "polar_gauge": 0.01599844404361258,
+   "polar_spinon": 0.3232460279536291,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.0009208368072797235,
+   "polar_min_C": 4.008204258877611e-24,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811310448572493,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931160116840027,
+   "feshbach_entropy_error": -3.1168875942566565e-05,
+   "feshbach_peaks": [
+    [
+     0.0239322,
+     0.1295
+    ],
+    [
+     0.323246,
+     0.1989
+    ]
+   ],
+   "feshbach_gauge": 0.023932244348368412,
+   "feshbach_spinon": 0.3232460279536291,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0008536435187220803,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6497944729396619,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.6931161717246584,
+   "hc_entropy_error": -3.100883528683873e-05,
+   "hc_peaks": [
+    [
+     0.0037621,
+     0.0471
+    ],
+    [
+     0.0235168,
+     0.1232
+    ],
+    [
+     0.323246,
+     0.2007
+    ]
+   ],
+   "hc_gauge": 0.023516832911304443,
+   "hc_spinon": 0.3232460279536291,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.002059562603890952,
+   "hc_min_C": 1.5573252139652635e-21,
+   "runtime": 262.67641258303775
+  },
+  "periodic": [
+   {
+    "T": 0.08342559480025918,
+    "height": 0.23586075897268352,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 9.273158371398441,
+    "collapse_k": null,
+    "f_band": 0.9630236366649347,
+    "f_above": 0.03697636333506506
+   },
+   {
+    "T": 0.2587917306323107,
+    "height": 0.23348229740625748,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 481.377538490179,
+    "collapse_k": null,
+    "f_band": 0.3577814634216977,
+    "f_above": 0.6422185365783024
+   }
+  ],
+  "polar": [
+   {
+    "T": 0.0053691182134586865,
+    "height": 0.06522341321872885,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 3.8110547586613888,
+    "collapse_k": null,
+    "f_band": 0.9999999999999996,
+    "f_above": 1.7765142076463996e-31
+   },
+   {
+    "T": 0.015968350453896052,
+    "height": 0.1291499422291421,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 17.58584769147756,
+    "collapse_k": null,
+    "f_band": 0.99999999832277,
+    "f_above": 1.677230126094485e-09
+   },
+   {
+    "T": 0.32284484949773423,
+    "height": 0.1988999231845268,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 1242.1998698396715,
+    "collapse_k": null,
+    "f_band": 0.3440102435340959,
+    "f_above": 0.655989756465904
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.023951887637781447,
+    "height": 0.12951354646599922,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 21.793943685791916,
+    "collapse_k": null,
+    "f_band": 0.9999960934186325,
+    "f_above": 3.906581367456486e-06
+   },
+   {
+    "T": 0.32284484949773423,
+    "height": 0.1989357475487594,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 1242.0956959444625,
+    "collapse_k": null,
+    "f_band": 0.34409526281179176,
+    "f_above": 0.6559047371882082
+   }
+  ],
+  "hc": [
+   {
+    "T": 0.003773034428052051,
+    "height": 0.04708797547930473,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 3.5425965884206154,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 6.182562085048693e-49
+   },
+   {
+    "T": 0.02345269462862714,
+    "height": 0.12316230761396718,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 21.11513816909146,
+    "collapse_k": null,
+    "f_band": 0.9999980107337537,
+    "f_above": 1.9892662462257956e-06
+   },
+   {
+    "T": 0.32284484949773423,
+    "height": 0.20067777424980707,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 1220.8331535231596,
+    "collapse_k": null,
+    "f_band": 0.3456872229838995,
+    "f_above": 0.6543127770161006
+   }
+  ]
+ },
+ {
+  "jpm": -0.15,
+  "g4": 0.09,
+  "g6": 0.040499999999999994,
+  "meta": {
+   "jpm": -0.15,
+   "g4": 0.09,
+   "g6": 0.040499999999999994,
+   "frame_ok": true,
+   "gram_min": 0.52715676441978,
+   "gap_above_band": 0.1972583219280853,
+   "mask_convergence": 0.029300744338932594,
+   "band_width_polar": 0.09676521652812198,
+   "n_roots": 90,
+   "z_mean": 0.6455127582650992,
+   "hc_residue_over_width": 0.13824855534873368,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.693118342123686,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.693118342123686,
+   "periodic_entropy_error": -2.8838436259337463e-05,
+   "periodic_peaks": [
+    [
+     0.0634316,
+     0.2321
+    ],
+    [
+     0.2635196,
+     0.239
+    ]
+   ],
+   "periodic_gauge": 0.06343163054819478,
+   "periodic_spinon": 0.26351960063578456,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.0006910349538504779,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.5811331126140541,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931180794408075,
+   "polar_entropy_error": -2.910111913778657e-05,
+   "polar_peaks": [
+    [
+     0.0029962,
+     0.0104
+    ],
+    [
+     0.0132728,
+     0.1243
+    ],
+    [
+     0.2910085,
+     0.2125
+    ]
+   ],
+   "polar_gauge": 0.01327278526512367,
+   "polar_spinon": 0.29100846881469583,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.0038769281457817772,
+   "polar_min_C": 5.682945663866477e-24,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811331126139994,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931180794407528,
+   "feshbach_entropy_error": -2.9101119192520564e-05,
+   "feshbach_peaks": [
+    [
+     0.0173606,
+     0.1394
+    ],
+    [
+     0.2910085,
+     0.2126
+    ]
+   ],
+   "feshbach_gauge": 0.017360644979810807,
+   "feshbach_spinon": 0.29100846881469583,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0009072030216323856,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6497965411789955,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.6931182399639921,
+   "hc_entropy_error": -2.8940595953153014e-05,
+   "hc_peaks": [
+    [
+     0.001263,
+     0.0424
+    ],
+    [
+     0.0171592,
+     0.1352
+    ],
+    [
+     0.292712,
+     0.2141
+    ]
+   ],
+   "hc_gauge": 0.017159164039976083,
+   "hc_spinon": 0.29271197687268874,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0009091506939264971,
+   "hc_min_C": 4.160670775351891e-21,
+   "runtime": 267.27342966600554
+  },
+  "periodic": [
+   {
+    "T": 0.06344367797550858,
+    "height": 0.23211799150867046,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 7.315247982385565,
+    "collapse_k": null,
+    "f_band": 0.9962301814840893,
+    "f_above": 0.003769818515910662
+   },
+   {
+    "T": 0.2643001391458853,
+    "height": 0.23904746299728638,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 614.8712500183074,
+    "collapse_k": null,
+    "f_band": 0.3585126433389204,
+    "f_above": 0.6414873566610796
+   }
+  ],
+  "polar": [
+   {
+    "T": 0.002992773172842274,
+    "height": 0.010445221689062607,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 6.7837906332038544,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 3.940879247255995e-66
+   },
+   {
+    "T": 0.013280787646038206,
+    "height": 0.12431657100429955,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 21.307739515443295,
+    "collapse_k": null,
+    "f_band": 0.9999999999998003,
+    "f_above": 1.994393631595639e-13
+   },
+   {
+    "T": 0.2905754224063189,
+    "height": 0.21250755366628296,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 1001.0322271161864,
+    "collapse_k": null,
+    "f_band": 0.35871756703014035,
+    "f_above": 0.6412824329698599
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.017371928891513677,
+    "height": 0.13938998010526732,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 20.765381670527372,
+    "collapse_k": null,
+    "f_band": 0.9999999995976511,
+    "f_above": 4.0234921081599083e-10
+   },
+   {
+    "T": 0.2905754224063189,
+    "height": 0.2125501273069151,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 1000.8614596225509,
+    "collapse_k": null,
+    "f_band": 0.3587811360913577,
+    "f_above": 0.6412188639086424
+   }
+  ],
+  "hc": [
+   {
+    "T": 0.0012619638939160302,
+    "height": 0.042406149413625416,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 3.1419209316167858,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 3.837552462170898e-165
+   },
+   {
+    "T": 0.01718994727214545,
+    "height": 0.13521759351292945,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 20.524662096746408,
+    "collapse_k": null,
+    "f_band": 0.9999999997308383,
+    "f_above": 2.6916131792768656e-10
+   },
+   {
+    "T": 0.29210946346324335,
+    "height": 0.21411781534617344,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 1001.0595608328116,
+    "collapse_k": null,
+    "f_band": 0.3592607563497792,
+    "f_above": 0.640739243650221
+   }
+  ]
+ },
+ {
+  "jpm": -0.13,
+  "g4": 0.06760000000000001,
+  "g6": 0.026364000000000002,
+  "meta": {
+   "jpm": -0.13,
+   "g4": 0.06760000000000001,
+   "g6": 0.026364000000000002,
+   "frame_ok": true,
+   "gram_min": 0.6063409948753347,
+   "gap_above_band": 0.2709869524430772,
+   "mask_convergence": 0.02269662952086554,
+   "band_width_polar": 0.0748519790250099,
+   "n_roots": 90,
+   "z_mean": 0.7077401957109799,
+   "hc_residue_over_width": 0.11448081469110029,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.693119512806857,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.693119512806857,
+   "periodic_entropy_error": -2.766775308826741e-05,
+   "periodic_peaks": [
+    [
+     0.0523185,
+     0.2331
+    ],
+    [
+     0.261986,
+     0.2451
+    ]
+   ],
+   "periodic_gauge": 0.05231850576897974,
+   "periodic_spinon": 0.2619859846631196,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.0007231650906356357,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.5811342832348928,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931192500616462,
+   "polar_entropy_error": -2.793049829907801e-05,
+   "polar_peaks": [
+    [
+     0.0106325,
+     0.139
+    ],
+    [
+     0.2761162,
+     0.2247
+    ]
+   ],
+   "polar_gauge": 0.01063254427903284,
+   "polar_spinon": 0.27611617165194224,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.0009890085212431732,
+   "polar_min_C": 1.1822243372517284e-25,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811342832348595,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931192500616129,
+   "feshbach_entropy_error": -2.79304983323847e-05,
+   "feshbach_peaks": [
+    [
+     0.0131187,
+     0.1451
+    ],
+    [
+     0.2761162,
+     0.2247
+    ]
+   ],
+   "feshbach_gauge": 0.01311874644614249,
+   "feshbach_spinon": 0.27611617165194224,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0009539482027398627,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6497977120357494,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.693119410820746,
+   "hc_entropy_error": -2.7769739199268173e-05,
+   "hc_peaks": [
+    [
+     0.0005418,
+     0.0422
+    ],
+    [
+     0.0130424,
+     0.1423
+    ],
+    [
+     0.2777325,
+     0.226
+    ]
+   ],
+   "hc_gauge": 0.013042398732186496,
+   "hc_spinon": 0.27773250304348984,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0009549220838940276,
+   "hc_min_C": 1.2509969040946108e-19,
+   "runtime": 257.4339986210107
+  },
+  "periodic": [
+   {
+    "T": 0.05221299803245384,
+    "height": 0.23310621236889614,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 6.863096870644625,
+    "collapse_k": null,
+    "f_band": 0.9995968349777385,
+    "f_above": 0.0004031650222611285
+   },
+   {
+    "T": 0.26291214144121094,
+    "height": 0.24505987370219703,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 666.1137113206614,
+    "collapse_k": null,
+    "f_band": 0.35773786277567415,
+    "f_above": 0.6422621372243259
+   }
+  ],
+  "polar": [
+   {
+    "T": 0.010645850551512548,
+    "height": 0.13900478402380126,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.942740369543664,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 1.4084644679487246e-18
+   },
+   {
+    "T": 0.27567119290782394,
+    "height": 0.22468006007114905,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 893.0052561423331,
+    "collapse_k": null,
+    "f_band": 0.36030528920471117,
+    "f_above": 0.6396947107952886
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.013141663242674326,
+    "height": 0.14512631376810894,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 20.325203535792372,
+    "collapse_k": null,
+    "f_band": 0.9999999999999939,
+    "f_above": 6.102911232719273e-15
+   },
+   {
+    "T": 0.27567119290782394,
+    "height": 0.2247013898597029,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 892.9251350923028,
+    "collapse_k": null,
+    "f_band": 0.36033097572884387,
+    "f_above": 0.639669024271156
+   }
+  ],
+  "hc": [
+   {
+    "T": 0.0005406053065837386,
+    "height": 0.04218687476716902,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 3.131239976865225,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.013072648529040875,
+    "height": 0.14225199900676885,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 20.242719972169173,
+    "collapse_k": null,
+    "f_band": 0.9999999999999943,
+    "f_above": 5.727843898055751e-15
+   },
+   {
+    "T": 0.2771265497464371,
+    "height": 0.22601250713194898,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 895.1505021561538,
+    "collapse_k": null,
+    "f_band": 0.3605295974904567,
+    "f_above": 0.6394704025095431
+   }
+  ]
+ },
+ {
+  "jpm": -0.11,
+  "g4": 0.0484,
+  "g6": 0.015972,
+  "meta": {
+   "jpm": -0.11,
+   "g4": 0.0484,
+   "g6": 0.015972,
+   "frame_ok": true,
+   "gram_min": 0.6853436050344061,
+   "gap_above_band": 0.36231641438205336,
+   "mask_convergence": 0.012249938108207348,
+   "band_width_polar": 0.05428374948061082,
+   "n_roots": 90,
+   "z_mean": 0.7698256567696726,
+   "hc_residue_over_width": 0.08911609612434711,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931205169176042,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931205169176042,
+   "periodic_entropy_error": -2.6663642341051563e-05,
+   "periodic_peaks": [
+    [
+     0.0416673,
+     0.2347
+    ],
+    [
+     0.2604613,
+     0.2528
+    ]
+   ],
+   "periodic_gauge": 0.04166732295680358,
+   "periodic_spinon": 0.260461293939074,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.0007611384005161703,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.5811352872908684,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931202541176218,
+   "polar_entropy_error": -2.6926442323493838e-05,
+   "polar_peaks": [
+    [
+     0.0079413,
+     0.1493
+    ],
+    [
+     0.2666138,
+     0.2387
+    ]
+   ],
+   "polar_gauge": 0.007941342964508939,
+   "polar_spinon": 0.26661381761962333,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.0010377054453463153,
+   "polar_min_C": 9.19749990396724e-26,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811352872908879,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931202541176413,
+   "feshbach_entropy_error": -2.6926442303953912e-05,
+   "feshbach_peaks": [
+    [
+     0.0091889,
+     0.1497
+    ],
+    [
+     0.2666138,
+     0.2387
+    ]
+   ],
+   "feshbach_gauge": 0.00918894339438041,
+   "feshbach_spinon": 0.26661381761962333,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0019032276225842137,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6497987162676127,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.6931204150526092,
+   "hc_entropy_error": -2.6765507336046213e-05,
+   "hc_peaks": [
+    [
+     0.000184,
+     0.0419
+    ],
+    [
+     0.0091355,
+     0.1479
+    ],
+    [
+     0.2666138,
+     0.2397
+    ]
+   ],
+   "hc_gauge": 0.009135466118581813,
+   "hc_spinon": 0.26661381761962333,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0010143306261278795,
+   "hc_min_C": 5.233911107596453e-21,
+   "runtime": 259.7042383099906
+  },
+  "periodic": [
+   {
+    "T": 0.04163402648747312,
+    "height": 0.23468898796017942,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 6.663311452595888,
+    "collapse_k": null,
+    "f_band": 0.9999867396713018,
+    "f_above": 1.3260328698044272e-05
+   },
+   {
+    "T": 0.2601579753638674,
+    "height": 0.25280453123405683,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 698.5492876763254,
+    "collapse_k": null,
+    "f_band": 0.35575131839885005,
+    "f_above": 0.64424868160115
+   }
+  ],
+  "polar": [
+   {
+    "T": 0.007969097821244376,
+    "height": 0.14929456840721142,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.452606049430727,
+    "collapse_k": null,
+    "f_band": 0.9999999999999998,
+    "f_above": 2.2477195825166256e-27
+   },
+   {
+    "T": 0.2656954645365981,
+    "height": 0.23873492491664303,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 823.718338639276,
+    "collapse_k": null,
+    "f_band": 0.35810669736472195,
+    "f_above": 0.6418933026352781
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.009186527657792433,
+    "height": 0.14967571143910305,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.923470310807843,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 1.0722987746772817e-23
+   },
+   {
+    "T": 0.2656954645365981,
+    "height": 0.23873851805948515,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 823.7101643174077,
+    "collapse_k": null,
+    "f_band": 0.3581121373248077,
+    "f_above": 0.6418878626751922
+   }
+  ],
+  "hc": [
+   {
+    "T": 0.00018369473696173765,
+    "height": 0.04186488143773771,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 3.1309775913607893,
+    "collapse_k": null,
+    "f_band": 1.0000000000000002,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.009138283720637692,
+    "height": 0.147890018960789,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.767722947418594,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 8.64948281554699e-24
+   },
+   {
+    "T": 0.2670981562985593,
+    "height": 0.23969424226598138,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 829.242594774358,
+    "collapse_k": null,
+    "f_band": 0.3586488421891162,
+    "f_above": 0.6413511578108838
+   }
+  ]
+ },
+ {
+  "jpm": -0.09,
+  "g4": 0.0324,
+  "g6": 0.008747999999999999,
+  "meta": {
+   "jpm": -0.09,
+   "g4": 0.0324,
+   "g6": 0.008747999999999999,
+   "frame_ok": true,
+   "gram_min": 0.7578333635132428,
+   "gap_above_band": 0.4675908399313677,
+   "mask_convergence": 0.005374688465408478,
+   "band_width_polar": 0.03539994300379459,
+   "n_roots": 90,
+   "z_mean": 0.8301462857663391,
+   "hc_residue_over_width": 0.0541420389346185,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931213542329814,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931213542329814,
+   "periodic_entropy_error": -2.5826326963906965e-05,
+   "periodic_peaks": [
+    [
+     0.0314863,
+     0.2361
+    ],
+    [
+     0.2574385,
+     0.2621
+    ]
+   ],
+   "periodic_gauge": 0.03148633277136431,
+   "periodic_spinon": 0.25743848076857023,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.0008078767599952741,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.581136124562073,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931210913888264,
+   "polar_entropy_error": -2.6089171118903742e-05,
+   "polar_peaks": [
+    [
+     0.0052778,
+     0.1548
+    ],
+    [
+     0.2604613,
+     0.2537
+    ]
+   ],
+   "polar_gauge": 0.005277805796297981,
+   "polar_spinon": 0.260461293939074,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.0018109687844192202,
+   "polar_min_C": 9.799375061263764e-25,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811361245621035,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931210913888569,
+   "feshbach_entropy_error": -2.608917108837261e-05,
+   "feshbach_peaks": [
+    [
+     0.0057607,
+     0.1531
+    ],
+    [
+     0.2604613,
+     0.2537
+    ]
+   ],
+   "feshbach_gauge": 0.005760714869149218,
+   "feshbach_spinon": 0.260461293939074,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0010912747981117743,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6497995536624533,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.6931212524474499,
+   "hc_entropy_error": -2.592811249535476e-05,
+   "hc_peaks": [
+    [
+     4.48e-05,
+     0.0414
+    ],
+    [
+     0.0057607,
+     0.1521
+    ],
+    [
+     0.2604613,
+     0.2543
+    ]
+   ],
+   "hc_gauge": 0.005760714869149218,
+   "hc_spinon": 0.260461293939074,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.001825536536325445,
+   "hc_min_C": 2.1251896759916695e-19,
+   "runtime": 260.23734185897047
+  },
+  "periodic": [
+   {
+    "T": 0.03149565940269518,
+    "height": 0.23608026197345236,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 6.603447106688376,
+    "collapse_k": null,
+    "f_band": 0.9999999585820541,
+    "f_above": 4.141794574701415e-08
+   },
+   {
+    "T": 0.25743266086690253,
+    "height": 0.26207252676836834,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 721.7239472389333,
+    "collapse_k": null,
+    "f_band": 0.3535216937075314,
+    "f_above": 0.6464783062924687
+   }
+  ],
+  "polar": [
+   {
+    "T": 0.005284972336437834,
+    "height": 0.15475342523259092,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.321985225093062,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 2.0490620166693506e-46
+   },
+   {
+    "T": 0.2601579753638674,
+    "height": 0.2536848389917635,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 792.4691537195918,
+    "collapse_k": null,
+    "f_band": 0.35625889722790716,
+    "f_above": 0.6437411027720928
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.00574950830940805,
+    "height": 0.15310156611068856,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.533245340514906,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 1.3154126018488791e-42
+   },
+   {
+    "T": 0.2601579753638674,
+    "height": 0.2536821743721672,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 792.4839922727646,
+    "collapse_k": null,
+    "f_band": 0.35625890941187144,
+    "f_above": 0.6437410905881286
+   }
+  ],
+  "hc": [
+   {
+    "T": 4.479689589102979e-05,
+    "height": 0.04139539257912662,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 3.119813768209744,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.00574950830940805,
+    "height": 0.15212982174481687,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.577906643961843,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 1.1857893441374187e-42
+   },
+   {
+    "T": 0.2601579753638674,
+    "height": 0.254267519789582,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 785.1433292051697,
+    "collapse_k": null,
+    "f_band": 0.3548499917690592,
+    "f_above": 0.6451500082309409
+   }
+  ]
+ },
+ {
+  "jpm": -0.07,
+  "g4": 0.019600000000000003,
+  "g6": 0.004116000000000002,
+  "meta": {
+   "jpm": -0.07,
+   "g4": 0.019600000000000003,
+   "g6": 0.004116000000000002,
+   "frame_ok": true,
+   "gram_min": 0.8220407473439889,
+   "gap_above_band": 0.5826565730255147,
+   "mask_convergence": 0.0020463209547980366,
+   "band_width_polar": 0.01970462393800021,
+   "n_roots": 90,
+   "z_mean": 0.8865845508275606,
+   "hc_residue_over_width": 0.02531896010351039,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931220245299383,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931220245299383,
+   "periodic_entropy_error": -2.5156030006967534e-05,
+   "periodic_peaks": [
+    [
+     0.0217984,
+     0.2372
+    ],
+    [
+     0.2544507,
+     0.2723
+    ]
+   ],
+   "periodic_gauge": 0.02179844876214044,
+   "periodic_spinon": 0.25445074920011784,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.0008692241694152614,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.5811367948276329,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931217616543863,
+   "polar_entropy_error": -2.5418905558960425e-05,
+   "polar_peaks": [
+    [
+     0.0029271,
+     0.1573
+    ],
+    [
+     0.2559403,
+     0.2683
+    ]
+   ],
+   "polar_gauge": 0.0029270628356284478,
+   "polar_spinon": 0.25594025534195025,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.0012042668322127525,
+   "polar_min_C": 2.970333545838816e-25,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.581136794827649,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931217616544024,
+   "feshbach_entropy_error": -2.541890554286219e-05,
+   "feshbach_peaks": [
+    [
+     0.0030849,
+     0.1556
+    ],
+    [
+     0.2559403,
+     0.2683
+    ]
+   ],
+   "feshbach_gauge": 0.0030849336669580203,
+   "feshbach_spinon": 0.25594025534195025,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0017216152550328934,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6498002240063897,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.6931219227913863,
+   "hc_entropy_error": -2.5257768558994975e-05,
+   "hc_peaks": [
+    [
+     6.8e-06,
+     0.0408
+    ],
+    [
+     0.003067,
+     0.1552
+    ],
+    [
+     0.2559403,
+     0.2686
+    ]
+   ],
+   "hc_gauge": 0.0030669801502752293,
+   "hc_spinon": 0.25594025534195025,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.00412211595821943,
+   "hc_min_C": 6.510345171372782e-17,
+   "runtime": 259.9709025690099
+  },
+  "periodic": [
+   {
+    "T": 0.02178603814131316,
+    "height": 0.23723472655220842,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 6.548976731560009,
+    "collapse_k": null,
+    "f_band": 0.9999999999994463,
+    "f_above": 5.536536745675215e-13
+   },
+   {
+    "T": 0.25473589571230265,
+    "height": 0.2723476354706267,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 733.0783855771037,
+    "collapse_k": null,
+    "f_band": 0.35060107839633897,
+    "f_above": 0.649398921603661
+   }
+  ],
+  "polar": [
+   {
+    "T": 0.002930399322878525,
+    "height": 0.15734031063395645,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.17816858895381,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 1.9508866842690435e-95
+   },
+   {
+    "T": 0.2560807283876153,
+    "height": 0.2683115413125231,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 768.7674378999028,
+    "collapse_k": null,
+    "f_band": 0.3529712056169604,
+    "f_above": 0.6470287943830395
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.0030726107687759196,
+    "height": 0.1556352174040808,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.391772861072837,
+    "collapse_k": null,
+    "f_band": 0.9999999999999998,
+    "f_above": 5.949741981972673e-91
+   },
+   {
+    "T": 0.2560807283876153,
+    "height": 0.2683095006586089,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 768.7774678378942,
+    "collapse_k": null,
+    "f_band": 0.3529709482668109,
+    "f_above": 0.647029051733189
+   }
+  ],
+  "hc": [
+   {
+    "T": 6.801296361547355e-06,
+    "height": 0.04076915532660799,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 3.0967997911598855,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.0030726107687759196,
+    "height": 0.15518969956358825,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.410025055310538,
+    "collapse_k": null,
+    "f_band": 1.0000000000000002,
+    "f_above": 4.708096136439367e-91
+   },
+   {
+    "T": 0.2560807283876153,
+    "height": 0.2685987122387891,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 764.8249267115032,
+    "collapse_k": null,
+    "f_band": 0.3521080697895703,
+    "f_above": 0.6478919302104295
+   }
+  ]
+ },
+ {
+  "jpm": -0.05,
+  "g4": 0.010000000000000002,
+  "g6": 0.0015000000000000005,
+  "meta": {
+   "jpm": -0.05,
+   "g4": 0.010000000000000002,
+   "g6": 0.0015000000000000005,
+   "frame_ok": true,
+   "gram_min": 0.8872896692031119,
+   "gap_above_band": 0.7034007670701152,
+   "mask_convergence": 0.0006439818494814037,
+   "band_width_polar": 0.008436313509522939,
+   "n_roots": 90,
+   "z_mean": 0.9361594370460015,
+   "hc_residue_over_width": 0.015273022899246615,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931225275853213,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931225275853213,
+   "periodic_entropy_error": -2.4652974623950996e-05,
+   "periodic_peaks": [
+    [
+     0.0129665,
+     0.2387
+    ],
+    [
+     0.2529699,
+     0.2826
+    ]
+   ],
+   "periodic_gauge": 0.012966495342194679,
+   "periodic_spinon": 0.2529699115990879,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.0019605209243765964,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.5811372978645938,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931222646913472,
+   "polar_entropy_error": -2.491586859809658e-05,
+   "polar_peaks": [
+    [
+     0.0012339,
+     0.1584
+    ],
+    [
+     0.2529699,
+     0.2813
+    ]
+   ],
+   "polar_gauge": 0.001233877465404716,
+   "polar_spinon": 0.2529699115990879,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.0015691130427034627,
+   "polar_min_C": 1.802331283117225e-24,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811372978645976,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.693122264691351,
+   "feshbach_entropy_error": -2.491586859432182e-05,
+   "feshbach_peaks": [
+    [
+     0.0012557,
+     0.1574
+    ],
+    [
+     0.2529699,
+     0.2813
+    ]
+   ],
+   "feshbach_gauge": 0.0012556732069060376,
+   "feshbach_spinon": 0.2529699115990879,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0013455248093103833,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6498007270852442,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.6931224258702408,
+   "hc_entropy_error": -2.475468970453143e-05,
+   "hc_peaks": [
+    [
+     5e-07,
+     0.04
+    ],
+    [
+     0.0012557,
+     0.1573
+    ],
+    [
+     0.2529699,
+     0.2814
+    ]
+   ],
+   "hc_gauge": 0.0012556732069060376,
+   "hc_spinon": 0.2529699115990879,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0013455248093103833,
+   "hc_min_C": 2.250453083749623e-06,
+   "runtime": 272.8625177729991
+  },
+  "periodic": [
+   {
+    "T": 0.012935704510699383,
+    "height": 0.2386907992596966,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 6.568106065420135,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 1.7391374179178718e-24
+   },
+   {
+    "T": 0.25339812555565633,
+    "height": 0.282638396322097,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 748.8820442399326,
+    "collapse_k": null,
+    "f_band": 0.3502529754934223,
+    "f_above": 0.6497470245065775
+   }
+  ],
+  "polar": [
+   {
+    "T": 0.001229173485033403,
+    "height": 0.15841660838481486,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.046908786948133,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 2.9006183037921147e-260
+   },
+   {
+    "T": 0.25339812555565633,
+    "height": 0.28127368373354633,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 755.3267475648547,
+    "collapse_k": null,
+    "f_band": 0.35009985088591206,
+    "f_above": 0.6499001491140879
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.0012619638939160302,
+    "height": 0.15743175246730087,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.443326867522778,
+    "collapse_k": null,
+    "f_band": 1.0000000000000002,
+    "f_above": 1.9797348047684228e-253
+   },
+   {
+    "T": 0.25339812555565633,
+    "height": 0.28127315832773847,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 755.3292884022669,
+    "collapse_k": null,
+    "f_band": 0.3500998116596201,
+    "f_above": 0.64990018834038
+   }
+  ],
+  "hc": [
+   {
+    "T": 4.914777219180744e-07,
+    "height": 0.040044654917922536,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 3.062658464671595,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.00125533656865696,
+    "height": 0.157279849399681,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.193121455039375,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 6.576322208463839e-255
+   },
+   {
+    "T": 0.25339812555565633,
+    "height": 0.2813749536156158,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 753.8130897504867,
+    "collapse_k": null,
+    "f_band": 0.34974340531378,
+    "f_above": 0.6502565946862199
+   }
+  ]
+ },
+ {
+  "jpm": -0.04,
+  "g4": 0.0064,
+  "g6": 0.0007680000000000001,
+  "meta": {
+   "jpm": -0.04,
+   "g4": 0.0064,
+   "g6": 0.0007680000000000001,
+   "frame_ok": true,
+   "gram_min": 0.9189379605286712,
+   "gap_above_band": 0.764566630380928,
+   "mask_convergence": 0.00029055276249975726,
+   "band_width_polar": 0.004667795714129723,
+   "n_roots": 90,
+   "z_mean": 0.9571269458358556,
+   "hc_residue_over_width": 0.010525315014514708,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931227163276584,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931227163276584,
+   "periodic_entropy_error": -2.4464232286858234e-05,
+   "periodic_peaks": [
+    [
+     0.0090294,
+     0.2399
+    ],
+    [
+     0.2514977,
+     0.2873
+    ]
+   ],
+   "periodic_gauge": 0.009029443427515861,
+   "periodic_spinon": 0.25149769209019374,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.0019003143159810332,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.5811374866019745,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931224534287279,
+   "polar_entropy_error": -2.4727131217372467e-05,
+   "polar_peaks": [
+    [
+     0.0006724,
+     0.1586
+    ],
+    [
+     0.2514977,
+     0.2867
+    ]
+   ],
+   "polar_gauge": 0.0006724284465850811,
+   "polar_spinon": 0.25149769209019374,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.0014680796415594832,
+   "polar_min_C": 1.8331119458588403e-24,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811374866019756,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.693122453428729,
+   "feshbach_entropy_error": -2.4727131216262244e-05,
+   "feshbach_peaks": [
+    [
+     0.0006803,
+     0.1581
+    ],
+    [
+     0.2514977,
+     0.2867
+    ]
+   ],
+   "feshbach_gauge": 0.0006803240244275641,
+   "feshbach_spinon": 0.25149769209019374,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0014700226879933442,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6498009122292565,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.6931226110142531,
+   "hc_entropy_error": -2.4569545692187944e-05,
+   "hc_peaks": [
+    [
+     0.0006803,
+     0.158
+    ],
+    [
+     0.2514977,
+     0.2867
+    ]
+   ],
+   "hc_gauge": 0.0006803240244275641,
+   "hc_spinon": 0.25149769209019374,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0014700226879933442,
+   "hc_min_C": 2.7146587047317265e-07,
+   "runtime": 271.88836050697137
+  },
+  "periodic": [
+   {
+    "T": 0.008995066740201143,
+    "height": 0.23985731822611686,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 6.594185485761691,
+    "collapse_k": null,
+    "f_band": 1.0000000000000002,
+    "f_above": 2.051658144254794e-37
+   },
+   {
+    "T": 0.25206738082817853,
+    "height": 0.28733367462422976,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 743.258994750715,
+    "collapse_k": null,
+    "f_band": 0.3479727376908316,
+    "f_above": 0.6520272623091682
+   }
+  ],
+  "polar": [
+   {
+    "T": 0.0006708679163019967,
+    "height": 0.15864877035251757,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.061264167144124,
+    "collapse_k": null,
+    "f_band": 1.0000000000000002,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25206738082817853,
+    "height": 0.2866980227610564,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 746.2777170594576,
+    "collapse_k": null,
+    "f_band": 0.3479265898220379,
+    "f_above": 0.652073410177962
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.000681549290884257,
+    "height": 0.15807380356569692,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.370242345534393,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25206738082817853,
+    "height": 0.2866978528579057,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 746.2785361095293,
+    "collapse_k": null,
+    "f_band": 0.3479265817564958,
+    "f_above": 0.6520734182435041
+   }
+  ],
+  "hc": [
+   {
+    "T": 8.378303672009187e-08,
+    "height": 0.039694125181737754,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 3.0437941079381043,
+    "collapse_k": null,
+    "f_band": 0.9999999999999998,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.000681549290884257,
+    "height": 0.15800103964937326,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.37302315487697,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25206738082817853,
+    "height": 0.2867459947679487,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 745.5284565270155,
+    "collapse_k": null,
+    "f_band": 0.3477445259666516,
+    "f_above": 0.6522554740333483
+   }
+  ]
+ },
+ {
+  "jpm": -0.03,
+  "g4": 0.0036,
+  "g6": 0.00032399999999999996,
+  "meta": {
+   "jpm": -0.03,
+   "g4": 0.0036,
+   "g6": 0.00032399999999999996,
+   "frame_ok": true,
+   "gram_min": 0.9484812894225734,
+   "gap_above_band": 0.8254827452233907,
+   "mask_convergence": 0.00010116202815485184,
+   "band_width_polar": 0.0021227452167327243,
+   "n_roots": 90,
+   "z_mean": 0.9747205171706308,
+   "hc_residue_over_width": 0.006467886783608692,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931228631758715,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931228631758715,
+   "periodic_entropy_error": -2.4317384073824222e-05,
+   "periodic_peaks": [
+    [
+     0.0055301,
+     0.2415
+    ],
+    [
+     0.2514977,
+     0.2914
+    ]
+   ],
+   "periodic_gauge": 0.005530091604876002,
+   "periodic_spinon": 0.25149769209019374,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.0010980929213795232,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.5811376334474277,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931226002741812,
+   "polar_entropy_error": -2.458028576413085e-05,
+   "polar_peaks": [
+    [
+     0.0003005,
+     0.1588
+    ],
+    [
+     0.2514977,
+     0.2912
+    ]
+   ],
+   "polar_gauge": 0.0003004932454401563,
+   "polar_spinon": 0.25149769209019374,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.001334000306132288,
+   "polar_min_C": 7.056332058632321e-23,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811376334474279,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931226002741813,
+   "feshbach_entropy_error": -2.4580285764019827e-05,
+   "feshbach_peaks": [
+    [
+     0.0003023,
+     0.1585
+    ],
+    [
+     0.2514977,
+     0.2912
+    ]
+   ],
+   "feshbach_gauge": 0.00030225227557101407,
+   "feshbach_spinon": 0.25149769209019374,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0013349719602745447,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6174016507010764,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.660723349486073,
+   "hc_entropy_error": -0.032423831073872256,
+   "hc_peaks": [
+    [
+     0.0003023,
+     0.1585
+    ],
+    [
+     0.2514977,
+     0.2912
+    ]
+   ],
+   "hc_gauge": 0.00030225227557101407,
+   "hc_spinon": 0.25149769209019374,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0013349719602745447,
+   "hc_min_C": 1.7411077471138063e-08,
+   "runtime": 265.2601077390136
+  },
+  "periodic": [
+   {
+    "T": 0.005541450541174203,
+    "height": 0.24154598648781195,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 6.705929805485531,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 1.1470749631370848e-64
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.2914099872682676,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 734.5450441940309,
+    "collapse_k": null,
+    "f_band": 0.3453296525067846,
+    "f_above": 0.6546703474932152
+   }
+  ],
+  "polar": [
+   {
+    "T": 0.0002997535887624527,
+    "height": 0.15875933730899447,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.006222895508472,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.2911818210722745,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 735.6318529951587,
+    "collapse_k": null,
+    "f_band": 0.3453203441145989,
+    "f_above": 0.654679655885401
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.00030133608430978385,
+    "height": 0.15853890371447116,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.118211131911593,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.2911817869524906,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 735.6320169329397,
+    "collapse_k": null,
+    "f_band": 0.34532034324839744,
+    "f_above": 0.6546796567516027
+   }
+  ],
+  "hc": [
+   {
+    "T": 8.48047513098592e-09,
+    "height": 0.03938766343846899,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 3.030794804537439,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.00030133608430978385,
+    "height": 0.15851186344927212,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.11928693484766,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.2911993164571283,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 735.3464797618033,
+    "collapse_k": null,
+    "f_band": 0.34524893055208944,
+    "f_above": 0.6547510694479105
+   }
+  ]
+ },
+ {
+  "jpm": -0.02,
+  "g4": 0.0016,
+  "g6": 9.600000000000002e-05,
+  "meta": {
+   "jpm": -0.02,
+   "g4": 0.0016,
+   "g6": 9.600000000000002e-05,
+   "frame_ok": true,
+   "gram_min": 0.9740166093206117,
+   "gap_above_band": 0.8855030497572176,
+   "mask_convergence": 2.0061175515768623e-05,
+   "band_width_polar": 0.0006757692358880935,
+   "n_roots": 90,
+   "z_mean": 0.9882409833381023,
+   "hc_residue_over_width": 0.0038360209286998842,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.693122968102037,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.693122968102037,
+   "periodic_entropy_error": -2.4212457908290297e-05,
+   "periodic_peaks": [
+    [
+     0.0027132,
+     0.2439
+    ],
+    [
+     0.250034,
+     0.2946
+    ]
+   ],
+   "periodic_gauge": 0.0027131812130765797,
+   "periodic_spinon": 0.25003404051836686,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.0017002469216905736,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.5811377383723921,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931227051991455,
+   "polar_entropy_error": -2.4475360799747214e-05,
+   "polar_peaks": [
+    [
+     9.41e-05,
+     0.1588
+    ],
+    [
+     0.250034,
+     0.2946
+    ]
+   ],
+   "polar_gauge": 9.40581838536225e-05,
+   "polar_spinon": 0.25003404051836686,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.0011406223176616548,
+   "polar_min_C": 5.659136764788751e-23,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811377383723922,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931227051991457,
+   "feshbach_entropy_error": -2.4475360799636192e-05,
+   "feshbach_peaks": [
+    [
+     9.41e-05,
+     0.1588
+    ],
+    [
+     0.250034,
+     0.2946
+    ]
+   ],
+   "feshbach_gauge": 9.40581838536225e-05,
+   "feshbach_spinon": 0.25003404051836686,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0011406223176616548,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.5813141634191656,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.6246358622041622,
+   "hc_entropy_error": -0.06851131835578306,
+   "hc_peaks": [
+    [
+     9.41e-05,
+     0.1588
+    ],
+    [
+     0.250034,
+     0.2946
+    ]
+   ],
+   "hc_gauge": 9.40581838536225e-05,
+   "hc_spinon": 0.25003404051836686,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0011406223176616548,
+   "hc_min_C": 3.5330083728154493e-10,
+   "runtime": 263.3129056720063
+  },
+  "periodic": [
+   {
+    "T": 0.002707856009306653,
+    "height": 0.24391279538409777,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 6.8042579624923265,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 3.921026786415568e-141
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.2946186843225484,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 741.2047859546619,
+    "collapse_k": null,
+    "f_band": 0.34628354983093673,
+    "f_above": 0.6537164501690632
+   }
+  ],
+  "polar": [
+   {
+    "T": 9.362521172953069e-05,
+    "height": 0.158791880791012,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 18.965474334284178,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.29456770751174244,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 741.450657182608,
+    "collapse_k": null,
+    "f_band": 0.3462829463965263,
+    "f_above": 0.6537170536034737
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 9.362521172953069e-05,
+    "height": 0.15880922227982947,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.023146464442714,
+    "collapse_k": null,
+    "f_band": 0.9999999999999998,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.29456770456025694,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 741.4506714757431,
+    "collapse_k": null,
+    "f_band": 0.346282946383638,
+    "f_above": 0.6537170536163621
+   }
+  ],
+  "hc": [
+   {
+    "T": 9.362521172953069e-05,
+    "height": 0.1588028598076532,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.023406898252905,
+    "collapse_k": null,
+    "f_band": 0.9999999999999998,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.29457193102138607,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 741.3816923955965,
+    "collapse_k": null,
+    "f_band": 0.34626569837120597,
+    "f_above": 0.6537343016287941
+   }
+  ]
+ },
+ {
+  "jpm": -0.01,
+  "g4": 0.0004,
+  "g6": 1.2000000000000002e-05,
+  "meta": {
+   "jpm": -0.01,
+   "g4": 0.0004,
+   "g6": 1.2000000000000002e-05,
+   "frame_ok": true,
+   "gram_min": 0.9926139766870365,
+   "gap_above_band": 0.943925826863749,
+   "mask_convergence": 1.162763610835886e-06,
+   "band_width_polar": 9.034382725046789e-05,
+   "n_roots": 90,
+   "z_mean": 0.9969293200340881,
+   "hc_residue_over_width": 0.0012491240256094836,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931230310782243,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931230310782243,
+   "periodic_entropy_error": -2.4149481721025268e-05,
+   "periodic_peaks": [
+    [
+     0.0007469,
+     0.2471
+    ],
+    [
+     0.250034,
+     0.2967
+    ]
+   ],
+   "periodic_gauge": 0.000746919240278411,
+   "periodic_spinon": 0.25003404051836686,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.0014855669233492241,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.5811378013482569,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931227681750103,
+   "polar_entropy_error": -2.4412384935001974e-05,
+   "polar_peaks": [
+    [
+     1.23e-05,
+     0.1588
+    ],
+    [
+     0.250034,
+     0.2967
+    ]
+   ],
+   "polar_gauge": 1.2338534662271111e-05,
+   "polar_spinon": 0.25003404051836686,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.00371365774339516,
+   "polar_min_C": 4.590158496937231e-21,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811378013482569,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931227681750103,
+   "feshbach_entropy_error": -2.4412384935001974e-05,
+   "feshbach_peaks": [
+    [
+     1.23e-05,
+     0.1589
+    ],
+    [
+     0.250034,
+     0.2967
+    ]
+   ],
+   "feshbach_gauge": 1.2266727579262161e-05,
+   "feshbach_spinon": 0.25003404051836686,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0021184124331732335,
+   "feshbach_min_C": 5.443993565963069e-176,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.5811378041739391,
+   "hc_ground_degeneracy": 2,
+   "hc_entropy_total": 0.6244595029589357,
+   "hc_entropy_error": -0.06868767760100958,
+   "hc_peaks": [
+    [
+     1.23e-05,
+     0.1589
+    ],
+    [
+     0.250034,
+     0.2967
+    ]
+   ],
+   "hc_gauge": 1.2266727579262161e-05,
+   "hc_spinon": 0.25003404051836686,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0021184124331732335,
+   "hc_min_C": 4.3123852047196243e-13,
+   "runtime": 262.76864578499226
+  },
+  "periodic": [
+   {
+    "T": 0.0007453701681917156,
+    "height": 0.24706620750175518,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 6.84128787947414,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.2966972523103461,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 745.3790225607709,
+    "collapse_k": null,
+    "f_band": 0.3469522072840454,
+    "f_above": 0.6530477927159547
+   }
+  ],
+  "polar": [
+   {
+    "T": 1.23308882414738e-05,
+    "height": 0.15877238403956018,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.1556805058301,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.2966936530014288,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 745.3965280517949,
+    "collapse_k": null,
+    "f_band": 0.3469522332738937,
+    "f_above": 0.6530477667261062
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 1.2266131391057208e-05,
+    "height": 0.15887390614053334,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.022133953820163,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.29669365296775024,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 745.396528215773,
+    "collapse_k": null,
+    "f_band": 0.34695223327420616,
+    "f_above": 0.6530477667257941
+   }
+  ],
+  "hc": [
+   {
+    "T": 1.2266131391057208e-05,
+    "height": 0.15887342649334774,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.022153959389843,
+    "collapse_k": null,
+    "f_band": 1.0000000000000002,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.2966939764731038,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 745.3912846766116,
+    "collapse_k": null,
+    "f_band": 0.34695092252913035,
+    "f_above": 0.6530490774708697
+   }
+  ]
+ },
+ {
+  "jpm": 0.01,
+  "g4": 0.0004,
+  "g6": 1.2000000000000002e-05,
+  "meta": {
+   "jpm": 0.01,
+   "g4": 0.0004,
+   "g6": 1.2000000000000002e-05,
+   "frame_ok": true,
+   "gram_min": 0.9905890968293438,
+   "gap_above_band": 0.9261845964765782,
+   "mask_convergence": 9.022066995169851e-07,
+   "band_width_polar": 0.00010108668841708052,
+   "n_roots": 90,
+   "z_mean": 0.9966736522877745,
+   "hc_residue_over_width": 0.0016009440945725971,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931230310689085,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931230310689085,
+   "periodic_entropy_error": -2.4149491036795645e-05,
+   "periodic_peaks": [
+    [
+     0.0009109,
+     0.2555
+    ],
+    [
+     0.250034,
+     0.2967
+    ]
+   ],
+   "periodic_gauge": 0.0009108755718200091,
+   "periodic_spinon": 0.25003404051836686,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.0013991106346682436,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.5811378013389477,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931227681657011,
+   "polar_entropy_error": -2.4412394244222035e-05,
+   "polar_peaks": [
+    [
+     1.37e-05,
+     0.1587
+    ],
+    [
+     0.250034,
+     0.2967
+    ]
+   ],
+   "polar_gauge": 1.370538230929274e-05,
+   "polar_spinon": 0.25003404051836686,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.002099887345076601,
+   "polar_min_C": 1.660168044852739e-20,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811378013389478,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931227681657012,
+   "feshbach_entropy_error": -2.4412394244111013e-05,
+   "feshbach_peaks": [
+    [
+     1.5e-05,
+     0.1589
+    ],
+    [
+     0.250034,
+     0.2967
+    ]
+   ],
+   "feshbach_gauge": 1.495939841361679e-05,
+   "feshbach_spinon": 0.25003404051836686,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0008344449312026603,
+   "feshbach_min_C": 1.7589767251413894e-212,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.5811383431967878,
+   "hc_ground_degeneracy": 1,
+   "hc_entropy_total": 0.5811383431967878,
+   "hc_entropy_error": -0.11200883736315748,
+   "hc_peaks": [
+    [
+     1.5e-05,
+     0.1589
+    ],
+    [
+     0.250034,
+     0.2967
+    ]
+   ],
+   "hc_gauge": 1.495939841361679e-05,
+   "hc_spinon": 0.25003404051836686,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0008344449312026603,
+   "hc_min_C": 4.242728709411181e-11,
+   "runtime": 268.1711930130259
+  },
+  "periodic": [
+   {
+    "T": 0.0009104759480929775,
+    "height": 0.25549937966030145,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 7.026989631472762,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.296660013906497,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 745.1748362220183,
+    "collapse_k": null,
+    "f_band": 0.3469008733246545,
+    "f_above": 0.6530991266753453
+   }
+  ],
+  "polar": [
+   {
+    "T": 1.3700276938513116e-05,
+    "height": 0.15874879207093212,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 18.937732473881514,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.29665543859712556,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 745.1970765689495,
+    "collapse_k": null,
+    "f_band": 0.34690090123983086,
+    "f_above": 0.6530990987601691
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 1.4904497334089157e-05,
+    "height": 0.15887726284003292,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 18.987862987437314,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.2966554386670557,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 745.1970762285687,
+    "collapse_k": null,
+    "f_band": 0.346900901239227,
+    "f_above": 0.653099098760773
+   }
+  ],
+  "hc": [
+   {
+    "T": 1.4904497334089157e-05,
+    "height": 0.15887658156202433,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 18.987861832263608,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.29665592395506485,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 745.1895140490841,
+    "collapse_k": null,
+    "f_band": 0.3468990089664875,
+    "f_above": 0.6531009910335123
+   }
+  ]
+ },
+ {
+  "jpm": 0.02,
+  "g4": 0.0016,
+  "g6": 9.600000000000002e-05,
+  "meta": {
+   "jpm": 0.02,
+   "g4": 0.0016,
+   "g6": 9.600000000000002e-05,
+   "frame_ok": true,
+   "gram_min": 0.9585471303266825,
+   "gap_above_band": 0.8477314885668991,
+   "mask_convergence": 1.1262343533538152e-05,
+   "band_width_polar": 0.0008412079269221624,
+   "n_roots": 90,
+   "z_mean": 0.9862028046612761,
+   "hc_residue_over_width": 0.00645110512877217,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931229680275109,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931229680275109,
+   "periodic_entropy_error": -2.4212532434342293e-05,
+   "periodic_peaks": [
+    [
+     0.0040116,
+     0.2602
+    ],
+    [
+     0.250034,
+     0.2943
+    ]
+   ],
+   "periodic_gauge": 0.0040115734930907,
+   "periodic_spinon": 0.25003404051836686,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.00176532178501132,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.5811377382980758,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931227051248292,
+   "polar_entropy_error": -2.447543511607808e-05,
+   "polar_peaks": [
+    [
+     0.0001154,
+     0.1587
+    ],
+    [
+     0.250034,
+     0.2943
+    ]
+   ],
+   "polar_gauge": 0.00011537636765485816,
+   "polar_spinon": 0.25003404051836686,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.0017440771248238285,
+   "polar_min_C": 4.2709689976158834e-23,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811377382980758,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931227051248292,
+   "feshbach_entropy_error": -2.447543511607808e-05,
+   "feshbach_peaks": [
+    [
+     0.0001399,
+     0.1588
+    ],
+    [
+     0.250034,
+     0.2943
+    ]
+   ],
+   "feshbach_gauge": 0.0001398837948352661,
+   "feshbach_spinon": 0.25003404051836686,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0012067054394409027,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6904692881761241,
+   "hc_ground_degeneracy": 1,
+   "hc_entropy_total": 0.6904692881761241,
+   "hc_entropy_error": -0.002677892383821212,
+   "hc_peaks": [
+    [
+     0.0001399,
+     0.1588
+    ],
+    [
+     0.250034,
+     0.2943
+    ]
+   ],
+   "hc_gauge": 0.0001398837948352661,
+   "hc_spinon": 0.25003404051836686,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0012067054394409027,
+   "hc_min_C": 1.5620874584231926e-07,
+   "runtime": 266.4098390209838
+  },
+  "periodic": [
+   {
+    "T": 0.00399802043434821,
+    "height": 0.26015929064843346,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 7.079587163795488,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 1.658191677054231e-83
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.2943411095993269,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 739.5126681877365,
+    "collapse_k": null,
+    "f_band": 0.34587677879259016,
+    "f_above": 0.6541232212074101
+   }
+  ],
+  "polar": [
+   {
+    "T": 0.00011557470186341899,
+    "height": 0.1586788242785061,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.05109094573479,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.29425877447791077,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 739.9080730795289,
+    "collapse_k": null,
+    "f_band": 0.34587506102335874,
+    "f_above": 0.6541249389766414
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.00013969657352158347,
+    "height": 0.15878403611409012,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.185119148103837,
+    "collapse_k": null,
+    "f_band": 1.0000000000000002,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.29425878722255727,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 739.9080115047562,
+    "collapse_k": null,
+    "f_band": 0.34587506114769206,
+    "f_above": 0.6541249388523077
+   }
+  ],
+  "hc": [
+   {
+    "T": 2.3062295763524637e-08,
+    "height": 0.08460483635261425,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 2.1445177197360903,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.00013969657352158347,
+    "height": 0.15876996969889984,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.185066278300916,
+    "collapse_k": null,
+    "f_band": 0.9999999999999997,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25074362463514954,
+    "height": 0.29426822354902415,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 739.7654000149298,
+    "collapse_k": null,
+    "f_band": 0.3458393207847557,
+    "f_above": 0.6541606792152443
+   }
+  ]
+ },
+ {
+  "jpm": 0.03,
+  "g4": 0.0036,
+  "g6": 0.00032399999999999996,
+  "meta": {
+   "jpm": 0.03,
+   "g4": 0.0036,
+   "g6": 0.00032399999999999996,
+   "frame_ok": true,
+   "gram_min": 0.9004808824115257,
+   "gap_above_band": 0.7653778329156079,
+   "mask_convergence": 4.0309796348218796e-05,
+   "band_width_polar": 0.0029085286112133096,
+   "n_roots": 90,
+   "z_mean": 0.9678646152160193,
+   "hc_residue_over_width": 0.019316363319104895,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931228629243462,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931228629243462,
+   "periodic_entropy_error": -2.4317635599069298e-05,
+   "periodic_peaks": [
+    [
+     0.0097983,
+     0.2644
+    ],
+    [
+     0.2514977,
+     0.2906
+    ]
+   ],
+   "periodic_gauge": 0.009798262961264341,
+   "periodic_spinon": 0.25149769209019374,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.0010026434211980462,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.5811376331974574,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931226000242108,
+   "polar_entropy_error": -2.458053573450858e-05,
+   "polar_peaks": [
+    [
+     0.0004023,
+     0.1584
+    ],
+    [
+     0.2514977,
+     0.2901
+    ]
+   ],
+   "polar_gauge": 0.0004023258725849918,
+   "polar_spinon": 0.25149769209019374,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.001382581855185805,
+   "polar_min_C": 2.454603031899256e-24,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811376331974554,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931226000242088,
+   "feshbach_entropy_error": -2.458053573650698e-05,
+   "feshbach_peaks": [
+    [
+     0.0005546,
+     0.1583
+    ],
+    [
+     0.2514977,
+     0.2901
+    ]
+   ],
+   "feshbach_gauge": 0.0005546200098885658,
+   "feshbach_spinon": 0.25149769209019374,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0014360188295134968,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6931228629210001,
+   "hc_ground_degeneracy": 1,
+   "hc_entropy_total": 0.6931228629210001,
+   "hc_entropy_error": -2.4317638945170472e-05,
+   "hc_peaks": [
+    [
+     1.7e-06,
+     0.0853
+    ],
+    [
+     0.0005546,
+     0.1582
+    ],
+    [
+     0.2514977,
+     0.2902
+    ]
+   ],
+   "hc_gauge": 0.0005546200098885658,
+   "hc_spinon": 0.25149769209019374,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0014360188295134968,
+   "hc_min_C": 4.919192823098531e-18,
+   "runtime": 271.32768709398806
+  },
+  "periodic": [
+   {
+    "T": 0.00978571081818089,
+    "height": 0.26440620926900243,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 7.160332018241425,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 5.289935743534033e-29
+   },
+   {
+    "T": 0.25206738082817853,
+    "height": 0.29060410596676844,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 746.5659564908639,
+    "collapse_k": null,
+    "f_band": 0.3478275601499403,
+    "f_above": 0.6521724398500598
+   }
+  ],
+  "polar": [
+   {
+    "T": 0.00040255233293635457,
+    "height": 0.15844304056844005,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.13536502385213,
+    "collapse_k": null,
+    "f_band": 1.0000000000000002,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25206738082817853,
+    "height": 0.2901371728426084,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 748.786531398404,
+    "collapse_k": null,
+    "f_band": 0.3477968741746069,
+    "f_above": 0.6522031258253931
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.0005550269234367215,
+    "height": 0.15829666040308724,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.332541971976358,
+    "collapse_k": null,
+    "f_band": 1.0000000000000004,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25206738082817853,
+    "height": 0.2901374805469354,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 748.7850457944722,
+    "collapse_k": null,
+    "f_band": 0.34779688634304207,
+    "f_above": 0.6522031136569578
+   }
+  ],
+  "hc": [
+   {
+    "T": 1.6673610672323969e-06,
+    "height": 0.08531211114129357,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 2.144955168146757,
+    "collapse_k": null,
+    "f_band": 0.9999999999999999,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.0005550269234367215,
+    "height": 0.15819858405347878,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.332458390211656,
+    "collapse_k": null,
+    "f_band": 1.0000000000000002,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.25206738082817853,
+    "height": 0.29019772029079355,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 747.9320948318407,
+    "collapse_k": null,
+    "f_band": 0.3475891096815573,
+    "f_above": 0.6524108903184427
+   }
+  ]
+ },
+ {
+  "jpm": 0.04,
+  "g4": 0.0064,
+  "g6": 0.0007680000000000001,
+  "meta": {
+   "jpm": 0.04,
+   "g4": 0.0064,
+   "g6": 0.0007680000000000001,
+   "frame_ok": true,
+   "gram_min": 0.8187835413989236,
+   "gap_above_band": 0.679727857103206,
+   "mask_convergence": 6.955721148444588e-05,
+   "band_width_polar": 0.006942206080910139,
+   "n_roots": 90,
+   "z_mean": 0.9408760457425147,
+   "hc_residue_over_width": 0.037339987985076824,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.69312271573145,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.69312271573145,
+   "periodic_entropy_error": -2.4464828495274205e-05,
+   "periodic_peaks": [
+    [
+     0.0186202,
+     0.2677
+    ],
+    [
+     0.2529699,
+     0.2859
+    ]
+   ],
+   "periodic_gauge": 0.0186201954537758,
+   "periodic_spinon": 0.2529699115990879,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.0008955170674584956,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.5811374860120808,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931224528388342,
+   "polar_entropy_error": -2.4727721111061918e-05,
+   "polar_peaks": [
+    [
+     0.00096,
+     0.158
+    ],
+    [
+     0.2529699,
+     0.2842
+    ]
+   ],
+   "polar_gauge": 0.0009600035515854829,
+   "polar_spinon": 0.2529699115990879,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.0015273408568552416,
+   "polar_min_C": 6.710216267080082e-24,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811374860120581,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931224528388115,
+   "feshbach_entropy_error": -2.472772113382149e-05,
+   "feshbach_peaks": [
+    [
+     0.0015584,
+     0.1572
+    ],
+    [
+     0.2529699,
+     0.2842
+    ]
+   ],
+   "feshbach_gauge": 0.0015583558324605284,
+   "feshbach_spinon": 0.2529699115990879,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.0013094777765148002,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6931227157188495,
+   "hc_ground_degeneracy": 1,
+   "hc_entropy_total": 0.6931227157188495,
+   "hc_entropy_error": -2.4464841095750423e-05,
+   "hc_peaks": [
+    [
+     4.78e-05,
+     0.0863
+    ],
+    [
+     0.0015584,
+     0.1568
+    ],
+    [
+     0.2544507,
+     0.2845
+    ]
+   ],
+   "hc_gauge": 0.0015583558324605284,
+   "hc_spinon": 0.25445074920011784,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0013094777765148002,
+   "hc_min_C": 0.0,
+   "runtime": 272.00742670695763
+  },
+  "periodic": [
+   {
+    "T": 0.018700901043145708,
+    "height": 0.2676692024546962,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 7.336374966532252,
+    "collapse_k": null,
+    "f_band": 0.999999999999233,
+    "f_above": 7.67139221638402e-13
+   },
+   {
+    "T": 0.25339812555565633,
+    "height": 0.2858763387739857,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 745.1799712235686,
+    "collapse_k": null,
+    "f_band": 0.3484830739826264,
+    "f_above": 0.6515169260173734
+   }
+  ],
+  "polar": [
+   {
+    "T": 0.000959701049708054,
+    "height": 0.1579969801478148,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.112581202791695,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 1.1882912341943076e-231
+   },
+   {
+    "T": 0.25339812555565633,
+    "height": 0.28423191417222643,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 752.8279961968693,
+    "collapse_k": null,
+    "f_band": 0.3482535916491578,
+    "f_above": 0.6517464083508422
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.0015578186484970131,
+    "height": 0.157154669159857,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.32819947410052,
+    "collapse_k": null,
+    "f_band": 0.9999999999999998,
+    "f_above": 2.7717082686955092e-142
+   },
+   {
+    "T": 0.25339812555565633,
+    "height": 0.2842351652079769,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 752.8124167894237,
+    "collapse_k": null,
+    "f_band": 0.3482538933354399,
+    "f_above": 0.65174610666456
+   }
+  ],
+  "hc": [
+   {
+    "T": 4.7970656432100994e-05,
+    "height": 0.08626017304407604,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 2.1510742479159526,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 0.0
+   },
+   {
+    "T": 0.0015578186484970131,
+    "height": 0.15677184182234072,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.311560846031952,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 1.4286446877929296e-142
+   },
+   {
+    "T": 0.25339812555565633,
+    "height": 0.2844678455389884,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 749.7071620334223,
+    "collapse_k": null,
+    "f_band": 0.34752110700987304,
+    "f_above": 0.652478892990127
+   }
+  ]
+ },
+ {
+  "jpm": 0.05,
+  "g4": 0.010000000000000002,
+  "g6": 0.0015000000000000005,
+  "meta": {
+   "jpm": 0.05,
+   "g4": 0.010000000000000002,
+   "g6": 0.0015000000000000005,
+   "frame_ok": true,
+   "gram_min": 0.722425317242858,
+   "gap_above_band": 0.5910297771401669,
+   "mask_convergence": 0.00014288510013783784,
+   "band_width_polar": 0.013419357960879105,
+   "n_roots": 90,
+   "z_mean": 0.9040634135803225,
+   "hc_residue_over_width": 0.0759463284486019,
+   "periodic_n_levels": 65536,
+   "periodic_entropy_released": 0.6931225264208516,
+   "periodic_ground_degeneracy": 1,
+   "periodic_entropy_total": 0.6931225264208516,
+   "periodic_entropy_error": -2.465413909369385e-05,
+   "periodic_peaks": [
+    [
+     0.0305807,
+     0.2696
+    ],
+    [
+     0.2559403,
+     0.281
+    ]
+   ],
+   "periodic_gauge": 0.03058072352053451,
+   "periodic_spinon": 0.25594025534195025,
+   "periodic_resolved": true,
+   "periodic_grid_shift": 0.0008127454646362775,
+   "periodic_min_C": 0.0,
+   "polar_n_levels": 65536,
+   "polar_entropy_released": 0.5811372967184284,
+   "polar_ground_degeneracy": 6,
+   "polar_entropy_total": 0.6931222635451818,
+   "polar_entropy_error": -2.4917014763481404e-05,
+   "polar_peaks": [
+    [
+     0.0018458,
+     0.1573
+    ],
+    [
+     0.2559403,
+     0.2765
+    ]
+   ],
+   "polar_gauge": 0.0018457705585313384,
+   "polar_spinon": 0.25594025534195025,
+   "polar_resolved": true,
+   "polar_grid_shift": 0.0016361391772637957,
+   "polar_min_C": 7.653503198816893e-25,
+   "feshbach_n_levels": 65536,
+   "feshbach_entropy_released": 0.5811372967182735,
+   "feshbach_ground_degeneracy": 6,
+   "feshbach_entropy_total": 0.6931222635450269,
+   "feshbach_entropy_error": -2.4917014918357516e-05,
+   "feshbach_peaks": [
+    [
+     0.0036753,
+     0.1548
+    ],
+    [
+     0.2559403,
+     0.2766
+    ]
+   ],
+   "feshbach_gauge": 0.003675291403067881,
+   "feshbach_spinon": 0.25594025534195025,
+   "feshbach_resolved": true,
+   "feshbach_grid_shift": 0.001166276708078895,
+   "feshbach_min_C": 0.0,
+   "hc_n_levels": 65536,
+   "hc_entropy_released": 0.6931225263839744,
+   "hc_ground_degeneracy": 1,
+   "hc_entropy_total": 0.6931225263839744,
+   "hc_entropy_error": -2.4654175970861836e-05,
+   "hc_peaks": [
+    [
+     0.0006964,
+     0.0873
+    ],
+    [
+     0.0036539,
+     0.159
+    ],
+    [
+     0.2574385,
+     0.2773
+    ]
+   ],
+   "hc_gauge": 0.0036539021569308113,
+   "hc_spinon": 0.25743848076857023,
+   "hc_resolved": true,
+   "hc_grid_shift": 0.0011672507958164768,
+   "hc_min_C": 0.0,
+   "runtime": 258.51012173999334
+  },
+  "periodic": [
+   {
+    "T": 0.03067728769267932,
+    "height": 0.26962471731067045,
+    "label": "gauge",
+    "at_grid_edge": false,
+    "active_levels": 7.3408223125395855,
+    "collapse_k": null,
+    "f_band": 0.9999990281863693,
+    "f_above": 9.718136305217097e-07
+   },
+   {
+    "T": 0.2560807283876153,
+    "height": 0.2809641549363758,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 749.3142125068628,
+    "collapse_k": null,
+    "f_band": 0.3511029890638368,
+    "f_above": 0.6488970109361635
+   }
+  ],
+  "polar": [
+   {
+    "T": 0.0018437111137974253,
+    "height": 0.15728980426074476,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.13986486426325,
+    "collapse_k": null,
+    "f_band": 0.9999999999999998,
+    "f_above": 7.787446995778074e-88
+   },
+   {
+    "T": 0.2560807283876153,
+    "height": 0.2765453275406394,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 769.3986674787857,
+    "collapse_k": null,
+    "f_band": 0.35002936148524144,
+    "f_above": 0.6499706385147587
+   }
+  ],
+  "feshbach": [
+   {
+    "T": 0.003674997279588049,
+    "height": 0.15483837943733317,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 19.634058868759983,
+    "collapse_k": null,
+    "f_band": 0.9999999999999997,
+    "f_above": 5.737418559794917e-44
+   },
+   {
+    "T": 0.2560807283876153,
+    "height": 0.2765673601660718,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 769.2933028189119,
+    "collapse_k": null,
+    "f_band": 0.3500332575760067,
+    "f_above": 0.6499667424239934
+   }
+  ],
+  "hc": [
+   {
+    "T": 0.0006960561374019364,
+    "height": 0.0873173875550636,
+    "label": "sector",
+    "at_grid_edge": false,
+    "active_levels": 2.1470750848601545,
+    "collapse_k": null,
+    "f_band": 1.0000000000000002,
+    "f_above": 1.4114002401880822e-242
+   },
+   {
+    "T": 0.003655697676473065,
+    "height": 0.15901520758117785,
+    "label": "ring",
+    "at_grid_edge": false,
+    "active_levels": 18.427796043428675,
+    "collapse_k": null,
+    "f_band": 1.0,
+    "f_above": 1.4107505980240755e-44
+   },
+   {
+    "T": 0.25743266086690253,
+    "height": 0.27726937100306265,
+    "label": "spinon",
+    "at_grid_edge": false,
+    "active_levels": 778.7294703318901,
+    "collapse_k": null,
+    "f_band": 0.35155435517484385,
+    "f_above": 0.648445644825156
+   }
+  ]
+ }
+]

@@ -1,0 +1,8 @@
+{
+ "jpm": -0.2,
+ "masked": false,
+ "n_roots": 12870,
+ "dimension": 12870,
+ "runtime": 484.2647603499936,
+ "max_deviation_from_exact": 8.436238374542882e-10
+}

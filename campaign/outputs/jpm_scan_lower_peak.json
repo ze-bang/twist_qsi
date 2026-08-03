@@ -1,0 +1,734 @@
+{
+  "protocol": "cubic-16 exact band, M=2 character + polarization blocks",
+  "Ja_meV_for_reference_only": 0.05,
+  "temperature_grid_Jzz": [
+    1.72346665242e-05,
+    17.2346665242
+  ],
+  "n_points": 41,
+  "points": [
+    {
+      "jpm": -0.3,
+      "g6_Jzz": 0.32399999999999995,
+      "g4_Jzz": 0.36,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-3.530e-16"
+    },
+    {
+      "jpm": -0.29,
+      "g6_Jzz": 0.29266799999999993,
+      "g4_Jzz": 0.3364,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-4.017e-16"
+    },
+    {
+      "jpm": -0.28,
+      "g6_Jzz": 0.2634240000000001,
+      "g4_Jzz": 0.31360000000000005,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-2.031e-16"
+    },
+    {
+      "jpm": -0.27,
+      "g6_Jzz": 0.23619600000000002,
+      "g4_Jzz": 0.2916,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-3.622e-16"
+    },
+    {
+      "jpm": -0.26,
+      "g6_Jzz": 0.21091200000000002,
+      "g4_Jzz": 0.27040000000000003,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-4.343e-16"
+    },
+    {
+      "jpm": -0.25,
+      "g6_Jzz": 0.1875,
+      "g4_Jzz": 0.25,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-3.803e-16"
+    },
+    {
+      "jpm": -0.24,
+      "g6_Jzz": 0.16588799999999998,
+      "g4_Jzz": 0.2304,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-2.886e-16"
+    },
+    {
+      "jpm": -0.23,
+      "g6_Jzz": 0.14600400000000002,
+      "g4_Jzz": 0.2116,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-1.050e-16"
+    },
+    {
+      "jpm": -0.22,
+      "g6_Jzz": 0.127776,
+      "g4_Jzz": 0.1936,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-5.087e-16"
+    },
+    {
+      "jpm": -0.21,
+      "g6_Jzz": 0.11113199999999998,
+      "g4_Jzz": 0.17639999999999997,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-3.200e-16"
+    },
+    {
+      "jpm": -0.2,
+      "g6_Jzz": 0.09600000000000003,
+      "g4_Jzz": 0.16000000000000003,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-1.760e-16"
+    },
+    {
+      "jpm": -0.19,
+      "g6_Jzz": 0.082308,
+      "g4_Jzz": 0.1444,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-2.892e-16"
+    },
+    {
+      "jpm": -0.18,
+      "g6_Jzz": 0.06998399999999999,
+      "g4_Jzz": 0.1296,
+      "well_defined": true,
+      "band_gap_Jzz": 0.039110069850245344,
+      "model_overlap_min": 0.3596680460652164,
+      "winding_free": {
+        "n_maxima": 3,
+        "T_low_Jzz": 0.015992433822722318,
+        "C_low": 1.073817444274543,
+        "T_high_Jzz": 0.32279796519343446,
+        "C_high": 1.6537459921097606,
+        "peak_ratio": 0.04954316800955967
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0832412633458695,
+        "C_low": 1.9610740935006674,
+        "T_high_Jzz": 0.2591012755250235,
+        "C_high": 1.9412818881871619,
+        "peak_ratio": 0.3212692148164675
+      }
+    },
+    {
+      "jpm": -0.17,
+      "g6_Jzz": 0.05895600000000001,
+      "g4_Jzz": 0.11560000000000002,
+      "well_defined": true,
+      "band_gap_Jzz": 0.08932510094571522,
+      "model_overlap_min": 0.4138208598658105,
+      "winding_free": {
+        "n_maxima": 3,
+        "T_low_Jzz": 0.015572862139673505,
+        "C_low": 0.9911858168114935,
+        "T_high_Jzz": 0.311103449000284,
+        "C_high": 1.6861786402429837,
+        "peak_ratio": 0.05005686111714978
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.07604046638358075,
+        "C_low": 1.9413428981539076,
+        "T_high_Jzz": 0.2620061714625819,
+        "C_high": 1.9526720521691083,
+        "peak_ratio": 0.29022395144016816
+      }
+    },
+    {
+      "jpm": -0.16,
+      "g6_Jzz": 0.04915200000000001,
+      "g4_Jzz": 0.1024,
+      "well_defined": true,
+      "band_gap_Jzz": 0.14019204295860968,
+      "model_overlap_min": 0.4732751176169635,
+      "winding_free": {
+        "n_maxima": 3,
+        "T_low_Jzz": 0.01459033625931127,
+        "C_low": 0.988501810780274,
+        "T_high_Jzz": 0.3003981924665955,
+        "C_high": 1.7238467846741556,
+        "peak_ratio": 0.04856998685481014
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.06955400779741577,
+        "C_low": 1.9319538635245397,
+        "T_high_Jzz": 0.2633297239331634,
+        "C_high": 1.9681852410046456,
+        "peak_ratio": 0.2641327638921215
+      }
+    },
+    {
+      "jpm": -0.15,
+      "g6_Jzz": 0.040499999999999994,
+      "g4_Jzz": 0.09,
+      "well_defined": true,
+      "band_gap_Jzz": 0.19154386314313668,
+      "model_overlap_min": 0.5271567644197761,
+      "winding_free": {
+        "n_maxima": 3,
+        "T_low_Jzz": 0.013305361211600543,
+        "C_low": 1.0336344645439215,
+        "T_high_Jzz": 0.29094261061382576,
+        "C_high": 1.7668891725402067,
+        "peak_ratio": 0.045731909751992386
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.06354644840679934,
+        "C_low": 1.929949402972236,
+        "T_high_Jzz": 0.2636593784808303,
+        "C_high": 1.9875649675473839,
+        "peak_ratio": 0.24101721233261406
+      }
+    },
+    {
+      "jpm": -0.14,
+      "g6_Jzz": 0.03292800000000001,
+      "g4_Jzz": 0.07840000000000001,
+      "well_defined": true,
+      "band_gap_Jzz": 0.2317576636248865,
+      "model_overlap_min": 0.5664877270390419,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.011972260274150203,
+        "C_low": 1.0960717940489044,
+        "T_high_Jzz": 0.2828596109532026,
+        "C_high": 1.815135027976167,
+        "peak_ratio": 0.042325803368692815
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.05784905814877393,
+        "C_low": 1.932735030362921,
+        "T_high_Jzz": 0.2633310678085868,
+        "C_high": 2.0107061553371297,
+        "peak_ratio": 0.21968185763338774
+      }
+    },
+    {
+      "jpm": -0.13,
+      "g6_Jzz": 0.026364000000000002,
+      "g4_Jzz": 0.06760000000000001,
+      "well_defined": true,
+      "band_gap_Jzz": 0.27098695244308013,
+      "model_overlap_min": 0.6063409948753345,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.010650048530783043,
+        "C_low": 1.1557505436927953,
+        "T_high_Jzz": 0.2761319653194198,
+        "C_high": 1.8681008340003822,
+        "peak_ratio": 0.03856869130838742
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0523498384299215,
+        "C_low": 1.9381897009652347,
+        "T_high_Jzz": 0.26256939361848664,
+        "C_high": 2.037546384822697,
+        "peak_ratio": 0.19937524975201726
+      }
+    },
+    {
+      "jpm": -0.12,
+      "g6_Jzz": 0.020735999999999997,
+      "g4_Jzz": 0.0576,
+      "well_defined": true,
+      "band_gap_Jzz": 0.3146525881173164,
+      "model_overlap_min": 0.646063767871225,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.009313645166287693,
+        "C_low": 1.2044922997051357,
+        "T_high_Jzz": 0.27063980641080226,
+        "C_high": 1.9250318433738314,
+        "peak_ratio": 0.03441343418695244
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0469816160265098,
+        "C_low": 1.9447321166699014,
+        "T_high_Jzz": 0.26152001073387654,
+        "C_high": 2.0680057190707224,
+        "peak_ratio": 0.17964826437055487
+      }
+    },
+    {
+      "jpm": -0.11,
+      "g6_Jzz": 0.015972,
+      "g4_Jzz": 0.0484,
+      "well_defined": true,
+      "band_gap_Jzz": 0.36231641438205187,
+      "model_overlap_min": 0.6853436050344065,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.007953846128236785,
+        "C_low": 1.2413184052135298,
+        "T_high_Jzz": 0.26621055225044915,
+        "C_high": 1.984965121105451,
+        "peak_ratio": 0.029878027226936738
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.04171335224672699,
+        "C_low": 1.9513328727262214,
+        "T_high_Jzz": 0.26029867093796377,
+        "C_high": 2.101934668525201,
+        "peak_ratio": 0.16025188333239093
+      }
+    },
+    {
+      "jpm": -0.1,
+      "g6_Jzz": 0.012000000000000004,
+      "g4_Jzz": 0.04000000000000001,
+      "well_defined": true,
+      "band_gap_Jzz": 0.41347093074625463,
+      "model_overlap_min": 0.7241433797522925,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.006592798269239869,
+        "C_low": 1.2679708187203134,
+        "T_high_Jzz": 0.2626596053543827,
+        "C_high": 2.0467838569115053,
+        "peak_ratio": 0.025100160568446776
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.036541581592041704,
+        "C_low": 1.9574431782164772,
+        "T_high_Jzz": 0.2589876020614989,
+        "C_high": 2.1390720827102556,
+        "peak_ratio": 0.1410939415677689
+      }
+    },
+    {
+      "jpm": -0.09,
+      "g6_Jzz": 0.008747999999999999,
+      "g4_Jzz": 0.0324,
+      "well_defined": true,
+      "band_gap_Jzz": 0.46759083993136846,
+      "model_overlap_min": 0.7578333635132427,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.005271231144636277,
+        "C_low": 1.286720435614007,
+        "T_high_Jzz": 0.25981222614267335,
+        "C_high": 2.109261214122669,
+        "peak_ratio": 0.020288618526141385
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.03147954229055352,
+        "C_low": 1.962882175175925,
+        "T_high_Jzz": 0.2576472171123445,
+        "C_high": 2.1789953410897525,
+        "peak_ratio": 0.12218079684061628
+      }
+    },
+    {
+      "jpm": -0.08,
+      "g6_Jzz": 0.006144000000000001,
+      "g4_Jzz": 0.0256,
+      "well_defined": true,
+      "band_gap_Jzz": 0.5241564715243698,
+      "model_overlap_min": 0.789648269307713,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.004035420222128878,
+        "C_low": 1.2995946858821426,
+        "T_high_Jzz": 0.2575251118963444,
+        "C_high": 2.1710850296860724,
+        "peak_ratio": 0.01567000667396336
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.026551024209602085,
+        "C_low": 1.967761209307393,
+        "T_high_Jzz": 0.2563256526317302,
+        "C_high": 2.2210756366624227,
+        "peak_ratio": 0.10358317217570354
+      }
+    },
+    {
+      "jpm": -0.07,
+      "g6_Jzz": 0.004116000000000002,
+      "g4_Jzz": 0.019600000000000003,
+      "well_defined": true,
+      "band_gap_Jzz": 0.5826565730255098,
+      "model_overlap_min": 0.8220407473439871,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0029288467644912166,
+        "C_low": 1.308201516100911,
+        "T_high_Jzz": 0.255672895218692,
+        "C_high": 2.230880133006077,
+        "peak_ratio": 0.011455444903481075
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.021788061531504796,
+        "C_low": 1.9724792115522984,
+        "T_high_Jzz": 0.2550600581852848,
+        "C_high": 2.264433592547902,
+        "peak_ratio": 0.08542325947278331
+      }
+    },
+    {
+      "jpm": -0.06,
+      "g6_Jzz": 0.0025919999999999997,
+      "g4_Jzz": 0.0144,
+      "well_defined": true,
+      "band_gap_Jzz": 0.6425796953407419,
+      "model_overlap_min": 0.854740600009562,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0019864789464302686,
+        "C_low": 1.31375615630153,
+        "T_high_Jzz": 0.2541645697916545,
+        "C_high": 2.2872230456908866,
+        "peak_ratio": 0.007815719350886076
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.017233804697034814,
+        "C_low": 1.9777474045895356,
+        "T_high_Jzz": 0.25388350166398177,
+        "C_high": 2.307903570891105,
+        "peak_ratio": 0.06788075863174436
+      }
+    },
+    {
+      "jpm": -0.05,
+      "g6_Jzz": 0.0015000000000000005,
+      "g4_Jzz": 0.010000000000000002,
+      "well_defined": true,
+      "band_gap_Jzz": 0.7034007670701187,
+      "model_overlap_min": 0.8872896692031199,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0012312272965140105,
+        "C_low": 1.317161715597726,
+        "T_high_Jzz": 0.25293023759107824,
+        "C_high": 2.3386622564912085,
+        "peak_ratio": 0.004867853318924175
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.012947545001277018,
+        "C_low": 1.9845905070554262,
+        "T_high_Jzz": 0.2528197337478295,
+        "C_high": 2.3500211761974183,
+        "peak_ratio": 0.05121255690503698
+      }
+    },
+    {
+      "jpm": -0.04,
+      "g6_Jzz": 0.0007680000000000001,
+      "g4_Jzz": 0.0064,
+      "well_defined": true,
+      "band_gap_Jzz": 0.764566630380927,
+      "model_overlap_min": 0.9189379605286668,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0006715964430052446,
+        "C_low": 1.3190845715205917,
+        "T_high_Jzz": 0.2519211652452501,
+        "C_high": 2.3837429121779556,
+        "peak_ratio": 0.002665899240150912
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.009011133951195538,
+        "C_low": 1.9943035103437186,
+        "T_high_Jzz": 0.2518860816983098,
+        "C_high": 2.389029304003372,
+        "peak_ratio": 0.03577464022799163
+      }
+    },
+    {
+      "jpm": -0.03,
+      "g6_Jzz": 0.00032399999999999996,
+      "g4_Jzz": 0.0036,
+      "well_defined": true,
+      "band_gap_Jzz": 0.8231302984608189,
+      "model_overlap_min": 0.9484812894225614,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.00030032185761336654,
+        "C_low": 1.3200148277279249,
+        "T_high_Jzz": 0.25111932272378507,
+        "C_high": 2.421036465157139,
+        "peak_ratio": 0.0011959328910093512
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0055413331945172615,
+        "C_low": 2.0083250242360893,
+        "T_high_Jzz": 0.2511111586229092,
+        "C_high": 2.4229328549361058,
+        "peak_ratio": 0.022067251909098227
+      }
+    },
+    {
+      "jpm": -0.02,
+      "g6_Jzz": 9.600000000000002e-05,
+      "g4_Jzz": 0.0016,
+      "well_defined": true,
+      "band_gap_Jzz": 0.8812799349341262,
+      "model_overlap_min": 0.974016609320609,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 9.384830511385068e-05,
+        "C_low": 1.320294899624141,
+        "T_high_Jzz": 0.2505107611798071,
+        "C_high": 2.449178312181164,
+        "peak_ratio": 0.00037462783902720225
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0027059794663299845,
+        "C_low": 2.0280067466700036,
+        "T_high_Jzz": 0.25050967353105763,
+        "C_high": 2.449602220823129,
+        "peak_ratio": 0.010801896103203788
+      }
+    },
+    {
+      "jpm": -0.015,
+      "g6_Jzz": 4.0499999999999995e-05,
+      "g4_Jzz": 0.0009,
+      "well_defined": true,
+      "band_gap_Jzz": 0.9106880822820693,
+      "model_overlap_min": 0.984415498075145,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 4.058096487463287e-05,
+        "C_low": 1.3202595278299372,
+        "T_high_Jzz": 0.250287087433458,
+        "C_high": 2.4594168173660305,
+        "peak_ratio": 0.00016213766874977853
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0015980884724046385,
+        "C_low": 2.040278564713541,
+        "T_high_Jzz": 0.2502868167421991,
+        "C_high": 2.4595594124023057,
+        "peak_ratio": 0.006385028557259988
+      }
+    },
+    {
+      "jpm": -0.01,
+      "g6_Jzz": 1.2000000000000002e-05,
+      "g4_Jzz": 0.0004,
+      "well_defined": true,
+      "band_gap_Jzz": 0.9402914765210445,
+      "model_overlap_min": 0.9926139766870254,
+      "winding_free": {
+        "n_maxima": 1,
+        "T_low_Jzz": 0.2501203230920071,
+        "C_low": 2.4668980597777876
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0007463391875867709,
+        "C_low": 2.054233428321013,
+        "T_high_Jzz": 0.25012028017810317,
+        "C_high": 2.4669279939269835,
+        "peak_ratio": 0.002983921124090078
+      }
+    },
+    {
+      "jpm": 0.01,
+      "g6_Jzz": 1.2000000000000002e-05,
+      "g4_Jzz": 0.0004,
+      "well_defined": true,
+      "band_gap_Jzz": 0.8902571787207452,
+      "model_overlap_min": 0.9905890968293408,
+      "winding_free": {
+        "n_maxima": 1,
+        "T_low_Jzz": 0.2501440324315349,
+        "C_low": 2.4665766381584198
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0009115663975202003,
+        "C_low": 2.124350079505987,
+        "T_high_Jzz": 0.250143975590697,
+        "C_high": 2.466614689264563,
+        "peak_ratio": 0.003644166905749386
+      }
+    },
+    {
+      "jpm": 0.015,
+      "g6_Jzz": 4.0499999999999995e-05,
+      "g4_Jzz": 0.0009,
+      "well_defined": true,
+      "band_gap_Jzz": 0.8301542006176914,
+      "model_overlap_min": 0.9777083701994119,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 4.766560572020858e-05,
+        "C_low": 1.3197799800751588,
+        "T_high_Jzz": 0.25036751234368,
+        "C_high": 2.4583312469246836,
+        "peak_ratio": 0.00019038255113058722
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.002152049159335087,
+        "C_low": 2.1438508361326485,
+        "T_high_Jzz": 0.2503670827548047,
+        "C_high": 2.458535579655438,
+        "peak_ratio": 0.00859557548722442
+      }
+    },
+    {
+      "jpm": 0.02,
+      "g6_Jzz": 9.600000000000002e-05,
+      "g4_Jzz": 0.0016,
+      "well_defined": true,
+      "band_gap_Jzz": 0.7666596768919485,
+      "model_overlap_min": 0.958547130326681,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.00011562331232237418,
+        "C_low": 1.3193299210327063,
+        "T_high_Jzz": 0.25070589332188814,
+        "C_high": 2.446603279264079,
+        "peak_ratio": 0.00046119104258120593
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.004006420086679419,
+        "C_low": 2.163118128466693,
+        "T_high_Jzz": 0.2507037970386754,
+        "C_high": 2.4472878713664508,
+        "peak_ratio": 0.015980691692760278
+      }
+    },
+    {
+      "jpm": 0.03,
+      "g6_Jzz": 0.00032399999999999996,
+      "g4_Jzz": 0.0036,
+      "well_defined": true,
+      "band_gap_Jzz": 0.630016756209987,
+      "model_overlap_min": 0.9004808824115306,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0004020657882041422,
+        "C_low": 1.3173755543432022,
+        "T_high_Jzz": 0.25179359853555094,
+        "C_high": 2.4123438912593436,
+        "peak_ratio": 0.0015968070298156298
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.00980087812832189,
+        "C_low": 2.198414453631622,
+        "T_high_Jzz": 0.25177028090749665,
+        "C_high": 2.4162277523957165,
+        "peak_ratio": 0.03892785952732383
+      }
+    },
+    {
+      "jpm": 0.04,
+      "g6_Jzz": 0.0007680000000000001,
+      "g4_Jzz": 0.0064,
+      "well_defined": true,
+      "band_gap_Jzz": 0.4816033602301489,
+      "model_overlap_min": 0.8187835413989313,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0009589568739351008,
+        "C_low": 1.3136626233142794,
+        "T_high_Jzz": 0.2536087387812939,
+        "C_high": 2.3632407342396213,
+        "peak_ratio": 0.003781245388243826
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.018653977270304035,
+        "C_low": 2.2255781889084596,
+        "T_high_Jzz": 0.25345976002531717,
+        "C_high": 2.376908963983842,
+        "peak_ratio": 0.07359739182440936
+      }
+    },
+    {
+      "jpm": 0.05,
+      "g6_Jzz": 0.0015000000000000005,
+      "g4_Jzz": 0.010000000000000002,
+      "well_defined": true,
+      "band_gap_Jzz": 0.3227028090014334,
+      "model_overlap_min": 0.7224253172428531,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0018408067447351095,
+        "C_low": 1.3077914414489813,
+        "T_high_Jzz": 0.25649643995120047,
+        "C_high": 2.2993418135378896,
+        "peak_ratio": 0.007176734090677168
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.03063258825396866,
+        "C_low": 2.24180282437815,
+        "T_high_Jzz": 0.2558176968604023,
+        "C_high": 2.3360725574432037,
+        "peak_ratio": 0.11974382003245312
+      }
+    },
+    {
+      "jpm": 0.06,
+      "g6_Jzz": 0.0025919999999999997,
+      "g4_Jzz": 0.0144,
+      "well_defined": true,
+      "band_gap_Jzz": 0.1549777971151931,
+      "model_overlap_min": 0.6232678182427627,
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.0030640311372640353,
+        "C_low": 1.2995640148898613,
+        "T_high_Jzz": 0.2610177787339765,
+        "C_high": 2.222300333687844,
+        "peak_ratio": 0.011738783281834711
+      },
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_Jzz": 0.04550730613654152,
+        "C_low": 2.2479013403783625,
+        "T_high_Jzz": 0.2586094842535067,
+        "C_high": 2.3045601369847866,
+        "peak_ratio": 0.1759692080431673
+      }
+    },
+    {
+      "jpm": 0.07,
+      "g6_Jzz": 0.004116000000000002,
+      "g4_Jzz": 0.019600000000000003,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-1.792e-16"
+    },
+    {
+      "jpm": 0.08,
+      "g6_Jzz": 0.006144000000000001,
+      "g4_Jzz": 0.0256,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-2.453e-16"
+    },
+    {
+      "jpm": 0.09,
+      "g6_Jzz": 0.008747999999999999,
+      "g4_Jzz": 0.0324,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=7.002e-17"
+    }
+  ]
+}

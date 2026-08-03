@@ -1,0 +1,98 @@
+{
+ "jpm": 0.05,
+ "g4": 0.010000000000000002,
+ "g6": 0.0015000000000000005,
+ "frame_ok": true,
+ "gram_min": 0.722425317242858,
+ "gap_above_band": 0.5910297771401669,
+ "mask_convergence": 0.00014288510013783784,
+ "band_width_polar": 0.013419357960879105,
+ "n_roots": 90,
+ "z_mean": 0.9040634135803225,
+ "hc_residue_over_width": 0.0759463284486019,
+ "periodic_n_levels": 65536,
+ "periodic_entropy_released": 0.6931225264208516,
+ "periodic_ground_degeneracy": 1,
+ "periodic_entropy_total": 0.6931225264208516,
+ "periodic_entropy_error": -2.465413909369385e-05,
+ "periodic_peaks": [
+  [
+   0.0305807,
+   0.2696
+  ],
+  [
+   0.2559403,
+   0.281
+  ]
+ ],
+ "periodic_gauge": 0.03058072352053451,
+ "periodic_spinon": 0.25594025534195025,
+ "periodic_resolved": true,
+ "periodic_grid_shift": 0.0008127454646362775,
+ "periodic_min_C": 0.0,
+ "polar_n_levels": 65536,
+ "polar_entropy_released": 0.5811372967184284,
+ "polar_ground_degeneracy": 6,
+ "polar_entropy_total": 0.6931222635451818,
+ "polar_entropy_error": -2.4917014763481404e-05,
+ "polar_peaks": [
+  [
+   0.0018458,
+   0.1573
+  ],
+  [
+   0.2559403,
+   0.2765
+  ]
+ ],
+ "polar_gauge": 0.0018457705585313384,
+ "polar_spinon": 0.25594025534195025,
+ "polar_resolved": true,
+ "polar_grid_shift": 0.0016361391772637957,
+ "polar_min_C": 7.653503198816893e-25,
+ "feshbach_n_levels": 65536,
+ "feshbach_entropy_released": 0.5811372967182735,
+ "feshbach_ground_degeneracy": 6,
+ "feshbach_entropy_total": 0.6931222635450269,
+ "feshbach_entropy_error": -2.4917014918357516e-05,
+ "feshbach_peaks": [
+  [
+   0.0036753,
+   0.1548
+  ],
+  [
+   0.2559403,
+   0.2766
+  ]
+ ],
+ "feshbach_gauge": 0.003675291403067881,
+ "feshbach_spinon": 0.25594025534195025,
+ "feshbach_resolved": true,
+ "feshbach_grid_shift": 0.001166276708078895,
+ "feshbach_min_C": 0.0,
+ "hc_n_levels": 65536,
+ "hc_entropy_released": 0.6931225263839744,
+ "hc_ground_degeneracy": 1,
+ "hc_entropy_total": 0.6931225263839744,
+ "hc_entropy_error": -2.4654175970861836e-05,
+ "hc_peaks": [
+  [
+   0.0006964,
+   0.0873
+  ],
+  [
+   0.0036539,
+   0.159
+  ],
+  [
+   0.2574385,
+   0.2773
+  ]
+ ],
+ "hc_gauge": 0.0036539021569308113,
+ "hc_spinon": 0.25743848076857023,
+ "hc_resolved": true,
+ "hc_grid_shift": 0.0011672507958164768,
+ "hc_min_C": 0.0,
+ "runtime": 258.51012173999334
+}

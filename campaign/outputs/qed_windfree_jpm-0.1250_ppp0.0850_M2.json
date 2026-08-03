@@ -1,0 +1,13 @@
+{
+  "backend": "QED",
+  "jpm": -0.125,
+  "jpmpm": 0.085,
+  "M": 2,
+  "ice_overlap_min": 0.6191592098159271,
+  "g6_Jzz": 0.0234375,
+  "winding_free_peak_Jzz": 0.010364215560050011,
+  "periodic_peak_Jzz": 0.0299872923946273,
+  "winding_free_peak_over_g6": 0.4422065305621338,
+  "winding_free_peak_mK": 6.013586364144112,
+  "periodic_peak_mK": 17.39940390057489
+}

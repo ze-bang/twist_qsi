@@ -1,0 +1,10 @@
+{
+ "jpm": -0.15,
+ "raw_manifold_return": 0.5385390466121636,
+ "raw_vector_return": 0.27291118917555907,
+ "raw_band_ice": 0.6466385202991201,
+ "wf_manifold_return": 0.5506681511871632,
+ "wf_vector_return": 0.323772664294705,
+ "wf_band_ice": 0.657588525629305,
+ "runtime": 127.03818873901037
+}

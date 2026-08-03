@@ -1,0 +1,205 @@
+{
+  "n_points": 16,
+  "points": [
+    {
+      "jpm": -0.3,
+      "plain_converged": 54,
+      "masked_converged": 77,
+      "masked_min_pole_distance": 0.04142029952346227,
+      "masked_mean_ice_weight": 0.26199764799347447,
+      "masked_min_ice_weight": 0.17159160718593258,
+      "masked_ring_peak_Jzz": 0.00709458387757168,
+      "oracle": {
+        "band_isolated": false
+      }
+    },
+    {
+      "jpm": -0.29,
+      "plain_converged": 54,
+      "masked_converged": 77,
+      "masked_min_pole_distance": 0.0562740247605793,
+      "masked_mean_ice_weight": 0.2767221308665909,
+      "masked_min_ice_weight": 0.20358790611898095,
+      "masked_ring_peak_Jzz": 0.005885851580928773,
+      "oracle": {
+        "band_isolated": false
+      }
+    },
+    {
+      "jpm": -0.28,
+      "plain_converged": 54,
+      "masked_converged": 77,
+      "masked_min_pole_distance": 0.0717045191359027,
+      "masked_mean_ice_weight": 0.2974878143827486,
+      "masked_min_ice_weight": 0.1955234563115458,
+      "masked_ring_peak_Jzz": 0.004626819503005609,
+      "oracle": {
+        "band_isolated": false
+      }
+    },
+    {
+      "jpm": -0.27,
+      "plain_converged": 63,
+      "masked_converged": 77,
+      "masked_min_pole_distance": 0.08775856304238161,
+      "masked_mean_ice_weight": 0.3140462498712219,
+      "masked_min_ice_weight": 0.21093735702578884,
+      "masked_ring_peak_Jzz": 0.0033028232900688655,
+      "oracle": {
+        "band_isolated": false
+      }
+    },
+    {
+      "jpm": -0.26,
+      "plain_converged": 63,
+      "masked_converged": 89,
+      "masked_min_pole_distance": 0.006276668839756638,
+      "masked_mean_ice_weight": 0.35135889590050895,
+      "masked_min_ice_weight": 0.23673073256798408,
+      "masked_ring_peak_Jzz": 0.0018761602810219444,
+      "oracle": {
+        "band_isolated": false
+      }
+    },
+    {
+      "jpm": -0.25,
+      "plain_converged": 63,
+      "masked_converged": 89,
+      "masked_min_pole_distance": 0.031058268566268588,
+      "masked_mean_ice_weight": 0.37224873547944076,
+      "masked_min_ice_weight": 0.27580086941894644,
+      "masked_ring_peak_Jzz": 0.00042395826642863745,
+      "oracle": {
+        "band_isolated": false
+      }
+    },
+    {
+      "jpm": -0.24,
+      "plain_converged": 63,
+      "masked_converged": 89,
+      "masked_min_pole_distance": 0.05661664137163536,
+      "masked_mean_ice_weight": 0.39400143445246166,
+      "masked_min_ice_weight": 0.3075106433543207,
+      "masked_ring_peak_Jzz": 0.0014995189723811823,
+      "oracle": {
+        "band_isolated": false
+      }
+    },
+    {
+      "jpm": -0.23,
+      "plain_converged": 76,
+      "masked_converged": 90,
+      "masked_min_pole_distance": 0.006989744671553111,
+      "masked_mean_ice_weight": 0.41959058710601427,
+      "masked_min_ice_weight": 0.3275620637665381,
+      "masked_ring_peak_Jzz": 0.0035344313064595637,
+      "oracle": {
+        "band_isolated": false
+      }
+    },
+    {
+      "jpm": -0.22,
+      "plain_converged": 76,
+      "masked_converged": 90,
+      "masked_min_pole_distance": 0.0416394680381883,
+      "masked_mean_ice_weight": 0.44471397074993146,
+      "masked_min_ice_weight": 0.3498240130197828,
+      "masked_ring_peak_Jzz": 0.004913935398413269,
+      "oracle": {
+        "band_isolated": false
+      }
+    },
+    {
+      "jpm": -0.21,
+      "plain_converged": 76,
+      "masked_converged": 90,
+      "masked_min_pole_distance": 0.07688923067111775,
+      "masked_mean_ice_weight": 0.4708835264120063,
+      "masked_min_ice_weight": 0.3744960769837486,
+      "masked_ring_peak_Jzz": 0.006206812855639183,
+      "oracle": {
+        "band_isolated": false
+      }
+    },
+    {
+      "jpm": -0.2,
+      "plain_converged": 85,
+      "masked_converged": 90,
+      "masked_min_pole_distance": 0.11273283657926125,
+      "masked_mean_ice_weight": 0.49781553158784875,
+      "masked_min_ice_weight": 0.4017486419097865,
+      "masked_ring_peak_Jzz": 0.028328236924625896,
+      "oracle": {
+        "band_isolated": false
+      }
+    },
+    {
+      "jpm": -0.19,
+      "plain_converged": 85,
+      "masked_converged": 90,
+      "masked_min_pole_distance": 0.14917116652825602,
+      "masked_mean_ice_weight": 0.5262055901973924,
+      "masked_min_ice_weight": 0.43169605450462323,
+      "masked_ring_peak_Jzz": 0.026173311616948903,
+      "oracle": {
+        "band_isolated": false
+      }
+    },
+    {
+      "jpm": -0.18,
+      "plain_converged": 85,
+      "masked_converged": 90,
+      "masked_min_pole_distance": 0.186212091551891,
+      "masked_mean_ice_weight": 0.554791996523802,
+      "masked_min_ice_weight": 0.4643631967954913,
+      "masked_ring_peak_Jzz": 0.023974048465686595,
+      "oracle": {
+        "band_isolated": true,
+        "n_roots": 85,
+        "max_abs_difference": null
+      }
+    },
+    {
+      "jpm": -0.15,
+      "plain_converged": 90,
+      "masked_converged": 90,
+      "masked_min_pole_distance": 0.30113414217715206,
+      "masked_mean_ice_weight": 0.6458424970203103,
+      "masked_min_ice_weight": 0.5214966620383363,
+      "masked_ring_peak_Jzz": 0.017358317956772167,
+      "oracle": {
+        "band_isolated": true,
+        "n_roots": 90,
+        "max_abs_difference": 4.076738946423575e-13
+      }
+    },
+    {
+      "jpm": -0.1,
+      "plain_converged": 90,
+      "masked_converged": 90,
+      "masked_min_pole_distance": 0.5075113027916642,
+      "masked_mean_ice_weight": 0.8003270640281902,
+      "masked_min_ice_weight": 0.7328207192663679,
+      "masked_ring_peak_Jzz": 0.007392132812640669,
+      "oracle": {
+        "band_isolated": true,
+        "n_roots": 90,
+        "max_abs_difference": 2.4866220194041944e-13
+      }
+    },
+    {
+      "jpm": -0.05,
+      "plain_converged": 90,
+      "masked_converged": 90,
+      "masked_min_pole_distance": 0.7371291113906596,
+      "masked_mean_ice_weight": 0.936161639557123,
+      "masked_min_ice_weight": 0.9245603597739548,
+      "masked_ring_peak_Jzz": 0.0012587126535860086,
+      "oracle": {
+        "band_isolated": true,
+        "n_roots": 90,
+        "max_abs_difference": 2.7652879985851087e-13
+      }
+    }
+  ]
+}

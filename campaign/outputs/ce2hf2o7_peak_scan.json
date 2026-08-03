@@ -1,0 +1,706 @@
+{
+  "Ja_meV": 0.05,
+  "n_points": 32,
+  "points": [
+    {
+      "jpm": -0.01,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.001,
+      "Jc_meV": 0.001,
+      "well_defined": true,
+      "band_gap_Ja": 0.9402914765210445,
+      "model_overlap_min": 0.9926139766870254,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.00043304574138152725,
+        "C_low": 2.0542335448968223,
+        "T_high_K": 0.1451257192061526,
+        "C_high": 2.4669269693064804,
+        "peak_ratio": 0.0029839351959826035,
+        "T_low_over_Ja": 0.0007463398942435578,
+        "T_high_over_Ja": 0.2501193374602727
+      },
+      "winding_free": {
+        "n_maxima": 1,
+        "T_low_K": 0.1451257443686756,
+        "C_low": 2.4668970351453,
+        "T_low_over_Ja": 0.250119380827042
+      }
+    },
+    {
+      "jpm": -0.02,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.002,
+      "Jc_meV": 0.002,
+      "well_defined": true,
+      "band_gap_Ja": 0.8812799349341262,
+      "model_overlap_min": 0.974016609320609,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.0015700779306571896,
+        "C_low": 2.028006983155034,
+        "T_high_K": 0.14535373562371698,
+        "C_high": 2.44960255815495,
+        "peak_ratio": 0.010801772131414035,
+        "T_low_over_Ja": 0.002705976955188267,
+        "T_high_over_Ja": 0.2505123161521492
+      },
+      "winding_free": {
+        "n_maxima": 1,
+        "T_low_K": 0.14535436401525734,
+        "C_low": 2.4491786502083666,
+        "T_low_over_Ja": 0.25051339916401366
+      }
+    },
+    {
+      "jpm": -0.03,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.003,
+      "Jc_meV": 0.003,
+      "well_defined": true,
+      "band_gap_Ja": 0.8231302984608189,
+      "model_overlap_min": 0.9484812894225614,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.003215220255195022,
+        "C_low": 2.00832522233327,
+        "T_high_K": 0.14570098526383926,
+        "C_high": 2.4229333281343495,
+        "peak_ratio": 0.022067251291216835,
+        "T_low_over_Ja": 0.005541324890013943,
+        "T_high_over_Ja": 0.2511107893269648
+      },
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_K": 0.00017425443163318407,
+        "C_low": 1.3200147794780408,
+        "T_high_K": 0.14570569886464027,
+        "C_high": 2.421036937584625,
+        "peak_ratio": 0.0011959342221409294,
+        "T_low_over_Ja": 0.0003003217019561935,
+        "T_high_over_Ja": 0.2511189130607582
+      }
+    },
+    {
+      "jpm": -0.04,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.004,
+      "Jc_meV": 0.004,
+      "well_defined": true,
+      "band_gap_Ja": 0.764566630380927,
+      "model_overlap_min": 0.9189379605286668,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.005228495236256102,
+        "C_low": 1.9943035126335031,
+        "T_high_K": 0.14615141428394463,
+        "C_high": 2.3890283806460477,
+        "peak_ratio": 0.035774510030386175,
+        "T_low_over_Ja": 0.009011137182024221,
+        "T_high_over_Ja": 0.2518870887223986
+      },
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_K": 0.00038967597728666704,
+        "C_low": 1.3190844156166543,
+        "T_high_K": 0.1461720044798809,
+        "C_high": 2.383741998801379,
+        "peak_ratio": 0.0026658728439364187,
+        "T_low_over_Ja": 0.000671593552102744,
+        "T_high_over_Ja": 0.25192257523846157
+      }
+    },
+    {
+      "jpm": -0.05,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.005000000000000001,
+      "Jc_meV": 0.005000000000000001,
+      "well_defined": true,
+      "band_gap_Ja": 0.7034007670701187,
+      "model_overlap_min": 0.8872896692031199,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.007512501962347495,
+        "C_low": 1.9845904681724909,
+        "T_high_K": 0.14669206955064606,
+        "C_high": 2.350021557276945,
+        "peak_ratio": 0.051212734167294376,
+        "T_low_over_Ja": 0.012947546608345718,
+        "T_high_over_Ja": 0.2528188900450138
+      },
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_K": 0.0007143923709356867,
+        "C_low": 1.3171616735334828,
+        "T_high_K": 0.1467558894124527,
+        "C_high": 2.3386626118425,
+        "peak_ratio": 0.0048678957539340035,
+        "T_low_over_Ja": 0.001231231428050915,
+        "T_high_over_Ja": 0.2529288814485996
+      }
+    },
+    {
+      "jpm": -0.06,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.006,
+      "Jc_meV": 0.006,
+      "well_defined": true,
+      "band_gap_Ja": 0.6425796953407419,
+      "model_overlap_min": 0.854740600009562,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.009999518894075929,
+        "C_low": 1.977747014780793,
+        "T_high_K": 0.1473106972576421,
+        "C_high": 2.307903867527024,
+        "peak_ratio": 0.06788046679724191,
+        "T_low_over_Ja": 0.01723383735418358,
+        "T_high_over_Ja": 0.2538850742682845
+      },
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_K": 0.0011526103892055249,
+        "C_low": 1.3137562865116674,
+        "T_high_K": 0.14747307308947555,
+        "C_high": 2.287223390785582,
+        "peak_ratio": 0.007815734527388657,
+        "T_low_over_Ja": 0.001986485569028559,
+        "T_high_over_Ja": 0.2541649235996084
+      }
+    },
+    {
+      "jpm": -0.07,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.007000000000000001,
+      "Jc_meV": 0.007000000000000001,
+      "well_defined": true,
+      "band_gap_Ja": 0.5826565730255098,
+      "model_overlap_min": 0.8220407473439871,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.012641992986421087,
+        "C_low": 1.9724794291625691,
+        "T_high_K": 0.1479927766878313,
+        "C_high": 2.2644328321286364,
+        "peak_ratio": 0.0854230407007464,
+        "T_low_over_Ja": 0.021788053332224267,
+        "T_high_over_Ja": 0.2550606154205172
+      },
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_K": 0.0016993949308889424,
+        "C_low": 1.3082012708230086,
+        "T_high_K": 0.1483484974627314,
+        "C_high": 2.230880417216699,
+        "peak_ratio": 0.011455423950727038,
+        "T_low_over_Ja": 0.002928850492678683,
+        "T_high_over_Ja": 0.2556736883136306
+      }
+    },
+    {
+      "jpm": -0.08,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.008,
+      "Jc_meV": 0.008,
+      "well_defined": true,
+      "band_gap_Ja": 0.5241564715243698,
+      "model_overlap_min": 0.789648269307713,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.015405618385976597,
+        "C_low": 1.9677611444733096,
+        "T_high_K": 0.14872576089362335,
+        "C_high": 2.22107583454673,
+        "peak_ratio": 0.10358406165422493,
+        "T_low_over_Ja": 0.026551069548139093,
+        "T_high_over_Ja": 0.2563238892559504
+      },
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_K": 0.0023414612099787856,
+        "C_low": 1.299594469659109,
+        "T_high_K": 0.14942267984731097,
+        "C_high": 2.171085276022132,
+        "peak_ratio": 0.0156700523131524,
+        "T_low_over_Ja": 0.00403543031333342,
+        "T_high_over_Ja": 0.25752500583207044
+      }
+    },
+    {
+      "jpm": -0.09,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.009,
+      "Jc_meV": 0.009,
+      "well_defined": true,
+      "band_gap_Ja": 0.46759083993136846,
+      "model_overlap_min": 0.7578333635132427,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.01826528305893696,
+        "C_low": 1.9628818788771107,
+        "T_high_K": 0.14949328288605548,
+        "C_high": 2.1789955531160152,
+        "peak_ratio": 0.1221812960844458,
+        "T_low_over_Ja": 0.03147960624908982,
+        "T_high_over_Ja": 0.25764668781490613
+      },
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_K": 0.003058490927210582,
+        "C_low": 1.2867205873742242,
+        "T_high_K": 0.15074901976590796,
+        "C_high": 2.109260581740116,
+        "peak_ratio": 0.020288628954005728,
+        "T_low_over_Ja": 0.005271207119776564,
+        "T_high_over_Ja": 0.2598109084515458
+      }
+    },
+    {
+      "jpm": -0.1,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.010000000000000002,
+      "Jc_meV": 0.010000000000000002,
+      "well_defined": true,
+      "band_gap_Ja": 0.41347093074625463,
+      "model_overlap_min": 0.7241433797522925,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.021202384309181668,
+        "C_low": 1.9574431385265234,
+        "T_high_K": 0.15027159324711153,
+        "C_high": 2.139072255378818,
+        "peak_ratio": 0.14109376130933657,
+        "T_low_over_Ja": 0.03654160230866767,
+        "T_high_over_Ja": 0.2589880797674192
+      },
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_K": 0.0038253129920260906,
+        "C_low": 1.2679710622591922,
+        "T_high_K": 0.15240157426051343,
+        "C_high": 2.0467839962682737,
+        "peak_ratio": 0.025100219670219064,
+        "T_low_over_Ja": 0.006592799376825941,
+        "T_high_over_Ja": 0.2626590310143051
+      }
+    },
+    {
+      "jpm": -0.11,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.011000000000000001,
+      "Jc_meV": 0.011000000000000001,
+      "well_defined": true,
+      "band_gap_Ja": 0.36231641438205187,
+      "model_overlap_min": 0.6853436050344065,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.024203154929952585,
+        "C_low": 1.9513326603817271,
+        "T_high_K": 0.15103283410681226,
+        "C_high": 2.1019347717134975,
+        "peak_ratio": 0.16025094856417657,
+        "T_low_over_Ja": 0.04171333040512801,
+        "T_high_over_Ja": 0.2603000530035729
+      },
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_K": 0.004615039903214416,
+        "C_low": 1.2413182332064432,
+        "T_high_K": 0.15446176416710802,
+        "C_high": 1.9849652046337118,
+        "peak_ratio": 0.02987820272609038,
+        "T_low_over_Ja": 0.00795386737277767,
+        "T_high_over_Ja": 0.2662096996159732
+      }
+    },
+    {
+      "jpm": -0.12,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.012,
+      "Jc_meV": 0.012,
+      "well_defined": true,
+      "band_gap_Ja": 0.3146525881173164,
+      "model_overlap_min": 0.646063767871225,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.027259914182648264,
+        "C_low": 1.944732188890354,
+        "T_high_K": 0.1517403908912105,
+        "C_high": 2.068005306467143,
+        "peak_ratio": 0.17964837194990568,
+        "T_low_over_Ja": 0.04698155304162529,
+        "T_high_over_Ja": 0.2615195035261768
+      },
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_K": 0.005404020694068864,
+        "C_low": 1.2044924984511713,
+        "T_high_K": 0.1570324843153835,
+        "C_high": 1.9250318890138063,
+        "peak_ratio": 0.034413393621255124,
+        "T_low_over_Ja": 0.00931364945521527,
+        "T_high_over_Ja": 0.27064025006423015
+      }
+    },
+    {
+      "jpm": -0.125,
+      "jpmpm": 0.085,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.021000000000000005,
+      "Jc_meV": 0.003999999999999999,
+      "well_defined": true,
+      "band_gap_Ja": 0.2223644814011406,
+      "model_overlap_min": 0.6191592098159255,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.028655430836248746,
+        "C_low": 1.9510453513470225,
+        "T_high_K": 0.14701024982896954,
+        "C_high": 2.008215798578863,
+        "peak_ratio": 0.19492131242267957,
+        "T_low_over_Ja": 0.049386679457002466,
+        "T_high_over_Ja": 0.253367263144162
+      },
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_K": 0.006014527016831812,
+        "C_low": 1.1960414678194788,
+        "T_high_K": 0.15388789507009046,
+        "C_high": 1.8515254351319828,
+        "peak_ratio": 0.039083821466869825,
+        "T_low_over_Ja": 0.010365836743588772,
+        "T_high_over_Ja": 0.26522065536440903
+      }
+    },
+    {
+      "jpm": -0.13,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.013000000000000001,
+      "Jc_meV": 0.013000000000000001,
+      "well_defined": true,
+      "band_gap_Ja": 0.27098695244308013,
+      "model_overlap_min": 0.6063409948753345,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.030374782359483442,
+        "C_low": 1.9381896636206104,
+        "T_high_K": 0.152349420266182,
+        "C_high": 2.037546471460241,
+        "peak_ratio": 0.1993757659623069,
+        "T_low_over_Ja": 0.052349924471085,
+        "T_high_over_Ja": 0.2625691453442844
+      },
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_K": 0.006179419796266166,
+        "C_low": 1.1557506495318906,
+        "T_high_K": 0.16021899260555103,
+        "C_high": 1.868100849071102,
+        "peak_ratio": 0.03856858475873397,
+        "T_low_over_Ja": 0.010650023950168728,
+        "T_high_over_Ja": 0.2761320908399938
+      }
+    },
+    {
+      "jpm": -0.14,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.014000000000000002,
+      "Jc_meV": 0.014000000000000002,
+      "well_defined": true,
+      "band_gap_Ja": 0.2317576636248865,
+      "model_overlap_min": 0.5664877270390419,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.03356555370235064,
+        "C_low": 1.9327348348531068,
+        "T_high_K": 0.15279205371532245,
+        "C_high": 2.0107058842442114,
+        "peak_ratio": 0.21968127848382069,
+        "T_low_over_Ja": 0.05784911247601399,
+        "T_high_over_Ja": 0.2633320093331236
+      },
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_K": 0.006946633008169561,
+        "C_low": 1.0960718089022974,
+        "T_high_K": 0.16412245949931684,
+        "C_high": 1.8151350092660787,
+        "peak_ratio": 0.04232591340247662,
+        "T_low_over_Ja": 0.01197229033618027,
+        "T_high_over_Ja": 0.28285958586022464
+      }
+    },
+    {
+      "jpm": -0.15,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.015,
+      "Jc_meV": 0.015,
+      "well_defined": true,
+      "band_gap_Ja": 0.19154386314313668,
+      "model_overlap_min": 0.5271567644197761,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.03687110072645122,
+        "C_low": 1.9299495108115354,
+        "T_high_K": 0.15298242420883507,
+        "C_high": 1.9875650044135895,
+        "peak_ratio": 0.24101527294481084,
+        "T_low_over_Ja": 0.06354611254005753,
+        "T_high_over_Ja": 0.26366010653029737
+      },
+      "winding_free": {
+        "n_maxima": 3,
+        "T_low_K": 0.0077201275571497155,
+        "C_low": 1.0336344421455315,
+        "T_high_K": 0.1688129573899883,
+        "C_high": 1.7668891480735116,
+        "peak_ratio": 0.045731842368680456,
+        "T_low_over_Ja": 0.013305382397176213,
+        "T_high_over_Ja": 0.29094350255804324
+      }
+    },
+    {
+      "jpm": -0.1515,
+      "jpmpm": 0.085,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.02365,
+      "Jc_meV": 0.00665,
+      "well_defined": true,
+      "band_gap_Ja": 0.08119812166988793,
+      "model_overlap_min": 0.5156931753832492,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.03747833263248602,
+        "C_low": 1.9378085258728628,
+        "T_high_K": 0.147908526736198,
+        "C_high": 1.9487945515311829,
+        "peak_ratio": 0.2533885872538669,
+        "T_low_over_Ja": 0.06459265648039392,
+        "T_high_over_Ja": 0.25491541343840923
+      },
+      "winding_free": {
+        "n_maxima": 2,
+        "T_low_K": 0.008108995388170108,
+        "C_low": 1.0478565145889784,
+        "T_high_K": 0.16575723494823777,
+        "C_high": 1.7211152502681129,
+        "peak_ratio": 0.048920913712770145,
+        "T_low_over_Ja": 0.013975583136138755,
+        "T_high_over_Ja": 0.28567706683063476
+      }
+    },
+    {
+      "jpm": -0.16,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.016,
+      "Jc_meV": 0.016,
+      "well_defined": true,
+      "band_gap_Ja": 0.14019204295860968,
+      "model_overlap_min": 0.4732751176169635,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.04035709321571534,
+        "C_low": 1.9319538648413699,
+        "T_high_K": 0.1527910964399097,
+        "C_high": 1.9681851004806734,
+        "peak_ratio": 0.2641324930316678,
+        "T_low_over_Ja": 0.06955410434589081,
+        "T_high_over_Ja": 0.2633303595008726
+      },
+      "winding_free": {
+        "n_maxima": 3,
+        "T_low_K": 0.008465658720665787,
+        "C_low": 0.9885017292320541,
+        "T_high_K": 0.17429969282178234,
+        "C_high": 1.7238467540662201,
+        "peak_ratio": 0.04856955616853404,
+        "T_low_over_Ja": 0.014590280495836043,
+        "T_high_over_Ja": 0.3003997081053915
+      }
+    },
+    {
+      "jpm": -0.17,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.017,
+      "Jc_meV": 0.017,
+      "well_defined": true,
+      "band_gap_Ja": 0.08932510094571522,
+      "model_overlap_min": 0.4138208598658105,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.044120348929520936,
+        "C_low": 1.9413427666301832,
+        "T_high_K": 0.15202299466483613,
+        "C_high": 1.9526720684025503,
+        "peak_ratio": 0.290221548567654,
+        "T_low_over_Ja": 0.07603995007316378,
+        "T_high_over_Ja": 0.26200656170586867
+      },
+      "winding_free": {
+        "n_maxima": 3,
+        "T_low_K": 0.009035793769180279,
+        "C_low": 0.9911857123799528,
+        "T_high_K": 0.18050983609548116,
+        "C_high": 1.6861785857993217,
+        "peak_ratio": 0.050057071485017424,
+        "T_low_over_Ja": 0.01557288923932663,
+        "T_high_over_Ja": 0.3111026829443618
+      }
+    },
+    {
+      "jpm": -0.18,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.018,
+      "Jc_meV": 0.018,
+      "well_defined": true,
+      "band_gap_Ja": 0.039110069850245344,
+      "model_overlap_min": 0.3596680460652164,
+      "periodic": {
+        "n_maxima": 2,
+        "T_low_K": 0.04829854891569977,
+        "C_low": 1.9610736556696164,
+        "T_high_K": 0.15033726782768128,
+        "C_high": 1.9412818922760486,
+        "peak_ratio": 0.32126797043471783,
+        "T_low_over_Ja": 0.08324093841648471,
+        "T_high_over_Ja": 0.2591012677169428
+      },
+      "winding_free": {
+        "n_maxima": 3,
+        "T_low_K": 0.009279236358660518,
+        "C_low": 1.0738174644187346,
+        "T_high_K": 0.18729489759245668,
+        "C_high": 1.6537460604921184,
+        "peak_ratio": 0.049543455149812045,
+        "T_low_over_Ja": 0.015992454424074595,
+        "T_high_over_Ja": 0.32279651016901806
+      }
+    },
+    {
+      "jpm": -0.19,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.019000000000000003,
+      "Jc_meV": 0.019000000000000003,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-2.892e-16"
+    },
+    {
+      "jpm": -0.2,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.020000000000000004,
+      "Jc_meV": 0.020000000000000004,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-1.760e-16"
+    },
+    {
+      "jpm": -0.21,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.021,
+      "Jc_meV": 0.021,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-3.200e-16"
+    },
+    {
+      "jpm": -0.22,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.022000000000000002,
+      "Jc_meV": 0.022000000000000002,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-5.087e-16"
+    },
+    {
+      "jpm": -0.23,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.023000000000000003,
+      "Jc_meV": 0.023000000000000003,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-1.050e-16"
+    },
+    {
+      "jpm": -0.24,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.024,
+      "Jc_meV": 0.024,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-2.886e-16"
+    },
+    {
+      "jpm": -0.25,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.025,
+      "Jc_meV": 0.025,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-3.803e-16"
+    },
+    {
+      "jpm": -0.26,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.026000000000000002,
+      "Jc_meV": 0.026000000000000002,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-4.343e-16"
+    },
+    {
+      "jpm": -0.27,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.027000000000000003,
+      "Jc_meV": 0.027000000000000003,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-3.622e-16"
+    },
+    {
+      "jpm": -0.28,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.028000000000000004,
+      "Jc_meV": 0.028000000000000004,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-2.031e-16"
+    },
+    {
+      "jpm": -0.29,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.028999999999999998,
+      "Jc_meV": 0.028999999999999998,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-4.017e-16"
+    },
+    {
+      "jpm": -0.3,
+      "jpmpm": 0.0,
+      "Ja_meV": 0.05,
+      "Jb_meV": 0.03,
+      "Jc_meV": 0.03,
+      "well_defined": false,
+      "failure": "matrix is singular below cutoff: lambda_min=-3.530e-16"
+    }
+  ]
+}

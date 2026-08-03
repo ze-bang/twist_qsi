@@ -1,0 +1,66 @@
+{
+ "jpm": -0.02,
+ "parity_imaginary_residue": 9.797174393178826e-16,
+ "band_gap": 0.88550304975722,
+ "coherence_rank_0p8": 90,
+ "coherence_rank_0p5": 90,
+ "band_coherence_min": 0.9763074778486349,
+ "band_coherence_mean": 0.982515377780219,
+ "corner_sigma_min": 0.9807741674010001,
+ "collective_sigma_min": 0.9603354788379383,
+ "collective_sigma_mean": 0.9844257739468154,
+ "individual_min": 0.9655567511616213,
+ "individual_mean": 0.9844257739468145,
+ "manifold_return_mean": 0.982515377780219,
+ "vector_return_mean": 0.4145053253487349,
+ "vector_return_max": 0.9826986781208675,
+ "band_ice_weight": 0.9883002354461726,
+ "band_coherence_mean_over_ice": 0.9941466596298624,
+ "transport_variance_mean": 0.67156017993989,
+ "transport_variance_max": 2.2349012608227956,
+ "greedy": [
+  {
+   "dropped": 0,
+   "rank": 90,
+   "coherence_min": 0.9763074778486349,
+   "coherence_mean": 0.982515377780219,
+   "sigma_min": 0.9807741674010001
+  },
+  {
+   "dropped": 1,
+   "rank": 89,
+   "coherence_min": 0.7266063692652658,
+   "coherence_mean": 0.9773342565814792,
+   "sigma_min": 0.5296694449548576
+  },
+  {
+   "dropped": 2,
+   "rank": 88,
+   "coherence_min": 0.5223623745017031,
+   "coherence_mean": 0.9717097513303831,
+   "sigma_min": 0.1695886788234363
+  },
+  {
+   "dropped": 5,
+   "rank": 85,
+   "coherence_min": 0.5223623745017029,
+   "coherence_mean": 0.959524287615787,
+   "sigma_min": 0.02692079510302348
+  },
+  {
+   "dropped": 10,
+   "rank": 80,
+   "coherence_min": 0.4917689553022365,
+   "coherence_mean": 0.9459243389044566,
+   "sigma_min": 0.0022880779096127227
+  },
+  {
+   "dropped": 20,
+   "rank": 70,
+   "coherence_min": 0.3714241323453961,
+   "coherence_mean": 0.893015285429373,
+   "sigma_min": 0.00017366922381538186
+  }
+ ],
+ "runtime": 11.403110997984186
+}

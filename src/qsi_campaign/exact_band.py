@@ -324,6 +324,7 @@ def extract_exact_band_full(
     *,
     tolerance: float = 1.0e-10,
     max_iterations: int = 3000,
+    escalation: tuple[int, ...] = (1, 2, 4),
 ) -> ExactBandResult:
     """Extract a generic-source band without assuming translation symmetry."""
     n_required = n_band + 1
@@ -346,7 +347,7 @@ def extract_exact_band_full(
     seed = np.random.default_rng(20260722).normal(size=dimension)
     base = max(3 * n_required + 1, 300)
     failure = None
-    for attempt, factor in enumerate((1, 2, 4)):
+    for attempt, factor in enumerate(escalation):
         values, vectors = eigsh(
             operator,
             k=n_required,

@@ -1,0 +1,29 @@
+{
+ "jpm": -0.35,
+ "iterations": 3,
+ "energy": -2.4177973041898726,
+ "energy_history": [
+  -2.562560323076039,
+  -2.4546605204378515,
+  -2.4177973041898726
+ ],
+ "degeneracy": 2,
+ "band_width": 0.6032805265189798,
+ "band_gap": 1.5543122344752192e-15,
+ "ice_weight": 0.14417349008311164,
+ "band_ice_weight": 0.31252806606220845,
+ "defect_number": 2.397966689237985,
+ "hexagon_flux": -0.009091642509958094,
+ "winding4_amplitude": 0.17759721050082428,
+ "condensate_fraction": 0.05204794520622065,
+ "ring_peak": 0.03750015744911241,
+ "ring_peak_over_g6": 0.07288660339963542,
+ "coherence_min": 0.13668439042482874,
+ "coherence_rank_0p8": 0,
+ "corner_sigma_min": 0.004254097393858164,
+ "counterterm_norm": 7.045970627498853,
+ "masked_roots": 71,
+ "root_agreement": 0.16210087116708038,
+ "root_agreement_relative": 0.26869899498070493,
+ "runtime": 146.7520463379915
+}

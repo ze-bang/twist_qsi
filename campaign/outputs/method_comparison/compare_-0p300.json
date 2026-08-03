@@ -1,0 +1,50 @@
+{
+ "jpm": -0.3,
+ "g4": 0.36,
+ "g6": 0.32399999999999995,
+ "frame_ok": false,
+ "frame_error": "matrix is singular below cutoff: lambda_min=-1.331e-16",
+ "n_roots": 77,
+ "z_mean": 0.26165662589434824,
+ "periodic_n_levels": 65536,
+ "periodic_entropy_released": 0.6931042749805056,
+ "periodic_ground_degeneracy": 1,
+ "periodic_entropy_total": 0.6931042749805056,
+ "periodic_entropy_error": -4.29055794396449e-05,
+ "periodic_peaks": [
+  [
+   0.1642438,
+   0.3177
+  ]
+ ],
+ "periodic_gauge": null,
+ "periodic_spinon": 0.16424375388801662,
+ "periodic_resolved": false,
+ "periodic_grid_shift": null,
+ "periodic_min_C": 0.0,
+ "hc_n_levels": 65536,
+ "hc_entropy_released": 0.6497824701548668,
+ "hc_ground_degeneracy": 2,
+ "hc_entropy_total": 0.6931041689398634,
+ "hc_entropy_error": -4.301162008191195e-05,
+ "hc_peaks": [
+  [
+   0.0056278,
+   0.0353
+  ],
+  [
+   0.0419112,
+   0.0972
+  ],
+  [
+   0.4588018,
+   0.1832
+  ]
+ ],
+ "hc_gauge": 0.04191123551612193,
+ "hc_spinon": 0.4588017799462135,
+ "hc_resolved": false,
+ "hc_grid_shift": 0.0007601647079047424,
+ "hc_min_C": 1.4546258455958707e-21,
+ "runtime": 229.16085450397804
+}
