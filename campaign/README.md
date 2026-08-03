@@ -1,7 +1,22 @@
 # Active campaign
 
-The cubic-16 exact-band calculation and the cubic/FCC topology audit are frozen
-method validation.  The remaining production campaign has two outputs:
+Current phase (2026-08): the `(Jpm, Jpmpm)` plane on FCC-32, sized for a
+remote cluster — see the status section at the top of `SIMULATION_PLAN.md`
+for the scoped goals, entry-point scripts, and measured per-point costs.
+The method is the transport-sector mask on the Feshbach map plus the
+two-sided fold (see the repository `README.md`); character averaging is its
+historical derivation, not the algorithm.  Current instruments:
+
+- `run_jpmpm_fold_plane.py` — full-space fold per `(Jpm, Jpmpm)` point
+  (cubic-16; the exact reference grid for truncation calibration);
+- `run_multi_anchor_band.py` — self-consistent masked band via multi-anchor
+  interpolation (any cluster, graded truncation);
+- `run_fcc32_sector_grounds.py` — per-sector bordered-matrix ground states;
+- `run_two_sided_fold.py` — counterterm-free full-range thermodynamics;
+- `campaign/outputs/README.md` — index of retained data and its consumers.
+
+The earlier production program below (FCC-32 exact-band Figure 1 and the
+Ce2Hf2O7 fit) is retained as reference for its manifest and fit tooling:
 
 1. a Figure 1 built entirely from converged FCC-32 exact-band XYZ results;
 2. a Ce2Hf2O7 heat-capacity fit over converged FCC-32 model curves.

@@ -1,11 +1,36 @@
 # Winding-free quantum spin ice campaign
 
-This repository tests a finite-cluster protocol for removing noncontractible
-ring exchanges from the gauge band of quantum spin ice (QSI).  The scientific
-claim is deliberately narrower than earlier drafts: winding-free character
-projection removes winding channels from a chosen, isolated band.  Whether
-the resulting band approaches bulk QSI is a separate numerical question that
-must pass order, character-grid, cluster-size, and sign-free QMC benchmarks.
+This repository develops and validates a finite-cluster protocol that removes
+the noncontractible (winding) ring exchanges a periodic cluster invents from
+the gauge physics of quantum spin ice (QSI).
+
+## The method, current form
+
+The optimized protocol is a projection, not an average.  Every ice
+configuration carries a transport (polarization) label; a winding process
+changes it by exactly half a box vector (`rho = w.L/2`), a contractible
+process cannot change it at all.  The winding-free theory is therefore
+obtained by **deleting every ice-block matrix element that connects
+different transport sectors** — applied to the exact Feshbach map
+`F(z) = PHP + PHQ (z - QHQ)^{-1} QHP`, because the bare ice block is
+diagonal (both the physical hexagon and the winding artifact are emergent),
+so the deletion must act on the folded map where those amplitudes become
+explicit.  Twist/character averaging over the ice manifold is the historical
+*derivation*, not the algorithm: the `M=2` character (corner) average equals
+the parity mask exactly (verified entry by entry, and eight times cheaper),
+and the continuous source average equals the full transport-sector block
+projection imposed directly here at any coupling.  Full-range thermodynamics
+comes from the two-sided fold (remove the highest-ice-weight raw levels,
+insert the masked self-consistent roots); band spectra on clusters too large
+for dense complements come from the multi-anchor interpolated
+self-consistency and the per-sector bordered matrices.
+
+The complete narrative — every construction, calibration gate, and recorded
+dead end — is `paper/pedagogical.tex`.  Campaign status and the
+remote-cluster phase goals are at the top of `SIMULATION_PLAN.md`.
+
+Whether the winding-free band approaches bulk QSI remains a cluster-size
+question that must pass order, cluster-size, and sign-free QMC benchmarks.
 
 ## Active workflow
 

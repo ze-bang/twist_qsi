@@ -2,6 +2,19 @@
 
 ## Campaign status and goal (updated 2026-08-03) — remote-cluster phase
 
+**The method, current form.**  The optimized protocol is no longer any form
+of twist or character averaging over the ice manifold: it is the direct
+deletion of every ice-block matrix element connecting different transport
+(polarization) sectors, applied to the exact Feshbach map `F(z)` (the bare
+ice block is diagonal, so only the folded map exposes the amplitudes to be
+deleted).  The character-grid construction below survives as the derivation
+and as a validation oracle: the `M=2` corner average equals the parity mask
+exactly, and the continuous source average equals the block projection used
+here.  Full-range thermodynamics is the two-sided fold; large-cluster band
+spectra come from multi-anchor interpolated self-consistency and per-sector
+bordered matrices, all under graded `L`-truncation with the cubic-16 exact
+grids as calibration gates.
+
 The local (cubic-16 + truncated FCC-32) program is complete through the
 `(Jpm, Jpmpm)` plane; the narrative record is `paper/pedagogical.tex`.
 State of the results:
