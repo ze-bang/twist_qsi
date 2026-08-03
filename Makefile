@@ -1,9 +1,6 @@
-.PHONY: validate nonperturbative nonperturbative-m3 nonperturbative-m4 dssf figures material-fit test paper note all clean
+.PHONY: nonperturbative nonperturbative-m3 nonperturbative-m4 dssf figures material-fit test paper all clean
 
 PYTHON ?= python
-
-validate:
-	PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 $(PYTHON) campaign/run_validation.py
 
 nonperturbative:
 	PYTHONPATH=src $(PYTHON) campaign/run_nonperturbative.py
@@ -28,14 +25,10 @@ test:
 
 paper: figures
 	latexmk -pdf -interaction=nonstopmode -halt-on-error -cd paper/main.tex
-	latexmk -pdf -interaction=nonstopmode -halt-on-error -cd paper/supplement.tex
+	latexmk -pdf -interaction=nonstopmode -halt-on-error -cd paper/pedagogical.tex
 
-note: figures
-	latexmk -pdf -interaction=nonstopmode -halt-on-error -cd docs/projected_band_protocol_note.tex
-
-all: validate test paper note
+all: test paper
 
 clean:
 	latexmk -C -cd paper/main.tex
-	latexmk -C -cd paper/supplement.tex
-	latexmk -C -cd docs/projected_band_protocol_note.tex
+	latexmk -C -cd paper/pedagogical.tex

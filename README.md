@@ -32,32 +32,69 @@ remote-cluster phase goals are at the top of `SIMULATION_PLAN.md`.
 Whether the winding-free band approaches bulk QSI remains a cluster-size
 question that must pass order, cluster-size, and sign-free QMC benchmarks.
 
-## Active workflow
+## The story
+
+Periodic clusters invent a spurious four-site ring exchange: an
+ice-preserving loop that closes only through the boundary, entering at
+order `Jpm^2/Jzz` — *below* the physical six-site ring exchange at
+`12|Jpm|^3/Jzz^2`.  Every naive finite-size ED of quantum spin ice
+therefore measures the box, not the photon.  The central goal of this
+repository is an ED technique that removes that artifact exactly, without
+introducing new physics or destroying real physics.  Three chapters:
+
+1. **Twist averaging over the ice manifold — tried, and provably
+   insufficient.**  Phases attach to virtual routes, not loop topology; no
+   observable-level twist scheme beats a surviving-weight floor of 1/3, and
+   the measured peak still scales with the artifact power.  Retained as the
+   falsification record (`campaign/twist_averaging.tex`,
+   `outputs/twist_average_curves_m*.npz`).
+2. **Polar isometry / character projection, equivalent to the parity
+   mask — the current best method.**  The `M=2` character average of the
+   polar-pullback band operator equals, entry for entry, the transport
+   parity mask; the continuous source average equals the full
+   transport-sector block projection.  In optimized form (see "The method"
+   above) this is a deletion on the Feshbach map, exact at any coupling,
+   and its full-spectrum embedding is the in-block counterterm `H + C`
+   (equivalently the splice / the two-sided fold for thermodynamics).
+3. **The coupling scans, tracking every peak.**  The `Jpm` line on
+   cubic-16 and FCC-32 (winding-free ring branch, third-peak taxonomy,
+   host coefficients `c16 = 1.070`, `c32 = 0.521`), and the
+   `(Jpm, Jpmpm)` plane on cubic-16 (certified ratio ceiling ~0.10, one
+   certified gauge-spinon merge cell, re-entrant dissolution boundary).
+   The FCC-32 plane is the remote-cluster phase (`SIMULATION_PLAN.md`).
+
+## Repository map
+
+- `paper/` — `main.tex` (the paper) and `pedagogical.tex` (the complete
+  narrative: every construction, calibration gate, and recorded dead end).
+- `SIMULATION_PLAN.md` — campaign status, remote-phase goals, and the
+  frozen microscopic protocol definition.
+- `src/qsi_campaign/` — the library: downfolding (`downfold.py`), mask and
+  band primitives (`protocol.py`, `exact_band.py`), materials
+  (`material_scan.py`), space-group reduction (`point_group.py`).
+- `campaign/` — one standalone script per instrument or study; the current
+  production stack is listed in `campaign/README.md`, and
+  `campaign/outputs/README.md` indexes every retained data directory with
+  its producer and consumers.
+- `notes/recompute_finite_size_artifact.py` — the cluster geometry builder
+  every campaign script imports.
+- `tests/` — unit tests for the library.
+
+Removed material (legacy trees, frame-era sweeps, dead-end counterterm
+catalogues, superseded twist caches) is recoverable from git history; the
+conclusions live in `paper/pedagogical.tex`.
+
+## Workflow
 
 ```bash
 python -m pip install -e .
-make all
+make all        # regenerates the frozen validation figures
 ```
 
-The workflow currently establishes:
-
-- exact removal of the second-order winding four-loop and retention of the
-  third-order contractible hexagon on cubic-16 and FCC-32;
-- an all-temperature construction that replaces only the winding-free gauge band
-  while retaining the exact microscopic complement on cubic-16;
-- a zero-temperature, four-sublattice-traced `Szz` comparison between the
-  periodic and winding-free cubic-16 bands at all four allowed momenta;
-- a zero-flux comparison at `(Jpm, Jpmpm)/Jzz = (0.046, 0)` to the heat-capacity and entropy
-  curves of Huang, Deng, Wan, and Meng;
-- explicit status gates for perturbative order `N`, character resolution `M`,
-  isolated-band overlap, full-temperature stability, and cluster size.
-
-The exact cubic-16 band is converged from `M=3` to `M=4` to 0.50% in centered
-operator norm.  It improves the Huang heat-capacity comparison substantially,
-but retains a finite-size discrepancy.  The remaining production campaign is
-therefore focused on a fully FCC-32 Figure 1 and a Ce2Hf2O7 fit using the full
-ABC/XYZ model.  The active fit code will not accept legacy order-three
-ice-space curves as nonperturbative FCC-32 results.
+Campaign scanners run standalone, one json+npz per parameter point,
+parallel by grid point, with `OMP_NUM_THREADS`/`OPENBLAS_NUM_THREADS`
+pinned (8 per job is calibrated); see `SIMULATION_PLAN.md` for measured
+per-point costs.
 
 ## Nonperturbative production path
 

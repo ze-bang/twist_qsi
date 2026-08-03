@@ -24,7 +24,7 @@ rerunning missing points.
 | `specific_heat/` | the full-ensemble C(T) scan behind the measured power laws |
 | `method_comparison/`, `counterterm_spine/`, `counterterm/` | spine/comparison data feeding `fig_peak_tracking` / `fig_summary` via `make_figures.py`, `refine_peaks.py` |
 | `gamow/` | zero-width verdicts (photon never decays) cited in pedagogical |
-| `exact_counterterm/`, `feshbach_anatomy/`, `truncated_feshbach/`, `strong_coupling/`, `polar_stitch/`, `jpm_levels/`, `anchor_convergence/` | numbers quoted in the paper/pedagogical record |
+| `exact_counterterm/`, `feshbach_anatomy/`, `truncated_feshbach/`, `strong_coupling/`, `polar_stitch/`, `anchor_convergence/` | numbers quoted in the paper/pedagogical record |
 | `twist_average_curves_m*.npz`, `fig_twist_average.*` | the observable-twist-averaging falsification (floor 1/3, wrong power law); curves retained so the figure reproduces without the 35 MB spectra cache |
 | `ce2hf2o7_*`, `bulk_pt_*`, `bw_greyzone_summary.json` | material section and grey-zone ladder of record |
 
