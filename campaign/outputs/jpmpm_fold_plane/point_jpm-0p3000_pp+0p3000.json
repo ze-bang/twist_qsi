@@ -1,0 +1,17 @@
+{
+ "jpm": -0.3,
+ "jpmpm": 0.3,
+ "trace_P": 90.00000000000003,
+ "n_found": 0,
+ "n_escaped": 90,
+ "z_last_removed": null,
+ "z_first_kept": 0.5213678578192694,
+ "fold_peaks": [
+  0.1326604842638053
+ ],
+ "raw_peaks": [
+  0.1326604842638053
+ ],
+ "oracle_max_dev": null,
+ "runtime": 2574.008218889998
+}
