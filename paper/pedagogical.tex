@@ -14,6 +14,7 @@
 \definecolor{goodcol}{RGB}{20,120,60}
 
 \newcommand{\Jpm}{J_{\pm}}
+\newcommand{\Jpmpm}{J_{\pm\pm}}
 \newcommand{\Jzz}{J_{zz}}
 \newcommand{\gfour}{g_4}
 \newcommand{\gsix}{g_6}
@@ -642,8 +643,48 @@ approximation --- and it exists at \emph{any} coupling strength.}
 
 Two more characters:
 \begin{description}
-\item[$Z$, the residue or ``purity''.]  The fraction of a low-energy state
-that actually lives in $P$.  At weak coupling $Z\approx0.99$ (states are
+\item[$Z$, the \textbf{ice weight} (also: residue, purity).]  The fraction
+of a state that actually lives in $P$.  It is a property of each exact
+eigenstate $|n\rangle$ of the full $H$, not of the map:
+\[
+Z_n \;=\; \langle n|P|n\rangle \;=\; \bigl\| P|n\rangle \bigr\|^2
+       \;=\!\!\!\!\sum_{c\,\in\,\text{two-in--two-out}}\!\!\!\!
+         |\langle c|n\rangle|^2
+       \;\in\;[0,1].
+\]
+Be precise about what is being projected onto.  The sum runs over the $90$
+\emph{ice configurations} $|c\rangle$ --- the spin patterns obeying the ice
+rule on every tetrahedron --- not over Ising configurations in general:
+those form a complete basis, so projecting onto all of them is the identity
+and every $Z_n$ would be $1$.  $P$ is the rank-90 projector onto the span
+of that \emph{subset},
+$P=\sum_{c\,\in\,\text{two-in--two-out}}|c\rangle\langle c|$, diagonal in
+the Ising basis and purely combinatorial (Sec.~\ref{sec:configs}); its
+complement $Q$ is spanned by the other $12\,780$ configurations, each of
+which has at least one tetrahedron violating the rule, i.e.\ at least one
+spinon pair.  So $Z_n$ is the total probability that a measurement in the
+Ising basis returns an ice-obeying pattern.  $Z_n=1$ is a pure ice state,
+$Z_n=0$ a state with no ice
+content at all, and $1-Z_n$ is the \emph{spinon dressing}: the weight the
+state has borrowed from $Q$ by breaking ice rules virtually.  One corollary
+worth flagging early: because the ice manifold is a set of configurations
+in the \emph{local-$z$} frame, $Z$ is defined relative to that frame ---
+the same physical state has a different ice weight with respect to an
+$x$-basis ice manifold.  Far from the Heisenberg point this is harmless
+(the $z$ frame is the physical one); at it, it is the whole story
+(Sec.~\ref{sec:heisenberg}).
+
+Two properties make $Z$ more than a diagnostic.  First, it is obtainable
+\emph{without} eigenvectors: at a self-consistent root $E_n$ of the
+branch $\lambda_n(z)$ of $F(z)$, $Z_n=[1-\lambda_n'(E_n)]^{-1}$ --- the
+flatter the folded map at a root, the purer the state (steep slope means
+the answer depended strongly on the asking-energy, i.e.\ on the
+excursions into $Q$).  Second, it obeys an exact sum rule,
+$\sum_n Z_n = \mathrm{Tr}\,P = 90$, the sum running over \emph{all}
+$12\,870$ eigenstates: the ice manifold's 90 dimensions are shared out
+among the whole spectrum, and the shares always total 90.
+Sec.~\ref{sec:twoside} turns that sum rule into a thermodynamic identity.
+At weak coupling $Z\approx0.99$ (states are
 almost pure ice); by $\Jpm=-0.30$, $Z\approx0.25$ --- states are mostly
 spinon dressing.  $1-Z$ controls every error and every convergence rate in
 what follows.
@@ -1012,7 +1053,10 @@ Sec.~\ref{sec:emptyblock} the block $PHP$ is diagonal, so the fold-back
 factor $(z-PHP)^{-1}$ is trivial --- $G(z)$ is just $QHQ$ plus a cheap,
 low-rank correction.  Second, and centrally: every eigenstate of $H$ is
 seen by \emph{both} maps, each in proportion to where the state lives.  A
-level with ice weight $Z_n$ appears among the roots of $F$ carrying weight
+level with ice weight $Z_n$ --- the quantity of Sec.~\ref{sec:feshbach},
+$Z_n=\langle n|P|n\rangle$, the fraction of that eigenstate sitting inside
+the ice manifold, with $1-Z_n$ its spinon dressing --- appears among the
+roots of $F$ carrying weight
 $Z_n$, and among the roots of $G$ carrying weight $1-Z_n$ --- and these
 weights are computable from the maps themselves (from the slope of $F$ or
 $G$ at the root).  Summing both sides therefore counts every level
@@ -1409,6 +1453,175 @@ $\int C/T\,dT=\ln 2$ converges like $1/T_{\max}^2$: truncating at
 $T_{\max}=60$ leaves a deficit that looks exactly like a lost energy level
 and does not improve with grid refinement.  ($T_{\max}=600$ resolves it.)
 Moral: before blaming the physics or the method, audit the ruler.
+\end{lesson}
+
+%=====================================================================
+\section{Turning the second dial: what $\Jpmpm$ actually does}
+\label{sec:jpmpm}
+
+Everything so far lived on the XXZ line, where the only transverse coupling
+is $\Jpm$.  There the two anomalies of $C(T)$ sit absurdly far apart: at
+$\Jpm=-0.125$ the winding-free gauge peak is at $0.0121\,\Jzz$ and the
+spinon peak at $0.274\,\Jzz$, a ratio of $0.044$ --- a factor of
+twenty-three.  The real materials refuse to behave: Ce$_2$Hf$_2$O$_7$ shows
+two heat-capacity anomalies at $65$ and $24$~mK, a ratio near $0.37$.  A
+factor of twenty-three against a factor of under three is not a discrepancy
+to be split; it is a different picture of the world.
+
+The obvious suspect is the coupling we had switched off.  Real cerium
+pyrochlores are XYZ, and in the $\Jpm$ language that means a second
+transverse term, the \emph{pair flip} $\Jpmpm$, which flips two spins the
+\emph{same} way instead of exchanging them.  It is not small in the fits:
+for the published Ce$_2$Hf$_2$O$_7$ parameters $\Jpmpm$ is comparable to
+$\Jpm$ itself.  So we turned the dial --- an $8\times7$ grid, $56$ cells,
+each one a complete exact band --- and asked whether it closes the gap.
+
+\subsection{What a pair flip costs}
+
+Start with what the move does to the ice rules, because that sets
+everything else.
+
+\begin{worked}
+Take a tetrahedron obeying two-in--two-out, so its charge is $Q_t=0$, and
+recall the energy is $\tfrac12\sum_t Q_t^2$ in units of $\Jzz$.
+
+\emph{An exchange move} ($\Jpm$) flips one up and one down spin on a bond.
+The tetrahedron containing both keeps two ups: $Q_t=0$, no cost.  The two
+outer tetrahedra --- one for each flipped site --- gain and lose one
+respectively: $Q=\pm1$, costing $\tfrac12$ each.  \textbf{Total: one unit.}
+That is a spinon--antispinon pair, the familiar excursion.
+
+\emph{A pair flip} ($\Jpmpm$) flips two spins that were both pointing the
+same way.  Now the shared tetrahedron goes from two ups to four:
+$Q_t=+2$, costing $\tfrac12(2)^2=2$.  The two outer tetrahedra each gain
+one: $\tfrac12$ each.  \textbf{Total: three units.}
+\end{worked}
+
+So a pair flip is three times as expensive as an exchange, and it is
+\emph{qualitatively} different: it manufactures a \textbf{double monopole},
+a tetrahedron carrying twice the elementary gauge charge, flanked by two
+ordinary spinons.  It also fails to conserve the total $S^z$, which is why
+the calculations in this section need the full $65\,536$-state space rather
+than the $12\,870$-state sector the XXZ line lives in.
+
+One thing does \emph{not} change.  The emptiness theorem of
+Sec.~\ref{sec:emptyblock} survives verbatim: a pair flip acting on an ice
+state always breaks the ice rule, so $PHP$ is still exactly diagonal ---
+we checked it numerically, and it is zero to the last bit.  $\Jpmpm$ buys
+no new direct ice-to-ice matrix element.  Whatever it does to the gauge
+physics, it does through the resolvent, like everything else.
+
+\subsection{Three measured effects, and a squeeze}
+
+With the complete band in hand at every cell, three things happen as
+$\Jpmpm$ is turned up at fixed $\Jpm$.  The numbers below are at
+$\Jpm=-0.125$, the coupling closest to the Ce$_2$Hf$_2$O$_7$ fits, as
+$\Jpmpm$ runs from $0$ to $0.30$.
+
+\begin{enumerate}
+\item \textbf{The band sinks.}  Its bottom drops from $-0.437\,\Jzz$ to
+$-0.822\,\Jzz$.  This is ordinary variational bookkeeping: expensive as
+they are, virtual pair excursions are extra ways for the ice states to
+lower their energy, and more channels always means a deeper ground state.
+\item \textbf{The band widens} --- from $0.075\,\Jzz$ to $0.184\,\Jzz$,
+a factor of $2.5$.  The gauge peak tracks the bandwidth, so it rises:
+$0.0121 \to 0.0185\,\Jzz$, up $53\%$.  The photon gets \emph{faster}.
+\item \textbf{The spinon scale softens} --- the upper peak falls
+$0.274 \to 0.168\,\Jzz$, down $39\%$.  Pair flips help the spinon
+continuum more than they help the band, because a region already full of
+monopoles has far more ways to use them, so the continuum descends faster
+than the band does and the gap between them closes from above.
+\end{enumerate}
+
+The two peaks therefore approach each other \emph{from both sides at once}:
+the gauge anomaly climbing, the spinon anomaly sinking.  The ratio duly
+improves, $0.044 \to 0.110$.
+
+\begin{plainwords}
+Think of the two peaks as two shelves, one very low and one high, and you
+are trying to bring them together.  Turning up $\Jpmpm$ raises the low
+shelf and lowers the high one simultaneously --- exactly the move you
+wanted.  It works.  It just does not work anywhere near hard enough: the
+shelves close from a factor of twenty-three to a factor of nine, and the
+experiment wants a factor of three.
+\end{plainwords}
+
+\subsection{Why it stops: the dial destroys what it moves}
+
+The squeeze does not gently saturate --- it terminates, and for a reason
+that is inevitable in hindsight.
+
+The mechanism by which $\Jpmpm$ closes the gap \emph{is} the admixture of
+non-ice configurations into the band.  The ice weight $Z$
+(Sec.~\ref{sec:feshbach}: the fraction of a level living inside the ice
+manifold) measures exactly
+that admixture, and it decays as the dial turns: at $\Jpm=-0.125$ the
+median $Z$ slips from $0.723$ to $0.640$; at $\Jpm=-0.20$, from $0.497$ to
+$0.257$.  Push further and there is nothing left to speak of.  At
+$(\Jpm,\Jpmpm)=(-0.05,0.30)$ only $25$ of the $90$ levels survive as band
+states at all and the largest ice weight anywhere is $0.001$ --- the band
+has dissolved completely.
+
+That corner is worth naming precisely, because it is the one place in the
+plane where dissolution is real rather than instrumental.  It is not set by
+$|\Jpm|$, the dial that governs dissolution on the XXZ line.  It is set by
+the \emph{ratio}: the band dies when $\Jpmpm/|\Jpm| \gtrsim 5$.  At
+$\Jpm=-0.05$ that threshold is crossed by $\Jpmpm=0.25$ (marginal, $86/90$)
+and comprehensively by $0.30$; at $\Jpm=-0.20$, where the same $\Jpmpm=0.30$
+is only $1.5$ times the exchange, the band is intact at $90/90$.  When the
+pair term dominates the exchange term outright, the ice manifold stops being
+the right low-energy description --- and no amount of careful bookkeeping
+about winding loops can rescue a band that is no longer there.
+
+So the two effects are the same effect wearing different hats.  You close
+the gap by dressing the band with monopoles; dress it enough and you have
+destroyed the band.  The best ratio in the whole plane, $0.1216$ at
+$(-0.16,0.30)$, sits exactly where you would expect from that
+trade-off: at intermediate exchange, with the pair term pushed as far as
+the band will tolerate and not one step further.
+
+\subsection{The verdict, and one honest complication}
+
+The ceiling over all $56$ cells is $\mathbf{0.1216}$, against a measured
+$0.37$.  $\Jpmpm$ moves the ratio by a factor of about $2.5$ and needs a
+factor of eight.  \textbf{On the 16-site cell, the second dial does not
+rescue the peak separation.}  Combined with the cluster comparison of
+Sec.~\ref{sec:cluster} --- where FCC-32 pushes the ring peak
+\emph{further} down, to $0.29\,\gsix$ against cubic-16's $0.84$ --- the
+honest reading is that the $24$~mK anomaly in Ce$_2$Hf$_2$O$_7$ is probably
+not the photon peak at all.
+
+The complication is a second kind of merging, and it is real.  At strong
+exchange and large pair coupling --- nine cells with $|\Jpm|\ge0.20$ ---
+the gauge peak and the sub-gauge peak of Sec.~\ref{sec:thirdpeak} run
+together into a single maximum.  At $(-0.27,0.20)$ there is one sub-spinon
+maximum at $0.0121\,\Jzz$ where both neighbours in $\Jpmpm$ carry two, near
+$0.005$ and $0.039$.  This is a genuine merge of two low-temperature
+features; it is \emph{not} the gauge peak meeting the spinon peak, and it
+moves the ratio the wrong way, down to $0.028$--$0.045$.  Any convention
+that reports ``the highest maximum below the spinon split'' will report the
+merged position and produce a branch that appears to jump.  It jumps
+because the peaks merged, not because the tracking failed.
+
+\begin{lesson}
+An earlier pass over this plane reported a ratio of $0.332$ at
+$(-0.125,0.30)$ --- tantalisingly close to experiment, and wrong.  The
+anchor solve had found only $27$ of the $90$ band levels there, and the
+two-sided fold removes exactly as many raw levels as it has replacements
+for.  So $63$ ice-descended raw levels stayed in the ensemble \emph{beside}
+their own replacements, and the low-temperature peak was radiating from the
+double-counted remainder.  With the complete band the same cell reads
+$0.110$.
+
+The diagnosis is worth keeping, because the failure was silent: every
+individual number was computed correctly.  Two habits catch it.  First,
+a fold that replaces a band must replace \emph{all} of it or refuse to run
+--- a partial replacement is not a weaker result, it is a different and
+meaningless one.  Second, when an instrument is upgraded, re-run the cells
+where the old one \emph{succeeded}: the bordered solver reproduces the
+old ratios to the digit wherever the old band was complete
+($(-0.20,0.15)$: $0.0893 \to 0.0893$), which is what makes the changes
+elsewhere trustworthy rather than merely different.
 \end{lesson}
 
 %=====================================================================
@@ -1971,8 +2184,11 @@ the mask & deletion of every amplitude connecting different sectors
 = exact removal of all winding processes\\
 $F(z)$ & the Feshbach map: the ice-block amplitude table with all spinon
 excursions folded in exactly, at asking-energy $z$\\
-$Z$ & ice purity of a state; $1-Z$ = spinon dressing = the error and
-convergence rate of everything approximate\\
+$Z$, ice weight & the fraction of an exact eigenstate living inside the
+ice manifold, $Z_n=\langle n|P|n\rangle=\|P|n\rangle\|^2\in[0,1]$ (also
+called the residue or purity); $1-Z$ = spinon dressing = the error and
+convergence rate of everything approximate; sum rule
+$\sum_n Z_n=\mathrm{Tr}\,P=90$ over the whole spectrum\\
 $H+C$ & full-space Hamiltonian with the artifact counterterm; whole
 spectrum at once; residue grows as $1-Z$\\
 the splice & $H+C$ spectrum with its lowest 90 levels replaced by the exact

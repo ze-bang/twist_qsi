@@ -19,30 +19,35 @@
 \contentsline {subsection}{\numberline {6.4}Why this is safe, and why nothing finer exists}{9}{subsection.6.4}%
 \contentsline {subsection}{\numberline {6.5}Three theorems, in plain words}{9}{subsection.6.5}%
 \contentsline {section}{\numberline {7}A toolkit interlude: folding the universe into a small matrix}{10}{section.7}%
-\contentsline {section}{\numberline {8}Strong coupling: the band dissolves, and the map survives}{11}{section.8}%
-\contentsline {subsection}{\numberline {8.1}What breaks, and when}{11}{subsection.8.1}%
-\contentsline {subsection}{\numberline {8.2}What survives}{11}{subsection.8.2}%
-\contentsline {subsection}{\numberline {8.3}Life inside the continuum: tracking without repairing}{12}{subsection.8.3}%
+\contentsline {section}{\numberline {8}Strong coupling: the band dissolves, and the map survives}{12}{section.8}%
+\contentsline {subsection}{\numberline {8.1}What breaks, and when}{12}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}What survives}{12}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Life inside the continuum: tracking without repairing}{13}{subsection.8.3}%
 \contentsline {section}{\numberline {9}One honest Hamiltonian: the counterterm, its limits, the splice}{14}{section.9}%
 \contentsline {subsection}{\numberline {9.1}Why there is nothing to cut: the ice block of $H$ is empty}{14}{subsection.9.1}%
-\contentsline {subsection}{\numberline {9.2}The construction}{14}{subsection.9.2}%
-\contentsline {subsection}{\numberline {9.3}The obstruction theorem, and honesty about the residue}{14}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.2}The construction}{15}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}The obstruction theorem, and honesty about the residue}{15}{subsection.9.3}%
 \contentsline {subsection}{\numberline {9.4}What the counterterm cannot do}{15}{subsection.9.4}%
-\contentsline {subsection}{\numberline {9.5}A counterterm-free future: folding from both sides}{15}{subsection.9.5}%
-\contentsline {subsection}{\numberline {9.6}The third peak: three bumps, one name}{18}{subsection.9.6}%
+\contentsline {subsection}{\numberline {9.5}A counterterm-free future: folding from both sides}{16}{subsection.9.5}%
+\contentsline {subsection}{\numberline {9.6}The third peak: three bumps, one name}{19}{subsection.9.6}%
 \contentsline {subsection}{\numberline {9.7}What the crossing means --- and what it does not}{20}{subsection.9.7}%
-\contentsline {section}{\numberline {10}What the campaign established}{21}{section.10}%
-\contentsline {section}{\numberline {11}The cluster is the error bar}{22}{section.11}%
-\contentsline {subsection}{\numberline {11.1}First steps onto FCC-32: calibrate, then scale}{22}{subsection.11.1}%
-\contentsline {section}{\numberline {12}The road ahead: beating finite size at strong coupling}{24}{section.12}%
-\contentsline {subsection}{\numberline {12.1}Residual 1: topology --- already solved}{24}{subsection.12.1}%
-\contentsline {subsection}{\numberline {12.2}Residual 2: matched winding pairs --- solved by geometry}{24}{subsection.12.2}%
-\contentsline {subsection}{\numberline {12.3}Residual 3: the coarse spinon continuum --- solved by twists, reborn}{25}{subsection.12.3}%
-\contentsline {subsection}{\numberline {12.4}Honesty items}{25}{subsection.12.4}%
-\contentsline {subsection}{\numberline {12.5}The validation ladder}{26}{subsection.12.5}%
-\contentsline {section}{\numberline {13}Where the method ends: the Heisenberg point, and beyond}{26}{section.13}%
-\contentsline {subsection}{\numberline {13.1}The Heisenberg point}{26}{subsection.13.1}%
-\contentsline {subsection}{\numberline {13.2}Beyond, in the XXZ model: the mask retires}{27}{subsection.13.2}%
-\contentsline {subsection}{\numberline {13.3}Beyond, in the XYZ model: the mask reborn}{27}{subsection.13.3}%
-\contentsline {section}{\numberline {14}Wrong turns, kept on purpose}{28}{section.14}%
-\contentsline {section}{\numberline {15}Cast of characters}{30}{section.15}%
+\contentsline {section}{\numberline {10}Turning the second dial: what $J_{\pm \pm }$ actually does}{22}{section.10}%
+\contentsline {subsection}{\numberline {10.1}What a pair flip costs}{22}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Three measured effects, and a squeeze}{23}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Why it stops: the dial destroys what it moves}{23}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}The verdict, and one honest complication}{24}{subsection.10.4}%
+\contentsline {section}{\numberline {11}What the campaign established}{24}{section.11}%
+\contentsline {section}{\numberline {12}The cluster is the error bar}{25}{section.12}%
+\contentsline {subsection}{\numberline {12.1}First steps onto FCC-32: calibrate, then scale}{26}{subsection.12.1}%
+\contentsline {section}{\numberline {13}The road ahead: beating finite size at strong coupling}{27}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Residual 1: topology --- already solved}{27}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Residual 2: matched winding pairs --- solved by geometry}{27}{subsection.13.2}%
+\contentsline {subsection}{\numberline {13.3}Residual 3: the coarse spinon continuum --- solved by twists, reborn}{27}{subsection.13.3}%
+\contentsline {subsection}{\numberline {13.4}Honesty items}{28}{subsection.13.4}%
+\contentsline {subsection}{\numberline {13.5}The validation ladder}{29}{subsection.13.5}%
+\contentsline {section}{\numberline {14}Where the method ends: the Heisenberg point, and beyond}{29}{section.14}%
+\contentsline {subsection}{\numberline {14.1}The Heisenberg point}{29}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Beyond, in the XXZ model: the mask retires}{30}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Beyond, in the XYZ model: the mask reborn}{30}{subsection.14.3}%
+\contentsline {section}{\numberline {15}Wrong turns, kept on purpose}{31}{section.15}%
+\contentsline {section}{\numberline {16}Cast of characters}{34}{section.16}%
