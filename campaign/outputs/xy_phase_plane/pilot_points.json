@@ -1,0 +1,11 @@
+{
+ "comment": "Validation of the hexagon-flux operator and the Krylov fix. The first three sit on the XXZ line (Jx = Jy, so Jpmpm = 0) at couplings the counterterm campaign already measured: Jpm = -0.10 gave hexagon_flux -0.20913, Jpm = -0.25 gave -0.12232, Jpm = +0.046 gave +0.21528. Point four is Jpm = 0 with a large pair flip, where third-order ring exchange vanishes and the label is not obvious. Points five and six are two of the eight cells the column array never reached.",
+ "points": [
+  {"jx": 0.20, "jy": 0.20},
+  {"jx": 0.50, "jy": 0.50},
+  {"jx": -0.092, "jy": -0.092},
+  {"jx": 0.50, "jy": -0.50},
+  {"jx": 0.05, "jy": 0.05},
+  {"jx": 0.10, "jy": 0.10}
+ ]
+}

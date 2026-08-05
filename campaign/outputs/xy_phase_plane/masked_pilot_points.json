@@ -1,0 +1,11 @@
+{
+ "comment": "Masked-map flux pilot. The first three are on the XXZ line (Jx = Jy, Jpmpm = 0) at Jpm = -0.10, -0.25 and +0.046, where the counterterm campaign cached hexagon_flux = -0.20913, -0.12232 and +0.21528 on the H+C state. The masked map measures the flux inside the ice manifold rather than on the full state, so agreement is expected in SIGN and rough magnitude, not to the digit. The last three carry Jpmpm and are the actually new information.",
+ "points": [
+  {"jx": 0.20, "jy": 0.20},
+  {"jx": 0.50, "jy": 0.50},
+  {"jx": -0.092, "jy": -0.092},
+  {"jx": 0.40, "jy": 0.10},
+  {"jx": 0.50, "jy": -0.50},
+  {"jx": -0.30, "jy": 0.10}
+ ]
+}

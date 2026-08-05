@@ -18,6 +18,8 @@
 \newcommand{\Jzz}{J_{zz}}
 \newcommand{\gfour}{g_4}
 \newcommand{\gsix}{g_6}
+\newcommand{\Ohex}{O_{\rm hex}}
+\newcommand{\Ofour}{O_{4}}
 
 \newtcolorbox{plainwords}{enhanced,breakable,colback=teal!5,colframe=teal!55!black,
   title=In plain words,fonttitle=\bfseries,left=2mm,right=2mm}
@@ -1623,6 +1625,513 @@ old ratios to the digit wherever the old band was complete
 ($(-0.20,0.15)$: $0.0893 \to 0.0893$), which is what makes the changes
 elsewhere trustworthy rather than merely different.
 \end{lesson}
+
+%=====================================================================
+\section{The whole square: both dials at once, and the flux that lives there}
+\label{sec:xyplane}
+
+The previous section turned the second dial along a band.  This one turns
+both dials over the entire square and asks the question the campaign had
+never been able to ask: \emph{where in this model is the spin ice
+$0$-flux, and where is it $\pi$-flux?}
+
+The answer is worth the trip, and so is the trap on the way.  Raw exact
+diagonalization gives a confident answer over the whole square, and that
+answer is \emph{wrong on the entire half that matters} --- not slightly
+wrong, but wrong in sign.  The mask fixes it, and the fixed answer turns
+out to be startlingly clean.
+
+\subsection{Leaving the line}
+
+Write the two transverse couplings as ordinary $XYZ$ exchanges
+$J_x,J_y$ with $J_z=\Jzz=1$.  The dictionary is
+\begin{equation}
+\Jpm = -\frac{J_x+J_y}{4}, \qquad \Jpmpm = \frac{J_x-J_y}{4},
+\label{eq:xymap}
+\end{equation}
+so the XXZ line of every previous section is the diagonal $J_x=J_y$, the
+pure pair-flip line is the anti-diagonal, and the $56$ cells of the
+$(\Jpm,\Jpmpm)$ campaign occupy a narrow diagonal band.  Scanning
+$J_x,J_y\in[-1,1]$ on a $41\times41$ grid means $1681$ cells, of which the
+campaign had visited $56$.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=2.6,>=Stealth]
+\draw[fill=black!3] (-1,-1) rectangle (1,1);
+\draw[->] (-1.15,0) -- (1.2,0) node[right,font=\small]{$J_x/\Jzz$};
+\draw[->] (0,-1.15) -- (0,1.2) node[above,font=\small]{$J_y/\Jzz$};
+\draw[thick,icecol] (-1,-1) -- (1,1)
+  node[pos=0.93,above left,font=\small,rotate=45]{XXZ line ($\Jpmpm=0$)};
+\draw[thick,dashed,spincol] (-1,1) -- (1,-1)
+  node[pos=0.08,above right,font=\small,rotate=-45]{$\Jpm=0$};
+\fill[badcol,opacity=0.16] (0.05,0.05) -- (0.7,-0.5) -- (1.05,-0.15)
+  -- (0.62,0.62) -- cycle;
+\node[badcol,font=\small] at (0.72,0.28) {campaign band};
+\node[font=\small,align=center] at (-0.55,-0.62)
+  {the $1625$ cells\\ nobody had looked at};
+\foreach \x/\y in {0.1/0.1, 0.25/0.25, 0.4/0.4, 0.35/-0.05, 0.5/0.1, 0.6/-0.2}
+  {\draw[badcol,thick] (\x,\y) circle (0.022);}
+\end{tikzpicture}
+\caption{The square, and how little of it the campaign had seen.  The
+dictionary~(\ref{eq:xymap}) makes the old XXZ line a diagonal and the old
+$(\Jpm,\Jpmpm)$ grid a thin band (shaded, with a few of its cells drawn as
+circles).  Everything outside that band is new territory.}
+\label{fig:square}
+\end{figure}
+
+\subsection{What ``flux'' means, and how you measure it}
+
+The emergent photon of quantum spin ice lives on a gauge field, and a gauge
+field has a flux through every closed loop.  The loops that matter are the
+hexagons --- the shortest closed paths that stay inside the ice manifold,
+the ones whose resonance \emph{is} the ring exchange $\gsix$.  Two flux
+values are possible for the ground state, $0$ and $\pi$, and which one the
+system chooses is a genuine physical distinction: they are different
+phases, with different photon spectra and different experimental
+signatures.
+
+Measuring it is refreshingly concrete.  Take a hexagon whose six spins
+alternate up--down--up--down--up--down around the ring; that is the only
+pattern a ring exchange can act on.  The ring-flip operator turns it into
+the complementary pattern:
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+\foreach \i/\lab in {0/{$\uparrow$},1/{$\downarrow$},2/{$\uparrow$},
+                     3/{$\downarrow$},4/{$\uparrow$},5/{$\downarrow$}}
+  {\node[circle,draw,thick,fill=icecol!12,minimum size=7mm,font=\small]
+     (a\i) at ({90+60*\i}:1.25) {\lab};}
+\foreach \i in {0,...,5} {\pgfmathtruncatemacro{\j}{mod(\i+1,6)}
+  \draw[thick,icecol!70] (a\i) -- (a\j);}
+\node[font=\small] at (0,0) {flippable};
+\draw[->,very thick,spincol] (1.9,0) -- (3.1,0)
+  node[midway,above,font=\small]{$\Ohex$} node[midway,below,font=\small]{flip all six};
+\begin{scope}[xshift=5cm]
+\foreach \i/\lab in {0/{$\downarrow$},1/{$\uparrow$},2/{$\downarrow$},
+                     3/{$\uparrow$},4/{$\downarrow$},5/{$\uparrow$}}
+  {\node[circle,draw,thick,fill=icecol!12,minimum size=7mm,font=\small]
+     (b\i) at ({90+60*\i}:1.25) {\lab};}
+\foreach \i in {0,...,5} {\pgfmathtruncatemacro{\j}{mod(\i+1,6)}
+  \draw[thick,icecol!70] (b\i) -- (b\j);}
+\node[font=\small] at (0,0) {also ice};
+\end{scope}
+\end{tikzpicture}
+\caption{The flux observable.  A hexagon with alternating spins is
+\emph{flippable}; flipping all six lands on another ice state, so the
+operator closes inside the ice manifold.  Its ground-state expectation
+$\langle\Ohex+\mathrm{h.c.}\rangle$ is positive for $0$-flux and negative
+for $\pi$-flux.  Averaged over the $16$ contractible hexagons of the
+cubic cell, that single number is the phase label.}
+\label{fig:hexflip}
+\end{figure}
+
+\noindent
+So the recipe is: get the ground state, sum $\langle\Ohex+\mathrm{h.c.}\rangle$
+over hexagons, read the sign.  It could not be simpler.  It is also, done
+naively, completely wrong.
+
+\subsection{The trap: raw ED reports the wrong flux everywhere it matters}
+
+Run that recipe on the raw cluster ground state at all $1681$ points and
+you get a positive number \emph{every single time}, ranging over a bland
+$+0.013$ to $+0.123$.  Raw ED declares the entire square $0$-flux and never
+once produces a $\pi$-flux signature.
+
+That is the box lying again, and by now you can predict the mechanism.
+Recall the two loop amplitudes: the physical hexagon
+$\gsix=12|\Jpm|^3/\Jzz^2$, and the wrap-around artifact
+$\gfour=4\Jpm^2/\Jzz$.  Look at the powers.  The artifact is
+\textbf{even} in $\Jpm$; the physics is \textbf{odd}.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+\draw[->] (-2.4,0) -- (2.6,0) node[right,font=\small]{$\Jpm$};
+\draw[->] (0,-1.5) -- (0,1.9) node[above,font=\small]{amplitude};
+\draw[thick,badcol,smooth,domain=-2.1:2.1,samples=60]
+  plot (\x,{0.32*\x*\x}) node[right,font=\small,badcol]{$\gfour\propto\Jpm^2$ (even)};
+\draw[thick,goodcol,smooth,domain=-1.75:1.75,samples=60]
+  plot (\x,{0.22*\x*\x*\x}) node[above right,font=\small,goodcol]{$\gsix\propto\Jpm^3$ (odd)};
+\node[font=\small,align=center,badcol] at (-1.45,-1.05)
+  {here they \emph{fight}\\ and the artifact wins};
+\node[font=\small,align=center,goodcol] at (1.5,-1.05)
+  {here they agree\\ (accidentally right)};
+\draw[decorate,decoration={brace,amplitude=4pt}] (-2.1,-0.55) -- (-0.1,-0.55);
+\draw[decorate,decoration={brace,amplitude=4pt}] (0.1,-0.55) -- (2.1,-0.55);
+\end{tikzpicture}
+\caption{Why the naive flux is inverted on the cerium side.  The artifact
+is even in $\Jpm$ and never changes sign; the real ring exchange is odd and
+does.  For $\Jpm>0$ both push the hexagon expectation positive and raw ED
+is right by luck.  For $\Jpm<0$ --- every cerium pyrochlore --- they oppose,
+and on a $16$-site box the artifact is the larger of the two, so the
+measured sign is the artifact's.}
+\label{fig:evenodd}
+\end{figure}
+
+\noindent
+The numbers say it plainly.  In the raw ground state the wrap-around
+amplitude $\langle\Ofour\rangle\approx0.33$ sits three to six times
+\emph{above} the hexagon amplitude it is drowning; in the winding-free
+state the same quantity collapses to $0.056$.
+
+\begin{center}
+\small
+\begin{tabular}{rrrrr}
+\toprule
+$\Jpm$ & raw $\langle\Ohex\rangle$ & winding-free $\langle\Ohex\rangle$
+       & raw $\langle\Ofour\rangle$ & verdict\\
+\midrule
+$-0.05$ & $+0.107$ & $-0.238$ & $0.348$ & raw inverted\\
+$-0.10$ & $+0.091$ & $-0.209$ & $0.326$ & raw inverted\\
+$-0.20$ & $+0.069$ & $-0.149$ & $0.290$ & raw inverted\\
+$-0.30$ & $+0.058$ & $-0.067$ & $0.269$ & raw inverted\\
+$+0.046$ & $+0.119$ & $+0.215$ & $0.335$ & raw right by luck\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{lesson}
+\textbf{An observable can be contaminated even when the state is fine.}
+The ice weight at $\Jpm=-0.10$ is a healthy $0.73$; nothing about the raw
+ground state looks broken.  But the flux is a \emph{loop} observable, and
+the box's spurious loop is stronger than the real one, so the loop
+observable inherits the artifact's sign.  Before trusting any quantity
+defined on a closed path in a periodic cluster, ask which closed path
+dominates it.
+\end{lesson}
+
+\subsection{The mask supplies the real answer --- with no counterterm}
+
+Here the machinery of Sec.~\ref{sec:feshbach} pays off immediately, and it
+is worth being precise about what gets masked, because the natural guess is
+wrong.
+
+The mask is \emph{not} the deletion of matrix elements of $H$ between
+transport sectors.  There are none to delete: by Sec.~\ref{sec:emptyblock}
+the ice block $PHP$ is diagonal.  Every winding amplitude is manufactured
+by excursions into the spinon space, which means it lives in the
+\emph{self-energy}.  So the mask is applied to the folded table $F(z)$,
+after the excursions have been summed in.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.95]
+\node[font=\small] at (-1.15,2.6) {$H$:};
+\draw[thick] (0,0) rectangle (2.2,2.2);
+\foreach \i in {0,...,4} {\fill[icecol!45] (0.22*\i+0.06,2.14-0.22*\i-0.16)
+  rectangle (0.22*\i+0.2,2.14-0.22*\i);}
+\node[font=\scriptsize,align=center] at (1.1,2.45) {ice block $PHP$};
+\node[font=\scriptsize,align=center] at (1.1,0.75) {\emph{diagonal}\\ nothing to cut};
+\draw[->,very thick] (2.6,1.1) -- (3.7,1.1)
+  node[midway,above,font=\scriptsize,align=center]{fold in\\ the spinons};
+\begin{scope}[xshift=4.1cm]
+\draw[thick] (0,0) rectangle (2.2,2.2);
+\fill[icecol!25] (0.06,1.44) rectangle (0.74,2.14);
+\fill[icecol!25] (0.78,0.74) rectangle (1.44,1.4);
+\fill[icecol!25] (1.48,0.06) rectangle (2.14,0.7);
+\fill[badcol!30] (0.78,1.44) rectangle (1.44,2.14);
+\fill[badcol!30] (0.06,0.74) rectangle (0.74,1.4);
+\fill[badcol!30] (1.48,1.44) rectangle (2.14,2.14);
+\fill[badcol!30] (0.06,0.06) rectangle (0.74,0.7);
+\fill[badcol!30] (1.48,0.74) rectangle (2.14,1.4);
+\fill[badcol!30] (0.78,0.06) rectangle (1.44,0.7);
+\node[font=\scriptsize] at (1.1,2.45) {$F(z)=PHP+\Sigma(z)$};
+\end{scope}
+\draw[->,very thick] (6.7,1.1) -- (7.8,1.1)
+  node[midway,above,font=\scriptsize,align=center]{mask};
+\begin{scope}[xshift=8.2cm]
+\draw[thick] (0,0) rectangle (2.2,2.2);
+\fill[icecol!25] (0.06,1.44) rectangle (0.74,2.14);
+\fill[icecol!25] (0.78,0.74) rectangle (1.44,1.4);
+\fill[icecol!25] (1.48,0.06) rectangle (2.14,0.7);
+\node[font=\scriptsize] at (1.1,2.45) {$\Delta[F(z)]$};
+\node[font=\scriptsize,align=center] at (1.1,-0.4)
+  {sector-diagonal:\\ winding-free};
+\end{scope}
+\end{tikzpicture}
+\caption{Where the mask acts.  In $H$ the ice block is diagonal, so there
+is literally nothing between sectors to delete.  Folding the spinon
+excursions in generates the off-sector amplitudes (red) --- these
+\emph{are} the wrap-around processes --- and deleting them from $F(z)$ is
+the mask.  Teal blocks are the transport sectors that survive.}
+\label{fig:maskf}
+\end{figure}
+
+For a flux, that is the entire method.  A hexagon flip maps an ice
+configuration to an ice configuration (Fig.~\ref{fig:hexflip}), so $\Ohex$
+is a $90\times90$ matrix in the ice basis, and the masked map's own ground
+multiplet is all you need.  \textbf{No counterterm appears anywhere in this
+measurement.}  The counterterm of Sec.~\ref{sec:hc} exists to supply what
+the masked map cannot --- states above the band, full-space wavefunctions,
+thermodynamics --- and a flux needs none of those.
+
+One detail is not optional: the masked ground state is degenerate
+\emph{by theorem}, six-fold at weak coupling and two-fold after the sector
+structure reorganizes.  A single eigenvector of a degenerate subspace is
+whatever the linear-algebra library happened to return, so every
+expectation value must be averaged over the multiplet.  Measured spread
+across multiplet members: below $10^{-6}$ at all $379$ points with a
+surviving band, so the averaging changes nothing --- but only because it
+was done.
+
+\subsection{What the square actually looks like}
+
+Three things live on this plane, and the third is the one nobody had
+predicted.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=2.6]
+\draw[fill=black!12] (-1,-1) rectangle (1,1);
+\fill[black!4] (-0.45,-0.3) -- (0.35,-0.5) -- (1,-0.42) -- (1,1)
+  -- (-0.42,1) -- cycle;
+\fill[icecol!70] (0.2,0.2) circle (0.42);
+\fill[badcol!75] (-0.28,-0.05) rectangle (-0.05,0.16);
+\draw[thick,black!55] (-1,-1) -- (1,1);
+\draw[thick,dashed,black!45] (-1,1) -- (1,-1);
+\draw (-1,-1) rectangle (1,1);
+\node[white,font=\small\bfseries] at (0.2,0.2) {$\pi$};
+\node[white,font=\small\bfseries] at (-0.165,0.055) {$0$};
+\node[font=\small,align=center] at (0.62,0.72) {band, but\\ no resonance};
+\node[font=\small,align=center] at (-0.55,-0.62) {no ice-descended\\ band at all};
+\node[font=\small] at (0,-1.15) {$J_x/\Jzz$};
+\node[font=\small,rotate=90] at (-1.15,0) {$J_y/\Jzz$};
+\end{tikzpicture}
+\caption{The winding-free square, schematically (the measured version is
+\texttt{fig\_xy\_masked}).  A compact $\pi$-flux disc near the origin, a
+small $0$-flux patch on the $\Jpm>0$ side, a large region that still has a
+band but no ring resonance at all, and --- over most of the square --- no
+ice-descended band to speak of.  Raw ED, by contrast, prints a confident
+positive flux in every one of these cells.}
+\label{fig:maskedsquare}
+\end{figure}
+
+\begin{center}
+\small
+\begin{tabular}{lrl}
+\toprule
+region & cells (of $1681$) & ground multiplet\\
+\midrule
+$\pi$-flux, $\langle\Ohex\rangle=-1/4$ & $193$ & six-fold\\
+$0$-flux, $\langle\Ohex\rangle=+1/4$ & $29$ & six-fold\\
+band, but no ring resonance ($\langle\Ohex\rangle=0$) & $497$ & one- or two-fold\\
+no ice-descended band & $962$ & ---\\
+unresolved (four grid points, mirrored) & $7$ & ---\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Two features are sharper than anyone asked for.  First the flux is
+\textbf{quantized}: across every resonant cell in the square the magnitude
+is the single value $1/4$, with the individual numbers equal to $\pm1/4$ to
+sixteen digits and nothing in between.  The mask converts the raw map's
+smeared positive continuum into a two-valued topological label.
+
+Second, and prettier: the resonant cells are \emph{exactly} the cells whose
+protected ground multiplet is six-fold.  Cell by cell, with no exceptions
+in $379$ live points --- all $117$ six-fold cells carry $\pm1/4$, and all
+$262$ cells of multiplicity one, two (or $90$, at the pure-Ising origin)
+carry exactly zero.  The protected multiplet \emph{is} the flux carrier;
+where the protection goes, the resonance goes with it.
+
+\begin{plainwords}
+The mask does not merely clean up the flux measurement, it sharpens it into
+a label.  Raw ED gives you a real number that drifts smoothly and means
+nothing.  The winding-free map gives you one of three answers --- $\pi$,
+$0$, or ``there is no resonance here'' --- and tells you which by the
+degeneracy of the ground state alone.  The phase boundary stops being a
+contour you have to guess and becomes a place where a degeneracy changes.
+\end{plainwords}
+
+A useful sanity check falls out for free: the campaign cell
+$(\Jpm,\Jpmpm)=(-0.05,0.30)$ maps to $(J_x,J_y)=(0.7,-0.5)$, which lands in
+the no-band region --- reproducing, by an entirely independent route, the
+$\Jpmpm/|\Jpm|\gtrsim5$ dissolution threshold of
+Sec.~\ref{sec:jpmpm}.  Less comfortably, a good number of the $56$
+campaign cells sit in the no-resonance region rather than in the
+$\pi$-flux disc.
+
+\subsection{Symmetry, or: how to afford the square}
+\label{sec:xysymmetry}
+
+The winding-free measurement needs the eigendecomposition of $QHQ$, and on
+the full $65\,536$-state basis that is a single dense solve of dimension
+$65\,446$.  It does not merely take about nine hours --- it \emph{crashes},
+because $n^2=4.3\times10^9$ overflows the 32-bit integer indexing inside
+LAPACK.  No amount of memory helps.  Symmetry is not an optimization here;
+it is the only way the calculation exists at all.
+
+Four independent reductions are available, and they compose.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0,>=Stealth,node distance=3mm]
+\node[draw,thick,rounded corners,fill=badcol!12,align=center,font=\small]
+  (a) at (0,0) {full basis\\ $65\,536$\\[1mm] \textcolor{badcol}{\bfseries crashes}};
+\node[draw,thick,rounded corners,fill=black!4,align=center,font=\small,right=10mm of a]
+  (b) {parity $(-1)^{N_\uparrow}$\\ $32\,768$\\[1mm] $\times8$ fewer flops};
+\node[draw,thick,rounded corners,fill=black!4,align=center,font=\small,right=10mm of b]
+  (c) {Klein $V_4$\\ $4\times8\,192$\\[1mm] $\times16$ again};
+\node[draw,thick,rounded corners,fill=goodcol!12,align=center,font=\small,right=10mm of c]
+  (d) {spin flip\\ $8\times4\,096$\\[1mm] $\times4$ more};
+\draw[->,thick] (a) -- (b);
+\draw[->,thick] (b) -- (c);
+\draw[->,thick,dashed] (c) -- (d);
+\node[font=\scriptsize,align=center,below=1mm of c] {\emph{implemented}};
+\node[font=\scriptsize,align=center,below=1mm of d] {\emph{available}};
+\end{tikzpicture}
+\caption{The symmetry ladder for $QHQ$.  Only the Klein step is currently
+implemented; parity is exact, free, and worth a further factor of eight;
+the global spin flip is worth another four but touches the fragile
+ice-kernel bookkeeping.}
+\label{fig:symladder}
+\end{figure}
+
+\paragraph{$U(1)$, on the XXZ line only.}  When $\Jpmpm=0$ the total $S^z$
+is conserved and the whole problem collapses into the $12\,870$-state
+$S^z=0$ block.  This is why the counterterm campaign was cheap along the
+line.  It buys nothing off it: the pair flip breaks $S^z$ outright.
+
+\paragraph{$\mathbb{Z}_2$ parity, everywhere.}  The pair flip changes
+$N_\uparrow$ by $\pm2$ and the exchange leaves it alone, so the parity
+$(-1)^{N_\uparrow}$ is conserved for \emph{any} $(\Jpm,\Jpmpm)$.  Now
+notice something better than a block decomposition.  Every ice state has
+exactly $N_\uparrow=8$ --- each site belongs to exactly one A-tetrahedron,
+so summing the ice rule over the four A-tetrahedra gives
+$4\times2=8$ --- which is even.  So $P$ sits \emph{entirely} inside the
+even sector, and the self-energy
+$\Sigma(z)=PHQ(z-QHQ)^{-1}QHP$ never touches the odd sector at any order.
+Those $32\,768$ states are not a block to diagonalize separately; they are
+irrelevant and can be discarded outright, taking $QHQ$ from $65\,446$ to
+$32\,678$ and the cost down by a factor of eight.
+
+\paragraph{The Klein group $V_4$, everywhere.}  The pyrochlore cubic cell
+contains four FCC primitive cells, so four translations map the $16$-site
+cluster to itself:
+$t_0=(0,0,0)$, $t_1=(0,\tfrac12,\tfrac12)$, $t_2=(\tfrac12,0,\tfrac12)$,
+$t_3=(\tfrac12,\tfrac12,0)$ in units of the cubic edge.  Each one
+\emph{doubles} to a cubic lattice vector, so every non-identity element
+squares to the identity, and the product of any two distinct ones is the
+third.  That makes the group $\mathbb{Z}_2\times\mathbb{Z}_2$ --- the Klein
+four-group, not the cyclic $\mathbb{Z}_4$ one might expect from four
+translations --- with four one-dimensional irreps of characters $\pm1$,
+labelled $++$, $+-$, $-+$, $--$.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.5,>=Stealth]
+\draw[thick] (0,0) rectangle (2,2);
+\foreach \x/\y in {0/0, 1/0, 0/1, 1/1} {
+  \draw[icecol!50,thin] (\x,\y) rectangle (\x+1,\y+1);}
+\fill[icecol] (0.5,0.5) circle (0.07);
+\fill[spincol] (1.5,0.5) circle (0.07);
+\fill[spincol] (0.5,1.5) circle (0.07);
+\fill[spincol] (1.5,1.5) circle (0.07);
+\draw[->,very thick,spincol] (0.58,0.5) -- (1.42,0.5) node[midway,below,font=\scriptsize]{$t_1$};
+\draw[->,very thick,spincol] (0.5,0.58) -- (0.5,1.42) node[midway,left,font=\scriptsize]{$t_2$};
+\draw[->,very thick,spincol,dashed] (0.58,0.58) -- (1.42,1.42)
+  node[midway,above left,font=\scriptsize]{$t_3=t_1t_2$};
+\node[font=\small,align=left,anchor=west] at (2.5,1.6)
+  {$t_i^2=\mathbb{1}$ on the cluster,};
+\node[font=\small,align=left,anchor=west] at (2.5,1.25)
+  {$t_1t_2=t_3$,\;\; $t_1t_3=t_2$, \dots};
+\node[font=\small,align=left,anchor=west] at (2.5,0.8)
+  {$\Rightarrow\;\mathbb{Z}_2\times\mathbb{Z}_2$, not $\mathbb{Z}_4$};
+\node[font=\small,align=left,anchor=west] at (2.5,0.35)
+  {four irreps, characters $\pm1$};
+\end{tikzpicture}
+\caption{The four FCC translations inside the cubic cell close on the Klein
+four-group.  They commute with $H$ at \emph{any} $(\Jpm,\Jpmpm)$ --- both
+transverse terms are translation invariant --- and the ice manifold is
+closed under them, so the $P/Q$ split survives the decomposition.}
+\label{fig:klein}
+\end{figure}
+
+Blocking $QHQ$ over the four irreps gives four solves of $\approx16\,384$
+instead of one of $65\,446$: sixteen times fewer flops, $\sim10$~GB instead
+of $\sim100$~GB, and every block comfortably inside 32-bit indexing.  There
+is one delicate step inside.  Projecting the ice components out of each
+irrep leaves \emph{spurious} ice-kernel modes mixed among the genuine
+poles, and they must be told apart by their overlap with the ice subspace
+and never by eigenvalue --- genuine poles cross zero at strong coupling, so
+an eigenvalue cut would throw away real physics.  That heuristic is the one
+piece of this that is not exact, and it is where the four unresolved grid
+points came from: at maximal coupling on the boundary the overlaps stop
+being bimodal and no threshold separates $36$ genuine modes from the
+$38$--$47$ that look spurious.
+
+\paragraph{Global spin flip, everywhere.}  Flipping every spin commutes
+with all three terms, preserves the ice manifold, preserves
+$N_\uparrow$ parity, and leaves $\Ohex+\mathrm{h.c.}$ invariant.  It would
+halve the blocks again.  It also \emph{permutes} the polarization sectors
+rather than fixing them, so it interacts with the mask's labelling and with
+the fragile ice-kernel step above --- worth taking, but as a separate and
+carefully validated exercise.
+
+\paragraph{And one more, on the grid rather than the matrix.}  Exchanging
+$J_x\leftrightarrow J_y$ sends $\Jpmpm\to-\Jpmpm$ and is exact, implemented
+by the diagonal transformation $D=i^{N_\uparrow}$: the pair term picks up
+$i^{\pm2}=-1$, the exchange term is untouched, and the hexagon operator,
+with its three $S^+$ and three $S^-$, picks up $i^3(-i)^3=1$ and is
+invariant.  So only the upper triangle needs solving --- $861$ points cover
+all $1681$ cells.  This was verified rather than assumed, and the check
+needed care: the assembled map writes both $(i,j)$ and $(j,i)$ from one
+solve, so a symmetry check computed \emph{from the map} returns zero by
+construction and means nothing.  Solving both members of six mirror pairs
+independently, they agree \emph{bitwise} --- which is what a diagonal
+similarity does to a Lanczos run started from the same real seed.
+
+\subsection{Is the protocol well defined at any \texorpdfstring{$\Jpm$}{Jpm} and \texorpdfstring{$\Jpmpm$}{Jpmpm}?}
+\label{sec:xywelldefined}
+
+This deserves a straight answer in three parts, because the honest reply is
+``yes, no, and it depends what you mean''.
+
+\paragraph{The construction: yes, unconditionally.}  Nothing in the
+definition of the mask refers to the couplings.  $P$ is combinatorial --- a
+list of the $90$ two-in--two-out configurations, fixed by the lattice.  The
+transport label is an integer property of those configurations
+(Sec.~\ref{sec:configs}), computed before any Hamiltonian is written down.
+The fold $F(z)$ exists at every coupling because it is just a Schur
+complement, and the mask is the deletion of its off-sector entries.  There
+is no perturbative expansion, no small parameter, no adiabatic
+continuation, and no place where $\Jpm$ or $\Jpmpm$ could enter the
+\emph{definition}.  In this sense the protocol is as well defined at
+$\Jpm=-0.4$ as at $-0.01$, and as well defined off the XXZ line as on it.
+
+\paragraph{The output: no, and the failures are informative.}  Whether the
+protocol \emph{returns} anything is emphatically coupling-dependent.  Over
+$57\%$ of this square --- $962$ of $1681$ cells --- not one of the ninety
+branches has a root below the continuum: the ice-descended band has
+dissolved entirely, and the correct output is ``there is nothing here''.
+That is a result, not a malfunction, and it is exactly the kind of thing
+raw ED cannot tell you, since raw ED cheerfully prints a ground state
+everywhere.  A further $497$ cells have a band whose ground multiplet
+carries no ring resonance.  So the protocol answers the flux question on
+$13\%$ of the square, and its refusal to answer elsewhere is the map's
+honest report on where a gauge sector still exists.
+
+\paragraph{The meaning: it degrades, measurably and predictably.}  Where a
+band does survive, the ice weight $Z$ says how much of the true state the
+answer describes, and $Z$ falls from $0.99$ to below $0.15$ as the coupling
+grows.  The obstruction theorem of Sec.~\ref{sec:theorems} forbids
+enlarging the model space to compensate.  And at the Heisenberg point the
+ice basis becomes a convention rather than a fact
+(Sec.~\ref{sec:heisenberg}), so the mask becomes axis-dependent --- notably,
+$\Jpm=-\Jzz/2$ is the corner $J_x=J_y=1$ of this very square, and it is one
+of the four points where the numerics gave up.  That coincidence is
+probably not a coincidence.
+
+\begin{plainwords}
+The mask is defined everywhere; the \emph{band} is not.  Ask the protocol
+for a flux at any $(\Jpm,\Jpmpm)$ and it will either give you a sharp,
+quantized answer or tell you truthfully that the ice-descended band no
+longer exists there.  What it will never do is invent a number.  The naive
+calculation, which does invent one, gets the sign wrong across the whole
+region the materials live in.
+\end{plainwords}
 
 %=====================================================================
 \section{What the campaign established}

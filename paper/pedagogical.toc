@@ -5,7 +5,7 @@
 \contentsline {subsection}{\numberline {2.3}The Hamiltonian, for reference}{4}{subsection.2.3}%
 \contentsline {section}{\numberline {3}The instrument: exact diagonalization on a torus}{4}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Why small boxes}{4}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Two kinds of loops on a doughnut}{4}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.2}Two kinds of loops on a doughnut}{5}{subsection.3.2}%
 \contentsline {section}{\numberline {4}The villain: the box invents a process stronger than the physics}{5}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Counting steps}{5}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}The measured symptom}{6}{subsection.4.2}%
@@ -15,7 +15,7 @@
 \contentsline {section}{\numberline {6}The fix: a label that sees topology, and the mask}{8}{section.6}%
 \contentsline {subsection}{\numberline {6.1}Transport: the bookkeeping number}{8}{subsection.6.1}%
 \contentsline {subsection}{\numberline {6.2}The mask}{8}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}What the mask never asks: configurations, not eigenstates}{9}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.3}What the mask never asks: configurations, not eigenstates}{8}{subsection.6.3}%
 \contentsline {subsection}{\numberline {6.4}Why this is safe, and why nothing finer exists}{9}{subsection.6.4}%
 \contentsline {subsection}{\numberline {6.5}Three theorems, in plain words}{9}{subsection.6.5}%
 \contentsline {section}{\numberline {7}A toolkit interlude: folding the universe into a small matrix}{10}{section.7}%
@@ -36,18 +36,34 @@
 \contentsline {subsection}{\numberline {10.2}Three measured effects, and a squeeze}{23}{subsection.10.2}%
 \contentsline {subsection}{\numberline {10.3}Why it stops: the dial destroys what it moves}{23}{subsection.10.3}%
 \contentsline {subsection}{\numberline {10.4}The verdict, and one honest complication}{24}{subsection.10.4}%
-\contentsline {section}{\numberline {11}What the campaign established}{24}{section.11}%
-\contentsline {section}{\numberline {12}The cluster is the error bar}{25}{section.12}%
-\contentsline {subsection}{\numberline {12.1}First steps onto FCC-32: calibrate, then scale}{26}{subsection.12.1}%
-\contentsline {section}{\numberline {13}The road ahead: beating finite size at strong coupling}{27}{section.13}%
-\contentsline {subsection}{\numberline {13.1}Residual 1: topology --- already solved}{27}{subsection.13.1}%
-\contentsline {subsection}{\numberline {13.2}Residual 2: matched winding pairs --- solved by geometry}{27}{subsection.13.2}%
-\contentsline {subsection}{\numberline {13.3}Residual 3: the coarse spinon continuum --- solved by twists, reborn}{27}{subsection.13.3}%
-\contentsline {subsection}{\numberline {13.4}Honesty items}{28}{subsection.13.4}%
-\contentsline {subsection}{\numberline {13.5}The validation ladder}{29}{subsection.13.5}%
-\contentsline {section}{\numberline {14}Where the method ends: the Heisenberg point, and beyond}{29}{section.14}%
-\contentsline {subsection}{\numberline {14.1}The Heisenberg point}{29}{subsection.14.1}%
-\contentsline {subsection}{\numberline {14.2}Beyond, in the XXZ model: the mask retires}{30}{subsection.14.2}%
-\contentsline {subsection}{\numberline {14.3}Beyond, in the XYZ model: the mask reborn}{30}{subsection.14.3}%
-\contentsline {section}{\numberline {15}Wrong turns, kept on purpose}{31}{section.15}%
-\contentsline {section}{\numberline {16}Cast of characters}{34}{section.16}%
+\contentsline {section}{\numberline {11}The whole square: both dials at once, and the flux that lives there}{25}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Leaving the line}{25}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}What ``flux'' means, and how you measure it}{25}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}The trap: raw ED reports the wrong flux everywhere it matters}{26}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}The mask supplies the real answer --- with no counterterm}{27}{subsection.11.4}%
+\contentsline {subsection}{\numberline {11.5}What the square actually looks like}{28}{subsection.11.5}%
+\contentsline {subsection}{\numberline {11.6}Symmetry, or: how to afford the square}{29}{subsection.11.6}%
+\contentsline {paragraph}{$U(1)$, on the XXZ line only.}{29}{section*.2}%
+\contentsline {paragraph}{$\mathbb {Z}_2$ parity, everywhere.}{29}{section*.3}%
+\contentsline {paragraph}{The Klein group $V_4$, everywhere.}{29}{section*.4}%
+\contentsline {paragraph}{Global spin flip, everywhere.}{30}{section*.5}%
+\contentsline {paragraph}{And one more, on the grid rather than the matrix.}{30}{section*.6}%
+\contentsline {subsection}{\numberline {11.7}Is the protocol well defined at any $J_{\pm }$ and $J_{\pm \pm }$?}{30}{subsection.11.7}%
+\contentsline {paragraph}{The construction: yes, unconditionally.}{30}{section*.7}%
+\contentsline {paragraph}{The output: no, and the failures are informative.}{30}{section*.8}%
+\contentsline {paragraph}{The meaning: it degrades, measurably and predictably.}{30}{section*.9}%
+\contentsline {section}{\numberline {12}What the campaign established}{31}{section.12}%
+\contentsline {section}{\numberline {13}The cluster is the error bar}{32}{section.13}%
+\contentsline {subsection}{\numberline {13.1}First steps onto FCC-32: calibrate, then scale}{32}{subsection.13.1}%
+\contentsline {section}{\numberline {14}The road ahead: beating finite size at strong coupling}{33}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Residual 1: topology --- already solved}{33}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Residual 2: matched winding pairs --- solved by geometry}{33}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Residual 3: the coarse spinon continuum --- solved by twists, reborn}{34}{subsection.14.3}%
+\contentsline {subsection}{\numberline {14.4}Honesty items}{34}{subsection.14.4}%
+\contentsline {subsection}{\numberline {14.5}The validation ladder}{35}{subsection.14.5}%
+\contentsline {section}{\numberline {15}Where the method ends: the Heisenberg point, and beyond}{35}{section.15}%
+\contentsline {subsection}{\numberline {15.1}The Heisenberg point}{36}{subsection.15.1}%
+\contentsline {subsection}{\numberline {15.2}Beyond, in the XXZ model: the mask retires}{36}{subsection.15.2}%
+\contentsline {subsection}{\numberline {15.3}Beyond, in the XYZ model: the mask reborn}{37}{subsection.15.3}%
+\contentsline {section}{\numberline {16}Wrong turns, kept on purpose}{37}{section.16}%
+\contentsline {section}{\numberline {17}Cast of characters}{40}{section.17}%

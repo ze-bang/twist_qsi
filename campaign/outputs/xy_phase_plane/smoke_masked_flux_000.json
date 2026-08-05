@@ -1,0 +1,39 @@
+{
+ "points": [
+  {
+   "jx": -1.0,
+   "jy": -1.0,
+   "jpm": 0.5,
+   "jpmpm": 0.0,
+   "masked_energy": -10.528248195992575,
+   "masked_flux": 4.025267762305499e-32,
+   "masked_flux_spread": 0.0,
+   "masked_ice_weight": 0.005728236902482516,
+   "masked_degeneracy": 1,
+   "masked_gap": 0.016153645590748056,
+   "masked_residual": -2.8817837005590263e-11,
+   "masked_levels": [
+    -10.528248195992575,
+    -10.512094550401827,
+    -10.512094550401827,
+    -10.512094550401827,
+    -10.512094550401827,
+    -10.512094550401827,
+    -10.512094550401827
+   ],
+   "masked_n_converged": 7,
+   "unmasked_energy": -10.939216110644821,
+   "unmasked_flux": 0.13291877136703348,
+   "unmasked_flux_spread": 0.0,
+   "unmasked_ice_weight": 0.047789707517701834,
+   "unmasked_degeneracy": 1,
+   "unmasked_gap": Infinity,
+   "unmasked_residual": 7.808864666003501e-12,
+   "unmasked_levels": [
+    -10.939216110644821
+   ],
+   "unmasked_n_converged": 1,
+   "runtime": 173.78821528000117
+  }
+ ]
+}
