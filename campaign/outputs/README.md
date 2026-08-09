@@ -16,6 +16,8 @@ rerunning missing points.
 | `masked_band_complete/` | complete exact masked bands (BIC-recovered) on cubic-16, the oracle for every truncated instrument | `run_masked_band_complete.py` | fold, plane scanner oracles, `make_third_peak_figure.py` |
 | `wf_thermodynamics/` | raw and `H+C` full fixed-Sz spectra per coupling (fold inputs) | `run_wf_thermodynamics.py` | `run_two_sided_fold.py` |
 | `fcc32_band/` | the superseded fixed-anchor FCC-32 lane; retained as the failed-calibration reference | `run_fcc32_band.py` | pedagogical lesson box |
+| `tier1_probes/` | exact winding-free observables from per-sector bordered operators: equal-time S(q) maps, DSSF sticks + Gamma-point rule, momentum-labeled band (photon w(X), hierarchy), [111] field staircase, 't Hooft two-size splittings; own README with headline numbers | `make_tier1_figures.py` (data from session bordered-solver scripts staged in-dir) | figures in-dir |
+| `dssf_sweep/` | DSSF vs coupling on the bw ladder, Gamma and X: S^zz from the fold at the anchor (naive vs masked; Gamma winding-free exactly zero) + S^xx from exact Sz=+1 Lanczos (raw reference inflates the spinon gap); needs `cache/bw_greyzone` anchors | `run_dssf_sweep.py` | `make_dssf_sweep_figure.py` |
 
 ## Frozen validation era (retained: cited by main.tex figures or docs)
 
