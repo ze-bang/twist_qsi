@@ -1,17 +1,17 @@
 \contentsline {section}{\numberline {1}Why this document exists}{2}{section.1}%
-\contentsline {section}{\numberline {2}The stage: what quantum spin ice is}{3}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Spins on a pyrochlore lattice}{3}{subsection.2.1}%
+\contentsline {section}{\numberline {2}The stage: what quantum spin ice is}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Spins on a pyrochlore lattice}{2}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Three characters emerge}{3}{subsection.2.2}%
 \contentsline {subsection}{\numberline {2.3}The Hamiltonian, for reference}{4}{subsection.2.3}%
 \contentsline {section}{\numberline {3}The instrument: exact diagonalization on a torus}{4}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Why small boxes}{4}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Two kinds of loops on a doughnut}{5}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.2}Two kinds of loops on a doughnut}{4}{subsection.3.2}%
 \contentsline {section}{\numberline {4}The villain: the box invents a process stronger than the physics}{5}{section.4}%
 \contentsline {subsection}{\numberline {4.1}Counting steps}{5}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}The measured symptom}{6}{subsection.4.2}%
 \contentsline {section}{\numberline {5}First attempt: twist averaging --- and why it fails}{6}{section.5}%
 \contentsline {subsection}{\numberline {5.1}The idea}{6}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}The failure, precisely}{7}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.2}The failure, precisely}{6}{subsection.5.2}%
 \contentsline {section}{\numberline {6}The fix: a label that sees topology, and the mask}{8}{section.6}%
 \contentsline {subsection}{\numberline {6.1}Transport: the bookkeeping number}{8}{subsection.6.1}%
 \contentsline {subsection}{\numberline {6.2}The mask}{8}{subsection.6.2}%
@@ -19,51 +19,45 @@
 \contentsline {subsection}{\numberline {6.4}Why this is safe, and why nothing finer exists}{9}{subsection.6.4}%
 \contentsline {subsection}{\numberline {6.5}Three theorems, in plain words}{9}{subsection.6.5}%
 \contentsline {section}{\numberline {7}A toolkit interlude: folding the universe into a small matrix}{10}{section.7}%
-\contentsline {section}{\numberline {8}Strong coupling: the band dissolves, and the map survives}{12}{section.8}%
-\contentsline {subsection}{\numberline {8.1}What breaks, and when}{12}{subsection.8.1}%
-\contentsline {subsection}{\numberline {8.2}What survives}{12}{subsection.8.2}%
-\contentsline {subsection}{\numberline {8.3}Life inside the continuum: tracking without repairing}{13}{subsection.8.3}%
-\contentsline {section}{\numberline {9}One honest Hamiltonian: the counterterm, its limits, the splice}{14}{section.9}%
-\contentsline {subsection}{\numberline {9.1}Why there is nothing to cut: the ice block of $H$ is empty}{14}{subsection.9.1}%
-\contentsline {subsection}{\numberline {9.2}The construction}{15}{subsection.9.2}%
-\contentsline {subsection}{\numberline {9.3}The obstruction theorem, and honesty about the residue}{15}{subsection.9.3}%
-\contentsline {subsection}{\numberline {9.4}What the counterterm cannot do}{15}{subsection.9.4}%
-\contentsline {subsection}{\numberline {9.5}A counterterm-free future: folding from both sides}{16}{subsection.9.5}%
-\contentsline {subsection}{\numberline {9.6}The third peak: three bumps, one name}{19}{subsection.9.6}%
-\contentsline {subsection}{\numberline {9.7}What the crossing means --- and what it does not}{20}{subsection.9.7}%
-\contentsline {section}{\numberline {10}Turning the second dial: what $J_{\pm \pm }$ actually does}{22}{section.10}%
-\contentsline {subsection}{\numberline {10.1}What a pair flip costs}{22}{subsection.10.1}%
-\contentsline {subsection}{\numberline {10.2}Three measured effects, and a squeeze}{23}{subsection.10.2}%
-\contentsline {subsection}{\numberline {10.3}Why it stops: the dial destroys what it moves}{23}{subsection.10.3}%
-\contentsline {subsection}{\numberline {10.4}The verdict, and one honest complication}{24}{subsection.10.4}%
-\contentsline {section}{\numberline {11}The whole square: both dials at once, and the flux that lives there}{25}{section.11}%
-\contentsline {subsection}{\numberline {11.1}Leaving the line}{25}{subsection.11.1}%
-\contentsline {subsection}{\numberline {11.2}What ``flux'' means, and how you measure it}{25}{subsection.11.2}%
-\contentsline {subsection}{\numberline {11.3}The trap: raw ED reports the wrong flux everywhere it matters}{26}{subsection.11.3}%
-\contentsline {subsection}{\numberline {11.4}The mask supplies the real answer --- with no counterterm}{27}{subsection.11.4}%
-\contentsline {subsection}{\numberline {11.5}What the square actually looks like}{28}{subsection.11.5}%
-\contentsline {subsection}{\numberline {11.6}Symmetry, or: how to afford the square}{29}{subsection.11.6}%
-\contentsline {paragraph}{$U(1)$, on the XXZ line only.}{29}{section*.2}%
-\contentsline {paragraph}{$\mathbb {Z}_2$ parity, everywhere.}{29}{section*.3}%
-\contentsline {paragraph}{The Klein group $V_4$, everywhere.}{29}{section*.4}%
-\contentsline {paragraph}{Global spin flip, everywhere.}{30}{section*.5}%
-\contentsline {paragraph}{And one more, on the grid rather than the matrix.}{30}{section*.6}%
-\contentsline {subsection}{\numberline {11.7}Is the protocol well defined at any $J_{\pm }$ and $J_{\pm \pm }$?}{30}{subsection.11.7}%
-\contentsline {paragraph}{The construction: yes, unconditionally.}{30}{section*.7}%
-\contentsline {paragraph}{The output: no, and the failures are informative.}{30}{section*.8}%
-\contentsline {paragraph}{The meaning: it degrades, measurably and predictably.}{30}{section*.9}%
-\contentsline {section}{\numberline {12}What the campaign established}{31}{section.12}%
-\contentsline {section}{\numberline {13}The cluster is the error bar}{32}{section.13}%
-\contentsline {subsection}{\numberline {13.1}First steps onto FCC-32: calibrate, then scale}{32}{subsection.13.1}%
-\contentsline {section}{\numberline {14}The road ahead: beating finite size at strong coupling}{33}{section.14}%
-\contentsline {subsection}{\numberline {14.1}Residual 1: topology --- already solved}{33}{subsection.14.1}%
-\contentsline {subsection}{\numberline {14.2}Residual 2: matched winding pairs --- solved by geometry}{33}{subsection.14.2}%
-\contentsline {subsection}{\numberline {14.3}Residual 3: the coarse spinon continuum --- solved by twists, reborn}{34}{subsection.14.3}%
-\contentsline {subsection}{\numberline {14.4}Honesty items}{34}{subsection.14.4}%
-\contentsline {subsection}{\numberline {14.5}The validation ladder}{35}{subsection.14.5}%
-\contentsline {section}{\numberline {15}Where the method ends: the Heisenberg point, and beyond}{35}{section.15}%
-\contentsline {subsection}{\numberline {15.1}The Heisenberg point}{36}{subsection.15.1}%
-\contentsline {subsection}{\numberline {15.2}Beyond, in the XXZ model: the mask retires}{36}{subsection.15.2}%
-\contentsline {subsection}{\numberline {15.3}Beyond, in the XYZ model: the mask reborn}{37}{subsection.15.3}%
-\contentsline {section}{\numberline {16}Wrong turns, kept on purpose}{37}{section.16}%
-\contentsline {section}{\numberline {17}Cast of characters}{40}{section.17}%
+\contentsline {section}{\numberline {8}The method, settled: mask the fold}{12}{section.8}%
+\contentsline {subsection}{\numberline {8.1}The protocol, in six steps}{12}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Why the mask acts on the fold and never on $H$}{12}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}What it returns, and what it refuses to return}{13}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}The one honest extension, and why it can only be a convention}{13}{subsection.8.4}%
+\contentsline {subsection}{\numberline {8.5}Three definitions of one non-unique reference}{14}{subsection.8.5}%
+\contentsline {subsection}{\numberline {8.6}What the mask is not}{15}{subsection.8.6}%
+\contentsline {section}{\numberline {9}The XXZ line, measured}{15}{section.9}%
+\contentsline {subsection}{\numberline {9.1}First, the artifact is real, and the mask removes it exactly}{15}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}The temperature scale: where the specific-heat peak really is}{16}{subsection.9.2}%
+\contentsline {paragraph}{Raw ED measures the box.}{16}{section*.2}%
+\contentsline {paragraph}{The winding-free peak converges onto the photon scale.}{16}{section*.3}%
+\contentsline {paragraph}{The power laws come out right, and their split is physics.}{17}{section*.4}%
+\contentsline {paragraph}{Flux costs the photon a factor of $2.7$.}{17}{section*.5}%
+\contentsline {subsection}{\numberline {9.3}The spinon peak, which must not move --- and does not}{17}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}The band, exactly}{17}{subsection.9.4}%
+\contentsline {paragraph}{Completeness.}{18}{section*.6}%
+\contentsline {paragraph}{Purity.}{18}{section*.7}%
+\contentsline {paragraph}{The ground multiplet changes character at $-0.25$.}{18}{section*.8}%
+\contentsline {paragraph}{The internal gap.}{18}{section*.9}%
+\contentsline {subsection}{\numberline {9.5}Inside the map: what the effective gauge theory becomes}{18}{subsection.9.5}%
+\contentsline {paragraph}{The photon amplitude is renormalized by more than an order of magnitude.}{19}{section*.10}%
+\contentsline {paragraph}{It stays a ring model --- but stops being local.}{19}{section*.11}%
+\contentsline {paragraph}{The flux is exactly quantized, and then exactly off.}{19}{section*.12}%
+\contentsline {subsection}{\numberline {9.6}The flux, and the sign raw ED cannot get right}{19}{subsection.9.6}%
+\contentsline {subsection}{\numberline {9.7}Levels leave the band --- and none of them decays}{20}{subsection.9.7}%
+\contentsline {subsection}{\numberline {9.8}The low-temperature structure, and how it was told apart}{21}{subsection.9.8}%
+\contentsline {subsection}{\numberline {9.9}How much of this is the cluster}{22}{subsection.9.9}%
+\contentsline {paragraph}{The headline scale moves by a factor of three.}{22}{section*.13}%
+\contentsline {paragraph}{The most exciting cubic-16 feature does not exist there.}{23}{section*.14}%
+\contentsline {paragraph}{The trend of the ring scale survives.}{23}{section*.15}%
+\contentsline {subsection}{\numberline {9.10}Thermodynamics, and the size of the convention}{23}{subsection.9.10}%
+\contentsline {subsection}{\numberline {9.11}What was checked, and to how many digits}{24}{subsection.9.11}%
+\contentsline {subsection}{\numberline {9.12}What the line establishes, and where it stops}{25}{subsection.9.12}%
+\contentsline {section}{\numberline {10}The gauge theory knew: the campaign restated in field-theory language}{26}{section.10}%
+\contentsline {subsection}{\numberline {10.1}The dictionary}{26}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Why nothing finer than transport exists}{27}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}What the mask is: an emergent one-form symmetry, enforced by hand}{28}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}The photon's lifetime, where the box cannot go}{28}{subsection.10.4}%
+\contentsline {subsection}{\numberline {10.5}What is genuinely open}{28}{subsection.10.5}%
+\contentsline {subsection}{\numberline {10.6}What this offers experiment}{29}{subsection.10.6}%
+\contentsline {paragraph}{Starting points in the literature.}{30}{section*.16}%

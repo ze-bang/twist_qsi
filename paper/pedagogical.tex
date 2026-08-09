@@ -56,8 +56,12 @@ a fake physical process that is \emph{stronger} than the real one, and every
 naive simulation measures the fake.  The campaign (i) identified the fake
 process precisely, (ii) proved that the popular fix does \emph{not} work,
 (iii) constructed a fix that provably works, (iv) pushed that fix into the
-strongly interacting regime where the usual approximations collapse, and
-(v) mapped out what is left to do.  Along the way it collected several wrong
+strongly interacting regime where the usual approximations collapse,
+(v) translated the whole construction into the language of emergent gauge
+theory, where each hard-won fact turns out to have an old name and an older
+proof (Sec.~\ref{sec:gauge}), and (vi) mapped out what is left to do ---
+including what the corrected theory positively predicts for experiments on
+the cerium materials (Sec.~\ref{sec:experiment}).  Along the way it collected several wrong
 turns that are as instructive as the successes; they are all documented here.
 
 Every number quoted in this document was computed and cross-checked in the
@@ -527,7 +531,7 @@ they are combinatorial objects, fixed before any physics is computed.
 ``Band'' identity is then an \emph{output label, never an input
 classification}.  A winding-free band level is, by definition, a
 self-consistent root of an ice-sector block (the machinery of
-Secs.~\ref{sec:feshbach} and~\ref{sec:strong}), and it arrives stamped with
+Secs.~\ref{sec:feshbach} and~\ref{sec:method}), and it arrives stamped with
 its sector because that is where it emerged.  Even when such a root sits
 embedded inside the continuum (Sec.~\ref{sec:bic}), there is no ambiguity
 about whether it is ``band'': it is a root of the ice-block map, full stop.
@@ -560,6 +564,9 @@ process that winds $+1$ and then $-1$ (net zero) is topologically identical
 to a contractible one and is \emph{correctly kept} --- its counterpart exists
 in the infinite crystal too, as an ordinary, benign finite-size correction.
 The mask removes everything a topological label can remove, and nothing more.
+(Sec.~\ref{sec:gauge} restates this maximality in the language of gauge
+theory, where it is a classical theorem about electric flux sectors rather
+than a feature of this method.)
 \end{enumerate}
 
 \subsection{Three theorems, in plain words}
@@ -674,7 +681,7 @@ in the \emph{local-$z$} frame, $Z$ is defined relative to that frame ---
 the same physical state has a different ice weight with respect to an
 $x$-basis ice manifold.  Far from the Heisenberg point this is harmless
 (the $z$ frame is the physical one); at it, it is the whole story
-(Sec.~\ref{sec:heisenberg}).
+(Sec.~\ref{sec:strong}).
 
 Two properties make $Z$ more than a diagnostic.  First, it is obtainable
 \emph{without} eigenvectors: at a self-consistent root $E_n$ of the
@@ -726,1094 +733,73 @@ the real campaign appears in this $3\times3$ example.
 \end{worked}
 
 %=====================================================================
-\section{Strong coupling: the band dissolves, and the map survives}
-\label{sec:strong}
+\section{The method, settled: mask the fold}
+\label{sec:method}
 
-\subsection{What breaks, and when}
-
-As $|\Jpm|$ grows, the neat separation ``cheap ice band far below expensive
-spinons'' degrades.  On the 16-site cell the ice-derived band stops being
-cleanly separated from the two-spinon continuum at $\Jpm\approx-0.185$.
-Every earlier construction that relied on identifying ``the 90 ice-like
-eigenstates'' (so-called frames) fails there --- and the campaign showed all
-of them fail \emph{together}, because every one of their health diagnostics
-secretly measures the same quantity: the ice purity $Z$.  There is no
-cleverer frame; the concept of ``pick the ice-like eigenvectors'' itself
-runs out.
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[scale=1.0]
-% left panel: weak coupling
-\begin{scope}
-\draw[->] (0,0) -- (0,4.2); \node[rotate=90,font=\small] at (-0.4,2.1) {energy};
-\fill[icecol!40] (0.3,0.2) rectangle (2.3,0.75);
-\node[font=\small,icecol!60!black] at (1.3,0.475) {ice band};
-\foreach \y in {2.4,2.62,2.9,3.1,3.45,3.7,3.95} \draw[spincol,thick] (0.3,\y) -- (2.3,\y);
-\node[font=\small,spincol] at (1.3,4.05) {\vphantom{g}};
-\node[font=\small,spincol] at (1.35,2.15) {\vphantom{g}};
-\node[font=\small,spincol,above] at (1.3,3.95) {};
-\node[font=\small] at (1.3,-0.4) {weak coupling: clean gap};
-\draw[<->,thick] (2.55,0.75) -- (2.55,2.4);
-\node[font=\scriptsize,right] at (2.6,1.55) {gap};
-\node[font=\small,spincol] at (1.3,3.3) {};
-\node[font=\small,spincol,align=center] at (1.3,1.6) {};
-\node[font=\scriptsize,spincol] at (1.3,2.62) {};
-\node[font=\scriptsize,spincol,above right] at (0.3,2.9) {};
-\node[font=\small,spincol] at (3.9,3.2) {};
-\end{scope}
-\node[font=\small,spincol,align=left] at (4.5,3.1) {two-spinon\\ continuum};
-% right panel: strong coupling
-\begin{scope}[xshift=7.6cm]
-\draw[->] (0,0) -- (0,4.2);
-\fill[icecol!40] (0.3,0.2) rectangle (2.3,2.1);
-\node[font=\small,icecol!60!black,align=center] at (1.3,0.7) {band spreads};
-\foreach \y in {1.15,1.5,1.85,2.2,2.55,2.9,3.3,3.7} \draw[spincol,thick] (0.3,\y) -- (2.3,\y);
-\node[font=\small] at (1.3,-0.4) {strong coupling: dissolution};
-\end{scope}
-\end{tikzpicture}
-\caption{Weak coupling (left): the ice-derived band sits far below the
-spinon continuum.  Strong coupling (right): the band widens and the continuum
-descends until they interpenetrate.  Constructions that must \emph{identify}
-band states die here; the Feshbach map, which never identifies anything, does
-not.}
-\label{fig:dissolve}
-\end{figure}
-
-\subsection{What survives}
-
-The masked Feshbach map does not care: it is built from the ice
-\emph{configurations} (which exist at any coupling --- they are just spin
-patterns), not from eigenvectors.  Its self-consistent roots below the
-continuum edge remain exact, winding-free energies at every coupling tested.
-Highlights of the strong-coupling reconnaissance on the 16-site cell:
-
-\begin{itemize}
-\item \textbf{Completeness:} all 90 winding-free levels exist below the
-continuum up to $\Jpm=-0.22$; at $-0.24$ to $-0.26$ one goes missing; at
-$-0.28$, thirteen (77 of 90 remain).  The missing ones did not die --- see
-next item.
-\item \textbf{The escaped levels are not lost.}  They reappear \emph{above}
-the continuum edge with exactly zero decay width, still tracked cleanly by
-the masked map.  How that is possible --- and when it stops being possible
---- deserves its own subsection (Sec.~\ref{sec:bic}).
-\item \textbf{The flux law is restored.}  The naive ground state gets the
-sign of the hexagon flux wrong at every coupling; the winding-free ground
-multiplet gives the correct $\pi$-flux sign throughout, fading smoothly as
-coupling grows ($\langle\text{hex}\rangle = -0.248$ at $-0.02$ down to
-$-0.067$ at $-0.30$).
-\item \textbf{Nothing dramatic happens to the raw ground state:} it evolves
-smoothly to $\Jpm=-1$ with no level crossing.  The drama --- band
-dissolution --- is real physics of the \emph{excitations}, and it is
-continuous, not a wall.  (Its interpretation as a Higgs-type frontier of the
-emergent gauge theory is a separate, ongoing project.)
-\end{itemize}
-
-\subsection{Life inside the continuum: tracking without repairing}
-\label{sec:bic}
-
-What does it actually mean for a gauge-band level to ``enter the spinon
-continuum''?  The masked map answers this with unusual precision, because it
-is not one map but twenty-five: one independent block per transport sector,
-and \emph{each block has its own continuum} --- the spinon states that
-particular sector can reach.  The global ``continuum edge'' quoted in
-dissolution plots is just the lowest of these.
-
-So when a level of sector $A$ rises above the \emph{global} edge, the first
-question is: whose continuum is it swimming in?  If the spinon states at
-that energy connect to \emph{other} sectors, the level of sector $A$ cannot
-decay into them --- the transport label forbids it --- and sector $A$'s own
-map still has a perfectly ordinary, real, self-consistent root there.  The
-level is a \textbf{bound state in the continuum} (BIC): embedded in the
-spectrum, yet with decay width exactly zero.  This is not a hope but a
-measurement: the multiplets that escaped the band at strong coupling were
-recovered this way (for example a twelve-fold multiplet sitting $0.16\,\Jzz$
-\emph{above} the edge, width zero to machine precision).  This is why the
-winding-free photon never decays in the regime we mapped, and why the
-``band merging'' seen in naive ED there is frame artifact rather than a
-physical lifetime.
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[scale=1.0]
-% left: BIC
-\begin{scope}
-\draw[->] (0,0) -- (0,3.6);
-\node[rotate=90,font=\small] at (-0.4,1.8) {energy};
-\foreach \y in {0.6,1.05,1.5,1.95,2.4,2.85,3.3}
-  \draw[spincol,thick] (0.35,\y) -- (2.45,\y);
-\draw[icecol,line width=2.2pt] (0.25,1.72) -- (2.55,1.72);
-\node[font=\small,align=center] at (1.4,-1.05)
-  {\textbf{foreign-sector continuum}\\ level of sector $A$ amid states\\
-   of sectors $B,C,\dots$: decay forbidden,\\ $\Gamma=0$ exactly \; (a BIC)};
-\end{scope}
-% right: resonance
-\begin{scope}[xshift=7.4cm]
-\draw[->] (0,0) -- (0,3.6);
-\fill[icecol!18] (0.35,1.45) rectangle (2.45,2.0);
-\foreach \y in {0.6,1.05,1.5,1.95,2.4,2.85,3.3}
-  \draw[icecol!55,thick] (0.35,\y) -- (2.45,\y);
-\draw[icecol,line width=2.2pt] (0.25,1.72) -- (2.55,1.72);
-\node[font=\small,align=center] at (1.4,-1.05)
-  {\textbf{same-sector continuum}\\ hybridization allowed: the root\\
-   turns complex, $E-i\Gamma/2$,\\ width $\Gamma$ = a physical lifetime};
-\end{scope}
-\end{tikzpicture}
-\caption{Two very different ways to sit inside a continuum.  Left: the
-surrounding continuum belongs to other transport sectors (orange); the
-masked map's per-sector root stays real and the state cannot decay --- the
-mask keeps tracking it effortlessly.  Right: the continuum in the state's
-\emph{own} sector has reached it; the real root disappears and the honest
-object is a complex ``Gamow'' root whose imaginary part is a genuine decay
-rate --- physics to be reported, not an artifact to be repaired.}
-\label{fig:bic}
-\end{figure}
-
-The mechanism has a genuine failure mode, and it is the physically
-interesting one.  When the continuum \emph{in the state's own sector}
-reaches the level, nothing forbids hybridization: the real self-consistent
-root ceases to exist, and the correct object becomes a complex root
-$E - i\Gamma/2$ (a ``Gamow'' resonance).  At that point the width $\Gamma$
-is not an error to be subtracted --- it is a prediction: a finite photon
-lifetime, if the infinite system truly has one, must be allowed to appear
-exactly here.  The mask has not lost track of the state; it has changed
-\emph{what kind of object it reports}, from a level to a resonance.
-
-Two honesty caveats keep this from being too tidy:
-\begin{itemize}
-\item On a finite cluster the ``continuum'' is itself a handful of discrete
-levels, so same-sector contact shows up as avoided crossings: the band
-state's identity smears over several eigenstates, and tracking it becomes a
-matter of following \emph{spectral weight}, not a single number.
-\item Whether a level is inside or outside the continuum depends on where
-the edge sits --- and on a small cluster the edge is one of the
-\emph{worst}-converged quantities there is.  A verdict of ``escaped'' can be
-an artifact of a misplaced edge.  This is precisely the itch that the
-continuum-densification pillar of the next campaign
-(Sec.~\ref{sec:roadahead}) scratches.
-\end{itemize}
-
-\begin{lesson}
-\textbf{The unconverged fixed point.}  Solving $E=\mathrm{eig}\,F(E)$ by
-simple repetition (guess $E$, compute, feed back) converges at rate $1-Z$
-per round.  At strong coupling $1-Z\approx0.5$, so three rounds leave a
-residual of about $10^{-2}$ --- which was, for one embarrassing week,
-misread as a new physical effect (an ``anchoring residue'', complete with a
-spurious extra peak in $C(T)$).  A proper root-finder (a secant step)
-reaches $10^{-13}$ in 5--11 solves, and the ``effect'' evaporated: the
-ground multiplet is degenerate to $10^{-12}$, the spurious peak gone.
-Moral: before interpreting a small number as physics, converge it.
-\end{lesson}
-
-\begin{lesson}
-\textbf{The physical third peak.}  After the spurious peak was removed, a
-\emph{different} extra bump in $C(T)$ at $|\Jpm|\ge0.22$ survived every
-convergence test --- because it is real: a Schottky anomaly from a genuine
-gap inside the winding-free spectrum.  At weak coupling it coincides with
-the ring bump and hides; at strong coupling they separate.  One artifact
-peak and one physical peak had been conflated.  Moral: not every surprise is
-a bug; the same rigor that kills artifacts must be allowed to certify
-physics.  (The story goes deeper: ``the third peak'' turned out to name
-\emph{three} distinct low-temperature bumps --- one fake, two real.  The
-full taxonomy, separated cleanly by the fold data, is
-Sec.~\ref{sec:thirdpeak}.)
-\end{lesson}
-
-%=====================================================================
-\section{One honest Hamiltonian: the counterterm, its limits, the splice}
-\label{sec:hc}
-
-\subsection{Why there is nothing to cut: the ice block of $H$ is empty}
-\label{sec:emptyblock}
-
-The masked map is exact but speaks only about the ice-derived band.  For
-full thermodynamics --- both peaks of $C(T)$, entropy, flux on the true
-dressed ground state --- one wants a single honest Hamiltonian on the
-\emph{whole} space.  The natural first idea is pure surgery: take the full
-$H$, find the winding matrix elements between ice states, delete them, and
-leave everything else connected.  No counterterm, no anchor --- just a
-scalpel.
-
-This fails for a startling reason: \textbf{there are no such matrix
-elements}.  The ice block of the bare Hamiltonian, $PHP$, is
-\emph{diagonal}.  A single pair-flip acting on an ice state always breaks
-the ice rule on the tetrahedra it touches --- it necessarily creates
-spinons and lands in $Q$.  No ice state connects to any other ice state
-directly.  Both the physical hexagon amplitude $\gsix$ \emph{and} the
-winding artifact $\gfour$ are emergent: assembled from multi-step paths
-that leave the ice manifold, wander through spinon space, and return.
-They live inside the resolvent $(z-QHQ)^{-1}$, smeared across the
-geometry of $Q$ --- not in any entry of $H$ a scalpel could reach.  The
-$3\times3$ miniature of Sec.~\ref{sec:feshbach} shows it nakedly: the
-offending amplitude is $-t^2/(D-z)$, and no entry of the original matrix
-contains it; the matrix holds only $t$ and $D$.
-
-This is why deletion (the mask) operates on $F(z)$ --- where the emergent
-amplitudes have \emph{become} explicit matrix elements --- and can never be
-performed on $H$ itself.  On $H$, the only possible surgery is
-\textbf{addition}: insert a new ice-block operator whose emergent effect
-cancels the winding paths.  The counterterm is not a clever choice among
-alternatives; it is the only move the structure of $H$ permits.  And note
-that the ``reconnection to the full Hamiltonian'' comes free: the added
-operator touches only the $90\times90$ ice block, while $PHQ$, $QHP$, and
-$QHQ$ remain byte-for-byte intact --- spinons, dressing, and the upper
-band still flow through the untouched couplings.
-
-\subsection{The construction}
-
-The campaign's construction, forced by the above: compute the masked-out
-(artifact) part of $F$ at the self-consistent ground energy $z_0$, and
-\emph{subtract it from $H$} as a counterterm $C$ supported purely inside the
-ice block:
-\[
-H + C, \qquad C = -(1-\Delta)\,F(z_0)
-\quad (\Delta = \text{the mask}).
-\]
-Because $C$ lives inside the ice block, it does not disturb the spinon
-sector at all, and one ordinary diagonalization of $H+C$ delivers the entire
-65\,536-level spectrum, winding-free through third order in every loop class
-at once.  This is the object behind the money plot of the campaign
-(the specific-heat scan of Section~\ref{sec:results}).
-
-\subsection{The obstruction theorem, and honesty about the residue}
-
-Can the counterterm be made \emph{exactly} winding-free at all energies?
-\textbf{No --- provably.}  The transport label is only defined on ice
-states; a single spinon hop moves the polarization by a quarter of a box
-period, so no rule on the full space can conserve the label.  Consequently
-$H+C$ carries an irreducible residual error that grows with the dressing:
-about $0.4\%$ of the bandwidth at $\Jpm=-0.02$, $7\%$ at $-0.10$, $22\%$ at
-$-0.30$ --- the $3\times3$ miniature's level split, writ large.  The
-division of labor is therefore:
+Everything up to here was a derivation.  Twists were tried and shown to be
+incapable of removing the artifact (Sec.~\ref{sec:twist}); the transport
+label was found to measure winding exactly (Sec.~\ref{sec:mask}); the
+Feshbach fold was introduced to make the ice manifold's amplitudes explicit
+at any coupling (Sec.~\ref{sec:feshbach}).  Those three strands close here,
+into one instrument that the rest of this document simply \emph{uses}.
 
 \begin{center}
-\begin{tabular}{lll}
-\toprule
-question & instrument & why\\
-\midrule
-band energies, ring scale, flux & masked Feshbach roots & exact at any coupling\\
-full $C(T)$, entropy, upper peak & $H+C$ spectrum & only full-space object\\
-best of both & \textbf{the splice} & see below\\
-\bottomrule
-\end{tabular}
+\emph{The method is: build the fold, delete every entry between transport
+sectors, solve.}
 \end{center}
 
-\textbf{The splice} replaces the lowest 90 levels of the $H+C$ spectrum by
-the exact masked roots.  Wherever the band is complete
-($|\Jpm|\lesssim0.22$ on 16 sites) the result is clean: exactly two peaks in
-$C(T)$, correct scales, no artifact.
-
-\subsection{What the counterterm cannot do}
-\label{sec:hclimits}
-
-A natural hope: when band levels escape into the continuum
-(Sec.~\ref{sec:bic}), perhaps $H+C$ ``replaces'' them too, carrying the
-correction into the dissolution regime.  It does not --- doubly, and
-provably.
-
-First, $C$ is \textbf{static and anchored}: it is built from $F$ evaluated
-at one energy, the ground-state anchor $z_0$.  The states that run into the
-continuum are precisely the ones \emph{farthest} from the anchor and the
-most spinon-dressed --- so the cancellation is at its \emph{worst} exactly
-for them.  That is the $1-Z$ residue of the previous subsection, seen from
-the other side.
-
-Second, \textbf{the splice cannot rescue them}.  The splice presumes a
-one-to-one assignment between ``the lowest 90 levels of $H+C$'' and ``the
-90 masked roots''.  Once band levels and continuum levels interleave, that
-assignment simply does not exist: an escaped masked root sits \emph{among}
-continuum eigenvalues of $H+C$, and there is no principled rule for which
-one it replaces.  This --- not numerical difficulty --- is why the splice
-is certified clean only up to $|\Jpm|\approx0.22$ on this cluster.
-
-Nor can a smarter counterterm be built.  Making $C$ follow the escaped
-states would require either an energy-\emph{dependent} $C(z)$ --- but then
-$H+C$ is no longer a Hamiltonian and its thermodynamics is ill-defined ---
-or a transport projection on the full space, which the obstruction theorem
-of the previous subsection forbids exactly (the spinon hop moves the label
-by a quarter period; no Hermitian operator conserves it).  The wall is
-structural.
-
-So in the dissolution regime the division of labor genuinely shifts: the
-per-sector masked map --- with its BICs and Gamow widths --- is the
-\emph{only} exact instrument for band physics, while $H+C$ degrades to a
-gross thermodynamic estimate whose growing residue must be quoted alongside
-it.  Whether one can do better --- dropping the counterterm altogether ---
-is the subject of the next subsection.
-
-\subsection{A counterterm-free future: folding from both sides}
-\label{sec:twoside}
-
-The Feshbach fold of Sec.~\ref{sec:feshbach} has a mirror image.  Just as
-$F(z)$ folds the spinon space into a corrected ice-block table, one can
-fold the ice space into a corrected \emph{spinon}-block table:
-\[
-G(z) \;=\; QHQ \;+\; QHP\,\frac{1}{z-PHP}\,PHQ .
-\]
-Two facts make this mirror unusually pleasant.  First, by
-Sec.~\ref{sec:emptyblock} the block $PHP$ is diagonal, so the fold-back
-factor $(z-PHP)^{-1}$ is trivial --- $G(z)$ is just $QHQ$ plus a cheap,
-low-rank correction.  Second, and centrally: every eigenstate of $H$ is
-seen by \emph{both} maps, each in proportion to where the state lives.  A
-level with ice weight $Z_n$ --- the quantity of Sec.~\ref{sec:feshbach},
-$Z_n=\langle n|P|n\rangle$, the fraction of that eigenstate sitting inside
-the ice manifold, with $1-Z_n$ its spinon dressing --- appears among the
-roots of $F$ carrying weight
-$Z_n$, and among the roots of $G$ carrying weight $1-Z_n$ --- and these
-weights are computable from the maps themselves (from the slope of $F$ or
-$G$ at the root).  Summing both sides therefore counts every level
-\emph{exactly once}:
-\[
-\mathrm{Tr}\,e^{-\beta H}
-\;=\; \sum_{\text{roots of }F} Z_n\,e^{-\beta E_n}
-\;+\; \sum_{\text{roots of }G} (1-Z_n)\,e^{-\beta E_n}.
-\]
-
-\begin{plainwords}
-Each energy level splits its vote between the two folded maps according to
-where the state actually lives: an almost-pure ice state votes mostly
-through the ice-side map, an almost-pure spinon state mostly through the
-spinon-side map, and the votes always add up to exactly one.  No matching,
-no assignment, no double counting --- the weights do the bookkeeping
-automatically, which is precisely what the splice's one-to-one assignment
-could not do once band and continuum interleave.
-\end{plainwords}
-
-The obvious winding-free version of this identity --- keep the $G$-side
-sum \emph{raw} (the continuum is physics, not artifact) and replace the
-$F$-side sum by the masked roots with their residues $\tilde Z_m$ --- was
-built and measured.  \textbf{It fails, instructively.}  At
-$\Jpm=-0.05$, where every definition must agree, the naive weighted union
-put \emph{zero} heat capacity at the ring peak ($C=0.000$ at
-$0.84\,\gsix$, where splice and $H+C$ both say $0.157$) and grew a
-spurious bump of height $0.65$ at the \emph{artifact} scale --- taller
-than raw ED's own artifact bump.  The mechanism is worth engraving: the
-raw band states enter the union with small weight $1-Z_n\approx 0.06$,
-but at their \emph{raw absolute energies}, which sit a full artifact
-binding ($\sim\gfour$) \emph{below} the masked band --- the depth the
-mask exists to remove.  At $T\sim\gsix\ll\gfour$ the Boltzmann factor
-$e^{+\beta\Delta}$ overwhelms any weight: the tiny remnant hijacks the
-entire low-temperature ensemble, and no weighting convention can save a
-scheme that leaves a lower-lying level in place.
-
-\begin{lesson}
-\textbf{The hijacked ensemble.}  Weights cannot fix positions.  In a
-thermal mixture, a state at lower absolute energy wins the $T\to0$ limit
-no matter how small its weight --- $e^{+\beta\Delta}$ beats any
-bookkeeping.  A spectral-substitution scheme must therefore \emph{remove}
-the levels it replaces, not merely down-weight them.  (This is also the
-correct lens on the earlier ``match-trace'' trap: mixing spectra of two
-references makes their relative absolute placement load-bearing.)
-\end{lesson}
-
-The repair keeps both folds but changes what the mirror side supplies:
-\textbf{an identifier, not a weight}.  Each raw eigenstate carries its
-exactly computable ice weight $Z_n$; rank the raw levels by $Z_n$, remove
-the ninety highest --- \emph{wherever they sit}, interleaved with the
-continuum included, which is precisely the case the positional splice
-cannot handle --- and insert the ninety masked roots at weight one:
-\[
-\text{spectrum}_{\rm wf}
- \;=\; \{\,\text{raw levels}\,\}\setminus\{\,\text{90 highest-}Z_n\,\}
- \;\cup\; \{\,\text{masked roots}\,\}.
-\]
-Counts are exact by construction; the masked roots are absolute (they
-share the spinon continuum's energy axis, so no trace matching); BICs
-slot in wherever they lie.  The entire scheme is raw ED $+$ masked roots
-$+$ bookkeeping --- all cached campaign artifacts --- and it scales to 32
-sites, where the raw side goes stochastic and the band side uses the
-graded-truncation masked map.
-
-Measured, on the 16-site cell across $\Jpm=-0.05$ to $-0.40$:
-\begin{itemize}
-\item \textbf{Validation exact.}  At $-0.05$ the fold's ring peak lands
-at $0.84\,\gsix$, identical to splice and $H+C$ to the grid resolution
-(three-way spread $0.000\,\gsix$); the trace identity $\sum_n Z_n = 90$
-holds to ten digits at every coupling.
-\item \textbf{The classification is measurable.}  The ice weights are
-bimodal at weak coupling (band $0.89$--$0.97$ versus continuum
-$\le0.083$: an enormous $Z$-rank gap), and the gap closes by $-0.20$ ---
-but at every computed coupling it closes \emph{on an energy-degenerate
-multiplet} (cut energy split $=0$ to machine precision), where the choice
-of which members to remove is thermodynamically invisible.  The scheme
-stays well-defined deep into dissolution, and the $Z$-rank gap is the
-honest, continuous dial of how much longer that can last.
-\item \textbf{The ambiguity, finally measured.}  At $-0.30$ the three
-definitions (counterterm, splice, fold) differ by $20$--$30\%$ in
-$C(T)$ through the band region --- the first quantitative measurement of
-the irreducible definitional ambiguity the obstruction theorem predicts.
-At $-0.05$ that spread is zero; it grows continuously with $1-Z$.
-\end{itemize}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{figs/fig_fold_peaks.pdf}
-\caption{Every specific-heat maximum of every definition across the
-coupling scan (left) and the ring branch in units of $\gsix$ (right).
-Three branches organize the left panel: the spinon anomaly on top, the
-ring branch below it, and a low-temperature third-peak branch that only
-the winding-free definitions possess (Sec.~\ref{sec:thirdpeak}).  On the
-ring branch, raw ED runs along the artifact scale $\gfour$ and crosses
-$1\,\gsix$ near $-0.22$ purely by coincidence of scales; the three
-winding-free definitions collapse onto a single curve through $-0.30$
-($\sim$12\% spread in position) and fan out by a factor of three at
-$-0.40$ (fold $0.020\,\gsix$, counterterm $0.052$, splice $0.060$) ---
-the definitional ambiguity made visible.  At $-0.40$ raw ED has no
-low-temperature peak at all: the artifact scale has grown into the
-spinon scale and swallowed every gauge-sector feature, while the
-winding-free definitions still resolve structure there.}
-\label{fig:foldpeaks}
-\end{figure}
-
-Figure~\ref{fig:foldpeaks} condenses the whole scan into the peak
-positions.  One reading caution that cost an afternoon: the campaign's
-two-window peak extractor silently clips whichever maximum crosses its
-$T=0.05$ split (strong-coupling raw ``peaks'' all read exactly $0.0497$
-in the archived records); peak positions must be re-extracted as true
-local maxima of the curves.  The ruler, audited again.
-
-One thing this scheme does \emph{not} do is beat the obstruction theorem
---- nothing can.  The theorem's thermodynamic meaning is that
-``winding-free'' is only exactly defined \emph{on the band}; any extension
-to the full spectrum must decide which ninety full-space levels the band
-replaces, and that decision is a convention of order $1-Z$.  The
-counterterm, the splice, and the fold are therefore three
-\emph{definitions} of the same non-unique reference.  They provably agree
-at weak coupling (measured: exactly); their mutual spread at strong
-coupling is not a defect of any one of them but the honest, irreducible
-error bar on the concept of winding-free thermodynamics itself --- and
-quoting that spread is the right practice.  The fold simply has the best
-structural properties of the three: no anchor energy, no \emph{positional}
-assignment (only a $Z$-ranking whose sharpness is itself measured), smooth
-behavior through dissolution, and a path to larger clusters.
-
-For completeness, the genuinely different roads, with their price tags:
-\begin{center}
-\small
-\begin{tabular}{p{4.3cm}p{4.9cm}p{4.9cm}}
-\toprule
-\textbf{route} & \textbf{what it buys} & \textbf{what it costs}\\
-\midrule
-counterterm $H+C$ & complete spectrum from one solve & anchored at $z_0$;
-residue grows as $1-Z$\\
-splice & exact band $+$ full continuum & needs the band below the
-continuum ($|\Jpm|\lesssim0.22$)\\
-two-sided fold ($Z$-ranked) & no anchor, no positional assignment,
-BICs slot in, survives dissolution, scalable & $O(1-Z)$ definitional
-ambiguity (irreducible for anyone); the naive \emph{weighted} version
-fails outright (hijacked ensemble)\\
-NLCE on open clusters & winding loops \emph{never exist} --- no torus, no
-artifact, by construction & converges only down to intermediate $T$; the
-photon regime needs embedding orders far out of reach\\
-girth-engineered cells & demotes the artifact itself to higher order in
-$\Jpm$ & combinatorial search; the remedy shrinks the disease rather than
-curing it\\
-\bottomrule
-\end{tabular}
-\end{center}
-
-The NLCE row deserves one sentence of emphasis: linked-cluster expansions
-sum \emph{open} clusters, which have no glued edges and therefore no
-winding loops at all --- the artifact this entire document fights simply
-never appears.  That makes NLCE (a QED-backed tier of which already exists
-in the parent codebase) the one fully independent cross-check of
-winding-free thermodynamics in the temperature window where it converges;
-it cannot reach the photon scale, but agreement in the overlap window is
-evidence money cannot buy.  Perturbative subtraction of the artifact from
-$\ln\mathcal{Z}$ order by order is also possible but adds nothing: it
-works exactly where the counterterm already works, and fails where it
-fails.
-
-\subsection{The third peak: three bumps, one name}
-\label{sec:thirdpeak}
-
-Below the ring anomaly, $C(T)$ at strong coupling grows extra
-low-temperature structure --- the ``third peak'' of
-Sec.~\ref{sec:strong}'s lesson box and the lowest branch of
-Fig.~\ref{fig:foldpeaks}.  Asking \emph{is it physical?} turned out to
-have three different answers, because ``the third peak'' named three
-different objects.  Untangling them is a case study in the campaign's
-central habit: the exact masked spectrum is the referee.  A degeneracy it
-declares exact must not radiate a heat-capacity bump; a gap it certifies
-must.  Figure~\ref{fig:thirdpeak} demonstrates all three verdicts directly
-from the computed spectra.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\textwidth]{figs/fig_third_peak.pdf}
-\caption{The third-peak taxonomy, demonstrated.  (a)~At $\Jpm=-0.20$ the
-counterterm curve has a low-temperature bump the fold lacks; collapsing
-the six lowest $H+C$ levels --- the image of the exactly-degenerate
-masked ground sextet --- to their mean (dashed) kills the bump and lands
-on the fold curve: bump~1 is pure multiplet splitting, the counterterm's
-residue radiating.  (b)~At $\Jpm=-0.30$ the fold curve peaks at the
-two-level Schottky position $\Delta_{\rm masked}/2.4=0.0086$ predicted
-by the exact masked internal gap $\Delta=0.0206$: bump~2 is a certified
-gap speaking.  (c)~The lowest exact masked levels versus coupling: the
-ground sextet is degenerate to all digits through $-0.22$; at $-0.25$
-the twelve-dimensional sector's doublet dives below it ($6\to2$),
-leaving the splitting $\delta=0.0012$ whose Schottky at
-$\delta/2.4\approx5\times10^{-4}$ is bump~3.}
-\label{fig:thirdpeak}
-\end{figure}
-
-\begin{description}
-\item[Bump 1: the counterterm's splitting bump --- artifact
-(Fig.~\ref{fig:thirdpeak}a).]
-In the exact masked map the sector ground states are \emph{exactly}
-degenerate: six states, one per eight-dimensional transport sector, with
-spread $0.00000$.  The counterterm splits them --- $C$ cancels transport
-inside the ice block at one energy while $PHQ$ keeps transporting --- by
-a fraction of the bandwidth growing from $0.011$ at $-0.10$ to $0.115$
-at $-0.30$, and the split multiplet radiates a spurious Schottky bump.
-These are the counterterm-\emph{only} peaks of
-Fig.~\ref{fig:foldpeaks} (at $T=0.0013$ at $-0.15$, $0.006$ at $-0.20$),
-absent from splice and fold, whose lowest levels are the exact masked
-roots.  The surgical proof: keeping only the five lowest $H+C$ levels
-reproduces the bump ($0.00548$ vs $0.00564$ at $-0.30$); collapsing
-their splitting to zero removes it exactly.  Verdict: \textbf{not
-physical} --- it is the $1-Z$ residue of Sec.~\ref{sec:hclimits} made
-visible at low temperature.
-
-\item[Bump 2: the internal-gap Schottky --- physical
-(Fig.~\ref{fig:thirdpeak}b).]
-The exact winding-free spectrum has a genuine gap between the
-mask-protected ground multiplet and the seventh band level.  Two
-independent constructions see the same number: at $-0.22$ the exact
-masked gap is $0.010634$ and the counterterm's is $0.010730$.  At weak
-coupling the resulting bump sits at $0.79\,\gsix$, indistinguishable
-from the ring anomaly at $0.84\,\gsix$ --- it \emph{hides inside the
-ring peak}; by $-0.22$ the two have separated by a factor of seven and
-it becomes a visible third maximum.  At $-0.30$ the gap is $0.0206$ and
-the fold and splice curves peak at $T\approx0.008\approx\Delta/2.4$, the
-textbook two-level Schottky position --- and the fold's lowest levels
-there \emph{are} the masked roots verbatim, so the feature is exact by
-construction.  Verdict: \textbf{physical}.
-
-\item[Bump 3: the multiplicity-change peak --- physical, and a free
-diagnostic (Fig.~\ref{fig:thirdpeak}c).]  At $-0.25$ the ground multiplicity of the masked band
-drops from six to two: the twelve-dimensional sector takes over the band
-bottom, a level crossing \emph{within} the winding-free ground manifold.
-The tiny exact splitting it leaves behind radiates the ultra-low maximum
-at $T=4\times10^{-4}$ in the splice and fold curves at $-0.25$
-(Fig.~\ref{fig:foldpeaks}, lowest points).  Verdict: \textbf{physical}
---- and useful: a heat-capacity fingerprint of ground-sector
-reorganization, visible without ever inspecting an eigenvector.
-\end{description}
-
-Two honesty riders on the word ``physical''.  First, it means: a true
-feature of the exact winding-free reference \emph{on this cluster}.
-Whether the 16-site band's internal gap survives on FCC-32 --- sectors
-forty times larger, flux unpinned --- is exactly the kind of question
-the cluster, not the method, decides (Sec.~\ref{sec:cluster}).  This
-rider has since been cashed for bump~3: the FCC-32 scan
-(Sec.~\ref{sec:fcc32first}) finds \emph{no} multiplicity change at any
-coupling, so the crossing --- and its little Schottky --- are real
-physics of the 16-site torus and of nothing larger
-(Sec.~\ref{sec:crossingmeaning} draws the moral).  Second,
-at the couplings where the third peak stands separate, the definitional
-spread of Fig.~\ref{fig:foldpeaks} is already growing; the peak's
-\emph{existence} is definition-independent (its levels are sub-continuum
-masked roots, exact and shared by every construction that inherits
-them), but any statement about its precise \emph{lineshape} carries the
-spread.
-
-\begin{plainwords}
-Same temperature window, three causes.  A counterterm error split an
-exact degeneracy --- fake, and diagnosed because the exact masked
-spectrum says those states are degenerate to all digits.  A real gap
-inside the clean band --- real, certified by two independent
-constructions agreeing on the gap to three digits.  And a change of
-which sector owns the ground state --- real, and a bonus: the specific
-heat announces the level crossing on its own.  The referee in every case
-is the same: exact degeneracies must stay silent, certified gaps must
-speak.
-\end{plainwords}
-
-\subsection{What the crossing means --- and what it does not}
-\label{sec:crossingmeaning}
-
-Bump 3 records a change in the ground-state multiplicity, and a level
-crossing with a degeneracy change sounds like a phase transition.  It is
-not one --- and what it actually is deserves care, because it is arguably
-more interesting.
-
-First, what it is not.  It is \emph{not} a ground-state level crossing of
-the actual Hamiltonian: the raw ground state of this cluster evolves
-smoothly and monotonically all the way to $\Jpm=-1$, with no crossing
-anywhere.  The 6$\to$2 crossing lives in the winding-free band, and it is
-a crossing between \emph{different transport sectors} --- the incoming
-doublet belongs to the twelve-dimensional polarization sector, displacing
-a sextet assembled from six eight-dimensional sectors.  Transport sectors
-are not symmetry sectors of any local order parameter; they are the
-\emph{topological} sectors of the emergent gauge field on the torus
-(polarization is electric flux threading the handles,
-Eq.~\ref{eq:rho}).  A change in which topological sector owns the ground
-state is a reordering of flux-sector energetics: no local observable
-jumps, nothing orders, no symmetry breaks.  On a single finite cluster,
-that is spectroscopy, not a transition.
-
-Here is why it is interesting anyway.  In a gauge theory, the energy
-splittings between flux sectors are precisely the quantity whose
-\emph{system-size scaling} diagnoses the phase (the 't~Hooft criterion
---- and the reason Sec.~\ref{sec:roadahead} insists the masked-out
-sectors be recycled, not discarded): in the photon phase the splittings
-must vanish as the torus grows; in a Higgs or confined regime they
-saturate.  The crossing is a single data point of exactly the right
-diagnostic, waiting for a size axis.
-
-And it sits at a suspicious address.  The crossing lands at
-$\Jpm=-0.25$ --- the coupling where one line of theory (the
-self-consistent exclusion-boson treatment) predicts the $\pi$-flux
-spin-ice phase terminates, $\Jpm/\Jzz=-1/4$; a competing estimate puts
-the terminus near $-0.5$.  It is also where the masked band's
-completeness begins to degrade.  So a tempting reading exists: \emph{the
-6$\to$2 crossing is the finite-size shadow of the QSI terminus} --- the
-gauge theory's sector energetics inverting as the Higgs frontier
-approaches.  Three caveats before believing it: cubic-16's ground-state
-flux is pinned by pure counting, so its sector energetics are partly
-arithmetic; the splitting is tiny ($0.0012\,\Jzz$) and must sharpen, not
-vanish, with system size to mean anything; and the definitional spread
-is already growing there (though the crossing itself is between
-sub-continuum masked roots --- exact and shared by every construction).
-
-Is it still a spin liquid beyond?  What theory requires: the deconfined
-phase is a genuine phase --- the photon either exists or it does not ---
-so a true $T=0$ transition out of it must occur \emph{somewhere} in the
-thermodynamic limit.  Beyond it, though, no further sharp structure is
-required: the spinons carry fundamental gauge charge, so the Higgs and
-confined regimes are smoothly connected to each other
-(Fradkin--Shenker), consistent with the continuous dissolution we
-measure.  What this cluster sees: every gauge signature fades smoothly
---- the flux expectation from $-0.25$ at weak coupling to $-0.067$ at
-$-0.30$ and $-0.009$ at $-0.35$, the ring scale renormalized to
-$\sim0.1\,\gsix$, the purity to $Z\approx0.25$ --- with no condensation,
-no symmetry breaking, no raw-level crossing.  That is exactly what a
-true transition \emph{rounded by a tiny torus} looks like, and also
-exactly what a crossover looks like; sixteen sites cannot tell them
-apart.  Best current statement: the terminus lies somewhere in
-$[-0.25,-0.5]$, and this cluster cannot adjudicate.
-
-Two measurements would decide it.  (i)~Does the crossing reproduce on
-FCC-32 --- flux unpinned, sectors up to dimension 396 --- and does its
-coupling converge with cluster size and truncation depth?  A physical
-terminus shadow drifts systematically; an artifact wanders or vanishes.
-(ii)~The flux-sector splitting scaling itself, across sizes and girths.
-
-\textbf{Measurement (i) has now been made
-(Sec.~\ref{sec:fcc32first}), and the answer is: it vanishes.}  On
-FCC-32 the band bottom belongs to the unique largest
-(zero-polarization) sector at \emph{every} coupling from $-0.05$ to
-$-0.32$, with a twelve-fold degenerate multiplet of 140-dimensional
-sectors above it and a gap that only grows --- and deepening the
-truncation from $L=1$ to $L=2$ \emph{entrenches} that ordering (the
-gap at $-0.22$ triples), the opposite of what a hidden crossing would
-do.  This is exactly the ordering the photon phase predicts: flux
-costs energy, so the zero-flux sector sits lowest.  The correct
-reading of cubic-16's crossing is therefore deflationary: its
-pathological sector structure (flux pinned by counting, sectors of
-dimension at most twelve) put the \emph{wrong} sectors on the bottom
-at weak coupling, and the celebrated 6$\to$2 crossing at $-0.25$ was
-the small cluster relaxing into the correct ordering --- a cluster
-artifact, not a terminus shadow.  The coincidence with the
-$-1/4$ prediction was a coincidence.  Bump~3 of the taxonomy is
-correspondingly a cubic-16-only feature, exactly the outcome its
-cluster rider anticipated.
-
-What survives, sharpened: the terminus question itself now rests
-entirely on measurement (ii) --- the sector splittings, measured on
-both clusters and growing smoothly with coupling, are the raw material
-of the 't~Hooft scaling analysis, and the recycled-sector program of
-Sec.~\ref{sec:roadahead} remains the road to it.  And there is a
-methodological moral worth stating plainly: the machinery in this
-document not only found a sharp feature, it then \emph{killed its own
-most exciting interpretation} with a controlled measurement on a
-better cluster.  That is what the validation-first culture of this
-campaign is for.
-
-\begin{lesson}
-\textbf{Repairs that are not repairs.}  Two tempting improvements were
-tested and made things \emph{worse}.  (i) Forcing the upper $H+C$ band to
-inherit the exact degeneracy pattern of the masked map (``sector
-symmetrisation'') increased the error everywhere --- the pattern is exact
-but the eigenvectors are not, so the symmetrisation imposes structure the
-true operator does not have.  (ii) Hand-built counterterms from a catalogue
-of loop shapes missed whole classes of winding processes and shifted the
-\emph{physical} part of the map by up to $42\%$.  Moral: a correction must
-be derived from the exact object ($F$ itself), not from a plausible model of
-it.
-\end{lesson}
-
-\begin{lesson}
-\textbf{Estimator traps.}  Three measurement bugs each briefly masqueraded
-as physics.  (i) A comparison routine silently \emph{shifted} one spectrum
-to match the mean of another --- invisible in level differences, corrupting
-every absolute-energy comparison.  (ii) Classifying $C(T)$ peaks by
-Boltzmann weights mislabels them; the correct weight is each level's share
-of the heat-capacity \emph{variance}.  (iii) The entropy sum rule
-$\int C/T\,dT=\ln 2$ converges like $1/T_{\max}^2$: truncating at
-$T_{\max}=60$ leaves a deficit that looks exactly like a lost energy level
-and does not improve with grid refinement.  ($T_{\max}=600$ resolves it.)
-Moral: before blaming the physics or the method, audit the ruler.
-\end{lesson}
-
-%=====================================================================
-\section{Turning the second dial: what $\Jpmpm$ actually does}
-\label{sec:jpmpm}
-
-Everything so far lived on the XXZ line, where the only transverse coupling
-is $\Jpm$.  There the two anomalies of $C(T)$ sit absurdly far apart: at
-$\Jpm=-0.125$ the winding-free gauge peak is at $0.0121\,\Jzz$ and the
-spinon peak at $0.274\,\Jzz$, a ratio of $0.044$ --- a factor of
-twenty-three.  The real materials refuse to behave: Ce$_2$Hf$_2$O$_7$ shows
-two heat-capacity anomalies at $65$ and $24$~mK, a ratio near $0.37$.  A
-factor of twenty-three against a factor of under three is not a discrepancy
-to be split; it is a different picture of the world.
-
-The obvious suspect is the coupling we had switched off.  Real cerium
-pyrochlores are XYZ, and in the $\Jpm$ language that means a second
-transverse term, the \emph{pair flip} $\Jpmpm$, which flips two spins the
-\emph{same} way instead of exchanging them.  It is not small in the fits:
-for the published Ce$_2$Hf$_2$O$_7$ parameters $\Jpmpm$ is comparable to
-$\Jpm$ itself.  So we turned the dial --- an $8\times7$ grid, $56$ cells,
-each one a complete exact band --- and asked whether it closes the gap.
-
-\subsection{What a pair flip costs}
-
-Start with what the move does to the ice rules, because that sets
-everything else.
-
-\begin{worked}
-Take a tetrahedron obeying two-in--two-out, so its charge is $Q_t=0$, and
-recall the energy is $\tfrac12\sum_t Q_t^2$ in units of $\Jzz$.
-
-\emph{An exchange move} ($\Jpm$) flips one up and one down spin on a bond.
-The tetrahedron containing both keeps two ups: $Q_t=0$, no cost.  The two
-outer tetrahedra --- one for each flipped site --- gain and lose one
-respectively: $Q=\pm1$, costing $\tfrac12$ each.  \textbf{Total: one unit.}
-That is a spinon--antispinon pair, the familiar excursion.
-
-\emph{A pair flip} ($\Jpmpm$) flips two spins that were both pointing the
-same way.  Now the shared tetrahedron goes from two ups to four:
-$Q_t=+2$, costing $\tfrac12(2)^2=2$.  The two outer tetrahedra each gain
-one: $\tfrac12$ each.  \textbf{Total: three units.}
-\end{worked}
-
-So a pair flip is three times as expensive as an exchange, and it is
-\emph{qualitatively} different: it manufactures a \textbf{double monopole},
-a tetrahedron carrying twice the elementary gauge charge, flanked by two
-ordinary spinons.  It also fails to conserve the total $S^z$, which is why
-the calculations in this section need the full $65\,536$-state space rather
-than the $12\,870$-state sector the XXZ line lives in.
-
-One thing does \emph{not} change.  The emptiness theorem of
-Sec.~\ref{sec:emptyblock} survives verbatim: a pair flip acting on an ice
-state always breaks the ice rule, so $PHP$ is still exactly diagonal ---
-we checked it numerically, and it is zero to the last bit.  $\Jpmpm$ buys
-no new direct ice-to-ice matrix element.  Whatever it does to the gauge
-physics, it does through the resolvent, like everything else.
-
-\subsection{Three measured effects, and a squeeze}
-
-With the complete band in hand at every cell, three things happen as
-$\Jpmpm$ is turned up at fixed $\Jpm$.  The numbers below are at
-$\Jpm=-0.125$, the coupling closest to the Ce$_2$Hf$_2$O$_7$ fits, as
-$\Jpmpm$ runs from $0$ to $0.30$.
+\subsection{The protocol, in six steps}
 
 \begin{enumerate}
-\item \textbf{The band sinks.}  Its bottom drops from $-0.437\,\Jzz$ to
-$-0.822\,\Jzz$.  This is ordinary variational bookkeeping: expensive as
-they are, virtual pair excursions are extra ways for the ice states to
-lower their energy, and more channels always means a deeper ground state.
-\item \textbf{The band widens} --- from $0.075\,\Jzz$ to $0.184\,\Jzz$,
-a factor of $2.5$.  The gauge peak tracks the bandwidth, so it rises:
-$0.0121 \to 0.0185\,\Jzz$, up $53\%$.  The photon gets \emph{faster}.
-\item \textbf{The spinon scale softens} --- the upper peak falls
-$0.274 \to 0.168\,\Jzz$, down $39\%$.  Pair flips help the spinon
-continuum more than they help the band, because a region already full of
-monopoles has far more ways to use them, so the continuum descends faster
-than the band does and the gap between them closes from above.
+\item \textbf{List the ice configurations.}  Every spin pattern with
+two-in--two-out on all tetrahedra: $90$ on cubic-16, $2970$ on FCC-32.  This
+is a combinatorial list, fixed before any coupling is chosen
+(Sec.~\ref{sec:configs}).  It defines the projector $P$; $Q=1-P$ is
+everything else.
+\item \textbf{Label them by transport.}  For each configuration, the
+polarization $\rho$; group configurations with equal $\rho$ into
+\emph{sectors} ($25$ on cubic-16, $85$ on FCC-32).  Also combinatorial ---
+integers, computed once.
+\item \textbf{Fold.}  At an asking-energy $z$, form
+$F(z)=PHP+PHQ\,(z-QHQ)^{-1}QHP$.  This is exact: no expansion, no small
+parameter.
+\item \textbf{Mask.}  Delete every entry of $F(z)$ joining different
+sectors.  Write the survivor $\Delta[F(z)]$.  It is block diagonal, one
+block per sector.
+\item \textbf{Solve self-consistently.}  Find every $E$ with
+$E=\mathrm{eig}\,\Delta[F(E)]$, branch by branch, with a genuine root finder
+(the fixed-point iteration converges at rate $1-Z$ and will lie to you ---
+see the lesson box in Sec.~\ref{sec:strong}).
+\item \textbf{Report.}  The roots are exact winding-free energies.  Each
+arrives stamped with its sector, with its ice weight
+$Z_n=[1-\lambda_n'(E_n)]^{-1}$, and with an eigenvector inside the ice
+manifold, from which any observable that closes on ice configurations ---
+the hexagon flux above all --- is read off, averaged over the ground
+multiplet.
 \end{enumerate}
 
-The two peaks therefore approach each other \emph{from both sides at once}:
-the gauge anomaly climbing, the spinon anomaly sinking.  The ratio duly
-improves, $0.044 \to 0.110$.
+Steps 1, 2 and 4 involve no physics input whatsoever.  Step 3 is the only
+expensive one, and it is one eigendecomposition of $QHQ$ per parameter
+point.  That is the whole algorithm.
 
-\begin{plainwords}
-Think of the two peaks as two shelves, one very low and one high, and you
-are trying to bring them together.  Turning up $\Jpmpm$ raises the low
-shelf and lowers the high one simultaneously --- exactly the move you
-wanted.  It works.  It just does not work anywhere near hard enough: the
-shelves close from a factor of twenty-three to a factor of nine, and the
-experiment wants a factor of three.
-\end{plainwords}
+\subsection{Why the mask acts on the fold and never on \texorpdfstring{$H$}{H}}
+\label{sec:emptyblock}
 
-\subsection{Why it stops: the dial destroys what it moves}
+The natural first guess --- take $H$, find the matrix elements between ice
+states that wind, delete them --- fails for a startling reason:
+\textbf{there are no such matrix elements}.  The ice block of the bare
+Hamiltonian, $PHP$, is \emph{diagonal}.  A single pair flip acting on an ice
+state always breaks the ice rule on the tetrahedra it touches: it creates
+spinons and lands in $Q$.  No ice configuration connects directly to any
+other.
 
-The squeeze does not gently saturate --- it terminates, and for a reason
-that is inevitable in hindsight.
-
-The mechanism by which $\Jpmpm$ closes the gap \emph{is} the admixture of
-non-ice configurations into the band.  The ice weight $Z$
-(Sec.~\ref{sec:feshbach}: the fraction of a level living inside the ice
-manifold) measures exactly
-that admixture, and it decays as the dial turns: at $\Jpm=-0.125$ the
-median $Z$ slips from $0.723$ to $0.640$; at $\Jpm=-0.20$, from $0.497$ to
-$0.257$.  Push further and there is nothing left to speak of.  At
-$(\Jpm,\Jpmpm)=(-0.05,0.30)$ only $25$ of the $90$ levels survive as band
-states at all and the largest ice weight anywhere is $0.001$ --- the band
-has dissolved completely.
-
-That corner is worth naming precisely, because it is the one place in the
-plane where dissolution is real rather than instrumental.  It is not set by
-$|\Jpm|$, the dial that governs dissolution on the XXZ line.  It is set by
-the \emph{ratio}: the band dies when $\Jpmpm/|\Jpm| \gtrsim 5$.  At
-$\Jpm=-0.05$ that threshold is crossed by $\Jpmpm=0.25$ (marginal, $86/90$)
-and comprehensively by $0.30$; at $\Jpm=-0.20$, where the same $\Jpmpm=0.30$
-is only $1.5$ times the exchange, the band is intact at $90/90$.  When the
-pair term dominates the exchange term outright, the ice manifold stops being
-the right low-energy description --- and no amount of careful bookkeeping
-about winding loops can rescue a band that is no longer there.
-
-So the two effects are the same effect wearing different hats.  You close
-the gap by dressing the band with monopoles; dress it enough and you have
-destroyed the band.  The best ratio in the whole plane, $0.1216$ at
-$(-0.16,0.30)$, sits exactly where you would expect from that
-trade-off: at intermediate exchange, with the pair term pushed as far as
-the band will tolerate and not one step further.
-
-\subsection{The verdict, and one honest complication}
-
-The ceiling over all $56$ cells is $\mathbf{0.1216}$, against a measured
-$0.37$.  $\Jpmpm$ moves the ratio by a factor of about $2.5$ and needs a
-factor of eight.  \textbf{On the 16-site cell, the second dial does not
-rescue the peak separation.}  Combined with the cluster comparison of
-Sec.~\ref{sec:cluster} --- where FCC-32 pushes the ring peak
-\emph{further} down, to $0.29\,\gsix$ against cubic-16's $0.84$ --- the
-honest reading is that the $24$~mK anomaly in Ce$_2$Hf$_2$O$_7$ is probably
-not the photon peak at all.
-
-The complication is a second kind of merging, and it is real.  At strong
-exchange and large pair coupling --- nine cells with $|\Jpm|\ge0.20$ ---
-the gauge peak and the sub-gauge peak of Sec.~\ref{sec:thirdpeak} run
-together into a single maximum.  At $(-0.27,0.20)$ there is one sub-spinon
-maximum at $0.0121\,\Jzz$ where both neighbours in $\Jpmpm$ carry two, near
-$0.005$ and $0.039$.  This is a genuine merge of two low-temperature
-features; it is \emph{not} the gauge peak meeting the spinon peak, and it
-moves the ratio the wrong way, down to $0.028$--$0.045$.  Any convention
-that reports ``the highest maximum below the spinon split'' will report the
-merged position and produce a branch that appears to jump.  It jumps
-because the peaks merged, not because the tracking failed.
-
-\begin{lesson}
-An earlier pass over this plane reported a ratio of $0.332$ at
-$(-0.125,0.30)$ --- tantalisingly close to experiment, and wrong.  The
-anchor solve had found only $27$ of the $90$ band levels there, and the
-two-sided fold removes exactly as many raw levels as it has replacements
-for.  So $63$ ice-descended raw levels stayed in the ensemble \emph{beside}
-their own replacements, and the low-temperature peak was radiating from the
-double-counted remainder.  With the complete band the same cell reads
-$0.110$.
-
-The diagnosis is worth keeping, because the failure was silent: every
-individual number was computed correctly.  Two habits catch it.  First,
-a fold that replaces a band must replace \emph{all} of it or refuse to run
---- a partial replacement is not a weaker result, it is a different and
-meaningless one.  Second, when an instrument is upgraded, re-run the cells
-where the old one \emph{succeeded}: the bordered solver reproduces the
-old ratios to the digit wherever the old band was complete
-($(-0.20,0.15)$: $0.0893 \to 0.0893$), which is what makes the changes
-elsewhere trustworthy rather than merely different.
-\end{lesson}
-
-%=====================================================================
-\section{The whole square: both dials at once, and the flux that lives there}
-\label{sec:xyplane}
-
-The previous section turned the second dial along a band.  This one turns
-both dials over the entire square and asks the question the campaign had
-never been able to ask: \emph{where in this model is the spin ice
-$0$-flux, and where is it $\pi$-flux?}
-
-The answer is worth the trip, and so is the trap on the way.  Raw exact
-diagonalization gives a confident answer over the whole square, and that
-answer is \emph{wrong on the entire half that matters} --- not slightly
-wrong, but wrong in sign.  The mask fixes it, and the fixed answer turns
-out to be startlingly clean.
-
-\subsection{Leaving the line}
-
-Write the two transverse couplings as ordinary $XYZ$ exchanges
-$J_x,J_y$ with $J_z=\Jzz=1$.  The dictionary is
-\begin{equation}
-\Jpm = -\frac{J_x+J_y}{4}, \qquad \Jpmpm = \frac{J_x-J_y}{4},
-\label{eq:xymap}
-\end{equation}
-so the XXZ line of every previous section is the diagonal $J_x=J_y$, the
-pure pair-flip line is the anti-diagonal, and the $56$ cells of the
-$(\Jpm,\Jpmpm)$ campaign occupy a narrow diagonal band.  Scanning
-$J_x,J_y\in[-1,1]$ on a $41\times41$ grid means $1681$ cells, of which the
-campaign had visited $56$.
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[scale=2.6,>=Stealth]
-\draw[fill=black!3] (-1,-1) rectangle (1,1);
-\draw[->] (-1.15,0) -- (1.2,0) node[right,font=\small]{$J_x/\Jzz$};
-\draw[->] (0,-1.15) -- (0,1.2) node[above,font=\small]{$J_y/\Jzz$};
-\draw[thick,icecol] (-1,-1) -- (1,1)
-  node[pos=0.93,above left,font=\small,rotate=45]{XXZ line ($\Jpmpm=0$)};
-\draw[thick,dashed,spincol] (-1,1) -- (1,-1)
-  node[pos=0.08,above right,font=\small,rotate=-45]{$\Jpm=0$};
-\fill[badcol,opacity=0.16] (0.05,0.05) -- (0.7,-0.5) -- (1.05,-0.15)
-  -- (0.62,0.62) -- cycle;
-\node[badcol,font=\small] at (0.72,0.28) {campaign band};
-\node[font=\small,align=center] at (-0.55,-0.62)
-  {the $1625$ cells\\ nobody had looked at};
-\foreach \x/\y in {0.1/0.1, 0.25/0.25, 0.4/0.4, 0.35/-0.05, 0.5/0.1, 0.6/-0.2}
-  {\draw[badcol,thick] (\x,\y) circle (0.022);}
-\end{tikzpicture}
-\caption{The square, and how little of it the campaign had seen.  The
-dictionary~(\ref{eq:xymap}) makes the old XXZ line a diagonal and the old
-$(\Jpm,\Jpmpm)$ grid a thin band (shaded, with a few of its cells drawn as
-circles).  Everything outside that band is new territory.}
-\label{fig:square}
-\end{figure}
-
-\subsection{What ``flux'' means, and how you measure it}
-
-The emergent photon of quantum spin ice lives on a gauge field, and a gauge
-field has a flux through every closed loop.  The loops that matter are the
-hexagons --- the shortest closed paths that stay inside the ice manifold,
-the ones whose resonance \emph{is} the ring exchange $\gsix$.  Two flux
-values are possible for the ground state, $0$ and $\pi$, and which one the
-system chooses is a genuine physical distinction: they are different
-phases, with different photon spectra and different experimental
-signatures.
-
-Measuring it is refreshingly concrete.  Take a hexagon whose six spins
-alternate up--down--up--down--up--down around the ring; that is the only
-pattern a ring exchange can act on.  The ring-flip operator turns it into
-the complementary pattern:
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[scale=1.0,>=Stealth]
-\foreach \i/\lab in {0/{$\uparrow$},1/{$\downarrow$},2/{$\uparrow$},
-                     3/{$\downarrow$},4/{$\uparrow$},5/{$\downarrow$}}
-  {\node[circle,draw,thick,fill=icecol!12,minimum size=7mm,font=\small]
-     (a\i) at ({90+60*\i}:1.25) {\lab};}
-\foreach \i in {0,...,5} {\pgfmathtruncatemacro{\j}{mod(\i+1,6)}
-  \draw[thick,icecol!70] (a\i) -- (a\j);}
-\node[font=\small] at (0,0) {flippable};
-\draw[->,very thick,spincol] (1.9,0) -- (3.1,0)
-  node[midway,above,font=\small]{$\Ohex$} node[midway,below,font=\small]{flip all six};
-\begin{scope}[xshift=5cm]
-\foreach \i/\lab in {0/{$\downarrow$},1/{$\uparrow$},2/{$\downarrow$},
-                     3/{$\uparrow$},4/{$\downarrow$},5/{$\uparrow$}}
-  {\node[circle,draw,thick,fill=icecol!12,minimum size=7mm,font=\small]
-     (b\i) at ({90+60*\i}:1.25) {\lab};}
-\foreach \i in {0,...,5} {\pgfmathtruncatemacro{\j}{mod(\i+1,6)}
-  \draw[thick,icecol!70] (b\i) -- (b\j);}
-\node[font=\small] at (0,0) {also ice};
-\end{scope}
-\end{tikzpicture}
-\caption{The flux observable.  A hexagon with alternating spins is
-\emph{flippable}; flipping all six lands on another ice state, so the
-operator closes inside the ice manifold.  Its ground-state expectation
-$\langle\Ohex+\mathrm{h.c.}\rangle$ is positive for $0$-flux and negative
-for $\pi$-flux.  Averaged over the $16$ contractible hexagons of the
-cubic cell, that single number is the phase label.}
-\label{fig:hexflip}
-\end{figure}
-
-\noindent
-So the recipe is: get the ground state, sum $\langle\Ohex+\mathrm{h.c.}\rangle$
-over hexagons, read the sign.  It could not be simpler.  It is also, done
-naively, completely wrong.
-
-\subsection{The trap: raw ED reports the wrong flux everywhere it matters}
-
-Run that recipe on the raw cluster ground state at all $1681$ points and
-you get a positive number \emph{every single time}, ranging over a bland
-$+0.013$ to $+0.123$.  Raw ED declares the entire square $0$-flux and never
-once produces a $\pi$-flux signature.
-
-That is the box lying again, and by now you can predict the mechanism.
-Recall the two loop amplitudes: the physical hexagon
-$\gsix=12|\Jpm|^3/\Jzz^2$, and the wrap-around artifact
-$\gfour=4\Jpm^2/\Jzz$.  Look at the powers.  The artifact is
-\textbf{even} in $\Jpm$; the physics is \textbf{odd}.
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[scale=1.0,>=Stealth]
-\draw[->] (-2.4,0) -- (2.6,0) node[right,font=\small]{$\Jpm$};
-\draw[->] (0,-1.5) -- (0,1.9) node[above,font=\small]{amplitude};
-\draw[thick,badcol,smooth,domain=-2.1:2.1,samples=60]
-  plot (\x,{0.32*\x*\x}) node[right,font=\small,badcol]{$\gfour\propto\Jpm^2$ (even)};
-\draw[thick,goodcol,smooth,domain=-1.75:1.75,samples=60]
-  plot (\x,{0.22*\x*\x*\x}) node[above right,font=\small,goodcol]{$\gsix\propto\Jpm^3$ (odd)};
-\node[font=\small,align=center,badcol] at (-1.45,-1.05)
-  {here they \emph{fight}\\ and the artifact wins};
-\node[font=\small,align=center,goodcol] at (1.5,-1.05)
-  {here they agree\\ (accidentally right)};
-\draw[decorate,decoration={brace,amplitude=4pt}] (-2.1,-0.55) -- (-0.1,-0.55);
-\draw[decorate,decoration={brace,amplitude=4pt}] (0.1,-0.55) -- (2.1,-0.55);
-\end{tikzpicture}
-\caption{Why the naive flux is inverted on the cerium side.  The artifact
-is even in $\Jpm$ and never changes sign; the real ring exchange is odd and
-does.  For $\Jpm>0$ both push the hexagon expectation positive and raw ED
-is right by luck.  For $\Jpm<0$ --- every cerium pyrochlore --- they oppose,
-and on a $16$-site box the artifact is the larger of the two, so the
-measured sign is the artifact's.}
-\label{fig:evenodd}
-\end{figure}
-
-\noindent
-The numbers say it plainly.  In the raw ground state the wrap-around
-amplitude $\langle\Ofour\rangle\approx0.33$ sits three to six times
-\emph{above} the hexagon amplitude it is drowning; in the winding-free
-state the same quantity collapses to $0.056$.
-
-\begin{center}
-\small
-\begin{tabular}{rrrrr}
-\toprule
-$\Jpm$ & raw $\langle\Ohex\rangle$ & winding-free $\langle\Ohex\rangle$
-       & raw $\langle\Ofour\rangle$ & verdict\\
-\midrule
-$-0.05$ & $+0.107$ & $-0.238$ & $0.348$ & raw inverted\\
-$-0.10$ & $+0.091$ & $-0.209$ & $0.326$ & raw inverted\\
-$-0.20$ & $+0.069$ & $-0.149$ & $0.290$ & raw inverted\\
-$-0.30$ & $+0.058$ & $-0.067$ & $0.269$ & raw inverted\\
-$+0.046$ & $+0.119$ & $+0.215$ & $0.335$ & raw right by luck\\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\begin{lesson}
-\textbf{An observable can be contaminated even when the state is fine.}
-The ice weight at $\Jpm=-0.10$ is a healthy $0.73$; nothing about the raw
-ground state looks broken.  But the flux is a \emph{loop} observable, and
-the box's spurious loop is stronger than the real one, so the loop
-observable inherits the artifact's sign.  Before trusting any quantity
-defined on a closed path in a periodic cluster, ask which closed path
-dominates it.
-\end{lesson}
-
-\subsection{The mask supplies the real answer --- with no counterterm}
-
-Here the machinery of Sec.~\ref{sec:feshbach} pays off immediately, and it
-is worth being precise about what gets masked, because the natural guess is
-wrong.
-
-The mask is \emph{not} the deletion of matrix elements of $H$ between
-transport sectors.  There are none to delete: by Sec.~\ref{sec:emptyblock}
-the ice block $PHP$ is diagonal.  Every winding amplitude is manufactured
-by excursions into the spinon space, which means it lives in the
-\emph{self-energy}.  So the mask is applied to the folded table $F(z)$,
-after the excursions have been summed in.
+Both the physical hexagon amplitude $\gsix$ \emph{and} the winding artifact
+$\gfour$ are therefore \emph{emergent}: assembled from multi-step paths that
+leave the ice manifold, wander through spinon space, and return.  They live
+inside the resolvent $(z-QHQ)^{-1}$, smeared over the geometry of $Q$, not
+in any entry of $H$ a scalpel could reach.  The $3\times3$ miniature of
+Sec.~\ref{sec:feshbach} shows it nakedly: the offending amplitude is
+$-t^2/(D-z)$, and the original matrix contains only $t$ and $D$.
 
 \begin{figure}[h]
 \centering
@@ -1851,916 +837,1172 @@ after the excursions have been summed in.
   {sector-diagonal:\\ winding-free};
 \end{scope}
 \end{tikzpicture}
-\caption{Where the mask acts.  In $H$ the ice block is diagonal, so there
-is literally nothing between sectors to delete.  Folding the spinon
-excursions in generates the off-sector amplitudes (red) --- these
-\emph{are} the wrap-around processes --- and deleting them from $F(z)$ is
-the mask.  Teal blocks are the transport sectors that survive.}
+\caption{Where the mask acts.  In $H$ the ice block is diagonal, so there is
+literally nothing between sectors to delete.  Folding the spinon excursions
+in \emph{generates} the off-sector amplitudes (red) --- those \emph{are} the
+wrap-around processes --- and deleting them from $F(z)$ is the mask.  Teal
+blocks are the transport sectors that survive.}
 \label{fig:maskf}
 \end{figure}
 
-For a flux, that is the entire method.  A hexagon flip maps an ice
-configuration to an ice configuration (Fig.~\ref{fig:hexflip}), so $\Ohex$
-is a $90\times90$ matrix in the ice basis, and the masked map's own ground
-multiplet is all you need.  \textbf{No counterterm appears anywhere in this
-measurement.}  The counterterm of Sec.~\ref{sec:hc} exists to supply what
-the masked map cannot --- states above the band, full-space wavefunctions,
-thermodynamics --- and a flux needs none of those.
+\subsection{What it returns, and what it refuses to return}
 
-One detail is not optional: the masked ground state is degenerate
-\emph{by theorem}, six-fold at weak coupling and two-fold after the sector
-structure reorganizes.  A single eigenvector of a degenerate subspace is
-whatever the linear-algebra library happened to return, so every
-expectation value must be averaged over the multiplet.  Measured spread
-across multiplet members: below $10^{-6}$ at all $379$ points with a
-surviving band, so the averaging changes nothing --- but only because it
-was done.
-
-\subsection{What the square actually looks like}
-
-Three things live on this plane, and the third is the one nobody had
-predicted.
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[scale=2.6]
-\draw[fill=black!12] (-1,-1) rectangle (1,1);
-\fill[black!4] (-0.45,-0.3) -- (0.35,-0.5) -- (1,-0.42) -- (1,1)
-  -- (-0.42,1) -- cycle;
-\fill[icecol!70] (0.2,0.2) circle (0.42);
-\fill[badcol!75] (-0.28,-0.05) rectangle (-0.05,0.16);
-\draw[thick,black!55] (-1,-1) -- (1,1);
-\draw[thick,dashed,black!45] (-1,1) -- (1,-1);
-\draw (-1,-1) rectangle (1,1);
-\node[white,font=\small\bfseries] at (0.2,0.2) {$\pi$};
-\node[white,font=\small\bfseries] at (-0.165,0.055) {$0$};
-\node[font=\small,align=center] at (0.62,0.72) {band, but\\ no resonance};
-\node[font=\small,align=center] at (-0.55,-0.62) {no ice-descended\\ band at all};
-\node[font=\small] at (0,-1.15) {$J_x/\Jzz$};
-\node[font=\small,rotate=90] at (-1.15,0) {$J_y/\Jzz$};
-\end{tikzpicture}
-\caption{The winding-free square, schematically (the measured version is
-\texttt{fig\_xy\_masked}).  A compact $\pi$-flux disc near the origin, a
-small $0$-flux patch on the $\Jpm>0$ side, a large region that still has a
-band but no ring resonance at all, and --- over most of the square --- no
-ice-descended band to speak of.  Raw ED, by contrast, prints a confident
-positive flux in every one of these cells.}
-\label{fig:maskedsquare}
-\end{figure}
+Being precise about the output is what keeps the rest of this document
+honest.
 
 \begin{center}
 \small
-\begin{tabular}{lrl}
+\begin{tabular}{p{6.6cm}p{7.6cm}}
 \toprule
-region & cells (of $1681$) & ground multiplet\\
+\textbf{the masked map gives} & \textbf{it does not give}\\
 \midrule
-$\pi$-flux, $\langle\Ohex\rangle=-1/4$ & $193$ & six-fold\\
-$0$-flux, $\langle\Ohex\rangle=+1/4$ & $29$ & six-fold\\
-band, but no ring resonance ($\langle\Ohex\rangle=0$) & $497$ & one- or two-fold\\
-no ice-descended band & $962$ & ---\\
-unresolved (four grid points, mirrored) & $7$ & ---\\
+exact winding-free energies of every ice-descended level, at any coupling
+& anything about states with no ice content --- the spinon continuum is
+outside its jurisdiction\\[2pt]
+the sector (topological) label of each level, for free
+& full-space wavefunctions; hence no ice-violation expectation, no defect
+density\\[2pt]
+the ice weight $Z_n$ of each level, without eigenvectors
+& thermodynamics of the whole spectrum: the band alone has no upper
+Schottky peak\\[2pt]
+expectation values of any operator that maps ice to ice --- the hexagon
+flux, the four-loop amplitude
+& an answer where no branch has a root: it returns \emph{nothing}, and
+saying so is a result\\
 \bottomrule
 \end{tabular}
 \end{center}
 
-Two features are sharper than anyone asked for.  First the flux is
-\textbf{quantized}: across every resonant cell in the square the magnitude
-is the single value $1/4$, with the individual numbers equal to $\pm1/4$ to
-sixteen digits and nothing in between.  The mask converts the raw map's
-smeared positive continuum into a two-valued topological label.
+The right-hand column is not a list of defects.  Two of its four entries are
+the mask working correctly: it does not touch the spinons (it must not ---
+they are physics), and it refuses to invent a band where none survives.
 
-Second, and prettier: the resonant cells are \emph{exactly} the cells whose
-protected ground multiplet is six-fold.  Cell by cell, with no exceptions
-in $379$ live points --- all $117$ six-fold cells carry $\pm1/4$, and all
-$262$ cells of multiplicity one, two (or $90$, at the pure-Ising origin)
-carry exactly zero.  The protected multiplet \emph{is} the flux carrier;
-where the protection goes, the resonance goes with it.
+\subsection{The one honest extension, and why it can only be a convention}
+\label{sec:hc}
 
-\begin{plainwords}
-The mask does not merely clean up the flux measurement, it sharpens it into
-a label.  Raw ED gives you a real number that drifts smoothly and means
-nothing.  The winding-free map gives you one of three answers --- $\pi$,
-$0$, or ``there is no resonance here'' --- and tells you which by the
-degeneracy of the ground state alone.  The phase boundary stops being a
-contour you have to guess and becomes a place where a degeneracy changes.
-\end{plainwords}
+For full thermodynamics --- both peaks of $C(T)$, the entropy, expectation
+values on the true dressed ground state --- one wants a single Hermitian
+operator on the whole $2^N$ space that is winding-free.  \textbf{No such
+operator exists}, and the reason is exact.
 
-A useful sanity check falls out for free: the campaign cell
-$(\Jpm,\Jpmpm)=(-0.05,0.30)$ maps to $(J_x,J_y)=(0.7,-0.5)$, which lands in
-the no-band region --- reproducing, by an entirely independent route, the
-$\Jpmpm/|\Jpm|\gtrsim5$ dissolution threshold of
-Sec.~\ref{sec:jpmpm}.  Less comfortably, a good number of the $56$
-campaign cells sit in the no-resonance region rather than in the
-$\pi$-flux disc.
+The transport label is defined on ice configurations only.  A single spinon
+hop moves the polarization by a \emph{quarter} of a box period, so the label
+is not even defined on $Q$, let alone conserved there.  (This is not a
+failure of imagination; Sec.~\ref{sec:nolabel} identifies it with a known
+theorem of gauge theory --- dynamical charges destroy flux superselection ---
+so no cleverer bookkeeping can exist.)  Any full-space
+construction must therefore make an arbitrary choice about the $1-Z$ of each
+state that lives outside the ice manifold.  \emph{Winding-free
+thermodynamics is a convention of order $1-Z$} --- and since $Z$ is
+measured, the size of the convention is measured too.
 
-\subsection{Symmetry, or: how to afford the square}
-\label{sec:xysymmetry}
+The cheapest such convention is the \textbf{counterterm}: evaluate the
+masked-out part of the fold at the self-consistent ground energy $z_0$ and
+subtract it from $H$ inside the ice block,
+\[
+H+C, \qquad C=-(1-\Delta)\,F(z_0).
+\]
+Because $C$ touches only the $90\times90$ ice block, $PHQ$, $QHP$ and $QHQ$
+survive byte for byte --- spinons, dressing and the upper band still flow
+through the untouched couplings --- and one ordinary diagonalization returns
+the entire spectrum.  Its price is exactly the obstruction, made visible:
+$H+C$ reproduces the exact masked roots to $0.4\%$ of the bandwidth at
+$\Jpm=-0.02$, $1.5\%$ at $-0.05$, $7\%$ at $-0.10$, $17\%$ at $-0.20$ and
+$22\%$ at $-0.30$ --- the $3\times3$ miniature's level split, writ large.
 
-The winding-free measurement needs the eigendecomposition of $QHQ$, and on
-the full $65\,536$-state basis that is a single dense solve of dimension
-$65\,446$.  It does not merely take about nine hours --- it \emph{crashes},
-because $n^2=4.3\times10^9$ overflows the 32-bit integer indexing inside
-LAPACK.  No amount of memory helps.  Symmetry is not an optimization here;
-it is the only way the calculation exists at all.
+\subsection{Three definitions of one non-unique reference}
+\label{sec:twoside}
 
-Four independent reductions are available, and they compose.
+Three constructions extend the masked band to the full spectrum.  They agree
+exactly at weak coupling and diverge at strong coupling by precisely the
+amount the obstruction theorem demands.
 
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[scale=1.0,>=Stealth,node distance=3mm]
-\node[draw,thick,rounded corners,fill=badcol!12,align=center,font=\small]
-  (a) at (0,0) {full basis\\ $65\,536$\\[1mm] \textcolor{badcol}{\bfseries crashes}};
-\node[draw,thick,rounded corners,fill=black!4,align=center,font=\small,right=10mm of a]
-  (b) {parity $(-1)^{N_\uparrow}$\\ $32\,768$\\[1mm] $\times8$ fewer flops};
-\node[draw,thick,rounded corners,fill=black!4,align=center,font=\small,right=10mm of b]
-  (c) {Klein $V_4$\\ $4\times8\,192$\\[1mm] $\times16$ again};
-\node[draw,thick,rounded corners,fill=goodcol!12,align=center,font=\small,right=10mm of c]
-  (d) {spin flip\\ $8\times4\,096$\\[1mm] $\times4$ more};
-\draw[->,thick] (a) -- (b);
-\draw[->,thick] (b) -- (c);
-\draw[->,thick,dashed] (c) -- (d);
-\node[font=\scriptsize,align=center,below=1mm of c] {\emph{implemented}};
-\node[font=\scriptsize,align=center,below=1mm of d] {\emph{available}};
-\end{tikzpicture}
-\caption{The symmetry ladder for $QHQ$.  Only the Klein step is currently
-implemented; parity is exact, free, and worth a further factor of eight;
-the global spin flip is worth another four but touches the fragile
-ice-kernel bookkeeping.}
-\label{fig:symladder}
-\end{figure}
-
-\paragraph{$U(1)$, on the XXZ line only.}  When $\Jpmpm=0$ the total $S^z$
-is conserved and the whole problem collapses into the $12\,870$-state
-$S^z=0$ block.  This is why the counterterm campaign was cheap along the
-line.  It buys nothing off it: the pair flip breaks $S^z$ outright.
-
-\paragraph{$\mathbb{Z}_2$ parity, everywhere.}  The pair flip changes
-$N_\uparrow$ by $\pm2$ and the exchange leaves it alone, so the parity
-$(-1)^{N_\uparrow}$ is conserved for \emph{any} $(\Jpm,\Jpmpm)$.  Now
-notice something better than a block decomposition.  Every ice state has
-exactly $N_\uparrow=8$ --- each site belongs to exactly one A-tetrahedron,
-so summing the ice rule over the four A-tetrahedra gives
-$4\times2=8$ --- which is even.  So $P$ sits \emph{entirely} inside the
-even sector, and the self-energy
-$\Sigma(z)=PHQ(z-QHQ)^{-1}QHP$ never touches the odd sector at any order.
-Those $32\,768$ states are not a block to diagonalize separately; they are
-irrelevant and can be discarded outright, taking $QHQ$ from $65\,446$ to
-$32\,678$ and the cost down by a factor of eight.
-
-\paragraph{The Klein group $V_4$, everywhere.}  The pyrochlore cubic cell
-contains four FCC primitive cells, so four translations map the $16$-site
-cluster to itself:
-$t_0=(0,0,0)$, $t_1=(0,\tfrac12,\tfrac12)$, $t_2=(\tfrac12,0,\tfrac12)$,
-$t_3=(\tfrac12,\tfrac12,0)$ in units of the cubic edge.  Each one
-\emph{doubles} to a cubic lattice vector, so every non-identity element
-squares to the identity, and the product of any two distinct ones is the
-third.  That makes the group $\mathbb{Z}_2\times\mathbb{Z}_2$ --- the Klein
-four-group, not the cyclic $\mathbb{Z}_4$ one might expect from four
-translations --- with four one-dimensional irreps of characters $\pm1$,
-labelled $++$, $+-$, $-+$, $--$.
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[scale=1.5,>=Stealth]
-\draw[thick] (0,0) rectangle (2,2);
-\foreach \x/\y in {0/0, 1/0, 0/1, 1/1} {
-  \draw[icecol!50,thin] (\x,\y) rectangle (\x+1,\y+1);}
-\fill[icecol] (0.5,0.5) circle (0.07);
-\fill[spincol] (1.5,0.5) circle (0.07);
-\fill[spincol] (0.5,1.5) circle (0.07);
-\fill[spincol] (1.5,1.5) circle (0.07);
-\draw[->,very thick,spincol] (0.58,0.5) -- (1.42,0.5) node[midway,below,font=\scriptsize]{$t_1$};
-\draw[->,very thick,spincol] (0.5,0.58) -- (0.5,1.42) node[midway,left,font=\scriptsize]{$t_2$};
-\draw[->,very thick,spincol,dashed] (0.58,0.58) -- (1.42,1.42)
-  node[midway,above left,font=\scriptsize]{$t_3=t_1t_2$};
-\node[font=\small,align=left,anchor=west] at (2.5,1.6)
-  {$t_i^2=\mathbb{1}$ on the cluster,};
-\node[font=\small,align=left,anchor=west] at (2.5,1.25)
-  {$t_1t_2=t_3$,\;\; $t_1t_3=t_2$, \dots};
-\node[font=\small,align=left,anchor=west] at (2.5,0.8)
-  {$\Rightarrow\;\mathbb{Z}_2\times\mathbb{Z}_2$, not $\mathbb{Z}_4$};
-\node[font=\small,align=left,anchor=west] at (2.5,0.35)
-  {four irreps, characters $\pm1$};
-\end{tikzpicture}
-\caption{The four FCC translations inside the cubic cell close on the Klein
-four-group.  They commute with $H$ at \emph{any} $(\Jpm,\Jpmpm)$ --- both
-transverse terms are translation invariant --- and the ice manifold is
-closed under them, so the $P/Q$ split survives the decomposition.}
-\label{fig:klein}
-\end{figure}
-
-Blocking $QHQ$ over the four irreps gives four solves of $\approx16\,384$
-instead of one of $65\,446$: sixteen times fewer flops, $\sim10$~GB instead
-of $\sim100$~GB, and every block comfortably inside 32-bit indexing.  There
-is one delicate step inside.  Projecting the ice components out of each
-irrep leaves \emph{spurious} ice-kernel modes mixed among the genuine
-poles, and they must be told apart by their overlap with the ice subspace
-and never by eigenvalue --- genuine poles cross zero at strong coupling, so
-an eigenvalue cut would throw away real physics.  That heuristic is the one
-piece of this that is not exact, and it is where the four unresolved grid
-points came from: at maximal coupling on the boundary the overlaps stop
-being bimodal and no threshold separates $36$ genuine modes from the
-$38$--$47$ that look spurious.
-
-\paragraph{Global spin flip, everywhere.}  Flipping every spin commutes
-with all three terms, preserves the ice manifold, preserves
-$N_\uparrow$ parity, and leaves $\Ohex+\mathrm{h.c.}$ invariant.  It would
-halve the blocks again.  It also \emph{permutes} the polarization sectors
-rather than fixing them, so it interacts with the mask's labelling and with
-the fragile ice-kernel step above --- worth taking, but as a separate and
-carefully validated exercise.
-
-\paragraph{And one more, on the grid rather than the matrix.}  Exchanging
-$J_x\leftrightarrow J_y$ sends $\Jpmpm\to-\Jpmpm$ and is exact, implemented
-by the diagonal transformation $D=i^{N_\uparrow}$: the pair term picks up
-$i^{\pm2}=-1$, the exchange term is untouched, and the hexagon operator,
-with its three $S^+$ and three $S^-$, picks up $i^3(-i)^3=1$ and is
-invariant.  So only the upper triangle needs solving --- $861$ points cover
-all $1681$ cells.  This was verified rather than assumed, and the check
-needed care: the assembled map writes both $(i,j)$ and $(j,i)$ from one
-solve, so a symmetry check computed \emph{from the map} returns zero by
-construction and means nothing.  Solving both members of six mirror pairs
-independently, they agree \emph{bitwise} --- which is what a diagonal
-similarity does to a Lanczos run started from the same real seed.
-
-\subsection{Is the protocol well defined at any \texorpdfstring{$\Jpm$}{Jpm} and \texorpdfstring{$\Jpmpm$}{Jpmpm}?}
-\label{sec:xywelldefined}
-
-This deserves a straight answer in three parts, because the honest reply is
-``yes, no, and it depends what you mean''.
-
-\paragraph{The construction: yes, unconditionally.}  Nothing in the
-definition of the mask refers to the couplings.  $P$ is combinatorial --- a
-list of the $90$ two-in--two-out configurations, fixed by the lattice.  The
-transport label is an integer property of those configurations
-(Sec.~\ref{sec:configs}), computed before any Hamiltonian is written down.
-The fold $F(z)$ exists at every coupling because it is just a Schur
-complement, and the mask is the deletion of its off-sector entries.  There
-is no perturbative expansion, no small parameter, no adiabatic
-continuation, and no place where $\Jpm$ or $\Jpmpm$ could enter the
-\emph{definition}.  In this sense the protocol is as well defined at
-$\Jpm=-0.4$ as at $-0.01$, and as well defined off the XXZ line as on it.
-
-\paragraph{The output: no, and the failures are informative.}  Whether the
-protocol \emph{returns} anything is emphatically coupling-dependent.  Over
-$57\%$ of this square --- $962$ of $1681$ cells --- not one of the ninety
-branches has a root below the continuum: the ice-descended band has
-dissolved entirely, and the correct output is ``there is nothing here''.
-That is a result, not a malfunction, and it is exactly the kind of thing
-raw ED cannot tell you, since raw ED cheerfully prints a ground state
-everywhere.  A further $497$ cells have a band whose ground multiplet
-carries no ring resonance.  So the protocol answers the flux question on
-$13\%$ of the square, and its refusal to answer elsewhere is the map's
-honest report on where a gauge sector still exists.
-
-\paragraph{The meaning: it degrades, measurably and predictably.}  Where a
-band does survive, the ice weight $Z$ says how much of the true state the
-answer describes, and $Z$ falls from $0.99$ to below $0.15$ as the coupling
-grows.  The obstruction theorem of Sec.~\ref{sec:theorems} forbids
-enlarging the model space to compensate.  And at the Heisenberg point the
-ice basis becomes a convention rather than a fact
-(Sec.~\ref{sec:heisenberg}), so the mask becomes axis-dependent --- notably,
-$\Jpm=-\Jzz/2$ is the corner $J_x=J_y=1$ of this very square, and it is one
-of the four points where the numerics gave up.  That coincidence is
-probably not a coincidence.
-
-\begin{plainwords}
-The mask is defined everywhere; the \emph{band} is not.  Ask the protocol
-for a flux at any $(\Jpm,\Jpmpm)$ and it will either give you a sharp,
-quantized answer or tell you truthfully that the ice-descended band no
-longer exists there.  What it will never do is invent a number.  The naive
-calculation, which does invent one, gets the sign wrong across the whole
-region the materials live in.
-\end{plainwords}
-
-%=====================================================================
-\section{What the campaign established}
-\label{sec:results}
-
-A compact scoreboard of the physics results, all on the 16-site cell unless
-stated:
-
-\begin{itemize}
-\item \textbf{Naive ED never measures the photon.}  Its low-$T$ peak tracks
-the artifact scale $\gfour$ (exponent $1.99\approx2$); against the photon
-scale it drifts by a factor 40.  The winding-free peak tracks $\gsix$
-(exponent $3.10\approx3$) and approaches $1.02\,\gsix$ as $\Jpm\to0$ --- the
-perturbative prediction, recovered exactly where it must hold.
-\item \textbf{Flux-sign physics is real and restored:} $\pi$-flux
-suppression versus zero-flux enhancement of the ring scale
-(e.g.\ $0.73\,\gsix$ vs $1.13\,\gsix$ at $|\Jpm|=0.046$), with the correct
-sign of the hexagon expectation at every coupling --- naive ED gets the sign
-wrong everywhere.
-\item \textbf{The spinon peak is robust:} identical (4 digits) between naive
-and winding-free treatments up to $|\Jpm|\approx0.07$ --- as it must be,
-since spinons live outside the ice manifold.  A method that ``cleans'' the
-spinon peak would be destroying physics; this one provably does not touch it.
-\item \textbf{The photon does not decay} in the winding-free world:
-all masked levels have zero width at every coupling tested; apparent
-band merging in naive ED is frame artifact.  Escaped levels at
-$|\Jpm|\ge0.24$ are bound states in the continuum, protected by transport
-symmetry.
-\item \textbf{A third, physical Schottky peak} exists at $|\Jpm|\ge 0.22$
-from a genuine internal gap of the winding-free spectrum.
-\item \textbf{Application to Ce$_2$Hf$_2$O$_7$:} at literature couplings the
-naive ED peak lands deceptively close to the measured 24\,mK anomaly ---
-but the winding-free calculation shows that agreement is a coincidence
-between the \emph{artifact} scale and the data; the true ring peak on this
-cell is at 6\,mK.  A cautionary tale for fitting experiments with naive
-small-cluster ED.
-\item \textbf{Dissolution is continuous:} band isolation is lost at
-$\Jpm\approx-0.185$, completeness degrades from $-0.24$, and by $-0.30$ the
-band is as wide as the spinon scale.  No sharp wall, no phase transition of
-the ground state --- and the strong-coupling interpretation (Higgs frontier
-of the emergent gauge theory) is the subject of the follow-up project.
-\end{itemize}
-
-%=====================================================================
-\section{The cluster is the error bar}
-\label{sec:cluster}
-
-With the artifact provably removed, what limits accuracy?  The box itself
---- but now in the ordinary, honest way: through what it can and cannot
-represent.  The comparison between the two available cells is stark:
-
-\begin{center}
-\begin{tabular}{lcc}
-\toprule
- & cubic 16-site & FCC 32-site\\
-\midrule
-ice states & 90 & 2970\\
-transport sectors & 25 & 85\\
-largest sector & 12 & 396\\
-flippable hexagons per state & 0 or 4 only & 0, 4, 6, 7, 8\\
-ground-state flux & \emph{pinned by counting} & free\\
-winding-free ring peak at $\Jpm=-0.05$ & $0.84\,\gsix$ & $0.29\,\gsix$\\
-\bottomrule
-\end{tabular}
-\end{center}
-
-A factor of \emph{three} in the headline number, between two clusters with
-the identical, exact protocol.  The 16-site cell is simply a poor host: its
-ice manifold is so small that the flux is fixed by arithmetic before any
-dynamics happens.  This is the single most important systematic in the whole
-program, and it motivates everything in the final section.
-
-\subsection{First steps onto FCC-32: calibrate, then scale}
-\label{sec:fcc32first}
-
-The crossing question of Sec.~\ref{sec:crossingmeaning} forces the move
-to FCC-32, and the move immediately raises a practical wall: the
-$S^z=0$ block there has 601 million states.  The Feshbach fold's escape
-hatch is \textbf{graded truncation}: keep only the spinon states
-reachable from the ice manifold in at most $L$ pair-flip moves.
-Physically, $L$ is \emph{how deep a virtual spinon excursion the
-calculation can follow before being forced home} --- one freshly created
-adjacent pair at $L=1$; the pair separated, or a second pair, at $L=2$;
-and so on.  Since strong-coupling dressing \emph{is} spinons wandering
-far and often, $L$ is the convergence dial of everything on the large
-cluster, and its ladder is the error bar.
+\begin{description}
+\item[The counterterm $H+C$.]  One solve, complete spectrum, residue $1-Z$.
+\item[The splice.]  Replace the lowest $90$ levels of the $H+C$ spectrum by
+the exact masked roots.  Clean while the band lies wholly below the
+continuum ($|\Jpm|\lesssim0.22$ on cubic-16); undefined once band and
+continuum interleave, because ``the lowest 90 levels'' stops being the band.
+\item[The two-sided fold.]  Fold the \emph{other} way as well,
+$G(z)=QHQ+QHP\,(z-PHP)^{-1}PHQ$ --- cheap, because $PHP$ is diagonal
+(Sec.~\ref{sec:emptyblock}).  Every exact eigenstate is then seen by both
+maps, with weights $Z_n$ and $1-Z_n$ that sum to one.  Use that ice weight
+as an \emph{identifier}: rank the raw levels by $Z_n$, remove the ninety
+highest \emph{wherever they sit} (interleaved with the continuum included),
+and insert the ninety masked roots at weight one.  No anchor energy, no
+positional assignment, and BICs slot in wherever they lie.
+\end{description}
 
 \begin{lesson}
-\textbf{The instrument that failed its physical.}  A truncated FCC-32
-band pipeline already existed (one-pair truncation, map evaluated at a
-single anchor energy), and the obvious plan was to simply run it near
-the crossing.  Calibrating it first on cubic-16 --- where the exact
-answer is known --- stopped that: it shows \emph{no crossing at all},
-even at $-0.30$, with multiplet gaps wrong by a factor of four.  The
-fixed anchor misses the self-consistent $\sim\!Z$ renormalization of
-level spacings.  Run uncalibrated, it would have returned a confident,
-wrong verdict on precisely the question at stake.  Rule: an instrument
-earns the big cluster only by first reproducing known truth on the
-small one.
+\textbf{The hijacked ensemble.}  The obvious version of the two-sided
+identity --- keep both sums, but with masked roots carrying weight $Z_n$ ---
+was built and it fails spectacularly.  At $\Jpm=-0.05$, where every
+definition must agree, it put \emph{zero} heat capacity at the ring peak
+(splice and $H+C$: $0.157$) and grew a spurious bump of height $0.65$ at the
+artifact scale, taller than raw ED's own.  The mechanism deserves engraving:
+the raw band levels enter with small weight $1-Z_n\approx0.06$ but at their
+\emph{raw absolute energies}, a full artifact binding $\sim\gfour$
+\emph{below} the masked band --- the depth the mask exists to remove.  At
+$T\sim\gsix\ll\gfour$ the factor $e^{+\beta\Delta}$ beats any weight.
+\textbf{Weights cannot fix positions}: a substitution scheme must
+\emph{remove} the levels it replaces, not down-weight them.
 \end{lesson}
 
-The instrument that passes: each sector's masked spectrum is exactly the
-spectrum of the Hermitian \emph{bordered matrix}
-$M_s = \begin{pmatrix}(PHP)_{ss} & (PHQ)_s\\ (QHP)_s & QHQ\end{pmatrix}$
-(the same object that explained the BICs in
-Sec.~\ref{sec:bic}), so sparse Lanczos on $M_s$ delivers each sector's
-ground energy with \emph{no anchor and no self-consistency loop} ---
-exact within the truncation.  Its cubic-16 ladder, against the known
-crossing:
+Two free gates come with the construction and are worth stating here,
+because they are checked at every parameter point before anything is
+believed: the trace identity $\sum_n Z_n=\mathrm{Tr}\,P=90$, and the
+bimodality of the ice weights that makes the $Z$-ranking sharp (band
+$0.89$--$0.97$ against continuum $\le0.083$ at weak coupling).  How far the
+three definitions actually diverge, and where, is measured in
+Sec.~\ref{sec:strong}.
 
-\begin{center}
-\small
-\begin{tabular}{cccl}
-\toprule
-$L$ & truncated space & cost & crossing verdict\\
-\midrule
-1 & 1\,242 & instant & absent, even at $-0.30$ --- fails\\
-2 & 5\,754 & instant & present, displaced into $(-0.25,-0.30)$\\
-3 & 11\,130 & seconds & present, within $\sim0.02$ of the true coupling\\
-4 & 12\,870 ($=$ full) & seconds & \textbf{exact to all digits}\\
-\bottomrule
-\end{tabular}
-\end{center}
+\begin{plainwords}
+One instrument, one convention, one error bar.  The mask on the folded map
+is exact and needs no apology: it answers questions about the ice-descended
+band at any coupling.  The moment you ask a question about the \emph{whole}
+spectrum --- a heat capacity, an entropy --- you are forced to decide what
+``winding-free'' means for states that are half spinon, and mathematics
+guarantees that decision is not unique.  So we make it three different ways
+and quote how much they disagree.  At weak coupling: not at all, to the
+digit.  By $\Jpm=-0.40$: by a factor of three.
+\end{plainwords}
 
-Monotone convergence from below, with the crossing coupling drifting
-systematically toward truth --- so on FCC-32 the drift between $L$
-levels is a measured error bar, not a hope.  The FCC-32 costs, measured
-on the campaign machine: $L=1$ has 140\,442 states (seconds per
-sector); $L=2$ has 2\,511\,450 states, a 50-million-element sparse
-Hamiltonian built in 12 seconds, and one sector ground in 154 seconds
---- about 3.6 hours per coupling for all 85 sectors; $L=3$ fits in
-memory but costs roughly a day per coupling, reserved for single-point
-convergence checks.
+\subsection{What the mask is not}
 
-The scans are done, and the result is unambiguous.  FCC-32's 2\,970 ice
-states split into 85 sectors with dimensions
-$1{\times}396$, $12{\times}140$, $6{\times}72$, $24{\times}12$,
-$12{\times}6$, $24{\times}4$, $6{\times}1$.  At \emph{every} coupling
-scanned ($L=1$: thirteen points, $-0.05$ to $-0.32$; $L=2$: four
-points), the band bottom belongs to the unique 396-dimensional
-zero-polarization sector, with the twelve 140-dimensional sectors
-forming an exactly degenerate runner-up multiplet:
+Three clarifications that repeatedly saved time.
 
-\begin{center}
-\small
-\begin{tabular}{lcccc}
-\toprule
-gap to runner-up multiplet & $-0.05$ & $-0.22$ & $-0.26$ & $-0.30$\\
-\midrule
-$L=1$ & $0.0014$ & $0.0137$ & $0.0164$ & $0.0191$\\
-$L=2$ & $0.0018$ & $0.0374$ & $0.0473$ & $0.0573$\\
-\bottomrule
-\end{tabular}
-\end{center}
+It is \textbf{not a twist average}.  It is what the twist average would have
+been if twist averaging worked: Theorem~B of Sec.~\ref{sec:theorems} says
+the corner character average \emph{equals} the parity mask entry for entry
+(zero mismatches out of $8100$), and the mask is eight times cheaper.
+Averaging survives as the derivation and as an oracle, never as the
+algorithm.
 
-No crossing, anywhere --- and the truncation trend runs \emph{opposite}
-to a hidden one: going deeper ($L=1\to2$) makes the zero-polarization
-sector's dominance stronger, where on cubic-16 going deeper is what
-\emph{revealed} the crossing.  The verdict this feeds is drawn in
-Sec.~\ref{sec:crossingmeaning}.  (Measured runtimes for the record:
-$1.6$--$2.9$ hours per $L=2$ coupling --- the weak-coupling points
-converge fastest.)
+It is \textbf{not a truncation}.  Nothing is dropped from the Hilbert space;
+$QHQ$ enters $F(z)$ in full.  (On clusters too large for a dense complement
+a truncation \emph{is} imposed on top, by necessity, and then its
+convergence must be laddered and quoted --- Sec.~\ref{sec:host}.)
 
-Honesty about what FCC-32 will and will not deliver.  The sector-ground
-scan answers the crossing question.  The full \emph{peak} program needs
-the entire 2\,970-level winding-free band, and there the estimator
-ladder currently reads: full self-consistency --- validated excellent
-on cubic-16 (ring peak to $0.3\%$ at $L=3$) --- is unaffordable on
-FCC-32; the cheap single-anchor slope correction lands $7$--$14\%$ high
-on the ring peak; and a naive multi-anchor version is \emph{unstable} at
-strong coupling (anchors placed near the descended continuum corrupt
-the branch assignment --- measured, not conjectured).  A branch-tracked
-multi-anchor root finder is the one named engineering gap between here
-and the full peak scan on FCC-32.  And two things never come from
-FCC-32 at all: the raw-ED comparison curve and the spinon anomaly, both
-of which need the 601-million-level spectrum --- those remain cubic-16
-deliverables, which is an acceptable division of labor since every peak
-that matters at strong coupling (ring, third, crossing) is
-band-derived.
+It is \textbf{not a fit}.  There is no parameter to tune, no window to
+choose, no reference state to select.  Every ingredient is either
+combinatorial (the configurations, the labels, the sectors) or exact linear
+algebra (the fold, the deletion, the roots).
 
 %=====================================================================
-\section{The road ahead: beating finite size at strong coupling}
-\label{sec:roadahead}
+\section{The XXZ line, measured}
+\label{sec:strong}
 
-The next campaign asks: \emph{how do we maximally negate the remaining
-finite-size effects, in the strong-coupling regime, without introducing new
-physics or killing real physics?}  The answer designed above rests on a
-diagnosis: at strong coupling the dominant box effect is no longer one thing
-but three, and each has exactly one clean remedy.
+Everything up to here was construction.  This section is the result: what
+exact diagonalization of the XXZ pyrochlore Hamiltonian
+\[
+H \;=\; \Jzz\sum_{\langle ij\rangle}S^z_iS^z_j
+\;-\;\Jpm\sum_{\langle ij\rangle}\bigl(S^+_iS^-_j+S^-_iS^+_j\bigr),
+\qquad \Jzz=1,
+\]
+says once the mask is applied, coupling by coupling, from the perturbative
+regime down to $\Jpm=-0.5$.
 
-\subsection{Residual 1: topology --- already solved}
+Six independent calculations feed it, all on the cubic-16 cluster unless a
+row says otherwise: (i)~the microscopic amplitude audit, which compares
+matrix elements against the perturbative predictions; (ii)~raw ED of the
+complete $65\,536$-state spectrum; (iii)~the counterterm spectrum $H+C$,
+same size; (iv)~the exact masked band from self-consistent roots of
+$\Delta[F(z)]$; (v)~the anatomy of the masked map itself, amplitude class by
+amplitude class; and (vi)~the resonance calculation that asks whether any of
+these levels has a decay width.  Where two of them measure the same thing,
+the agreement is quoted.  Nothing below is fitted or modelled.
 
-The winding artifact itself is handled by the mask, which is combinatorial
-and coupling-independent: it works identically at $\Jpm=-0.30$ and $-0.03$.
-Nothing new needed --- but everything below must be built \emph{on top of}
-the masked map, never instead of it.
+\subsection{First, the artifact is real, and the mask removes it exactly}
 
-\subsection{Residual 2: matched winding pairs --- solved by geometry}
+Before any physics, the premise: the box \emph{does} invent a four-site
+process, it \emph{is} the dominant one, and deletion \emph{does} leave the
+hexagon untouched.  All three are matrix-element statements, checkable at a
+coupling small enough that perturbation theory is exact.
 
-Processes that wind $+1$ then $-1$ (net zero) are topologically trivial: no
-label can see them, and the mask correctly keeps them.  At weak coupling
-they are negligible (they cost two powers of the already-small winding
-amplitude); at strong coupling they are not.  The \emph{only} knob is
-geometry: their size is set by the length of the shortest winding loop the
-cell permits.  Hence \textbf{girth engineering}: among all simulation cells
-of a given size (including skewed, non-rectangular ones), choose the cell
-that maximizes the shortest wrap-around ice loop.
-
-\begin{figure}[h]
-\centering
-\begin{tikzpicture}[scale=0.85,>=Stealth]
-% left: square cell, short wrap
-\begin{scope}
-\draw[thick] (0,0) rectangle (3,3);
-\foreach \x in {0.5,1.5,2.5} \foreach \y in {0.5,1.5,2.5} \fill[black!50] (\x,\y) circle (0.06);
-\draw[badcol,very thick,->] (1.5,0.5) -- (1.5,2.5);
-\draw[badcol,very thick,dashed] (1.5,2.5) -- (1.5,3.4);
-\node[font=\small,align=center] at (1.5,-0.85) {compact cell:\\ wraps in \textbf{4 steps}\\ artifact $\sim\Jpm^{2}$};
-\end{scope}
-% right: sheared cell, long wrap
-\begin{scope}[xshift=6.8cm]
-\draw[thick] (0,0) -- (3,0) -- (4.4,3) -- (1.4,3) -- cycle;
-\foreach \x in {0.5,1.5,2.5} \foreach \y in {0.5,1.5,2.5}
-  \fill[black!50] ({\x+0.4667*\y},\y) circle (0.06);
-\draw[goodcol,very thick,->] (0.75,0.5) -- (1.2,1.5) -- (2.2,1.5) -- (2.65,2.5) -- (3.6,2.5);
-\draw[goodcol,very thick,dashed] (3.6,2.5) -- (4.1,3.4);
-\node[font=\small,align=center] at (2.2,-0.85) {sheared cell, same volume:\\ shortest wrap \textbf{longer}\\ artifact pushed to higher order};
-\end{scope}
-\end{tikzpicture}
-\caption{Girth engineering.  The irreducible (net-zero-winding) artifact is
-controlled by the length of the shortest wrap-around loop.  Skewing the
-simulation cell at fixed size can lengthen that loop, demoting the residual
-artifact by powers of $\Jpm$ --- at zero cost in Hilbert-space size.  The
-search over cell shapes is purely combinatorial (no diagonalization needed).}
-\label{fig:girth}
-\end{figure}
-
-Because the loop census is a counting exercise, thousands of candidate cell
-shapes can be screened without a single diagonalization, scoring each by:
-shortest winding loop (maximize), number of contractible hexagons (keep),
-flippability variety (keep), flux unpinned (require), largest transport
-sector (keep tractable).
-
-\subsection{Residual 3: the coarse spinon continuum --- solved by twists,
-reborn}
-
-At strong coupling every low-energy state is heavily dressed by spinon
-excursions ($1-Z$ up to $0.75$), but the small box offers only a handful of
-discrete spinon levels where the infinite crystal has a dense continuum.
-This misplaces the continuum edge, exaggerates the sharpness of the
-dissolution, and expels the bound-in-continuum levels.
-
-Here twist averaging returns --- in the \emph{opposite} role from
-Section~\ref{sec:twist}.  Threading a flux shifts the spinon levels;
-averaging over many twist values sweeps them across the true continuum,
-exactly the classic ``boundary-condition integration'' of electronic
-structure theory.  Crucially, the mask is applied \emph{at each twist}
-(the transport label does not depend on the twist), so topology removal and
-continuum densification never compete:
+At $\Jpm=\mp0.005$, comparing the ice-block amplitudes of the raw and
+winding-free operators against $\gfour=4\Jpm^2/\Jzz$ and
+$\gsix=12|\Jpm|^3/\Jzz^2$:
 
 \begin{center}
-\emph{mask handles the loops; twists handle the levels.}
+\small
+\begin{tabular}{lrr}
+\toprule
+ & $\Jpm=-0.005$ & $\Jpm=+0.005$\\
+\midrule
+raw winding four-loop element, in units of $\gfour$ & $0.970$ & $1.030$\\
+raw hexagon element, in units of $\gsix$ & $0.971$ & $1.028$\\
+\textbf{ratio (artifact / physics)} & $\mathbf{66.6}$ & $\mathbf{66.8}$\\
+\midrule
+winding-free four-loop element (largest) & $\mathbf{0}$ & $\mathbf{0}$\\
+winding-free hexagon element, in units of $\gsix$ & $0.971$ & $1.028$\\
+spread over the 16 hexagons & $7\times10^{-16}$ & $1\times10^{-15}$\\
+largest surviving non-hexagon element & $1.7\times10^{-8}$ & $1.5\times10^{-8}$\\
+\bottomrule
+\end{tabular}
 \end{center}
+
+The perturbative formulas are confirmed to $3\%$ at this coupling; the
+artifact is \textbf{sixty-seven times} the physics it is drowning; the mask
+sets it to zero --- not ``to $10^{-16}$'', but to the floating-point number
+$0$, because the deleted entries are never added; and the hexagon amplitude
+it must not touch is unchanged to the last bit, uniformly across all sixteen
+contractible hexagons.
+
+A second audit, at the working coupling $\Jpm=+0.046$, adds the piece that
+matters for a torus.  The cubic cell has $16$ contractible hexagons,
+\emph{$48$ wrapping ones}, and $36$ winding four-loops.  In the raw operator
+the wrapping hexagons carry \emph{exactly the same} amplitude as the
+contractible ones ($0.00131421$ against $0.00131421$, agreeing to fifteen
+digits) --- no local or energetic criterion could ever tell them apart,
+which is precisely why the label has to be topological.  After the mask:
+contractible $0.00131421$ (unchanged), wrapping $1\times10^{-36}$, winding
+four-loops $4\times10^{-19}$.
+
+\begin{plainwords}
+The box's fake process is not a small correction to be estimated --- it is
+sixty-seven times larger than the effect being measured, and the fake
+six-spin loops are numerically indistinguishable from the real ones by
+anything except topology.  The mask deletes them completely and leaves the
+real ones bit for bit identical.  Every number in the rest of this section
+rests on those two sentences being literally true, which is why they were
+checked first.
+\end{plainwords}
+
+\subsection{The temperature scale: where the specific-heat peak really is}
+
+The photon's thermodynamic fingerprint is the low-temperature Schottky
+anomaly in $C(T)$.  Below, its position on a $12\,000$-point logarithmic
+grid with parabolic refinement, for the raw periodic spectrum and for the
+winding-free one, alongside the two candidate scales.  ($T_{\rm ring}$ is
+the winding-free gauge peak, $T_{\rm per}$ the raw one; both are full
+spectra, so no ensemble mismatch enters.)
+
+\begin{center}
+\small
+\begin{tabular}{rrrrrrr}
+\toprule
+$\Jpm$ & $\gsix$ & $T_{\rm ring}$ & $T_{\rm ring}/\gsix$ &
+$T_{\rm per}$ & $T_{\rm per}/\gfour$ & $T_{\rm per}/\gsix$\\
+\midrule
+$-0.01$ & $0.000012$ & $0.000012$ & $1.024$ & $0.00075$ & $1.866$ & $62.2$\\
+$-0.02$ & $0.000096$ & $0.000094$ & $0.978$ & $0.00271$ & $1.691$ & $28.2$\\
+$-0.03$ & $0.000324$ & $0.000302$ & $0.932$ & $0.00554$ & $1.539$ & $17.1$\\
+$-0.05$ & $0.001500$ & $0.001259$ & $0.839$ & $0.01295$ & $1.295$ & $8.63$\\
+$-0.07$ & $0.004116$ & $0.003076$ & $0.747$ & $0.02179$ & $1.112$ & $5.29$\\
+$-0.09$ & $0.008748$ & $0.005759$ & $0.658$ & $0.03148$ & $0.972$ & $3.60$\\
+$-0.11$ & $0.015972$ & $0.009169$ & $0.574$ & $0.04171$ & $0.862$ & $2.61$\\
+$-0.15$ & $0.040500$ & $0.017327$ & $0.428$ & $0.06355$ & $0.706$ & $1.57$\\
+$-0.20$ & $0.096000$ & $0.028523$ & $0.297$ & $0.10094$ & $0.631$ & $1.05$\\
+$-0.25$ & $0.187500$ & $0.039971$ & $0.213$ & $0.14225$ & $0.569$ & $0.76$\\
+$-0.28$ & $0.263424$ & $0.048161$ & $0.183$ & $0.15603$ & $0.498$ & $0.59$\\
+\midrule
+$+0.01$ & $0.000012$ & $0.000015$ & $1.245$ & $0.00091$ & $2.279$ & $76.0$\\
+$+0.03$ & $0.000324$ & $0.000554$ & $1.710$ & $0.00980$ & $2.722$ & $30.3$\\
+$+0.046$ & $0.001168$ & $0.002650$ & $2.268$ & $0.02548$ & $3.010$ & $21.8$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Four readings, in order of importance.
+
+\paragraph{Raw ED measures the box.}  Its peak sits at $1$--$2$ times
+$\gfour$ throughout, drifting slowly, exactly as a two-step process should.
+Measured instead against the photon scale it wanders from $62\,\gsix$ to
+$0.5\,\gsix$ --- a factor of $120$ across the scan.  A quantity that changes
+by two orders of magnitude relative to the thing it is supposed to measure
+is not a noisy measurement of it; it is a measurement of something else.
+
+\paragraph{The winding-free peak converges onto the photon scale.}
+$T_{\rm ring}/\gsix\to1.02$ as $\Jpm\to0$: the exact perturbative
+prediction, recovered where it must hold, with no adjustable anything.  This
+is the single most important validation in the campaign, because it is a
+place where the answer was known in advance.
+
+\paragraph{The power laws come out right, and their split is physics.}
+Fitting $T_{\rm peak}\propto|\Jpm|^{n}$ over $|\Jpm|\le0.031$ gives
+$n=3.099$ winding-free (ideal $3$) against $n=1.994$ raw (ideal $2$).  That
+combined fit uses both signs of $\Jpm$; taken separately the $\pi$-flux side
+gives $n=2.92$ and the zero-flux side $n=3.28$ (raw: $1.83$ and $2.16$).
+The split is not scatter --- it is the flux asymmetry showing up in the
+exponent, and it is the reason the two sides must be quoted separately when
+one cares about the third digit.
+
+\paragraph{Flux costs the photon a factor of $2.7$.}  At the same
+$|\Jpm|$, the ratio $T_{\rm ring}/\gsix$ is $1.02$ at $-0.01$ against $1.24$
+at $+0.01$, and $0.84$ at $-0.05$ against $2.45$ at $+0.05$.  The
+$\pi$-flux ground state resonates more weakly than the zero-flux one, by a
+factor growing from $1.2$ to $2.9$ over that range.  Naive ED cannot see any
+of this: its artifact is even in $\Jpm$, so it reports nearly the same
+number on both sides ($1.87\,\gfour$ against $2.28\,\gfour$ at
+$|\Jpm|=0.01$, most of that difference being contamination of the physical
+part rather than the flux law).
+
+\subsection{The spinon peak, which must not move --- and does not}
+
+A cleaning procedure that improved everything would be suspicious.  Spinons
+live \emph{outside} the ice manifold; the mask is a deletion \emph{inside}
+it; so the upper anomaly of $C(T)$ must be untouched.  From the two complete
+spectra:
+
+\begin{center}
+\small
+\begin{tabular}{rrrl}
+\toprule
+$\Jpm$ & raw $T_{\rm spinon}$ & winding-free $T_{\rm spinon}$ & \\
+\midrule
+$-0.02$ & $0.2510$ & $0.2510$ & identical\\
+$-0.05$ & $0.2533$ & $0.2533$ & identical\\
+$-0.07$ & $0.2557$ & $0.2557$ & identical\\
+$-0.09$ & $0.2581$ & $0.2605$ & $0.9\%$\\
+$-0.15$ & $0.2630$ & $0.2914$ & $11\%$\\
+$-0.30$ & $0.1634$ & $0.4602$ & the two raw peaks have merged\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Four-digit agreement through $\Jpm=-0.07$, which is the regime where the
+statement is meaningful, and then a controlled divergence as the artifact
+scale $\gfour$ grows into the spinon scale and raw ED's two anomalies stop
+being separate maxima at all.  (The raw entry at $-0.30$ is not the spinon
+peak descending; it is the label following a merged feature.  Branch
+identity has to be tracked by continuity once $\gfour\sim\Jzz/4$.)
+
+\subsection{The band, exactly}
+
+Now the object the mask is really about: the ninety winding-free levels
+descended from the ice manifold, obtained as self-consistent roots of
+$\Delta[F(z)]$ and verified against the full spectrum to $3\times10^{-13}$.
+
+\begin{center}
+\small
+\begin{tabular}{rrrrrrrr}
+\toprule
+$\Jpm$ & below edge & recovered above & lost & band bottom & GS mult.\ &
+gap above GS & median $Z$\\
+\midrule
+$-0.05$ & $90$ & $0$ & $0$ & $-0.07700$ & $6$ & $0.002841$ & $0.936$\\
+$-0.15$ & $90$ & $0$ & $0$ & $-0.60543$ & $6$ & $0.015264$ & $0.636$\\
+$-0.20$ & $90$ & $0$ & $0$ & $-0.99128$ & $6$ & $0.013576$ & $0.473$\\
+$-0.22$ & $90$ & $0$ & $0$ & $-1.15982$ & $6$ & $0.010634$ & $0.414$\\
+$-0.25$ & $90$ & $0$ & $0$ & $-1.42542$ & $\mathbf{2}$ & $0.001206$ & $0.338$\\
+$-0.28$ & $77$ & $13$ & $0$ & $-1.71304$ & $2$ & $0.013105$ & $0.275$\\
+$-0.30$ & $77$ & $13$ & $0$ & $-1.90952$ & $2$ & $0.020638$ & $0.221$\\
+$-0.35$ & $77$ & $13$ & $0$ & $-2.41277$ & $2$ & $0.031457$ & $0.157$\\
+$-0.40$ & $71$ & $19$ & $0$ & $-2.92835$ & $2$ & $0.039192$ & $0.119$\\
+$-0.50$ & $59$ & $30$ & $\mathbf{1}$ & $-3.98273$ & $2$ & $0.049856$ & ---\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Completeness.}  The band is entirely below the two-spinon
+continuum through $\Jpm=-0.25$.  From $-0.28$ levels begin to cross the
+edge --- thirteen of them, then nineteen by $-0.40$, thirty by $-0.50$ ---
+and they are \emph{recovered above it}, not lost, by the per-sector argument
+of Sec.~\ref{sec:bic}.  Across the entire scan exactly one level, at
+$-0.50$, is not accounted for.
+
+\paragraph{Purity.}  The median ice weight falls from $0.94$ to $0.12$.  By
+$\Jpm=-0.4$ a typical band state is $88\%$ spinon dressing --- and yet its
+energy is still exact, because the fold never assumed otherwise.  This is
+the single number to keep in mind when reading any statement about strong
+coupling: it is also the size of the convention in every full-space
+extension (Sec.~\ref{sec:hc}).
+
+\paragraph{The ground multiplet changes character at $-0.25$.}  Through
+$-0.22$ the lowest level is six-fold degenerate --- one state from each of
+six eight-dimensional transport sectors, degenerate to all printed digits
+because the mask makes the sectors exactly equivalent.  At $-0.25$ a doublet
+from the twelve-dimensional sector drops below it and the multiplicity
+becomes two, leaving a splitting of $0.0012$.  This is a crossing
+\emph{between topological sectors}, not a symmetry breaking, and it is
+discussed in Sec.~\ref{sec:host}, where it turns out to belong to the
+cluster rather than to the model.
+
+\paragraph{The internal gap.}  The column ``gap above GS'' is a genuine
+feature of the winding-free spectrum and it radiates a real Schottky
+anomaly: at $-0.22$ the exact masked gap is $0.010634$ and the independently
+constructed $H+C$ gives $0.010730$.  At weak coupling the resulting bump
+sits at $0.79\,\gsix$, indistinguishable from the ring anomaly at
+$0.84\,\gsix$ --- it hides inside it --- and by $-0.22$ the two are a factor
+of seven apart.
 
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}[scale=1.0]
-\foreach \i/\xs in {0/0.0,1/1.2,2/2.4}{
-  \draw[thick] (\xs,0) -- (\xs,3);
-  \foreach \y in {0.35,1.0,1.75,2.3,2.8}{
-    \draw[spincol,very thick] ({\xs-0.18},{\y+0.13*\i}) -- ({\xs+0.18},{\y+0.13*\i});
-  }
-}
-\node[font=\small,align=center] at (1.2,-0.55) {a few discrete spinon levels,\\ shifting with each twist $\theta_1,\theta_2,\theta_3$};
-\draw[->,very thick] (3.3,1.5) -- (4.5,1.5);
-\node[font=\small,above] at (3.9,1.6) {average};
-\fill[spincol!35] (5.0,0.3) rectangle (6.4,2.95);
-\draw[thick] (5.0,0) -- (5.0,3);
-\node[font=\small,align=center] at (5.9,-0.55) {an effectively dense\\ continuum};
+\begin{scope}
+\draw[->] (0,0) -- (0,4.2); \node[rotate=90,font=\small] at (-0.4,2.1) {energy};
+\fill[icecol!40] (0.3,0.2) rectangle (2.3,0.75);
+\node[font=\small,icecol!60!black] at (1.3,0.475) {ice band};
+\foreach \y in {2.4,2.62,2.9,3.1,3.45,3.7,3.95} \draw[spincol,thick] (0.3,\y) -- (2.3,\y);
+\node[font=\small] at (1.3,-0.4) {$\Jpm=-0.05$: clean gap};
+\draw[<->,thick] (2.55,0.75) -- (2.55,2.4);
+\node[font=\scriptsize,right] at (2.6,1.55) {gap};
+\end{scope}
+\node[font=\small,spincol,align=left] at (4.5,3.1) {two-spinon\\ continuum};
+\begin{scope}[xshift=7.6cm]
+\draw[->] (0,0) -- (0,4.2);
+\fill[icecol!40] (0.3,0.2) rectangle (2.3,2.1);
+\node[font=\small,icecol!60!black,align=center] at (1.3,0.7) {band spreads};
+\foreach \y in {1.15,1.5,1.85,2.2,2.55,2.9,3.3,3.7} \draw[spincol,thick] (0.3,\y) -- (2.3,\y);
+\node[font=\small] at (1.3,-0.4) {$\Jpm=-0.30$: interpenetration};
+\end{scope}
 \end{tikzpicture}
-\caption{The twist reborn.  Each twist value slides the discrete spinon
-levels; averaging the \emph{masked} results over twists reconstructs a dense
-continuum for the virtual excursions --- correct dressing, smooth continuum
-edge --- without adding any new operator to the Hamiltonian.  Each twisted
-problem is an exact microscopic Hamiltonian, so no physics is invented.}
-\label{fig:densify}
+\caption{Measured behaviour, drawn schematically.  At weak coupling the
+ice-derived band sits far below the spinon continuum.  As $|\Jpm|$ grows the
+band widens (bandwidth $0.008\to0.35$ from $-0.05$ to $-0.25$) while the
+continuum descends, until they interpenetrate.  Constructions that must
+\emph{identify} band states die here; the masked fold, which never
+identifies anything, does not.}
+\label{fig:dissolve}
 \end{figure}
 
-A free diagnostic comes along: genuine contractible physics is provably
-twist-independent, so the \emph{spread} of the masked results across twists
-is a direct, honest error bar on whatever finite-size effect remains.  And a
-second dividend: a trustworthy continuum edge is exactly what the
-bound-state-versus-resonance verdicts of Sec.~\ref{sec:bic} hinge on --- on
-a coarse, undensified continuum, the question ``did this level really
-escape?'' is not even well-posed.
+\subsection{Inside the map: what the effective gauge theory becomes}
 
-\subsection{Honesty items}
+The masked map is a $90\times90$ table whose every entry can be attributed
+to the spin pattern it flips.  Classifying them at each coupling gives the
+effective theory directly, with no model assumed.
 
-Three more commitments, so the method neither invents nor kills physics at
-strong coupling:
-\begin{itemize}
-\item \textbf{Graded truncation.}  On the 32-site cell the spinon space must
-be truncated (one pair, two pairs of spinons).  At strong coupling the
-one-pair truncation is not obviously sufficient; the protocol requires the
-one-pair/two-pair difference to be measured and quoted at every coupling.
-\item \textbf{Recover, don't repair.}  Where winding-free levels escape into
-the continuum, they are recovered as symmetry-protected bound states (per
-transport sector), not patched with counterterms.  Where the continuum in
-the \emph{same} sector genuinely touches a level, its decay width is
-computed and reported as physics --- at strong coupling a finite photon
-lifetime, if real, must be allowed to appear.
-\item \textbf{Recycle the removed sectors.}  The masked-out winding sectors
-are not garbage: their energy splittings versus twist and cell size are
-precisely the flux-sector free energies whose scaling distinguishes the
-photon phase from a Higgs phase.  The artifact we negate in the physical
-sector becomes the measurement in the diagnostic sector --- one production
-run serves both this program and the strong-coupling phase-diagram project.
-\end{itemize}
+\begin{center}
+\small
+\begin{tabular}{rrrrrr}
+\toprule
+$\Jpm$ & $Z$ (ground) & $|g_{\rm eff}|/\gsix$ & masked $\langle\Ohex\rangle$ &
+long/hex & $|V/g|$\\
+\midrule
+$-0.02$ & $0.990$ & $0.813$ & $-1/4$ & $0.134$ & $0.007$\\
+$-0.05$ & $0.929$ & $0.588$ & $-1/4$ & $0.317$ & $0.011$\\
+$-0.10$ & $0.805$ & $0.358$ & $-1/4$ & $0.567$ & $0.006$\\
+$-0.16$ & $0.591$ & $0.217$ & $-1/4$ & $0.787$ & $0.004$\\
+$-0.20$ & $0.465$ & $0.162$ & $-1/4$ & $0.898$ & $0.010$\\
+$-0.24$ & $0.439$ & $0.125$ & $-1/4$ & $0.989$ & $0.014$\\
+$-0.26$ & $0.273$ & $0.111$ & $\mathbf{0}$ & $1.028$ & $0.016$\\
+$-0.30$ & $0.222$ & $0.089$ & $0$ & $1.096$ & $0.019$\\
+$-0.35$ & $0.181$ & $0.070$ & $0$ & $1.166$ & $0.022$\\
+\midrule
+$+0.046$ & $0.890$ & $1.264$ & $+1/4$ & $0.321$ & $0.017$\\
+\bottomrule
+\end{tabular}
+\end{center}
 
-\subsection{The validation ladder}
+\paragraph{The photon amplitude is renormalized by more than an order of
+magnitude.}  $g_{\rm eff}$ is the hexagon amplitude the masked map
+\emph{actually has} once every virtual spinon excursion is summed in.  It is
+$81\%$ of the perturbative $\gsix$ at $\Jpm=-0.02$, half of it by $-0.06$,
+and $7\%$ of it by $-0.35$.  Quoting $12|\Jpm|^3/\Jzz^2$ as ``the photon
+scale'' at $\Jpm=-0.3$ overestimates by a factor of eleven, and the measured
+peak position of the previous table tracks $g_{\rm eff}$, not $\gsix$.
+\emph{This is the correct sense in which strong coupling is hard: not
+instability, renormalization.}
 
-Every stage of the new protocol must pass, in order:
-\begin{enumerate}
-\item \textbf{Weak-coupling anchor:} ring peak $\to\gsix$ with exponent 3 as
-$\Jpm\to0$ on the new cell (the exact perturbative limit).
-\item \textbf{Spinon neutrality:} the spinon peak agrees with naive ED at
-weak coupling to 4 digits (the mask must not touch it).
-\item \textbf{Flux law:} correct $\pi$-flux sign, and the known
-flux-asymmetry between $\pm\Jpm$ at matched magnitude.
-\item \textbf{Physical features survive:} the third Schottky peak present;
-no feature removed that the exact masked reference possesses.
-\item \textbf{Sum rule:} entropy integral returns $\ln 2$ (with the
-$T_{\max}$ lesson applied).
-\item \textbf{Cross-size consistency:} dimensionless ratios
-(peak$/\gsix$, gaps$/\gsix$) drift monotonically and modestly from 16
-$\to$ 32 $\to$ girth-optimized cells, with twist-spread error bars quoted.
-\end{enumerate}
+\paragraph{It stays a ring model --- but stops being local.}  The column
+$|V/g|$ is the ratio of the diagonal (Rokhsar--Kivelson-like) term to the
+ring term.  It never exceeds $0.022$ anywhere on the line, so there is no
+diagonal takeover: the hypothesis that the band undergoes an RK-like
+transition inside the ice manifold is measured and dead.  What does change
+is reach: ``long/hex'' compares amplitudes for flipping strings of eight or
+more spins to the hexagon amplitude, and it grows from $0.13$ to $1.17$.  By
+$-0.35$ eight- and ten-spin loops resonate as strongly as hexagons.  That is
+what ``the effective theory breaks down'' means here, quantitatively --- a
+loss of locality, not a wall.
 
-%=====================================================================
-\section{Where the method ends: the Heisenberg point, and beyond}
-\label{sec:heisenberg}
+\paragraph{The flux is exactly quantized, and then exactly off.}  The masked
+ground multiplet's hexagon expectation is $-1/4$ to sixteen digits at every
+coupling through $-0.24$, and $0$ to sixteen digits from $-0.26$: no drift,
+nothing in between.  This is the $\pi$-flux label of the theory, recovered
+as a discrete number rather than a fitted contour, and it holds while the
+protected six-fold multiplet does.
 
-Every method should be able to say where its own writ runs out.  For the
-mask the answer is unusually crisp --- and it is \emph{not} at the band
-dissolution.  Dissolution only changes which instrument carries the load
-(Secs.~\ref{sec:bic} and~\ref{sec:hclimits}).  The genuine boundary lies
-deeper in coupling, at a point of enhanced symmetry.
+\subsection{The flux, and the sign raw ED cannot get right}
 
-\subsection{The Heisenberg point}
+The flux deserves its own comparison, because it is the sharpest failure of
+naive ED anywhere in the campaign.  Measured on the full dressed ground
+state (so these are not the quantized ice-manifold numbers of the previous
+table but their full-space counterparts):
 
-Our transverse term is $-\Jpm(S^+S^-+S^-S^+) = -2\Jpm(S^xS^x+S^yS^y)$, so
-at
-\[
-\Jpm \;=\; -\tfrac12\,\Jzz
-\]
-the Hamiltonian becomes $\Jzz\,\mathbf{S}_i\cdot\mathbf{S}_j$: the
-antiferromagnetic \textbf{Heisenberg} model, with full rotational (SU(2))
-symmetry --- no direction in spin space is special anymore.  The campaign's
-reconnaissance stopped at $\Jpm=-0.30$, well short of this point, and the
-trend at the frontier was already steep: purity $Z\approx0.25$ and falling,
-thirteen of ninety band levels escaped.
+\begin{center}
+\small
+\begin{tabular}{rrrrl}
+\toprule
+$\Jpm$ & raw $\langle\Ohex\rangle$ & winding-free $\langle\Ohex\rangle$
+       & raw $\langle\Ofour\rangle$ & verdict\\
+\midrule
+$-0.02$ & $+0.115$ & $-0.248$ & $0.356$ & inverted\\
+$-0.05$ & $+0.107$ & $-0.238$ & $0.348$ & inverted\\
+$-0.10$ & $+0.091$ & $-0.209$ & $0.326$ & inverted\\
+$-0.20$ & $+0.069$ & $-0.149$ & $0.290$ & inverted\\
+$-0.30$ & $+0.058$ & $-0.067$ & $0.269$ & inverted\\
+$-0.35$ & $+0.054$ & $-0.009$ & $0.261$ & inverted\\
+$+0.046$ & $+0.119$ & $+0.215$ & $0.335$ & right by luck\\
+\bottomrule
+\end{tabular}
+\end{center}
 
-Two different things fail as this point is approached, and separating them
-is the whole insight:
-
-\begin{enumerate}
-\item \textbf{Quantitatively, nothing crashes.}  $F(z)$ is linear algebra
-on spin patterns; it exists at any coupling, and every self-consistent root
-of the \emph{unmasked} map is an exact eigenvalue of $H$ no matter how
-small $Z$ becomes.  The machinery runs at $-0.5$ as happily as at $-0.05$.
-\item \textbf{Structurally, the mask breaks the symmetry.}  The transport
-label is built on the ice manifold \emph{in the $S^z$ basis}.  At the
-Heisenberg point the choice of $z$-axis is pure convention --- so ``the
-winding-free model'' built on the $z$ basis and the one built on the $x$
-basis are \emph{different operators with different spectra}, disagreeing
-about which processes are artifacts.  A cleaning procedure whose output
-depends on a convention is no longer describing the system.
-\end{enumerate}
-
-\begin{plainwords}
-The mask does not remove ``the'' finite-size artifact; it removes the
-finite-size artifact \emph{of a particular description} --- the ice-gauge
-description in the $z$ basis.  Approaching the Heisenberg point, that
-description carries less and less of the low-energy weight, until at the
-point itself it becomes one of three equivalent conventions.  The premise
-dissolves before the method does.
-\end{plainwords}
-
-This failure is measurable, which turns it from a worry into a diagnostic:
-build the label on the $z$, $x$, and $y$ axes in turn and record the
-\textbf{axis spread} of the masked observables.  At weak coupling the
-anisotropy picks the axis physically and the spread is negligible; toward
-$-0.5$ it must grow, and its size \emph{is} the meaninglessness of the
-mask, quantified.  At the point itself the honest labels are total-spin
-quantum numbers (machinery that exists in the parent codebase), and the
-dominant finite-size effects are the conventional ones of a
-near-critical or ordered magnet --- tower-of-states structure and level
-discretization --- for which the conventional tools are the right ones.
-
-\subsection{Beyond, in the XXZ model: the mask retires}
-
-Past the Heisenberg point in the XXZ model ($\Jpm<-0.5$), the transverse
-antiferromagnetic coupling dominates.  There is \emph{no} dual ice
-manifold to migrate to: the two transverse axes remain exactly degenerate
-($J_x=J_y$), so no in-plane Ising arrows can be defined.  The physics is
-that of a planar (XY) pyrochlore antiferromagnet --- generically ordered,
-with Goldstone-like towers.  Here the mask has nothing left to protect,
-and, pleasingly, \emph{observable-level twist averaging finally works}:
-what needs converging there is ordinary level discretization, not a
-topological amplitude, and that is the problem twist averaging was always
-good at.  Each tool retires exactly where the other's jurisdiction begins.
-
-\subsection{Beyond, in the XYZ model: the mask reborn}
-
-The real cerium materials are not XXZ but XYZ: three independent couplings
-$J_x,J_y,J_z$.  There the question ``what happens when $J_x$ or $J_y$
-dominates?'' has a beautiful answer: the low-energy manifold is the
-two-in--two-out manifold \emph{in the dominant axis's basis}, and the XYZ
-model enjoys an exact \textbf{axis-permutation duality} --- relabel the
-local axes and the $J_x$-dominant model becomes the $J_z$-dominant model.
-Everything transfers verbatim: the identity $\rho=\frac12\,w\cdot L$ is
-lattice combinatorics that never asks which local basis defines the
-arrows; the sectors, the mask, the Feshbach fold, the BIC/Gamow taxonomy
-all rebuild in the rotated frame with zero new theory.  The duality even
-donates a free exactness test: results computed on the $J_x$-dominant side
-must mirror the $J_z$-dominant side bit for bit.
-
-What remains genuinely hard is the \emph{crossover shell} around the
-symmetric point, where two (or three) descriptions coexist with comparable,
-low purities.  In that no-man's-land the finite-size problem is not
-topological in \emph{any} basis, and the axis-spread diagnostic above is
-the instrument that maps where the shell begins and ends.
-
-The whole territory fits in one picture
-(Fig.~\ref{fig:regimemap}): three handoffs, each at a boundary the
-campaign either measured or proved.
+Raw ED reports $0$-flux at \emph{every} coupling, including the entire
+region where the cerium materials live.  The mechanism is one observation
+about powers: the artifact $\gfour=4\Jpm^2/\Jzz$ is \textbf{even} in
+$\Jpm$, the physical ring exchange $\gsix=12|\Jpm|^3/\Jzz^2$ is
+\textbf{odd}.  For $\Jpm>0$ they reinforce and the raw sign is accidentally
+right; for $\Jpm<0$ they oppose, and since the artifact is the larger the
+measured sign is the artifact's.  The middle columns show the same thing
+from the other side: the wrap-around amplitude $\langle\Ofour\rangle\approx
+0.33$ sits three to six times \emph{above} the hexagon amplitude it is
+drowning, and collapses to $0.02$--$0.06$ once the winding is removed.
 
 \begin{figure}[h]
 \centering
-\begin{tikzpicture}
-% bar: x = 15*|Jpm/Jzz|
-\fill[goodcol!25] (0,0) rectangle (2.78,1);
-\fill[icecol!22] (2.78,0) rectangle (6.0,1);
-\fill[black!12] (6.0,0) rectangle (9.0,1);
-\fill[spincol!22] (9.0,0.5) rectangle (15,1);
-\fill[blue!10] (9.0,0) rectangle (15,0.5);
-\draw[black!70] (0,0) rectangle (15,1);
-\draw[black!40] (2.78,0) -- (2.78,1);
-\draw[black!40] (6.0,0) -- (6.0,1);
-\draw[black!40] (9.0,0) -- (9.0,1);
-\draw[black!40] (9.0,0.5) -- (15,0.5);
-% region labels
-\node[font=\scriptsize,align=center] at (1.39,0.5) {full toolkit:\\ mask $+$ splice};
-\node[font=\scriptsize,align=center] at (4.39,0.5) {dissolution:\\ per-sector map,\\ BICs, widths $\Gamma$};
-\node[font=\scriptsize,align=center] at (7.5,0.5) {no-man's-land:\\ SU(2), no\\ privileged basis};
-\node[font=\scriptsize,align=center] at (12.0,0.75) {XYZ: dual-basis mask (reborn)};
-\node[font=\scriptsize,align=center] at (12.0,0.25) {XXZ: planar order, conventional tools};
-% ticks
-\foreach \x/\l in {0/$0$, 2.78/$-0.185$, 7.5/$-0.5$, 15/$-1$}{
-  \draw[black!70] (\x,0) -- (\x,-0.12);
-  \node[font=\scriptsize,below] at (\x,-0.15) {\l};
-}
-\node[font=\scriptsize,below] at (7.5,-0.55) {Heisenberg point};
-% annotations above
-\node[font=\scriptsize,left] at (3.4,1.9) {splice certified to $-0.22$};
-\draw[->,black!60] (3.4,1.9) to[bend left=18] (3.3,1.08);
-\node[font=\scriptsize,right] at (5.8,1.9) {reconnaissance frontier ($-0.30$)};
-\draw[->,black!60] (5.8,1.9) to[bend right=18] (4.5,1.08);
-\node[font=\small] at (7.5,-1.25) {coupling $\Jpm/\Jzz \longrightarrow$};
+\begin{tikzpicture}[scale=1.0,>=Stealth]
+\draw[->] (-2.4,0) -- (2.6,0) node[right,font=\small]{$\Jpm$};
+\draw[->] (0,-1.5) -- (0,1.9) node[above,font=\small]{amplitude};
+\draw[thick,badcol,smooth,domain=-2.1:2.1,samples=60]
+  plot (\x,{0.32*\x*\x}) node[right,font=\small,badcol]{$\gfour\propto\Jpm^2$ (even)};
+\draw[thick,goodcol,smooth,domain=-1.75:1.75,samples=60]
+  plot (\x,{0.22*\x*\x*\x}) node[above right,font=\small,goodcol]{$\gsix\propto\Jpm^3$ (odd)};
+\node[font=\small,align=center,badcol] at (-1.45,-1.05)
+  {here they \emph{fight}\\ and the artifact wins};
+\node[font=\small,align=center,goodcol] at (1.5,-1.05)
+  {here they agree\\ (accidentally right)};
+\draw[decorate,decoration={brace,amplitude=4pt}] (-2.1,-0.55) -- (-0.1,-0.55);
+\draw[decorate,decoration={brace,amplitude=4pt}] (0.1,-0.55) -- (2.1,-0.55);
 \end{tikzpicture}
-\caption{The regime map, with instrument handoffs.  Green: weak coupling,
-where mask, counterterm, and splice all operate.  Teal: the dissolution
-regime, where band physics belongs to the per-sector masked map (BICs and
-Gamow widths) and $H+C$ survives only as an estimate with quoted residue.
-Grey: the shell around the Heisenberg point, where SU(2) symmetry makes
-every ice basis a convention and no topological cleaning is meaningful.
-Beyond: in XYZ materials the whole machinery is reborn in the dominant
-axis's basis (orange); in strict XXZ the planar magnet takes over and
-conventional finite-size tools --- including honest twist averaging ---
-are the right ones (blue).  Boundaries drawn at the 16-site values; their
-precise location is itself a finite-size quantity.}
-\label{fig:regimemap}
+\caption{Why the naive flux is inverted on the cerium side.  The artifact is
+even in $\Jpm$ and never changes sign; the real ring exchange is odd and
+does.}
+\label{fig:evenodd}
 \end{figure}
 
-%=====================================================================
-\section{Wrong turns, kept on purpose}
-\label{sec:wrongturns}
+\begin{lesson}
+\textbf{An observable can be contaminated even when the state looks fine.}
+The raw ice weight at $\Jpm=-0.10$ is a healthy $0.73$ and nothing about
+that ground state looks broken.  But flux is a \emph{loop} observable, and
+the box's spurious loop is stronger than the real one, so the loop
+observable inherits the artifact's sign.  Before trusting any quantity
+defined on a closed path in a periodic cluster, ask which closed path
+dominates it.
+\end{lesson}
 
-Science reporting usually deletes the dead ends.  This campaign keeps them,
-because each one carries a transferable rule.
+\subsection{Levels leave the band --- and none of them decays}
+\label{sec:bic}
+
+From $\Jpm=-0.28$ the band is no longer wholly below the two-spinon
+continuum.  The natural fear is that the photon is acquiring a lifetime and
+that the calculation is losing it.  Both halves are measurably false.
+
+The masked map is not one map but twenty-five: one independent block per
+transport sector, and \emph{each block has its own continuum} --- the spinon
+states that particular sector can reach.  The quoted ``continuum edge'' is
+merely the lowest of these.  So when a level of sector $A$ rises above the
+global edge, the question is whose continuum surrounds it.  If those states
+belong to \emph{other} sectors, the level cannot decay into them --- the
+transport label forbids it --- and sector $A$'s own map still has an
+ordinary real root there.  The level is a \textbf{bound state in the
+continuum}.  That is how the escaped levels are recovered: at $-0.28$ and
+$-0.30$ the thirteen missing ones include an entire twelve-fold multiplet
+sitting $0.16\,\Jzz$ \emph{above} the edge.
+
+The decay widths, computed independently by golden rule on the winding-free
+poles and by continuing the self-consistent root into the complex plane:
 
 \begin{center}
 \small
-\begin{tabular}{p{5.6cm}p{8.6cm}}
+\begin{tabular}{rrrr}
 \toprule
-\textbf{The wrong turn} & \textbf{The rule it taught}\\
+$\Jpm$ & roots found & largest golden-rule width & largest $|\mathrm{Im}\,E|$\\
 \midrule
-``Twist averaging removes winding contamination'' (original claim, retracted)
-& Phases attach to virtual routes, not loop topology.  Compute the object you
-claim vanishes.\\[2pt]
-The twist period was taken as $2\pi$; corrected to $4\pi$
-& The transport quantum is \emph{half} a box vector
-(Eq.~\ref{eq:rho}); flux periods follow from the charge actually
-transported, not from habit.\\[2pt]
-``The label is emergent electric charge''
-& The ice manifold is charge-free; the label is the \emph{magnetization
-displacement}.  Same machinery, correct words --- and the words matter when
-you predict what couples to it.\\[2pt]
-A spectral counting theorem was applied to the masked map, yielding 31\,233
-``levels'' in a 12\,870-state space
-& The theorem's hypotheses (it applies to genuine sub-blocks of a Hermitian
-matrix) failed for the masked object.  Check hypotheses \emph{before}
-trusting a theorem's output; a nonsense count was the only warning.\\[2pt]
-The ``anchoring residue'' peak (a week of theory built on it)
-& It was an unconverged solver ($3$ fixed-point rounds at convergence rate
-$\sim0.5$).  Converge to $10^{-12}$ before interpreting $10^{-2}$.\\[2pt]
-Sector symmetrisation; catalogue counterterms
-& Corrections must be derived from the exact object, not from a plausible
-model of it; both ``improvements'' made things worse.\\[2pt]
-Sparse eigensolver used to count degenerate levels
-& It silently returned 4 of 7 copies of a degenerate level.  Never use a
-lone sparse solve as a multiplicity referee.\\[2pt]
-Peak positions read off a 3000-point grid ``agreed to 0.00\%''
-& The grid step was 0.585\%; the agreement was quantization, not accuracy.
-Refine and interpolate before quoting exponents.\\
+$-0.10$ & $90$ & $0$ (underflow) & $5\times10^{-11}$\\
+$-0.16$ & $90$ & $5\times10^{-159}$ & $8\times10^{-11}$\\
+$-0.20$ & $90$ & $3\times10^{-46}$ & $10\times10^{-11}$\\
+$-0.24$ & $89$ & $3\times10^{-31}$ & $6\times10^{-11}$\\
+$-0.28$ & $77$ & $3\times10^{-15}$ & $6\times10^{-11}$\\
+$-0.30$ & $77$ & $8\times10^{-12}$ & $7\times10^{-11}$\\
 \bottomrule
 \end{tabular}
 \end{center}
 
-%=====================================================================
-\section{Cast of characters}
+Zero, in other words, to the resolution of the calculation, at every
+coupling reached: complex iterations started off the real axis flow back
+onto it.  \textbf{In the winding-free world the photon never decays.}  What
+naive ED shows as ``the band merging into the continuum'' is therefore a
+statement about the raw spectrum's own contamination, not a lifetime.
+Whether the photon of the \emph{infinite} lattice can decay --- a question
+sixteen sites cannot pose, since a sixteen-site ``continuum'' is a comb of
+discrete lines --- is answered by the field theory in
+Sec.~\ref{sec:gaugelifetime}, and the answer explains the measured zeros:
+below the two-spinon threshold the width vanishes kinematically.
 
-\begin{center}
-\small
-\begin{tabular}{lp{10.6cm}}
-\toprule
-symbol / term & meaning\\
-\midrule
-$\Jzz$ & the ice-rule interaction; the unit of energy; spinon cost scale\\
-$\Jpm$ & the quantum (flip) interaction; the one dial; negative for cerium
-pyrochlores\\
-ice manifold & all spin patterns obeying two-in--two-out on every
-tetrahedron (90 states on 16 sites, 2970 on 32)\\
-spinon & a tetrahedron violating the ice rule; the emergent electric charge;
-energy $\sim\Jzz$\\
-ring exchange & collective flip of a closed loop of spins that stays inside
-the ice manifold\\
-$\gsix=12|\Jpm|^3/\Jzz^2$ & strength of the hexagon ring exchange = the
-photon scale = the real physics\\
-$\gfour=4\Jpm^2/\Jzz$ & strength of the wrap-around four-site loop = the
-box artifact\\
-winding $w$ & how many times a loop wraps each glued direction; the complete
-topological label\\
-transport $\rho$ & magnetization displacement of a flip process;
-$\rho=\frac12 w\cdot L$ exactly\\
-sector & family of ice states sharing one polarization value; 25 on 16
-sites, 85 on 32\\
-the mask & deletion of every amplitude connecting different sectors
-= exact removal of all winding processes\\
-$F(z)$ & the Feshbach map: the ice-block amplitude table with all spinon
-excursions folded in exactly, at asking-energy $z$\\
-$Z$, ice weight & the fraction of an exact eigenstate living inside the
-ice manifold, $Z_n=\langle n|P|n\rangle=\|P|n\rangle\|^2\in[0,1]$ (also
-called the residue or purity); $1-Z$ = spinon dressing = the error and
-convergence rate of everything approximate; sum rule
-$\sum_n Z_n=\mathrm{Tr}\,P=90$ over the whole spectrum\\
-$H+C$ & full-space Hamiltonian with the artifact counterterm; whole
-spectrum at once; residue grows as $1-Z$\\
-the splice & $H+C$ spectrum with its lowest 90 levels replaced by the exact
-masked roots; best of both\\
-BIC & bound state in the continuum: a winding-free level above the
-continuum edge, forbidden to decay by transport symmetry\\
-girth engineering & choosing the cell shape to maximize the shortest
-wrap-around loop, demoting the irreducible artifact\\
-twist $\theta$ & phase on flips crossing the glued edge; useless for
-topology (Sec.~\ref{sec:twist}), essential for densifying the spinon
-continuum (Sec.~\ref{sec:roadahead})\\
-Gamow root & complex self-consistent energy $E-i\Gamma/2$, appearing when a
-level meets its \emph{own} sector's continuum; $\Gamma$ is a physical
-lifetime, not an error\\
-mirror map $G(z)$ & the Feshbach fold run the other way: ice space folded
-into the spinon block; cheap because $PHP$ is diagonal\\
-truncation level $L$ & keep spinon states within $L$ pair-flip moves of
-the ice manifold: the depth of virtual excursion followed; the $L$-ladder
-drift is the large-cluster error bar\\
-bordered matrix $M_s$ & sector ice block bordered by the (truncated)
-spinon space; Hermitian, so sector spectra come from sparse Lanczos with
-no anchor --- the calibrated crossing instrument\\
-two-sided fold & counterterm-free thermodynamics: remove the 90
-highest-$Z_n$ raw levels (wherever they sit), insert the masked roots at
-weight one; the mirror map supplies $Z_n$ as the \emph{identifier} --- the
-weighted version fails (hijacked ensemble)\\
-$Z$-rank gap & jump in ice weight between the last removed and first kept
-raw level; bimodal at weak coupling, closes by $-0.20$ --- the continuous
-dial of band identity, and the obstruction theorem seen in data\\
-third peak & the low-$T$ $C(T)$ structure below the ring anomaly; three
-distinct causes --- counterterm splitting (fake), internal band gap
-(real), ground-multiplicity change (real) --- see
-Sec.~\ref{sec:thirdpeak}\\
-Heisenberg point & $\Jpm=-\Jzz/2$: full SU(2) symmetry; every ice basis
-becomes a convention and the mask becomes axis-dependent --- the method's
-structural boundary\\
-axis spread & disagreement between masked results built on the $z$, $x$,
-$y$ bases; measures how much meaning the mask retains as the Heisenberg
-point approaches\\
-axis-permutation duality & exact XYZ relabeling of local axes; transfers
-the entire machinery to whichever coupling dominates\\
-\bottomrule
-\end{tabular}
-\end{center}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0]
+\begin{scope}
+\draw[->] (0,0) -- (0,3.6);
+\node[rotate=90,font=\small] at (-0.4,1.8) {energy};
+\foreach \y in {0.6,1.05,1.5,1.95,2.4,2.85,3.3}
+  \draw[spincol,thick] (0.35,\y) -- (2.45,\y);
+\draw[icecol,line width=2.2pt] (0.25,1.72) -- (2.55,1.72);
+\node[font=\small,align=center] at (1.4,-1.05)
+  {\textbf{foreign-sector continuum}\\ level of sector $A$ amid states\\
+   of sectors $B,C,\dots$: decay forbidden,\\ $\Gamma=0$ \; (measured: a BIC)};
+\end{scope}
+\begin{scope}[xshift=7.4cm]
+\draw[->] (0,0) -- (0,3.6);
+\fill[icecol!18] (0.35,1.45) rectangle (2.45,2.0);
+\foreach \y in {0.6,1.05,1.5,1.95,2.4,2.85,3.3}
+  \draw[icecol!55,thick] (0.35,\y) -- (2.45,\y);
+\draw[icecol,line width=2.2pt] (0.25,1.72) -- (2.55,1.72);
+\node[font=\small,align=center] at (1.4,-1.05)
+  {\textbf{same-sector continuum}\\ hybridization allowed: the root\\
+   turns complex, $E-i\Gamma/2$,\\ width $\Gamma$ = a physical lifetime\\
+   (not reached on this cluster)};
+\end{scope}
+\end{tikzpicture}
+\caption{Two ways to sit inside a continuum.  Left: the surrounding
+continuum belongs to other transport sectors; the per-sector root stays real
+and the state cannot decay --- this is the measured case throughout the
+scan.  Right: the continuum in the state's \emph{own} sector reaches it, the
+real root ceases to exist, and the honest object is a complex root whose
+imaginary part is a genuine decay rate --- physics to report, not an
+artifact to repair.  Which of the two occurs depends on the density of the
+spinon continuum, and on sixteen sites that density is itself a finite-size
+quantity.}
+\label{fig:bic}
+\end{figure}
 
-\vspace{1em}
+\subsection{The low-temperature structure, and how it was told apart}
+\label{sec:thirdpeak}
+
+At strong coupling $C(T)$ grows extra structure \emph{below} the ring
+anomaly.  Asking whether it is physical turned out to have three answers,
+because ``the third peak'' named three different objects.  The referee in
+each case is the exact masked spectrum: a degeneracy it declares exact must
+not radiate a bump, and a gap it certifies must.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figs/fig_third_peak.pdf}
+\caption{The taxonomy, demonstrated from the computed spectra.  (a)~At
+$\Jpm=-0.20$ the counterterm curve carries a low-temperature bump the fold
+lacks; collapsing the six lowest $H+C$ levels --- the image of the
+exactly-degenerate masked ground sextet --- to their mean (dashed) kills the
+bump and lands the curve on the fold's.  (b)~At $\Jpm=-0.30$ the fold peaks
+at the two-level Schottky position $\Delta/2.4=0.0086$ predicted by the
+exact masked internal gap $\Delta=0.0206$.  (c)~The lowest exact masked
+levels versus coupling: the ground sextet is degenerate to all digits
+through $-0.22$; at $-0.25$ the twelve-dimensional sector's doublet dives
+below it, leaving $\delta=0.0012$.}
+\label{fig:thirdpeak}
+\end{figure}
+
+\begin{description}
+\item[Artifact.]  In the exact masked map the six sector ground states are
+degenerate with spread $0.00000$.  The counterterm splits them --- it
+cancels transport inside the ice block at one energy while $PHQ$ keeps
+transporting --- by a fraction of the bandwidth growing from $0.011$ at
+$-0.10$ to $0.115$ at $-0.30$, and the split multiplet radiates a spurious
+Schottky bump ($T=0.0013$ at $-0.15$, $0.006$ at $-0.20$).  Surgical proof:
+keeping only the five lowest $H+C$ levels reproduces it ($0.00548$ against
+$0.00564$ at $-0.30$); collapsing their splitting removes it exactly.  It is
+absent from the splice and the fold, whose lowest levels \emph{are} the
+masked roots.
+\item[Physical, certified.]  The internal-gap Schottky of the band table:
+$0.010634$ (masked) against $0.010730$ ($H+C$) at $-0.22$, two independent
+constructions agreeing to three digits, hiding inside the ring anomaly at
+weak coupling and separating from it by a factor of seven by $-0.22$.
+\item[Physical, and cluster-specific.]  The $6\to2$ multiplicity change at
+$-0.25$ leaves an exact splitting of $0.0012$ that radiates a maximum at
+$T\approx4\times10^{-4}$ --- a heat-capacity fingerprint of ground-sector
+reorganization, visible without inspecting a single eigenvector.  Whether it
+survives on a larger cluster is the subject of Sec.~\ref{sec:host}, and the
+answer is no.
+\end{description}
+
 \begin{plainwords}
-The campaign in four sentences.  A small glued simulation box invents a
-wrap-around quantum process that is stronger than the real photon physics of
-quantum spin ice, and the popular twist-averaging remedy provably cannot
-remove it.  Measuring how far each process transports magnetization
-identifies the wrap-arounds exactly, and deleting them (the mask) is a
-provably maximal, provably safe cleaning that works at any coupling once
-combined with the Feshbach fold.  With the artifact gone, the true photon
-scale, its flux law, its non-decay, and a previously hidden physical anomaly
-all emerge --- and the remaining error is the box itself.  The next campaign
-attacks that error on three independent fronts: the mask for topology,
-cell-shape optimization for the irreducible wrap-pairs, and twist averaging
---- reborn in its legitimate role --- to give the virtual spinons a dense
-continuum to live in.  The method's writ runs from weak coupling all the
-way to the Heisenberg point, where SU(2) symmetry turns the description
-itself into a convention --- and past it, in the XYZ models of the real
-materials, everything is reborn in the basis of the new dominant axis.
+Same temperature window, three causes.  A counterterm error split an exact
+degeneracy --- fake, and diagnosed because the exact spectrum says those
+states are degenerate to all digits.  A real gap inside the clean band ---
+real, certified by two independent constructions agreeing to three digits.
+And a change in which sector owns the ground state --- real on this cluster,
+and a bonus, since the specific heat announces the level crossing on its
+own.  The rule is the same in all three: exact degeneracies must stay
+silent, certified gaps must speak.
 \end{plainwords}
+
+\subsection{How much of this is the cluster}
+\label{sec:host}
+
+Everything above is sixteen sites.  The same line was then run on the
+$32$-site FCC cluster with the identical protocol under a graded truncation
+of the spinon space (keep states within $L$ pair-flip moves of the ice
+manifold; the $L$-ladder is calibrated on cubic-16, where $L=4$ is the exact
+answer).  Three results, and they are sobering in different directions.
+
+\paragraph{The headline scale moves by a factor of three.}  At
+$\Jpm=-0.05$ the winding-free ring peak is $0.84\,\gsix$ on cubic-16 and
+$0.28\,\gsix$ on FCC-32.  The protocol is identical, so the factor is the
+host.  And it is largely \emph{understood}: the peak position of a ring
+model is set by the hexagon-flip adjacency of the ice manifold, which is
+pure combinatorics --- computable with no diagonalization at all --- and
+those host coefficients are $1.070$ (cubic-16) against $0.521$ (FCC-32),
+already $0.49$ of the measured $0.33$.  Cubic-16 is a poor host: $90$ ice
+states in $25$ sectors of dimension at most twelve, every state with $0$ or
+$4$ flippable hexagons and nothing in between, and a ground-state flux
+pinned by counting before any dynamics happens.  FCC-32 has $2970$ ice
+states, $85$ sectors, the largest of dimension $396$, flippabilities
+$0,4,6,7,8$, and no pinning.
+
+\paragraph{The most exciting cubic-16 feature does not exist there.}  On
+FCC-32 the band bottom belongs to the unique zero-polarization sector at
+\emph{every} coupling from $-0.05$ to $-0.32$, with the twelve
+$140$-dimensional sectors forming an exactly degenerate runner-up and a gap
+that only grows ($0.0014\to0.0191$ at $L=1$; $0.0018\to0.0573$ at $L=2$).
+Deepening the truncation \emph{entrenches} that ordering, whereas on
+cubic-16 deepening it is what \emph{revealed} the crossing.  So the $6\to2$
+reorganization at $-0.25$ --- and with it the little Schottky bump, and the
+switching-off of the quantized flux --- is cubic-16 relaxing into the
+ordering FCC-32 has all along, not a physical transition.  The coincidence
+with the theoretical terminus estimate $\Jpm/\Jzz=-1/4$ was a coincidence.
+
+\paragraph{The trend of the ring scale survives.}  The complete
+$2970$-level FCC-32 band exists at thirteen couplings with no level escaping
+at any of them, and its ring peak declines smoothly from $0.281\,\gsix$ at
+$-0.05$ to $0.0158\,\gsix$ at $-0.32$ --- the same qualitative story as
+cubic-16, one host coefficient lower.  The truncation error is measured, not
+assumed: on cubic-16 the ring peak comes out $12\%/42\%/39\%$ low at $L=1$
+for $-0.05/-0.20/-0.30$, $0\%/11\%/19\%$ low at $L=2$, and under $1\%$ at
+$L=3$.  So FCC-32 numbers quoted at $L=1$ are underestimates at strong
+coupling by up to $\sim40\%$ if that error transfers; the weak-coupling
+factor of three between hosts is solid.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{../campaign/outputs/multi_anchor_band/fig_fcc32_peaks.pdf}
+\caption{The winding-free ring peak on both clusters across the XXZ line.
+The protocol is identical; the hosts are not.}
+\label{fig:fcc32peaks}
+\end{figure}
+
+\begin{lesson}
+\textbf{An instrument earns the big cluster by reproducing the small one.}
+A truncated FCC-32 pipeline already existed --- one-pair truncation, map
+evaluated at a single anchor energy --- and the obvious plan was to run it
+at the interesting coupling.  Calibrated first on cubic-16, where the answer
+is known, it showed \emph{no crossing at all} even at $-0.30$, with
+multiplet gaps wrong by a factor of four, because a fixed anchor misses the
+self-consistent $\sim Z$ renormalization of level spacings.  Run
+uncalibrated it would have returned a confident, wrong verdict on precisely
+the question at stake.
+\end{lesson}
+
+\subsection{Thermodynamics, and the size of the convention}
+
+The band alone has no upper Schottky peak, so any full $C(T)$ requires one
+of the three full-space definitions of Sec.~\ref{sec:twoside}.  Along this
+line they were all three computed, and their disagreement is the honest
+error bar.
+
+\begin{center}
+\small
+\begin{tabular}{rlll}
+\toprule
+$\Jpm$ & counterterm & splice & two-sided fold\\
+\midrule
+$-0.05$ & $0.00126$ & $0.00126$ & $0.00126$\\
+$-0.15$ & $0.01721$ & $0.01744$ & $0.01744$\\
+$-0.20$ & $0.02737$ & $0.02848$ & $0.02737$\\
+$-0.30$ & $0.03713$ & $0.04183$ & $0.04183$\\
+$-0.40$ & $0.03967$ & $0.04590$ & $0.01568$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Identical to the digit at $-0.05$, within $12\%$ through $-0.30$, and
+spread over a factor of three at $-0.40$.  That growth is not a defect of
+any one definition: the obstruction theorem says ``winding-free'' is exactly
+defined only \emph{on the band}, so every full-spectrum extension must
+decide which ninety levels the band replaces, and that decision is a
+convention of order $1-Z$ --- which the band table says is $0.88$ at
+$-0.40$.  The three constructions are three ways of making the same
+non-unique choice, and quoting their spread is the correct practice.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figs/fig_fold_peaks.pdf}
+\caption{Every specific-heat maximum of every definition across the line
+(left) and the ring branch in units of $\gsix$ (right).  Three branches
+organize the left panel: the spinon anomaly on top, the ring branch below
+it, and the low-temperature structure of Sec.~\ref{sec:thirdpeak}.  Raw ED's
+ring branch runs along the artifact scale $\gfour$ and crosses $1\,\gsix$
+near $-0.22$ purely by coincidence of scales.  At $-0.40$ raw ED has no
+low-temperature peak at all --- the artifact has grown into the spinon scale
+and swallowed every gauge feature --- while the winding-free definitions
+still resolve structure.}
+\label{fig:foldpeaks}
+\end{figure}
+
+\subsection{What was checked, and to how many digits}
+
+The numbers above are only worth their precision if the machinery around
+them was audited.  For the record, on this line:
+
+\begin{center}
+\small
+\begin{tabular}{lp{6.2cm}r}
+\toprule
+check & what it tests & result\\
+\midrule
+masked roots vs.\ full spectrum & the fold-and-solve is exact &
+$3\times10^{-13}$\\
+$H+C$ ground vs.\ masked reference & the counterterm reproduces the exact
+ground root & $\le1.3\times10^{-13}$\\
+$H+C$ ring peak vs.\ exact masked & where the convention still agrees with
+the exact object & $\le1.86\%$ (worst, at $-0.22$)\\
+$H+C$ level-by-level vs.\ exact & where it does not: the $1-Z$ residue,
+spread through the upper band & up to $19\%$ of the bandwidth\\
+$\sum_n Z_n=\mathrm{Tr}\,P$ & the two-sided bookkeeping counts every level
+once & $90$ to ten digits\\
+entropy $\int C/T\,\mathrm{d}T$ & no level lost or invented, either
+definition & $\ln2$ to $2\times10^{-7}$\\
+hexagon amplitude, raw vs.\ masked & the mask does not touch physics &
+identical to $7\times10^{-16}$\\
+winding amplitude after masking & the mask removes all of the artifact &
+exactly $0$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{lesson}
+\textbf{Three rulers that lied before the physics did.}  (i)~The
+self-consistency $E=\mathrm{eig}\,F(E)$ solved by plain iteration converges
+at rate $1-Z$; three rounds at strong coupling leave $\sim10^{-2}$, which
+was misread for a week as a new physical effect complete with a spurious
+$C(T)$ peak.  A secant step reaches $10^{-13}$ in 5--11 solves and the
+effect evaporated.  (ii)~Peak positions read off a $3000$-point grid
+``agreed to $0.00\%$'' --- the grid step was $0.585\%$; the agreement was
+quantization.  (iii)~The entropy sum rule converges like $1/T_{\max}^2$, so
+truncating at $T_{\max}=60$ leaves a deficit that looks exactly like a lost
+energy level and does not improve with grid refinement ($T_{\max}=600$
+resolves it).  Audit the ruler before blaming the physics.
+\end{lesson}
+
+\subsection{What the line establishes, and where it stops}
+
+Stated as plainly as the measurements allow:
+
+\begin{itemize}
+\item \textbf{Naive ED never measures the photon on this geometry.}  Its
+low-temperature peak tracks $\gfour$ with exponent $1.99$, its flux has the
+wrong sign at every negative coupling, and its ice-block winding amplitude
+is $67\times$ the hexagon amplitude it hides.
+\item \textbf{The masked fold measures it, and is validated where the answer
+was known:} peak $\to1.02\,\gsix$ and exponent $3.10$ as $\Jpm\to0$, flux
+exactly $\pm1/4$, hexagon amplitudes untouched to machine precision, spinon
+anomaly unchanged to four digits.
+\item \textbf{Strong coupling is renormalization, not instability.}  The
+ring amplitude falls to $0.07\,\gsix$ by $-0.35$ and the theory becomes
+longer-ranged (long/hex $0.13\to1.17$) with no diagonal takeover
+($|V/g|\le0.022$); the band widens, the continuum descends, and thirteen
+levels cross the edge by $-0.28$ --- every one of them with zero width.  The
+raw ground state crosses nothing all the way to $\Jpm=-1$.
+\item \textbf{The one dramatic feature belonged to the box.}  The $6\to2$
+sector reorganization at $-0.25$, its Schottky bump and the accompanying
+loss of the quantized flux do not occur on FCC-32 at any coupling, and
+deeper truncation there entrenches the opposite ordering.
+\item \textbf{Two limits are structural, not technical.}  Full-spectrum
+thermodynamics is a convention of size $1-Z$ (measured: exact agreement at
+$-0.05$, a factor of three between definitions at $-0.40$); and the whole
+construction is anchored to the $S^z$ ice manifold, so as $\Jpm\to-\Jzz/2$
+--- the Heisenberg point, where the model is $\Jzz\,\mathbf{S}_i\cdot
+\mathbf{S}_j$ and no spin axis is special --- the mask built on $z$ and the
+mask built on $x$ become different operators with different spectra.  The
+premise dissolves before the method does.
+\end{itemize}
+
+The frontier of this line is therefore not a failure of the instrument but a
+property of the hosts available: at $-0.5$ the ice description carries about
+a tenth of the low-energy weight, at $-0.25$ the sixteen-site cluster runs
+out of sectors, and the question of where the $\pi$-flux phase actually ends
+--- somewhere in $[-0.25,-0.5]$, on the evidence here --- needs the
+splitting between flux sectors measured against system size, which is a
+larger-cluster program rather than a better mask.
+
+\begin{plainwords}
+On the XXZ line, in one paragraph.  A sixteen-site periodic cluster invents
+a ring exchange sixty-seven times stronger than the real one, and every
+naive quantity that depends on a loop --- the low-temperature specific heat,
+the flux --- reports the invention instead: the peak sits at the artifact
+scale, and the flux comes out $0$ where the true answer is $\pi$.  Deleting
+the winding amplitudes from the folded map fixes both exactly: the peak
+converges onto the perturbative photon scale as the coupling goes to zero,
+the flux becomes a quantized $\pm1/4$, the spinon physics is untouched, and
+nothing was invented anywhere.  Pushed to strong coupling the photon does
+not die; it slows down by an order of magnitude, spreads over longer loops,
+and never acquires a decay width.  What limits the answer in the end is not
+the artifact --- that is gone --- but the smallness of the box that hosts
+the calculation.
+\end{plainwords}
+
+%=====================================================================
+\section{The gauge theory knew: the campaign restated in field-theory
+language}
+\label{sec:gauge}
+
+Everything in this document was derived microscopically: by enumerating
+loops, proving identities about polarization, folding matrices and measuring
+the results.  The theory community has a second language for quantum spin
+ice --- compact $U(1)$ lattice gauge theory with charged matter, the
+$\Phi^\dagger\Phi\,e^{iA}$ theory --- in which every hard-won fact of this
+campaign turns out to have a name, and most of them have proofs that predate
+the material.  Translating earns three things.  It shows that the
+limitations of Sec.~\ref{sec:hc} are physics, not methodology.  It imports
+tools for exactly the questions the small box cannot answer.  And it turns
+several ``sobering'' measurements into positive predictions
+(Sec.~\ref{sec:experiment}).
+
+\subsection{The dictionary}
+\label{sec:dictionary}
+
+The mapping is standard (Hermele, Fisher and Balents, 2004): the spin
+component $S^z$ on a pyrochlore link is an electric field $E$, the raising
+operator $S^+$ is $e^{iA}$, and the two-in--two-out ice rule is Gauss's law
+$\nabla\!\cdot\!E=0$.  Everything in this document then has a second name:
+
+\begin{center}
+\small
+\begin{tabular}{p{6.2cm}p{7.6cm}}
+\toprule
+\textbf{this document} & \textbf{gauge theory}\\
+\midrule
+ice configuration & state obeying Gauss's law (vacuum sector)\\[2pt]
+spinon (3-in--1-out tetrahedron) & gauge charge $\Phi$\\[2pt]
+the $\Jpm$ pair flip & matter hopping $\Phi^\dagger\Phi\,e^{iA}$: a charge
+moves and lays down electric string\\[2pt]
+hexagon ring exchange $\gsix$ & magnetic energy $\cos(\nabla\times A)$; its
+quanta are the photon\\[2pt]
+transport sector $\rho$ & 't~Hooft electric flux sector through the torus
+cycles\\[2pt]
+winding four-loop $\gfour$ & a virtual charge pair created, wound once
+around a cycle, and annihilated: the flux-changing process\\[2pt]
+twist $\theta$ & background flat connection (Wilson line of an external
+gauge field)\\[2pt]
+corner twists $\{0,\pi\}^3$ & the parity holonomies; Theorem~C is the
+statement that any flat connection factorizes into gauge $\times$
+holonomy\\[2pt]
+masked flux $\langle\Ohex\rangle=-1/4$ & the $\pi$-flux background of the
+emergent magnetic field\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+One entry of the dictionary carries a quantitative payoff immediately.  The
+flux-changing process requires a charge to traverse a non-contractible loop
+of length $\ell_w$, so its amplitude scales as
+$|\Jpm|^{\ell_w/2}/\Jzz^{\ell_w/2-1}$: \emph{relative to the hexagon it dies
+exponentially in system size}, and is anomalously strong only because
+$\ell_w=4<6$ on the small cell.  This single line reconciles the campaign
+with the literature: quantum Monte Carlo on large lattices (Shannon, Sikora,
+Pollmann, Penc and Fulde, 2012) measured the photon \emph{without} any mask
+and was right to, because at large $L$ the artifact is nonperturbatively
+small.  The mask matters precisely where exact diagonalization lives, and
+the $L$-ladder of Sec.~\ref{sec:host} is the crossover measured.
+
+\subsection{Why nothing finer than transport exists}
+\label{sec:nolabel}
+
+The obstruction theorem of Sec.~\ref{sec:hc} --- the transport label is
+exact on the ice manifold and \emph{cannot} be extended to spinon states ---
+looked like the method's private limitation.  In gauge-theory language it is
+a classical theorem.  In pure compact $U(1)$ on a torus the electric flux
+sectors are superselected ('t~Hooft, 1979): no local process connects them.
+Add dynamical matter of unit charge and superselection is \emph{destroyed}
+(the Fradkin--Shenker era, 1979): a $\Phi$ pair can wind a cycle and shift
+the flux by one, so no exact flux label survives on the full Hilbert space
+--- for charge-$q$ matter a $\mathbb{Z}_q$ remnant would survive, and $q=1$
+leaves nothing.  Our spinons have unit charge.  The quarter-period
+polarization step of a single spinon hop is this fact, microscopically.
+
+The same translation absorbs the twist chapter.  A charged state's flux
+depends on the Wilson string attached to it; only the combined winding of a
+pair's two strings is gauge invariant --- which is exactly the route
+ambiguity $N_A+N_B=w$ that killed twist averaging in
+Sec.~\ref{sec:twist}.  And with unit-charge matter present, the only
+representation-independent projection a background holonomy can implement is
+the parity (center) one --- which is Theorem~B: of all conceivable character
+averages, precisely the $M=2$ corner average survives, and it equals the
+parity mask.
+
+Two consequences deserve to be said plainly.  First, the $1-Z$ convention
+of Sec.~\ref{sec:twoside} is not a missed label waiting for a cleverer
+method; it is the measured size of a theorem.  Any future scheme must pay
+it.  Second, the search instinct ``surely there is a deeper label
+underneath'' has a definite answer: on the charge-free manifold, transport
+is the deepest label, and off it, there is none.
+
+\subsection{What the mask is: an emergent one-form symmetry, enforced by
+hand}
+\label{sec:oneform}
+
+Modern language sharpens the point once more.  The conservation of electric
+flux through the torus cycles is the charge of a \emph{one-form symmetry}
+(Gaiotto, Kapustin, Seiberg and Willett, 2015).  In quantum spin ice this
+symmetry is \emph{emergent}: explicitly broken by the spinon matter, exact
+below the spinon gap up to winding-tunneling corrections that vanish
+exponentially with $L$.  The infinite lattice therefore enforces it
+dynamically.  A four-site-circumference box does not --- the tunneling
+$\gfour$ is the symmetry-violating amplitude, resummed by the small torus
+into the dominant term.  Under this light the whole campaign compresses to
+one sentence:
+
+\begin{quote}
+\emph{The mask enforces, at finite size and by hand, the emergent one-form
+symmetry that the thermodynamic limit would enforce dynamically.}
+\end{quote}
+
+Its exactness on the band, its silence on the spinons, and its price of
+$1-Z$ off the band are then three faces of ``emergent, not exact.''
+
+This also situates the method in a lineage rather than presenting it as an
+ad-hoc repair.  Quantum dimer models are the matter-\emph{free} cousins of
+this problem --- the dimer constraint is Gauss's law with the charges
+removed from the Hilbert space --- and there, resolving torus spectra by
+winding sector has been standard practice since Rokhsar--Kivelson (1988) and
+Moessner--Sondhi (2001), because with no charges the sectors are exactly
+superselected and the ``mask'' is free.  Quantum spin ice at finite $\Jzz$
+puts the charges back.  The masked fold is the controlled continuation of
+the dimer-model practice to that case: the fold restores the charge dynamics
+exactly (every virtual spinon excursion, to all orders), and the mask keeps
+the sector bookkeeping that the dimer limit had for free.
+
+\subsection{The photon's lifetime, where the box cannot go}
+\label{sec:gaugelifetime}
+
+Section~\ref{sec:bic} measured decay widths of zero --- golden rule and
+complex continuation, every coupling reached --- and noted that the honest
+failure mode, a level degenerate with its \emph{own} sector's continuum,
+never occurs on this host.  The field theory explains both halves and then
+answers the question the box cannot pose.
+
+In the $\Phi^\dagger\Phi\,e^{iA}$ theory the photon width is the imaginary
+part of the transverse polarization bubble, $\Gamma(\omega)\propto
+\mathrm{Im}\,\Pi_T(\omega,k)$: the amplitude to convert one photon into a
+spinon--antispinon pair.  That imaginary part vanishes \emph{identically}
+below the two-spinon threshold, $\omega<2\Delta_{\rm spinon}$.  At weak
+coupling the photon lives at $\omega\sim\gsix$, orders of magnitude below
+$2\Delta\sim\Jzz$: the measured $\Gamma=0$ is not a small number, it is a
+kinematic identity, and the winding-free photon of the infinite lattice is
+\emph{exactly} stable there.  A genuine width requires the spinon gap to
+close --- the Higgs transition of the gauge--matter theory (Savary and
+Balents, 2012), where $\Phi$ condenses, the photon acquires a mass by the
+Anderson--Higgs mechanism, and critical fluctuations damp it.  The lifetime
+question therefore has a sharp infinite-volume answer: \emph{stable
+everywhere in the deconfined phase, damped only in a window around the
+Higgs transition}.  Our measured continuum edge collapsing from $+0.67$ to
+$-1.63\,\Jzz$ across the scan is the finite-size shadow of that closing gap,
+and the emergent fine-structure constant of spin ice being large (Pace,
+Morampudi, Moessner and Laumann, 2021) is why the approach to that window is
+so violent --- it is the same strong photon--matter coupling that
+renormalizes $g_{\rm eff}$ down to $0.07\,\gsix$ in the table of
+Sec.~\ref{sec:strong}.
+
+\subsection{What is genuinely open}
+
+The electric label organizes everything above, and its usefulness fades
+exactly where $Z$ collapses --- the states become mostly matter, and the
+electric flux of a matter state is the thing the theorems forbid.  The
+gauge theory owns a second, \emph{magnetic} sector --- monopoles of the
+emergent field, the $\pi$-flux background the campaign measures as the
+quantized $\langle\Ohex\rangle=-1/4$ --- with its own one-form structure.
+Whether a magnetic label can organize the strong-coupling regime where the
+electric one goes soft is, to our knowledge, open; the quantized flux
+holding to sixteen digits while $Z$ falls from $0.99$ to $0.34$ is at least
+a hint that something magnetic stays rigid after the electric bookkeeping
+has blurred.
+
+\subsection{What this offers experiment}
+\label{sec:experiment}
+
+Read as a referee report on naive simulation, this campaign is demolition:
+the peak was the box's, the flux sign was backwards, the one dramatic
+transition belonged to the cluster.  Read as a corrected instrument, it
+makes positive, falsifiable statements --- and they matter most for
+precisely the materials whose proposed couplings sit in the difficult
+regime.
+
+\begingroup
+\emergencystretch=1.2em
+\begin{description}
+\item[The ring anomaly exists, but colder than advertised.]  The photon
+scale that reaches observables is $g_{\rm eff}$, not the perturbative
+$12|\Jpm|^3/\Jzz^2$: five times smaller near $\Jpm/\Jzz=-0.18$ (the
+regime proposed for Ce$_2$Hf$_2$O$_7$) and eleven times smaller by
+$-0.30$.  A specific-heat search that looked for the bump at the
+perturbative scale and found nothing has \emph{not} falsified quantum spin
+ice; a bump found at the renormalized scale supports it.  The corrected
+peak positions, coupling by coupling and on two hosts, are in
+Secs.~\ref{sec:strong} and~\ref{sec:host} --- with the honest host spread
+(a factor of three between cubic-16 and FCC-32) quoted as the finite-size
+error bar.
+\item[A discrete sign, not a fitted curve.]  For $\Jpm<0$ the winding-free
+flux is $\pi$: quantized, $\langle\Ohex\rangle=-1/4$ to machine precision,
+at every coupling where the protected multiplet survives.  Naive theory got
+the sign backwards on the entire cerium side (Sec.~\ref{sec:strong}); any
+probe sensitive to the flux sector tests the corrected prediction against
+the artifact one.
+\item[The photon is coherent.]  Below the two-spinon continuum its
+intrinsic width is exactly zero (Sec.~\ref{sec:gaugelifetime}); on the
+instrument's resolution that is a quality factor above $10^8$.  An observed
+gauge-photon linewidth is then a measurement of disorder, of instrument, or
+of proximity to the Higgs window --- not an intrinsic property of the
+deconfined phase.
+\item[Where theory can promise numbers, and where only bands.]  The
+instrument itself says where its full-spectrum statements are sharp: for
+$|\Jpm|/\Jzz\lesssim0.22$ every construction agrees to a few percent, so a
+material fit is a genuine comparison; at $-0.18$ the whole $90$-level band
+is intact (median ice weight $0.54$) and quantitatively exact.  Beyond
+$-0.25$, full-spectrum thermodynamics carries the measured
+convention spread and only band-resolved statements (energies, flux,
+sector structure) remain exact.  A fit that lands there should be compared
+against band observables, not against $C(T)$ wholesale.
+\item[Old comparisons should be re-based, not discarded.]  Any material
+conclusion calibrated against small-cluster periodic ED inherited the
+artifact: peak positions tracking $\gfour$, inverted flux, a spurious
+uniform response ($0.333$ naive against an exact $0$).  The winding-free
+tables of Sec.~\ref{sec:strong} are drop-in replacements at the same cost,
+while large-lattice QMC needed no correction and agrees with the corrected
+picture by the $\ell_w$ scaling of Sec.~\ref{sec:dictionary}.
+\end{description}
+\endgroup
+
+\begin{plainwords}
+The campaign found, spin by spin, what the gauge theory knew abstractly:
+the small box's fake process is a flux-sector tunneling that the infinite
+material forbids; no label finer than flux exists, and with charges around
+even flux is only emergent; the mask is that emergent conservation law,
+imposed by hand at finite size.  The translation is not decoration.  It
+proves the method's limits are nature's, it explains why big simulations
+never needed the fix, it answers the lifetime question the box cannot ask
+--- the photon is exactly stable below the two-spinon threshold --- and it
+converts a demolition into predictions: a colder ring anomaly, a quantized
+$\pi$-flux sign, a coherent photon, and a stated regime of validity for
+every number.
+\end{plainwords}
+
+\paragraph{Starting points in the literature.}  Not a bibliography; one
+entry per idea used above.  The gauge-theory mapping: M.~Hermele,
+M.~P.~A.~Fisher and L.~Balents, Phys.\ Rev.\ B \textbf{69}, 064404 (2004).
+The photon seen numerically on large lattices: N.~Shannon, O.~Sikora,
+F.~Pollmann, K.~Penc and P.~Fulde, Phys.\ Rev.\ Lett.\ \textbf{108}, 067204
+(2012); O.~Benton, O.~Sikora and N.~Shannon, Phys.\ Rev.\ B \textbf{86},
+075154 (2012).  Gauge--matter mean-field theory and the Higgs transition:
+L.~Savary and L.~Balents, Phys.\ Rev.\ Lett.\ \textbf{108}, 037202 (2012).
+Electric flux sectors on the torus: G.~'t~Hooft, Nucl.\ Phys.\ B
+\textbf{153}, 141 (1979); their fate with dynamical matter: E.~Fradkin and
+S.~Shenker, Phys.\ Rev.\ D \textbf{19}, 3682 (1979).  One-form (higher-form)
+symmetries: D.~Gaiotto, A.~Kapustin, N.~Seiberg and B.~Willett, JHEP
+\textbf{02} (2015) 172.  The emergent fine-structure constant of spin ice:
+S.~D.~Pace, S.~C.~Morampudi, R.~Moessner and C.~R.~Laumann, Phys.\ Rev.\
+Lett.\ \textbf{127}, 117205 (2021).  Winding sectors in the matter-free
+cousin: D.~S.~Rokhsar and S.~A.~Kivelson, Phys.\ Rev.\ Lett.\ \textbf{61},
+2376 (1988); R.~Moessner and S.~L.~Sondhi, Phys.\ Rev.\ Lett.\ \textbf{86},
+1881 (2001).  Reviews of quantum spin ice: M.~J.~P.~Gingras and
+P.~A.~McClarty, Rep.\ Prog.\ Phys.\ \textbf{77}, 056501 (2014); L.~Savary
+and L.~Balents, Rep.\ Prog.\ Phys.\ \textbf{80}, 016502 (2017).
 
 \end{document}
