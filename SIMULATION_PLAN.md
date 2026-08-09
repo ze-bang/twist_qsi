@@ -1,75 +1,147 @@
 # Validation plan: a convergent winding-free band protocol
 
-## Campaign status and goal (updated 2026-08-03) — remote-cluster phase
+## Campaign status and goal (updated 2026-08-09) — physics-first remote phase
 
-**The method, current form.**  The optimized protocol is no longer any form
-of twist or character averaging over the ice manifold: it is the direct
+**The method, current form.**  The optimized protocol is the direct
 deletion of every ice-block matrix element connecting different transport
 (polarization) sectors, applied to the exact Feshbach map `F(z)` (the bare
 ice block is diagonal, so only the folded map exposes the amplitudes to be
 deleted).  The character-grid construction below survives as the derivation
 and as a validation oracle: the `M=2` corner average equals the parity mask
-exactly, and the continuous source average equals the block projection used
-here.  Full-range thermodynamics is the two-sided fold; large-cluster band
-spectra come from multi-anchor interpolated self-consistency and per-sector
-bordered matrices, all under graded `L`-truncation with the cubic-16 exact
-grids as calibration gates.
+exactly.  Full-range thermodynamics is the two-sided fold; large-cluster
+band spectra come from multi-anchor interpolated self-consistency and
+per-sector bordered matrices, all under graded `L`-truncation with the
+cubic-16 exact grids as calibration gates.  Conceptual frame (pedagogical
+Sec. "the gauge theory knew"): the mask enforces, at finite size, the
+emergent electric one-form symmetry that the thermodynamic limit enforces
+dynamically; the winding artifact is a flux-sector tunneling of virtual
+charges, exponentially small in circumference.
 
-The local (cubic-16 + truncated FCC-32) program is complete through the
-`(Jpm, Jpmpm)` plane; the narrative record is `paper/pedagogical.tex`.
-State of the results:
+**State of the results (through 2026-08-08).**
+- Instruments, calibration-gated: two-sided fold (`run_two_sided_fold.py`;
+  weighted variant falsified), bordered sector solver
+  (`run_fcc32_sector_grounds.py`), multi-anchor band
+  (`run_multi_anchor_band.py`, ring peak 0.3-1% vs exact), DSSF sweep
+  (`run_dssf_sweep.py`: S^zz fold + exact Sz=+-1 Lanczos S^xx).
+- cubic-16 `(Jpm, Jpmpm)` plane complete (56 points): certified two-peak
+  ratio ceiling ~0.10 at (-0.24, 0.15); re-entrant dissolution boundary;
+  near-CHO ratio 0.332 at (-0.125, 0.30) NOT certified (27/90 band).
+- FCC-32 XXZ line: no 6->2 crossing anywhere (cubic-16 host pathology);
+  L=1 band at 13 couplings; host coefficients c16 = 1.070, c32 = 0.521;
+  L-truncation error measured (L=1 ~40% low at strong coupling, L=2
+  11-19%, L=3 <1%).
+- Material confrontation (cubic-16): at the fitted Ce2Hf2O7 couplings
+  (-0.125, 0.085) the winding-free gauge peak sits at ~7 mK (Jzz = 0.05
+  meV; ~3 mK anchored on the measured 65 mK spinon peak) while NAIVE
+  periodic ED puts its artifact peak at ~29 mK — on top of the observed
+  25 mK anomaly.  Identifications of 25 mK as "the photon" calibrated on
+  small periodic clusters inherited the artifact.
+- Loop anatomy (cubic-16, `run_feshbach_anatomy.py`): within a geometry
+  class all amplitudes identical to 5e-15 (K_L is sharply defined);
+  |g_eff|/g6 falls 0.81 -> 0.07 while long/hex rises 0.13 -> 1.17 and
+  |V/g| stays <= 0.022: the effective gauge theory delocalizes rather
+  than developing a potential term or an instability.
 
-- **Instruments, all calibration-gated**: the two-sided fold
-  (`campaign/run_two_sided_fold.py`, Z-ranked replacement; the weighted
-  variant is falsified), the per-sector bordered-matrix solver
-  (`campaign/run_fcc32_sector_grounds.py`), and the multi-anchor
-  self-consistent band (`campaign/run_multi_anchor_band.py`; ring peak to
-  0.3-1% vs exact on cubic-16 with ~10 F-evaluations).
-- **cubic-16 `(Jpm, Jpmpm)` plane complete** (`run_jpmpm_fold_plane.py`,
-  8x7 grid, `campaign/outputs/jpmpm_fold_plane/`): certified two-peak
-  ratio ceiling ~0.10 at (-0.24, 0.15); one certified gauge-spinon merge
-  cell at (-0.16, 0.25); dissolution boundary is re-entrant in Jpm
-  (pp_c ~ 0.22 / 0.28 / 0.13 at |Jpm| = 0.05 / 0.125-0.16 / 0.30); the
-  near-CHO ratio 0.332 at (-0.125, 0.30) sits in the dissolving region
-  (27/90 band) and is NOT certified.
-- **FCC-32 (XXZ line only)**: no 6->2 sector crossing at any coupling
-  (cubic-16's crossing = host pathology); complete L=1 multi-anchor band
-  at 13 couplings; exact ring-model host coefficients c16 = 1.070,
-  c32 = 0.521; L-truncation error on ring peaks measured (L=1 ~40% low at
-  strong coupling, L=2 11-19%, L=3 <1%).
+**The physics goal of this phase** (reframed 2026-08-09 after external
+review): stop treating the mask as the headline and chase the two results
+it enables — (A) *virtual spinons do not kill the emergent photon; they
+delocalize its Hamiltonian* (loop-amplitude tomography, an emergent gauge
+range xi_gauge, and whether the residue Z is the organizing variable);
+(B) *does the nearest-neighbor XYZ model produce the 25 mK anomaly of
+Ce2Hf2O7 as dressed gauge dynamics, or can it be rigorously excluded?*
+(either outcome is publishable; the ORNL paper itself suspects beyond-NN
+terms).  Decision tree: WP2 positive -> build the PRL around the material;
+WP2 null -> build it around WP1, with WP2 as the material corollary.
 
-**Goal of the remote phase: the `(Jpm, Jpmpm)` plane on FCC-32**, scoped
-by what each side can deliver.  The full fold (and hence the spinon peak
-and certified peak ratios) is cubic-16-only: with Jpmpm breaking Sz, the
-FCC-32 raw side is the full 2^32 space.  FCC-32's contributions are:
+### Work packages, in order
 
-1. **Extend the truncated-space machinery to Jpmpm** (blocking step):
-   `bfs_space` / `build_hamiltonian` in `campaign/run_truncated_feshbach.py`
-   need pair-raising/lowering moves in the BFS and the `S+S+`/`S-S-` bond
-   terms (complex Hermitian; transport increments `+-c_ij` as defined
-   below).  Gate: rerun the cubic-16 plane with the truncated builder and
-   calibrate the L-ladder against the exact 56-point grid now in
-   `campaign/outputs/jpmpm_fold_plane/`.
-2. **Dissolution boundary on FCC-32** (the headline question: does the
-   re-entrant shape survive on a healthy host?): bordered sector grounds
-   + continuum edge vs `(Jpm, Jpmpm)` on three rows
-   (Jpm = -0.125, -0.20, -0.30) x pp in {0.10..0.30}, L=1 scan + L=2 spot
-   checks.
-3. **Gauge-peak surface** on the same grid, free from the same runs
-   (multi-anchor band; quote the L-drift as the truncation error bar).
-4. Optional: **spinon side via typicality** (mTPQ-style trace on the full
-   2^32 space, ~34 GB per vector, matrix-free) at boundary-adjacent
-   points only, to restore approximate ratios on FCC-32.
+**WP0 — local pre-flight (cubic-16, hours; run before or alongside
+cluster spin-up).**
+- *0a, organizing-variable discriminator.*  Loop-class anatomy
+  (K_6, K_8+/hex ratio, |V/g|, Z) on a POSITIVE-Jpm ladder
+  (+0.02 .. +0.20, ~8 points; extend `run_feshbach_anatomy.py`) and at
+  ~6 certified `(Jpm, pp)` points of the existing plane (full-65536 fold
+  path of `run_jpmpm_fold_plane.py`).  Test: do long/hex and K_8/K_6
+  collapse against (1-Z) across sign and pp, or against the bare
+  couplings?  Current data is ambiguous: at matched |Jpm| ~ 0.05 the two
+  signs give long/hex 0.317 / 0.321 despite different Z (0.929 / 0.890)
+  — one ladder decides.  Collapse => "Z is the physical scaling
+  coordinate" opens the paper; no collapse => organize WP1 by couplings.
+- *0b, Gamma selection-rule generality.*  Verify on the 2970 FCC-32 ice
+  states that the q=0 sublattice magnetizations are constant on each
+  transport sector (pure combinatorics, minutes).  Decides whether the
+  exact vanishing of the winding-free longitudinal Gamma response is a
+  theorem of the construction or a cubic-16 accident — required before
+  any selection-rule claim in WP3.
+
+**WP1 — FCC-32 loop-amplitude tomography -> xi_gauge (headline A).**
+Extract the masked ice-block fold entries at Jpm/Jzz = -0.03, -0.06,
+-0.10, -0.15, -0.20, -0.25, -0.30; classify every entry by flipped-string
+geometry: perimeter (6, 8, 10, 12), single-connected vs disconnected
+(product processes), spatial diameter, and the Delta-rho = 0 transport
+check.  Confirm the cubic-16 within-class degeneracy persists (if yes,
+K_L needs no median).  Fit K_L ~ A exp(-(L-6)/xi_gauge); plot (i)
+K_L/K_6 vs L per coupling, (ii) xi_gauge vs coupling, (iii) xi_gauge vs
+(1-Z) and vs the inverse continuum-edge gap.  **Truncation gate
+(critical): the longest loops converge SLOWEST in L-truncation and are
+biased low — exactly the quantity of interest.**  Calibrate K_8/K_6 and
+K_10/K_6 vs truncation depth on cubic-16 (L=1..4, L=4 exact) and quote
+the transfer as the error bar; kill criterion: if the L=1 -> L=2 drift of
+K_10/K_6 exceeds its inter-coupling variation, add L=3 spot checks before
+claiming any xi trend.  Machinery: block-CG fold columns in the truncated
+space (as in `run_multi_anchor_band.py`); 2970 columns per point.
+
+**WP2 — decisive NN-XYZ test of the 25 mK anomaly (headline B).**
+- Blocking step (unchanged from the 08-03 plan): extend
+  `bfs_space`/`build_hamiltonian` in `run_truncated_feshbach.py` to pair
+  moves (`S+S+`/`S-S-`, transport increments +-c_ij); gate against the
+  exact cubic-16 56-point plane grid.
+- Then scan the fit-constrained (Ja, Jb, Jc) region around the published
+  seeds (NLC_A, NLC_B, QMC_ordered in `material_fit_config.json`) — the
+  full XYZ triplet, not only the (Jpm, pp>=0) slice.  Per point record:
+  n_found (dissolution), Z, gauge/spinon peak positions, and the entropy
+  split (the gauge crossover must carry the Pauling R ln(3/2); the
+  25 mK peak's measured entropy content is an independent discriminator).
+- Question: does ANY certified parameter set consistent with the 65 mK
+  anomaly + entropy put a gauge feature at 25 mK?  Prior from cubic-16
+  is against it (ratio ceiling 0.098 vs measured 0.38; FCC-32 host
+  coefficient pushes the gauge peak colder) — a clean null is the
+  expected and equally publishable outcome: a rigorous NN-XYZ exclusion
+  answering the experiment's open question.  The 08-03 items
+  "dissolution boundary on FCC-32" and "gauge-peak surface" are absorbed
+  into this scan; the typicality option stays optional.
+
+**WP3 — sector-resolved S^zz(q, omega) on FCC-32 at the WP2 best point.**
+The fit-independent prediction: which spectral weight is forbidden by
+flux superselection, and where the pi-flux background redistributes the
+allowed weight in momentum (contact with the GMFT symmetry-
+fractionalization signatures).  Builds on the cubic-16 halves already in
+`outputs/tier1_probes/` (Gamma-rule sticks, photon omega(X)) via the
+per-sector bordered solvers; requires WP0b to have passed.
+
+**WP4 — radial cuts through the XYZ near-degeneracy ring (last; cheap).**
+3-4 radial cuts, FCC-32 L=1, measuring Z, band gap, K_6, K_8/K_6,
+continuum edge, and sector ordering simultaneously.  Pre-registered kill
+criterion (the 6->2 lesson): if only the sector gap sharpens with system
+size, it is a host effect — discard without ceremony.
+
+**What NOT to headline** (external review concurs with the campaign's own
+findings): the exact +-1/4 flux value (tied to cubic-16 flippability
+counting), the 6->2 crossing (host pathology, already demoted), and the
+BIC protection story (correct, but easily dismissed as finite-volume
+sector structure; keep it as a diagnostic, not a claim).
 
 **Remote execution notes.**  Every scanner is a standalone script taking
 `(coupling, ...)` pairs on the command line and writing one json+npz per
 point (embarrassingly parallel by grid point; resume = rerun missing
-points).  Dependencies: numpy + scipy only, thread count via
-`OMP_NUM_THREADS`/`OPENBLAS_NUM_THREADS` (8 per job is calibrated).
-Measured per-point costs on a 32-core/125 GB node: cubic-16 plane point
-~15-50 min; FCC-32 L=1 multi-anchor coupling ~70 min; FCC-32 L=2 bordered
-sector ground ~155 s/sector (85 sectors); L=2 spaces are ~2.5 M states
-(XXZ) and will grow several-fold with pair moves — budget accordingly.
+points).  Dependencies: numpy + scipy only; thread count via
+`OMP_NUM_THREADS`/`OPENBLAS_NUM_THREADS` (8 per job is calibrated; do NOT
+run concurrent unbounded-BLAS jobs — measured 30x slowdown).  Measured
+per-point costs on a 32-core/125 GB node: cubic-16 plane point ~15-50
+min; cubic-16 anatomy/DSSF point ~1-3 min; FCC-32 L=1 multi-anchor
+coupling ~70 min; FCC-32 L=2 bordered sector ~155 s/sector (85 sectors);
+L=2 spaces ~2.5 M states (XXZ), several-fold larger with pair moves —
+budget WP2 accordingly.  SLURM infra started in `campaign/pilot/`.
 
 The sections below are the frozen protocol definition and the original
 validation ladder; they remain the reference for what "winding-free"
