@@ -73,6 +73,87 @@ def loop_operator(sites):
     return active, active ^ mask
 
 
+def transverse_density(vectors, n_sites):
+    """M_ij = <S^+_i S^-_j>, averaged over the multiplet.
+
+    Its largest eigenvalue over N is the Penrose-Onsager condensate
+    fraction: order one means the transverse spins have condensed into a
+    single mode, i.e. XY magnetic order, which is what a spinon condensate
+    looks like from this side.  A finite cluster cannot break the symmetry,
+    so the eigenvalue -- not <S^+> -- is the order parameter.
+    """
+    configurations = np.arange(1 << n_sites, dtype=np.int64)
+    matrix = np.zeros((n_sites, n_sites))
+    for column in range(vectors.shape[1]):
+        vector = vectors[:, column]
+        for i in range(n_sites):
+            bit_i = 1 << i
+            occupied = (configurations & bit_i) != 0
+            matrix[i, i] += float(np.sum(vector[occupied] ** 2))
+            for j in range(i + 1, n_sites):
+                bit_j = 1 << j
+                source = np.where(~occupied
+                                  & ((configurations & bit_j) != 0))[0]
+                if source.size == 0:
+                    continue
+                element = float(np.dot(vector[source ^ (bit_i | bit_j)],
+                                       vector[source]))
+                matrix[i, j] += element
+                matrix[j, i] += element
+    return matrix / vectors.shape[1]
+
+
+def order_parameters(vectors, diagonal, exchange, pair, n_sites):
+    """What the state is, if it is not spin ice.
+
+    Three complementary questions, all cheap once the vector exists:
+
+      * <M_z^2>/N^2 with M_z = sum_i S^z_i.  Every ice state has M_z = 0
+        exactly, while all-in--all-out saturates it, so this separates
+        ice-like from Ising-ordered without reference to any band.
+      * the condensate fraction above: XY / spinon-condensed order.
+      * the energy split into its three terms, which says plainly which
+        term the state has chosen to optimise -- Ising (ice-like),
+        exchange (XY), or pair flip.
+    """
+    configurations = np.arange(1 << n_sites, dtype=np.int64)
+    # bitwise_count returns uint8, so the subtraction underflows to 248 for
+    # every state with fewer than eight up spins unless it is cast first.
+    # Points on the XXZ line hide this (the ground state has exactly eight),
+    # which is why it only showed up once Jpmpm was switched on.
+    magnetisation = 0.5 * (np.bitwise_count(configurations).astype(np.int64)
+                           - n_sites // 2)
+    weights = np.mean(np.abs(vectors) ** 2, axis=1)
+    density = transverse_density(vectors, n_sites)
+    return {
+        "m_z_squared": float(np.sum(weights * magnetisation ** 2)),
+        "aiao_fraction": float(np.sum(weights * magnetisation ** 2))
+                         / (0.5 * n_sites) ** 2,
+        "condensate_fraction": float(np.linalg.eigvalsh(density).max()
+                                     / n_sites),
+        "energy_ising": float(np.sum(weights * diagonal)),
+        "energy_exchange": float(np.mean(
+            [v @ (exchange @ v) for v in vectors.T])),
+        "energy_pair": float(np.mean([v @ (pair @ v) for v in vectors.T])),
+    }
+
+
+def flippability(operators, vectors):
+    """<sum_h N_h>: mean number of flippable loops, over the multiplet.
+
+    The normaliser of the flux.  ``active`` already indexes exactly the
+    configurations on which the loop can be flipped, so the projector's
+    expectation is the weight the state puts there.
+    """
+    if not operators:
+        return float("nan")
+    vectors = np.atleast_2d(vectors.T).T
+    return float(np.sum([
+        float(np.sum(np.abs(vectors[active, column]) ** 2))
+        for active, _ in operators
+        for column in range(vectors.shape[1])]) / vectors.shape[1])
+
+
 def loop_expectation(operators, vectors):
     """Mean of <O + h.c.> over the supplied loops and over the multiplet.
 
@@ -173,6 +254,19 @@ def main() -> None:
             "hexagon_flux": loop_expectation(hex_ops, multiplet),
             "hexagon_flux_ground": loop_expectation(hex_ops, ground),
             "winding4_amplitude": loop_expectation(wind_ops, multiplet),
+            # Same normalisation as the masked scan, so the two are
+            # comparable: Phi = <sum O_h>/<sum N_h>, which is +-1 exactly
+            # for a state that is an eigenvector of the ring flips and
+            # strictly smaller for one that is not.  On the raw cluster it
+            # measures how far the ground state is from a flux eigenstate.
+            "hexagon_flippable": flippability(hex_ops, multiplet),
+            "hexagon_phi": (
+                len(hex_ops) * loop_expectation(hex_ops, multiplet)
+                / flippability(hex_ops, multiplet)
+                if flippability(hex_ops, multiplet) > 1e-9 else float("nan")),
+            "winding4_flippable": flippability(wind_ops, multiplet),
+            **order_parameters(multiplet, diagonal, exchange, pair,
+                               cluster.n_sites),
             "converged": bool(full),
             "krylov": [k, ncv],
             "runtime": time.perf_counter() - point_started,
@@ -181,14 +275,20 @@ def main() -> None:
         print(f"jx={jx:+.3f} jy={jy:+.3f} E0={entry['energy']:+.6f} "
               f"gap={entry['gap']:.3e} deg={entry['degeneracy']} "
               f"Zice={entry['ice_weight']:.4f} "
-              f"flux6={entry['hexagon_flux']:+.5f} "
+              f"Phi={entry['hexagon_phi']:+.4f} "
+              f"<N>={entry['hexagon_flippable']:.3f} "
+              f"Mz2={entry['m_z_squared']:.3f} "
+              f"cond={entry['condensate_fraction']:.4f} "
               f"wind4={entry['winding4_amplitude']:+.5f} "
               f"{'ok' if full else 'PARTIAL'} ({entry['runtime']:.1f}s)",
               flush=True)
+        # Checkpoint every point: the order parameters made this ten times
+        # slower per point, so a task now carries over an hour of work.
+        with open(OUTPUT / f"{prefix}_{task_id:03d}.json", "w") as handle:
+            json.dump({"points": records}, handle, indent=1, default=float)
 
-    with open(OUTPUT / f"{prefix}_{task_id:03d}.json", "w") as handle:
-        json.dump({"points": records}, handle, indent=1, default=float)
-    print(f"wrote {OUTPUT}/{prefix}_{task_id:03d}.json", flush=True)
+    print(f"wrote {OUTPUT}/{prefix}_{task_id:03d}.json "
+          f"({len(records)} points)", flush=True)
 
 
 if __name__ == "__main__":

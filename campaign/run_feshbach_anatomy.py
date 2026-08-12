@@ -28,6 +28,22 @@ rather than only as a root finder.  Per coupling it reports
         masked band, so that "does a gauge theory survive?" is answered by a
         number rather than by a frame.
 
+  (v)   loop-amplitude tomography (WP1 machinery, calibrated here on cubic-16):
+        every entry of the *masked* map classified by the geometry of the
+        flipped string -- perimeter L, number of connected components
+        (single process vs a product of disjoint ones), graph diameter and
+        minimum-image spatial diameter -- giving the class amplitudes K_L
+        whose decay defines the emergent gauge range xi_gauge.  The
+        within-class spread is reported alongside every K_L: on cubic-16 it
+        is ~5e-15, i.e. K_L is sharply defined and needs no median.
+
+Sign of Jpm.  Nothing here assumes Jpm < 0.  The positive ladder is the WP0a
+discriminator: it separates "the residue Z is the organizing coordinate" from
+"the bare couplings are", because at matched |Jpm| the two signs have
+different Z but (so far) the same long/hex ratio.  For Jpm > 0 the expected
+winding-free flux flips to 0-flux (+1/4), which the run reports as a free
+consistency check.
+
 Usage: run_feshbach_anatomy.py <jpm> [<jpm> ...]
 """
 
@@ -57,6 +73,12 @@ from qsi_campaign.downfold import build_blocks, solve_roots  # noqa: E402
 from qsi_campaign.protocol import (  # noqa: E402
     polarization_sector_labels,
     sector_project,
+)
+from qsi_campaign.tomography import (  # noqa: E402
+    connected_class_amplitudes,
+    graph_distance_matrix,
+    loop_tomography,
+    minimum_image_distance_matrix,
 )
 
 OUTPUT = ROOT / "campaign" / "outputs" / "feshbach_anatomy"
@@ -121,6 +143,12 @@ def hexagon_flip_operator(cluster, ice_states: np.ndarray) -> np.ndarray:
                 column = index[int(state) ^ mask]
                 operator[row, column] += 1.0
     return operator
+
+
+# The loop tomography lives in ``qsi_campaign.tomography``: it is shared with
+# the FCC-32 driver, and a second copy here drifted from it once already (the
+# copy averaged in the entries the mask had zeroed, which corrupts every K_L
+# ratio by the ratio of survival fractions).  One implementation only.
 
 
 # ------------------------------------------------------------- thermodynamics
@@ -196,6 +224,8 @@ def main() -> None:
     table = string_classes(cluster)
     n_flip = flippable_counts(cluster, ice_states)
     hex_operator = hexagon_flip_operator(cluster, ice_states)
+    graph_distance = graph_distance_matrix(cluster)
+    real_distance = minimum_image_distance_matrix(cluster)
 
     for jpm in couplings:
         started = time.perf_counter()
@@ -256,6 +286,17 @@ def main() -> None:
                 long_mask |= names == name
         long_norm = float(np.linalg.norm(np.where(long_mask, off, 0.0)))
         total_norm = float(np.linalg.norm(off))
+
+        # ---- loop tomography of the masked map (WP0a / WP1)
+        tomography = loop_tomography(
+            f_masked, ice_states, cluster, labels, graph_distance,
+            real_distance)
+        amplitudes = connected_class_amplitudes(tomography)
+        k6 = amplitudes.get(6, {}).get("K", np.nan)
+        k_ratio = {
+            f"k{length}_over_k6": (entry["K"] / k6 if k6 else np.nan)
+            for length, entry in amplitudes.items() if length != 6
+        }
 
         # ---- winding-free band, its peak, flux, residue
         if n_masked:
@@ -318,10 +359,17 @@ def main() -> None:
             "z_ground": z_ground,
             "model_error": model_error,
             "model_peak": model_peak,
+            "k6": float(k6),
+            "one_minus_z": 1.0 - z_ground,
             "runtime": time.perf_counter() - started,
         }
+        record.update({key: float(value) for key, value in k_ratio.items()})
         for name, entry in stats.items():
             record[f"class::{name}"] = entry
+        for length, entry in amplitudes.items():
+            record[f"K::{length}"] = entry
+        for name, entry in tomography.items():
+            record[f"geom::{name}"] = entry
 
         tag = f"{jpm:+.3f}".replace(".", "p")
         with open(OUTPUT / f"anatomy_{tag}.json", "w") as handle:
@@ -339,6 +387,12 @@ def main() -> None:
             n_flip=n_flip, model_levels=model_levels,
             diagonal_residual=residual)
 
+        ladder = " ".join(
+            f"K{length}/K6={entry['K'] / k6:.4f}"
+            for length, entry in amplitudes.items() if length != 6 and k6)
+        worst_spread = max(
+            (entry["within_class_spread"] for entry in amplitudes.values()),
+            default=0.0)
         print(f"jpm={jpm:+.3f} roots={n_masked}/90 (raw {n_raw}, oracle "
               f"{oracle:.1e}) W/g={record['width_over_g']:.2f} g={g_eff:+.3e} [{g_eff/(12*abs(jpm)**3):.3f} g6] "
               f"V={v_eff:+.3e} V/g={record['rk_ratio']:+.3f} "
@@ -346,6 +400,8 @@ def main() -> None:
               f"peak/g6={record['ring_peak_over_g6']:.4f} flux={flux:+.4f} "
               f"Z={z_ground:.3f} modelerr={model_error:.3f} "
               f"({record['runtime']:.0f}s)", flush=True)
+        print(f"         K6={k6:.4e} {ladder} "
+              f"(worst within-class spread {worst_spread:.1e})", flush=True)
 
 
 if __name__ == "__main__":

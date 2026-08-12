@@ -46,6 +46,15 @@ Validation: at couplings where the reference is complete this must reproduce it
 exactly, since every root then lies below the edge and no scanning happens.
 
 Usage: run_masked_band_complete.py <jpm> [<jpm> ...] [--window W] [--grid N]
+                                   [--jpmpm PP] [--full-basis]
+
+``--jpmpm`` selects the full 65,536-state cubic-16 spin basis (Sz is no longer
+conserved) and adds the S+S+/S-S- bond terms at theta=0; the transport-sector
+mask is untouched because sector labels are properties of the ice
+configurations alone.  ``--full-basis`` forces the full basis at Jpmpm = 0:
+there every coupling to an Sz != 0 pole vanishes identically, so the result
+must reproduce the fixed-Sz calculation exactly -- the structural gate for the
+full-basis path.
 """
 
 from __future__ import annotations
@@ -65,10 +74,17 @@ sys.path.insert(0, str(ROOT / "campaign"))
 
 import recompute_finite_size_artifact as geometry  # noqa: E402
 from qsi_campaign.exact_band import (  # noqa: E402
+    cubic16_translation_permutations,
     fixed_magnetization_basis,
+    full_spin_basis,
     microscopic_character_hamiltonian,
+    translation_sector_bases,
 )
-from qsi_campaign.downfold import build_blocks, solve_roots  # noqa: E402
+from qsi_campaign.downfold import (  # noqa: E402
+    build_blocks,
+    build_blocks_klein,
+    solve_roots,
+)
 
 OUTPUT = ROOT / "campaign" / "outputs" / "masked_band_complete"
 OUTPUT.mkdir(parents=True, exist_ok=True)
@@ -144,6 +160,8 @@ def main() -> None:
     # Option values are not couplings: filtering on a leading "--" silently
     # swallowed 1.5 and 25000 as couplings on the first run of this script.
     window, grid_points, couplings = 0.40, 6000, []
+    jpmpm, full_basis, direct = 0.0, False, False
+    gpu, tag_suffix = False, ""
     tokens = list(sys.argv[1:])
     while tokens:
         token = tokens.pop(0)
@@ -151,19 +169,45 @@ def main() -> None:
             window = float(tokens.pop(0))
         elif token == "--grid":
             grid_points = int(tokens.pop(0))
+        elif token == "--jpmpm":
+            jpmpm = float(tokens.pop(0))
+        elif token == "--full-basis":
+            full_basis = True
+        elif token == "--direct":
+            direct = True
+        elif token == "--gpu":
+            gpu = True
+        elif token == "--tag-suffix":
+            tag_suffix = tokens.pop(0)
         else:
             couplings.append(float(token))
 
     cluster = geometry.build_cluster("cubic", (1, 1, 1))
-    states = fixed_magnetization_basis(cluster.n_sites, cluster.n_sites // 2)
+    if jpmpm != 0.0 or full_basis:
+        states = full_spin_basis(cluster.n_sites)
+    else:
+        states = fixed_magnetization_basis(cluster.n_sites, cluster.n_sites // 2)
     index = {int(s): i for i, s in enumerate(states)}
     ice_rows = np.asarray([index[int(s)] for s in cluster.ice_states])
+
+    # the Klein translation decomposition cuts the QHQ eigendecomposition
+    # ~16x on the full basis; --direct keeps the single dense solve as the
+    # cross-validation reference
+    blocked = len(states) > 20000 and not direct
+    sector_bases = None
+    if blocked:
+        sector_bases = translation_sector_bases(
+            states, cubic16_translation_permutations(cluster))
 
     for jpm in couplings:
         started = time.perf_counter()
         hamiltonian = microscopic_character_hamiltonian(
-            cluster, states, jpm, np.zeros(3))
-        blocks = build_blocks(cluster, states, ice_rows, hamiltonian)
+            cluster, states, jpm, np.zeros(3), jpmpm=jpmpm)
+        if blocked:
+            blocks = build_blocks_klein(cluster, states, ice_rows,
+                                        hamiltonian, sector_bases, gpu=gpu)
+        else:
+            blocks = build_blocks(cluster, states, ice_rows, hamiltonian)
         labels = blocks.sector_labels
 
         # the reference, for validation and for the count it misses
@@ -216,6 +260,8 @@ def main() -> None:
 
         record = {
             "jpm": jpm,
+            "jpmpm": jpmpm,
+            "n_states": len(states),
             "n_reference": n_baseline,
             "n_below_edge": n_below,
             "n_recovered_above": n_above,
@@ -234,13 +280,22 @@ def main() -> None:
             record["max_deviation_from_reference"] = float(
                 np.max(np.abs(np.sort(levels) - reference)))
 
+        record["method"] = ("klein-gpu" if gpu else "klein") if blocked \
+            else "direct"
         record["runtime"] = time.perf_counter() - started
         tag = f"{jpm:+.3f}".replace(".", "p")
+        if jpmpm != 0.0:
+            tag += f"_pp{jpmpm:+.3f}".replace(".", "p")
+            if not blocked:
+                tag += "_direct"
+        elif full_basis:
+            tag += "_fullbasis" + ("_klein" if blocked else "")
+        tag += tag_suffix
         with open(OUTPUT / f"band_{tag}.json", "w") as handle:
             json.dump(record, handle, indent=1, default=float)
 
         deviation = record.get("max_deviation_from_reference")
-        print(f"jpm={jpm:+.3f} reference={n_baseline:3d}/90 -> "
+        print(f"jpm={jpm:+.3f} pp={jpmpm:+.3f} reference={n_baseline:3d}/90 -> "
               f"complete={n_below + n_above:3d}/90 "
               f"(below {n_below}, recovered {n_above}, lost {n_lost}) | "
               f"Z of recovered: "

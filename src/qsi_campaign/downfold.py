@@ -31,6 +31,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import numpy as np
+from scipy.linalg import eigh as scipy_eigh
 
 from .protocol import polarization_sector_labels, sector_project
 
@@ -66,28 +67,134 @@ def build_blocks(cluster, states: np.ndarray, ice_indices: np.ndarray,
     """Assemble PHP, QHQ eigendata, and the rotated coupling block.
 
     ``hamiltonian`` is the sparse microscopic Hamiltonian on ``states`` (the
-    fixed-Sz basis for XXZ).  The single dense diagonalization of QHQ is the
-    only expensive step and is done exactly, with no iterative solver.
+    fixed-Sz basis for XXZ, or the full spin basis when ``Jpmpm`` breaks Sz).
+    The single dense diagonalization of QHQ is the only expensive step and is
+    done exactly, with no iterative solver.  The blocks are sliced from the
+    sparse matrix so that the only large dense allocations are QHQ itself and
+    the LAPACK workspace: on the full 65,536-state cubic-16 basis the dense
+    intermediate of ``todense()`` alone would cost 34 GB before slicing.
     """
-    dense = np.asarray(hamiltonian.todense())
-    imaginary = float(np.max(np.abs(dense.imag), initial=0.0))
-    if imaginary > 1e-12:
-        raise ValueError(f"downfolding expects a real Hamiltonian at theta=0: {imaginary:.3e}")
-    dense = dense.real
+    matrix = hamiltonian.tocsr()
+    if np.iscomplexobj(matrix.data):
+        imaginary = float(np.max(np.abs(matrix.data.imag), initial=0.0))
+        if imaginary > 1e-12:
+            raise ValueError(
+                f"downfolding expects a real Hamiltonian at theta=0: {imaginary:.3e}")
+        matrix = matrix.real.tocsr()
 
-    n = dense.shape[0]
+    n = matrix.shape[0]
     ice = np.asarray(ice_indices, dtype=np.int64)
     complement = np.setdiff1d(np.arange(n), ice)
 
-    php = dense[np.ix_(ice, ice)].copy()
-    qhp = dense[np.ix_(complement, ice)].copy()
-    qhq = dense[np.ix_(complement, complement)]
-    poles, rotation = np.linalg.eigh(qhq)
+    php = matrix[ice][:, ice].toarray()
+    qhp = matrix[complement][:, ice].toarray()
+    qhq = matrix[complement][:, complement].toarray()
+    # overwrite_a reuses the QHQ storage for the eigenvectors; peak memory is
+    # QHQ plus the dsyevd workspace (~3 n^2 doubles total) instead of ~4 n^2.
+    poles, rotation = scipy_eigh(qhq, overwrite_a=True, check_finite=False,
+                                 driver="evd")
+    del qhq
 
     return DownfoldBlocks(
         php=php,
         coupling=rotation.T @ qhp,
         poles=poles,
+        sector_labels=polarization_sector_labels(cluster),
+    )
+
+
+def _dense_eigh(matrix: np.ndarray, gpu: bool):
+    """Dense symmetric eigendecomposition, on the H100 when ``gpu``.
+
+    A 16,384 Klein block is 2.1 GB in fp64 -- trivial for an 80 GB H100 --
+    and cuSOLVER syevd runs it ~10-30x faster than the ~91 GFLOPS the AOCL
+    dsyevd sustains on a full Genoa node (the measured backend ceiling
+    there).  Transfers are ~2 GB each way, seconds, so only the
+    eigendecomposition itself moves to the device.
+    """
+    if gpu:
+        import cupy
+        device_values, device_vectors = cupy.linalg.eigh(cupy.asarray(matrix))
+        return cupy.asnumpy(device_values), cupy.asnumpy(device_vectors)
+    return scipy_eigh(matrix, overwrite_a=True, check_finite=False,
+                      driver="evd")
+
+
+def build_blocks_klein(cluster, states: np.ndarray, ice_indices: np.ndarray,
+                       hamiltonian, sector_bases, *,
+                       gpu: bool = False) -> DownfoldBlocks:
+    """``build_blocks`` through the Klein translation decomposition.
+
+    On the full 65,536-state cubic-16 basis the direct QHQ eigendecomposition
+    is a single 65,446-dimensional dense solve (~9 h at measured node
+    throughput).  The four FCC translations of the cubic cell commute with
+    ``H(theta=0)`` at any ``(Jpm, Jpmpm)`` and the ice manifold is closed under
+    them, so QHQ block-diagonalizes over the Klein irreps: four ~16,384 solves
+    (~16x fewer flops, ~10 GB instead of ~100 GB).
+
+    Per irrep ``k`` with sparse basis ``B_k`` (columns orthonormal):
+    the ice components are ``I_k = B_k[ice]^dagger`` (m_k x 90, rank d_k with
+    sum_k d_k = 90), orthonormalized by SVD into ``O_k``; the sector QHQ is
+    ``(1 - O_k O_k^dagger) H_k (1 - O_k O_k^dagger)`` whose spectrum splits
+    exactly into d_k spurious ice-kernel modes (classified by their overlap
+    with ``O_k`` -- NOT by eigenvalue, since genuine poles cross zero at
+    strong coupling) and the true QHQ poles; the coupling rows follow as
+    ``W^dagger H_k I_k`` because the kept eigenvectors are orthogonal to the
+    ice subspace.  Poles and coupling concatenate over irreps into the same
+    ``DownfoldBlocks`` contract as the direct path.
+    """
+    matrix = hamiltonian.tocsr()
+    if np.iscomplexobj(matrix.data):
+        imaginary = float(np.max(np.abs(matrix.data.imag), initial=0.0))
+        if imaginary > 1e-12:
+            raise ValueError(
+                f"downfolding expects a real Hamiltonian at theta=0: {imaginary:.3e}")
+        matrix = matrix.real.tocsr()
+
+    ice = np.asarray(ice_indices, dtype=np.int64)
+    php = matrix[ice][:, ice].toarray()
+
+    poles_parts, coupling_parts, rank_total = [], [], 0
+    for name, basis in sector_bases.items():
+        block = (basis.conj().T @ matrix @ basis).toarray()
+        imaginary = float(np.abs(block.imag).max())
+        if imaginary > 1e-10:
+            raise ValueError(f"Klein block {name} is not real: {imaginary:.3e}")
+        block = np.ascontiguousarray(block.real)
+
+        # ice components of this irrep: (m_k, 90); real because the Klein
+        # characters are +-1
+        ice_components = np.asarray(basis[ice].conj().T.todense()).real
+        left, singular, _ = np.linalg.svd(ice_components, full_matrices=False)
+        rank = int(np.sum(singular > 1e-10))
+        rank_total += rank
+        ortho = left[:, :rank]                              # (m_k, d_k)
+
+        projected = block - ortho @ (ortho.T @ block)
+        projected -= (projected @ ortho) @ ortho.T          # (1-P) H (1-P)
+        projected = 0.5 * (projected + projected.T)
+        values, vectors = _dense_eigh(projected, gpu)
+
+        overlap = np.linalg.norm(ortho.T @ vectors, axis=0)
+        spurious = overlap > 0.5
+        if int(spurious.sum()) != rank or (
+                np.any((overlap > 1e-6) & (overlap < 1.0 - 1e-6))):
+            raise RuntimeError(
+                f"Klein block {name}: ice-kernel classification failed "
+                f"({int(spurious.sum())} spurious vs rank {rank}; "
+                f"overlap range [{overlap.min():.2e}, {overlap.max():.2e}])")
+        keep = ~spurious
+        poles_parts.append(values[keep])
+        coupling_parts.append(vectors[:, keep].T @ (block @ ice_components))
+
+    if rank_total != len(ice):
+        raise RuntimeError(
+            f"ice ranks over Klein irreps sum to {rank_total}, expected {len(ice)}")
+
+    return DownfoldBlocks(
+        php=php,
+        coupling=np.vstack(coupling_parts),
+        poles=np.concatenate(poles_parts),
         sector_labels=polarization_sector_labels(cluster),
     )
 
@@ -103,7 +210,8 @@ class RootResult:
 
 def solve_roots(blocks: DownfoldBlocks, *, masked: bool,
                 tolerance: float = 1e-12,
-                max_bisections: int = 200) -> RootResult:
+                max_bisections: int = 200,
+                coupling_floor: float | None = None) -> RootResult:
     """Bisection solve of E = eig_n F(E) for every branch below the continuum.
 
     Between poles of the self-energy each sorted eigenvalue branch
@@ -120,7 +228,28 @@ def solve_roots(blocks: DownfoldBlocks, *, masked: bool,
     the dissolution diagnostic, not an error.
     """
     d = blocks.php.shape[0]
-    edge = float(blocks.poles.min()) - 1e-9
+    if coupling_floor is None:
+        # Historical behaviour, kept as the default so existing consumers
+        # are not changed underneath them.
+        edge = float(blocks.poles.min()) - 1e-9
+    else:
+        # A pole with no coupling to P is not a pole of the self-energy at
+        # all: its residue vanishes, Sigma is analytic there, and an
+        # ice-derived level cannot decay into it.  Taking such a state as
+        # the continuum edge rejects perfectly good roots against a
+        # continuum the band can never reach -- measured on the full
+        # 65,536-state basis, where the lowest pole is an odd-parity state
+        # with exactly zero coupling, this loses all 90 roots at points
+        # where the even-parity edge keeps 25.  Monotonicity of the
+        # branches is untouched, since Sigma is analytic across the
+        # decoupled poles being skipped.
+        weight = np.linalg.norm(blocks.coupling, axis=1)
+        coupled = blocks.poles[weight > coupling_floor]
+        if coupled.size == 0:
+            raise RuntimeError(
+                "no pole couples to the model space above "
+                f"{coupling_floor:g}: the fold is empty")
+        edge = float(coupled.min()) - 1e-9
 
     def branch_values(z: float) -> np.ndarray:
         return np.linalg.eigvalsh(blocks.f_matrix(z, masked=masked))

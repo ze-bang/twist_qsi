@@ -53,8 +53,16 @@ def path_mask(path) -> int:
     return mask
 
 
-def bfs_space(cluster, levels: int) -> np.ndarray:
-    """States reachable from the ice manifold in at most ``levels`` hops."""
+def bfs_space(cluster, levels: int, jpmpm: float = 0.0) -> np.ndarray:
+    """States reachable from the ice manifold in at most ``levels`` hops.
+
+    With ``jpmpm`` nonzero the pair-flip moves ``S+S+`` / ``S-S-`` are hops too,
+    and they must be in the BFS or the truncated space is not closed under the
+    Hamiltonian: a pair flip out of the space would silently drop amplitude
+    rather than raise.  Pair moves change S^z by +-2, so the reachable space at
+    a given ``levels`` is several-fold larger than the XXZ one -- which is the
+    cost WP2 has to budget for.
+    """
     current = np.asarray(cluster.ice_states, dtype=np.uint64)
     seen = current.copy()
     for _ in range(levels):
@@ -62,16 +70,51 @@ def bfs_space(cluster, levels: int) -> np.ndarray:
         for (left, right) in cluster.bonds:
             left_bit = np.uint64(1) << np.uint64(left)
             right_bit = np.uint64(1) << np.uint64(right)
-            differ = ((current & left_bit) != 0) != ((current & right_bit) != 0)
-            images.append(current[differ] ^ (left_bit | right_bit))
+            left_up = (current & left_bit) != 0
+            right_up = (current & right_bit) != 0
+            exchange = left_up != right_up
+            images.append(current[exchange] ^ (left_bit | right_bit))
+            if jpmpm != 0.0:
+                # S+S+ acts on both-down, S-S- on both-up; the flipped bit
+                # pattern is the same XOR either way
+                pair = left_up == right_up
+                images.append(current[pair] ^ (left_bit | right_bit))
         fresh = np.unique(np.concatenate(images))
         seen = np.union1d(seen, fresh)
         current = fresh
     return np.sort(seen)
 
 
-def build_hamiltonian(cluster, space: np.ndarray, jpm: float) -> csr_matrix:
-    """Sparse XXZ Hamiltonian restricted to ``space`` (a sorted uint64 array)."""
+def build_hamiltonian(cluster, space: np.ndarray, jpm: float,
+                      jpmpm: float = 0.0, strict: bool = False) -> csr_matrix:
+    """Sparse XXZ/XYZ Hamiltonian restricted to ``space``.
+
+    Conventions follow ``exact_band.microscopic_character_hamiltonian`` at
+    ``theta = 0`` exactly, since the cubic-16 plane grid built with that
+    function is the calibration oracle for this one:
+
+    ```text
+    H = H0 - Jpm sum_<ij> (S+_i S-_j + S-_i S+_j)
+           + Jpmpm sum_<ij> (S+_i S+_j + S-_i S-_j).
+    ```
+
+    Note the sign asymmetry -- the exchange term enters with `-Jpm` and the
+    pair term with `+Jpmpm`.  Both are real at `theta = 0`, so the matrix stays
+    real and the block-CG machinery downstream is unchanged.
+
+    Out-of-space targets are DROPPED, for both channels.  That is not a
+    shortcut: restricting an operator to a subspace *is* ``P_sub H P_sub``, so
+    discarding the matrix elements that leave the space is exactly the
+    variational truncation this whole construction rests on, and it is what the
+    exchange channel has always done.  A truncated BFS space is never closed --
+    its boundary states always have images one hop further out -- so raising
+    here would make every genuinely truncated run impossible.
+
+    ``strict=True`` instead raises on any dropped element.  Use it only to
+    ASSERT closure, as WP2's Gate A does after growing the BFS to saturation:
+    there the space really is closed, and a dropped element would mean the
+    builder disagrees with the reference Hamiltonian.
+    """
     ups = np.bitwise_count(space[:, None] & cluster.tet_masks[None, :])
     diagonal = 0.5 * ((ups.astype(np.int16) - 2) ** 2).sum(axis=1)
     rows = [np.arange(len(space))]
@@ -80,15 +123,34 @@ def build_hamiltonian(cluster, space: np.ndarray, jpm: float) -> csr_matrix:
     for (left, right) in cluster.bonds:
         left_bit = np.uint64(1) << np.uint64(left)
         right_bit = np.uint64(1) << np.uint64(right)
-        differ = ((space & left_bit) != 0) != ((space & right_bit) != 0)
-        source = np.where(differ)[0]
+        left_up = (space & left_bit) != 0
+        right_up = (space & right_bit) != 0
+
+        source = np.where(left_up != right_up)[0]
         target_states = space[source] ^ (left_bit | right_bit)
-        position = np.searchsorted(space, target_states)
-        position = np.clip(position, 0, len(space) - 1)
+        position = np.clip(np.searchsorted(space, target_states),
+                           0, len(space) - 1)
         inside = space[position] == target_states
         rows.append(position[inside])
         columns.append(source[inside])
         values.append(np.full(int(inside.sum()), -jpm))
+
+        if jpmpm == 0.0:
+            continue
+        source = np.where(left_up == right_up)[0]
+        target_states = space[source] ^ (left_bit | right_bit)
+        position = np.clip(np.searchsorted(space, target_states),
+                           0, len(space) - 1)
+        inside = space[position] == target_states
+        if strict and not inside.all():
+            raise ValueError(
+                f"{int((~inside).sum())} pair-flip targets fall outside the "
+                "space, but closure was asserted: rebuild the space with "
+                "bfs_space(..., jpmpm=...) grown to saturation")
+        rows.append(position[inside])
+        columns.append(source[inside])
+        values.append(np.full(int(inside.sum()), jpmpm))
+
     hamiltonian = csr_matrix(
         (np.concatenate(values),
          (np.concatenate(rows), np.concatenate(columns))),

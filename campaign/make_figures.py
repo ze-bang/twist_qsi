@@ -59,6 +59,7 @@ import recompute_finite_size_artifact as geometry  # noqa: E402
 from qsi_campaign.protocol import (  # noqa: E402
     full_hilbert_counterterm_spectrum,
 )
+from qsi_campaign.material_fit import load_digitized_series  # noqa: E402
 from qsi_campaign.thermodynamics import thermal_observables  # noqa: E402
 
 OUTPUT = ROOT / "campaign" / "outputs"
@@ -1262,6 +1263,120 @@ def character_convergence_figure(exact_report: dict) -> None:
     save(figure, "fig_character_convergence")
 
 
+# --- Ce2Hf2O7 ------------------------------------------------------------
+# The dipole-octupole XYZ fits, in meV, and their map onto Eq. (1):
+#   J_pm = -(Jb + Jc)/4,  J_pmpm = (Jb - Jc)/4,  J_zz = Ja.
+CE2HF2O7_SETS = {
+    "A": {"Ja": 0.050, "Jb": 0.021, "Jc": 0.004, "color": BARE},
+    "B": {"Ja": 0.051, "Jb": 0.008, "Jc": -0.018, "color": FCC},
+    "s2": {"Ja": 0.047693, "Jb": 0.025838, "Jc": 0.003838, "color": CLEAN},
+}
+MEV_TO_K = 1.0 / 0.08617333262   # 11.6045 K/meV
+GAS_CONSTANT = 8.31446261815324  # J K^-1 mol^-1
+
+# The two heat-capacity anomalies of Smith et al., PRL 135, 086702 (2025).
+CE2HF2O7_ANOMALIES = ((0.0635, r"$T_1$"), (0.0244, r"$T_2$"))
+
+
+def _load_ce2hf2o7_nlce():
+    """Order-6 NLCE curves, restricted to where order 6 agrees with order 5.
+
+    The file carries comment lines with commas, so the column names are read
+    from the single uncommented header line rather than through genfromtxt.
+    """
+    path = ROOT / "campaign" / "data" / "ce2hf2o7_nlce_order6.csv"
+    if not path.exists():
+        return None
+    lines = [line for line in path.read_text().splitlines()
+             if line.strip() and not line.startswith("#")]
+    names = lines[0].split(",")
+    table = np.array([[float(value) for value in row.split(",")]
+                      for row in lines[1:]])
+    temperature = table[:, 0]
+    curves = {}
+    for column, name in enumerate(names):
+        if not name.startswith("C_"):
+            continue
+        tag = name[len("C_"):]
+        heat = table[:, column]
+        mask = np.isfinite(heat)
+        if mask.any():
+            curves[tag] = (temperature[mask], heat[mask])
+    return curves
+
+
+def ce2hf2o7_figure() -> None:
+    """High-temperature NLCE and low-temperature exact diagonalisation.
+
+    The order-6 numerical linked-cluster expansion (set A) describes the data
+    only above its convergence floor near 0.17 K, above the two measured
+    anomalies.  Cubic-16 exact diagonalisation at the "s2" couplings reaches
+    the decade below that floor: the ordinary periodic band and the
+    winding-free replacement are shown together, since the low-temperature
+    peak of ordinary ED tracks the finite-torus winding scale rather than the
+    physical ring exchange.
+    """
+    band_path = OUTPUT / "nonperturbative_cubic16_m0p155557_ppp0p115321.npz"
+    full_path = ROOT / "campaign" / "cache" / "full_ed_cubic16_ce2hf2o7_s2.npz"
+    if not (band_path.exists() and full_path.exists()):
+        print("skipping Ce2Hf2O7 figure: inputs missing")
+        return
+    # The order-6 NLCE runs are long; draw the exact-diagonalisation part on
+    # its own until they land rather than blocking the figure on them.
+    nlce = _load_ce2hf2o7_nlce() or {}
+
+    band_data = np.load(band_path)
+    band_key = "M3_spectrum" if "M3_spectrum" in band_data else "M2_spectrum"
+    full_spectrum = np.load(full_path)["E_full"]
+    spliced = full_hilbert_counterterm_spectrum(full_spectrum, band_data[band_key])
+
+    jzz_kelvin = CE2HF2O7_SETS["s2"]["Ja"] * MEV_TO_K
+    temperature = np.geomspace(2.0e-3, 8.0, 3000) / jzz_kelvin
+    periodic = thermal_observables(full_spectrum, temperature, n_sites=16)
+    winding_free = thermal_observables(spliced, temperature, n_sites=16)
+    kelvin = temperature * jzz_kelvin
+
+    experiment_t, experiment_c = load_digitized_series(
+        ROOT / "campaign" / "data" / "ce2hf2o7_smith2025_digitized.csv"
+    )
+
+    figure, ax = plt.subplots(figsize=(3.35, 2.6))
+    for value, name in CE2HF2O7_ANOMALIES:
+        ax.axvline(value, color=INK_FAINT, lw=0.7, ls=(0, (1.2, 1.8)), zorder=1)
+        ax.text(value, 2.52, name, color=INK_MUTED, fontsize=7,
+                ha="center", va="bottom")
+
+    ax.plot(
+        experiment_t, experiment_c, "o", ms=2.0, mfc="white", mec=INK, mew=0.55,
+        label=r"Ce$_2$Hf$_2$O$_7$, expt.", zorder=4,
+    )
+    for tag, (temperatures, heat) in nlce.items():
+        ax.plot(
+            temperatures, heat, color=CE2HF2O7_SETS[tag]["color"],
+            lw=1.3, ls=(0, (3.4, 1.6)), zorder=3,
+            label=rf"NLCE order 6",
+        )
+    ax.plot(
+        kelvin, periodic["heat_capacity_per_site"] * GAS_CONSTANT,
+        color=INK_FAINT, lw=1.0, zorder=2, label="periodic ED, s2",
+    )
+    ax.plot(
+        kelvin, winding_free["heat_capacity_per_site"] * GAS_CONSTANT,
+        color=CLEAN, lw=1.55, zorder=5, label="winding-free ED, s2",
+    )
+
+    ax.set_xscale("log")
+    ax.set_xlim(2.0e-2, 6.0)
+    ax.set_ylim(0.0, 2.75)
+    ax.set_xlabel(r"$T$ (K)")
+    ax.set_ylabel(r"$C_{\mathrm{mag}}$ (J K$^{-1}$ mol$_{\mathrm{Ce}}^{-1}$)")
+    ax.legend(frameon=False, loc="upper right", fontsize=6.6,
+              handlelength=1.7, borderaxespad=0.2)
+    ax.spines[["top", "right"]].set_visible(False)
+    figure.tight_layout()
+    save(figure, "fig_ce2hf2o7")
+
+
 def low_temperature_heat_capacity_figure() -> None:
     """Heat capacity over the full range, down to the sector-degeneracy floor.
 
@@ -1322,6 +1437,7 @@ def main() -> None:
     geometry_figure()
     dssf_figure()
     low_temperature_heat_capacity_figure()
+    ce2hf2o7_figure()
     report = json.loads((OUTPUT / "validation_report.json").read_text())
 
 

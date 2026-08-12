@@ -27,12 +27,21 @@
    "hexagon_flux": 0.1198842327979967,
    "hexagon_flux_ground": 0.1198842327979967,
    "winding4_amplitude": 0.3388277749854882,
+   "hexagon_flippable": 1.925315088738857,
+   "hexagon_phi": 0.9962773033812327,
+   "winding4_flippable": 12.246534637677033,
+   "m_z_squared": 0.0,
+   "aiao_fraction": 0.0,
+   "condensate_fraction": 0.08692547910029112,
+   "energy_ising": 0.2571205619846417,
+   "energy_exchange": 10.474234562352361,
+   "energy_pair": 0.0,
    "converged": true,
    "krylov": [
     10,
     80
    ],
-   "runtime": 9.006242768999073
+   "runtime": 89.5195808080025
   },
   {
    "jx": 0.05,
@@ -61,12 +70,21 @@
    "hexagon_flux": 0.11464665621631454,
    "hexagon_flux_ground": 0.11464665621631454,
    "winding4_amplitude": 0.3558363077059252,
+   "hexagon_flippable": 1.843655426741762,
+   "hexagon_phi": 0.9949508312965071,
+   "winding4_flippable": 13.110706299658705,
+   "m_z_squared": 0.0,
+   "aiao_fraction": 0.0,
+   "condensate_fraction": 0.035747992512793446,
+   "energy_ising": 0.038618131507725834,
+   "energy_exchange": -3.3480934568244156,
+   "energy_pair": 0.0,
    "converged": true,
    "krylov": [
     10,
     80
    ],
-   "runtime": 10.428407410996442
+   "runtime": 138.80623495898908
   },
   {
    "jx": 0.1,
@@ -95,12 +113,21 @@
    "hexagon_flux": 0.10701999597300434,
    "hexagon_flux_ground": 0.10701999597300434,
    "winding4_amplitude": 0.34749462728551145,
+   "hexagon_flippable": 1.7518347473735578,
+   "hexagon_phi": 0.9774437561164196,
+   "winding4_flippable": 13.002660506203915,
+   "m_z_squared": 0.0,
+   "aiao_fraction": 0.0,
+   "condensate_fraction": 0.03876958951318558,
+   "energy_ising": 0.11752641262478103,
+   "energy_exchange": -5.501096827436963,
+   "energy_pair": 0.0,
    "converged": true,
    "krylov": [
     10,
     80
    ],
-   "runtime": 9.513134198001353
+   "runtime": 97.07613511098316
   },
   {
    "jx": 0.2,
@@ -129,12 +156,21 @@
    "hexagon_flux": 0.09139933057209913,
    "hexagon_flux_ground": 0.09139933057209913,
    "winding4_amplitude": 0.3263981301608806,
+   "hexagon_flippable": 1.601182452838152,
+   "hexagon_phi": 0.9133183333113911,
+   "winding4_flippable": 12.676587082306199,
+   "m_z_squared": 0.0,
+   "aiao_fraction": 0.0,
+   "condensate_fraction": 0.04244270879358078,
+   "energy_ising": 0.3010271445211022,
+   "energy_exchange": -8.039759922782828,
+   "energy_pair": 0.0,
    "converged": true,
    "krylov": [
     10,
     80
    ],
-   "runtime": 6.453688321002119
+   "runtime": 97.00566456600791
   },
   {
    "jx": 0.5,
@@ -163,12 +199,21 @@
    "hexagon_flux": 0.047697485448656554,
    "hexagon_flux_ground": 0.047697485448656554,
    "winding4_amplitude": 0.1659886234521137,
+   "hexagon_flippable": 0.7632734016192229,
+   "hexagon_phi": 0.9998511222315923,
+   "winding4_flippable": 5.97616320687119,
+   "m_z_squared": 0.7436256692612496,
+   "aiao_fraction": 0.011619151082207025,
+   "condensate_fraction": 0.26256227493284706,
+   "energy_ising": 3.15906806711922,
+   "energy_exchange": 25.072546922817832,
+   "energy_pair": -21.505872242442777,
    "converged": true,
    "krylov": [
     10,
     80
    ],
-   "runtime": 8.12921124100103
+   "runtime": 91.82343971199589
   },
   {
    "jx": 0.5,
@@ -197,12 +242,21 @@
    "hexagon_flux": 0.06247042942249158,
    "hexagon_flux_ground": 0.06247042942249158,
    "winding4_amplitude": 0.2780544343778169,
+   "hexagon_flippable": 1.377099700672817,
+   "hexagon_phi": 0.725820265788687,
+   "winding4_flippable": 11.768229766964744,
+   "m_z_squared": 5.217153653143396e-30,
+   "aiao_fraction": 8.151802583036557e-32,
+   "condensate_fraction": 0.04657400303349682,
+   "energy_ising": 0.729526120164062,
+   "energy_exchange": -10.770851783462946,
+   "energy_pair": -3.334756961760609e-16,
    "converged": true,
    "krylov": [
     10,
     80
    ],
-   "runtime": 10.528807431001042
+   "runtime": 94.8994262329652
   }
  ]
 }

@@ -22,7 +22,19 @@ At Jpmpm = 0 the masked roots must reproduce the masked_band_complete
 cache exactly (free oracle, checked when available).  Jpmpm -> -Jpmpm is
 a symmetry; scan Jpmpm >= 0.
 
-Usage: run_jpmpm_fold_plane.py <jpm> <jpmpm> [<jpm> <jpmpm> ...]
+``--bordered`` replaces the multi-anchor solve with the exact bordered
+per-sector band from ``masked_band_complete`` at the same (Jpm, Jpmpm).
+This matters for more than speed: the anchor solve brackets roots below the
+*global* continuum edge, so wherever a branch rises past it the fold removes
+only ``n_found`` raw levels and leaves ``90 - n_found`` ice-descended raw
+levels in the ensemble alongside their replacements.  At (-0.125, 0.30) that
+was 63 contaminating levels against 27 replacements, and the resulting peaks
+are not winding-free statements.  The bordered solver uses each transport
+sector's own live-pole edge and returns the complete band, so the fold
+removes and replaces all 90.
+
+Usage: run_jpmpm_fold_plane.py [--bordered] [--gpu] [--cross-check]
+                               <jpm> <jpmpm> [<jpm> <jpmpm> ...]
 """
 
 from __future__ import annotations
@@ -52,6 +64,7 @@ from qsi_campaign.exact_band import (  # noqa: E402
     cubic16_translation_permutations,
 )
 from qsi_campaign.protocol import polarization_sector_labels  # noqa: E402
+from qsi_campaign.downfold import _dense_eigh  # noqa: E402
 from run_multi_anchor_band import block_cg  # noqa: E402
 
 OUTPUT = ROOT / "campaign" / "outputs" / "jpmpm_fold_plane"
@@ -74,7 +87,7 @@ def all_peaks(levels: np.ndarray) -> np.ndarray:
     return GRID[index]
 
 
-def raw_side(hamiltonian, states, sectors, ice_indices):
+def raw_side(hamiltonian, states, sectors, ice_indices, gpu=False):
     """All 65,536 levels with ice weights, from the eight symmetry blocks."""
     parity = (np.bitwise_count(states.astype(np.uint64)) % 2).astype(np.int64)
     levels, weights = [], []
@@ -89,17 +102,49 @@ def raw_side(hamiltonian, states, sectors, ice_indices):
         ice_basis = basis[ice_indices, :]
         for value in (0, 1):
             mask = column_parity == value
-            block = projected.real[np.ix_(mask, mask)]
-            vals, vecs = eigh(block)
+            block = np.ascontiguousarray(projected.real[np.ix_(mask, mask)])
+            vals, vecs = _dense_eigh(block, gpu)
             amplitude = np.asarray(ice_basis[:, mask] @ vecs)
             levels.append(vals)
             weights.append((np.abs(amplitude) ** 2).sum(axis=0))
     return np.concatenate(levels), np.concatenate(weights)
 
 
+def bordered_band(jpm: float, jpmpm: float):
+    """The exact bordered per-sector band for this cell, if it is cached.
+
+    Returns ``(levels, path)`` with levels sorted ascending and the lost
+    entries (recorded as null) dropped, or ``(None, None)``.
+    """
+    stem = f"{jpm:+.3f}".replace(".", "p")
+    candidates = [f"band_{stem}_pp{jpmpm:+.3f}".replace(".", "p") + ".json"] \
+        if abs(jpmpm) > 1e-12 else \
+        [f"band_{stem}.json", f"band_{stem}_fullbasis_klein.json"]
+    for name in candidates:
+        path = BAND_DIR / name
+        if not path.exists():
+            continue
+        record = json.loads(path.read_text())
+        levels = np.asarray([x for x in record["levels"] if x is not None],
+                            float)
+        levels = np.sort(levels[np.isfinite(levels)])
+        if len(levels):
+            return levels, path.name
+    return None, None
+
+
 def main() -> None:
-    values = [float(v) for v in sys.argv[1:]]
-    points = list(zip(values[0::2], values[1::2]))
+    use_bordered, gpu, cross_check, raw_values = False, False, False, []
+    for token in sys.argv[1:]:
+        if token == "--bordered":
+            use_bordered = True
+        elif token == "--gpu":
+            gpu = True
+        elif token == "--cross-check":
+            cross_check = True
+        else:
+            raw_values.append(float(token))
+    points = list(zip(raw_values[0::2], raw_values[1::2]))
     cluster = geometry.build_cluster("cubic", (1, 1, 1))
     states = full_spin_basis(cluster.n_sites)
     state_index = {int(s): i for i, s in enumerate(states)}
@@ -119,21 +164,28 @@ def main() -> None:
                 states, cubic16_translation_permutations(cluster))
 
         raw_levels, raw_ice = raw_side(
-            hamiltonian, states, sectors_cache, ice_indices)
+            hamiltonian, states, sectors_cache, ice_indices, gpu=gpu)
         order = np.argsort(raw_levels)
         raw_levels, raw_ice = raw_levels[order], raw_ice[order]
         trace_p = float(raw_ice.sum())
 
-        real = hamiltonian.real.tocsr()
-        q_block = real[complement][:, complement].tocsr()
-        coupling = np.asarray(real[complement][:, ice_indices].todense())
-        ice_diag = real[ice_indices][:, ice_indices].toarray()
-        edge = float(eigsh(q_block, k=1, which="SA", tol=1e-9,
-                           return_eigenvectors=False)[0])
-        floor = raw_levels[0] - 0.05 * abs(raw_levels[0]) - 0.02
-        top = edge - 0.02 * (edge - floor)
-        anchors = list(np.linspace(floor, top, N_ANCHOR))
-        samples = {}
+        exact_band, band_file = (bordered_band(jpm, jpmpm)
+                                 if use_bordered else (None, None))
+        skip_anchors = exact_band is not None and not cross_check
+
+        # the resolvent machinery exists only to locate the masked roots;
+        # with the exact bordered band in hand none of it is assembled
+        anchors, samples = [], {}
+        if not skip_anchors:
+            real = hamiltonian.real.tocsr()
+            q_block = real[complement][:, complement].tocsr()
+            coupling = np.asarray(real[complement][:, ice_indices].todense())
+            ice_diag = real[ice_indices][:, ice_indices].toarray()
+            edge = float(eigsh(q_block, k=1, which="SA", tol=1e-9,
+                               return_eigenvectors=False)[0])
+            floor = raw_levels[0] - 0.05 * abs(raw_levels[0]) - 0.02
+            top = edge - 0.02 * (edge - floor)
+            anchors = list(np.linspace(floor, top, N_ANCHOR))
 
         def f_eigenvalues(z):
             solution = block_cg(
@@ -158,30 +210,36 @@ def main() -> None:
                 out[branch] = brentq(interp, low, high, xtol=1e-13)
             return out
 
-        for z in anchors:
-            f_eigenvalues(z)
-        roots = roots_from(anchors)
-        finite = roots[np.isfinite(roots)]
-        if len(finite):
-            for extra in np.percentile(finite, [30.0, 70.0]):
-                extra = float(extra)
-                if all(abs(extra - z) > 1e-6 for z in anchors):
-                    anchors.append(extra)
-                    f_eigenvalues(extra)
+        anchor_masked = None
+        if not skip_anchors:
+            for z in anchors:
+                f_eigenvalues(z)
             roots = roots_from(anchors)
-        masked = np.sort(roots[np.isfinite(roots)])
+            finite = roots[np.isfinite(roots)]
+            if len(finite):
+                for extra in np.percentile(finite, [30.0, 70.0]):
+                    extra = float(extra)
+                    if all(abs(extra - z) > 1e-6 for z in anchors):
+                        anchors.append(extra)
+                        f_eigenvalues(extra)
+                roots = roots_from(anchors)
+            anchor_masked = np.sort(roots[np.isfinite(roots)])
+
+        # The bordered band is the complete one; the anchor solve brackets
+        # only below the global edge and silently truncates above it.
+        masked = exact_band if exact_band is not None else anchor_masked
         n_found = len(masked)
 
-        # oracle at jpmpm = 0: exact masked band from the fixed-Sz cache
         oracle = None
-        tag16 = f"{jpm:+.3f}".replace(".", "p")
-        if abs(jpmpm) < 1e-12 and (BAND_DIR / f"band_{tag16}.json").exists():
-            record = json.loads((BAND_DIR / f"band_{tag16}.json").read_text())
-            exact = np.asarray(
-                [x for x in record["levels"] if x is not None], float)
-            exact = np.sort(exact[np.isfinite(exact)])
-            n = min(len(exact), n_found)
-            oracle = float(np.max(np.abs(masked[:n] - exact[:n])))
+        if anchor_masked is not None and exact_band is not None:
+            n = min(len(anchor_masked), len(exact_band))
+            oracle = float(np.max(np.abs(anchor_masked[:n] - exact_band[:n])))
+        elif anchor_masked is not None:
+            fallback, _ = bordered_band(jpm, jpmpm)
+            if fallback is not None:
+                n = min(len(fallback), len(anchor_masked))
+                oracle = float(
+                    np.max(np.abs(anchor_masked[:n] - fallback[:n])))
 
         # n_found = 0 means the whole winding-free band sits inside the
         # continuum (strong pair binding): no replacement is possible and
@@ -204,18 +262,25 @@ def main() -> None:
             "fold_peaks": fold_peaks.tolist(),
             "raw_peaks": raw_peaks.tolist(),
             "oracle_max_dev": oracle,
+            "band_source": band_file or "multi_anchor",
+            "n_anchor_found": (None if anchor_masked is None
+                               else int(len(anchor_masked))),
             "runtime": time.perf_counter() - started,
         }
         tag = f"jpm{jpm:+.4f}_pp{jpmpm:+.4f}".replace(".", "p")
+        if use_bordered:
+            tag += "_bordered"
         with open(OUTPUT / f"point_{tag}.json", "w") as handle:
             json.dump(record, handle, indent=1, default=float)
         np.savez_compressed(OUTPUT / f"point_{tag}.npz", jpm=jpm, jpmpm=jpmpm,
                             fold_levels=fold_levels, masked=masked,
                             raw_levels=raw_levels, raw_ice=raw_ice)
         print(f"jpm={jpm:+.3f} pp={jpmpm:+.3f} trP={trace_p:.6f} "
-              f"band {n_found}/90 | fold peaks {np.round(fold_peaks, 5)} | "
+              f"band {n_found}/90 [{record['band_source']}] | "
+              f"fold peaks {np.round(fold_peaks, 5)} | "
               f"raw peaks {np.round(raw_peaks, 5)} | "
-              + (f"oracle {oracle:.1e} " if oracle is not None else "")
+              + (f"anchor {record['n_anchor_found']}/90 dev {oracle:.1e} "
+                 if oracle is not None else "")
               + f"({record['runtime']:.0f}s)", flush=True)
 
 

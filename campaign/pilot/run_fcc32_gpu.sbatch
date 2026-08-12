@@ -10,7 +10,7 @@ module purge
 module load StdEnv/2023 gcc/12.3 openmpi/4.1.5 aocl-blas/5.1 aocl-lapack/5.1 \
             scalapack/2.2.0 cmake eigen arpack-ng hdf5-mpi cuda/12.6 \
             python/3.11.5 scipy-stack/2024b
-export PYTHONPATH=/lustre09/project/6003507/zhouzb79/QED/python:${PYTHONPATH:-}
+export PYTHONPATH=/lustre09/project/6003507/zhouzb79/QED/python_gpu:${PYTHONPATH:-}
 export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-16}
 cd /lustre09/project/6003507/zhouzb79/twist_qsi
 nvidia-smi --query-gpu=name,memory.total --format=csv,noheader

@@ -47,21 +47,22 @@ ROOT = Path(__file__).resolve().parents[1]
 SCAN = ROOT / "campaign" / "outputs" / "xy_phase_plane"
 
 PANELS = ("masked_ice_weight", "masked_gap", "masked_n_converged",
-          "masked_flux")
+          "masked_flux", "masked_flippable")
 
-# The measured flux is either +-0.25 to machine precision or 0 to ~1e-31;
-# anything between would be new physics, so the threshold is nowhere near
-# either population.
+# Phi = <sum O_h>/<sum N_h> is +-1 exactly for a flux eigenstate, so any
+# tolerance far from 1 does; anything landing strictly between would be new
+# physics and is reported rather than rounded away.
 FLUX_TOL = 1e-6
+FLIP_TOL = 1e-6
 
 
 def load(n_grid: int):
     """Upper-triangle solves, mirrored: Jx <-> Jy is exact for all of these."""
     axis = np.linspace(-1.0, 1.0, n_grid)
     planes = {name: np.full((n_grid, n_grid), np.nan) for name in PANELS}
-    files = sorted(SCAN.glob("masked_flux_*.json"))
+    files = sorted(SCAN.glob("masked_flux2_*.json"))
     if not files:
-        raise SystemExit(f"no masked_flux_*.json under {SCAN}")
+        raise SystemExit(f"no masked_flux2_*.json under {SCAN}")
     count = 0
     for path in files:
         for point in json.loads(path.read_text())["points"]:
@@ -87,8 +88,17 @@ def main() -> None:
     axis, planes = load(n_grid)
 
     flux = planes["masked_flux"]
+    flippable = planes["masked_flippable"]
     alive = planes["masked_n_converged"] > 0
-    finite = np.isfinite(flux) & alive
+    resonating = alive & (flippable > FLIP_TOL)
+    finite = np.isfinite(flux) & resonating
+    print(f"of {int(alive.sum())} cells with a band, "
+          f"{int(resonating.sum())} have a flippable hexagon and "
+          f"{int((alive & ~resonating).sum())} have none at all")
+    stray = finite & (np.abs(np.abs(flux) - 1.0) > FLUX_TOL)
+    print(f"cells with |Phi| not equal to 1: {int(stray.sum())}"
+          + (f" -> {np.unique(np.round(flux[stray], 6))}" if stray.any()
+             else " (the flux is a clean two-valued label)"))
     print(f"{int(finite.sum())} cells with a surviving band, "
           f"{int((~alive).sum())} with none")
     # Classify with a tolerance, and never with np.round: rounding 1e-31 to
@@ -146,15 +156,18 @@ def main() -> None:
     # same white as a genuine midpoint and invite reading a gradient that
     # does not exist.
     label = np.full(flux.shape, np.nan)
-    label[alive & (np.abs(flux) <= FLUX_TOL)] = 1.0
-    label[alive & (flux < -FLUX_TOL)] = 0.0
-    label[alive & (flux > FLUX_TOL)] = 2.0
-    classes = ListedColormap(["#2c5f9e", "#efece2", "#b03a3a"])
+    label[alive & (flippable <= FLIP_TOL)] = 1.0        # nothing flippable
+    label[resonating & (np.abs(flux) <= FLUX_TOL)] = 2.0  # flippable, no res.
+    label[resonating & (flux < -FLUX_TOL)] = 0.0
+    label[resonating & (flux > FLUX_TOL)] = 3.0
+    classes = ListedColormap(["#2c5f9e", "#cfcabb", "#efece2", "#b03a3a"])
     mesh3 = axes[3].pcolormesh(edges, edges, label, cmap=classes, vmin=-0.5,
-                               vmax=2.5, shading="flat")
-    bar = figure.colorbar(mesh3, ax=axes[3], shrink=0.86, ticks=[0, 1, 2])
-    bar.ax.set_yticklabels([r"$\pi$-flux", "no resonance", "0-flux"],
-                           fontsize=9)
+                               vmax=3.5, shading="flat")
+    bar = figure.colorbar(mesh3, ax=axes[3], shrink=0.86,
+                          ticks=[0, 1, 2, 3])
+    bar.ax.set_yticklabels([r"$\pi$-flux ($\Phi=-1$)", "no flippable hexagon",
+                            r"flippable, $\Phi=0$", r"0-flux ($\Phi=+1$)"],
+                           fontsize=8)
     axes[3].set_title(r"(d) flux sector", fontsize=10.5, loc="left",
                       color=INK)
 

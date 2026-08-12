@@ -35,7 +35,7 @@ cd /lustre09/project/6003507/zhouzb79/twist_qsi/campaign
 # instead of skipping it.
 python3 -m py_compile scan_xy_masked_flux.py || { echo "SYNTAX FAIL"; exit 1; }
 python3 -u scan_xy_masked_flux.py --gpu \
-  outputs/xy_phase_plane/flux_points.json "$SLURM_ARRAY_TASK_ID" 20 masked_flux
+  outputs/xy_phase_plane/flux_points.json "$SLURM_ARRAY_TASK_ID" 20 masked_flux2
 STATUS=$?
 echo "exit=$STATUS  $(date)"
 # Propagate the failure.  With echo as the last command the task exits 0 and

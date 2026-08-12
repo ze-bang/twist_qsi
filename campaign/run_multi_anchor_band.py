@@ -61,7 +61,11 @@ def block_cg(matvec, rhs, x0, tol=1e-9, max_iter=25000):
         if not active.any():
             break
         ap = matvec(p)
-        alpha = np.where(active, rr / np.einsum("ij,ij->j", p, ap), 0.0)
+        curvature = np.einsum("ij,ij->j", p, ap)
+        if np.any(curvature[active] <= 0.0):
+            raise RuntimeError(
+                "CG operator is not positive definite at this anchor")
+        alpha = np.where(active, rr / curvature, 0.0)
         x += alpha * p
         r -= alpha * ap
         rr_new = np.einsum("ij,ij->j", r, r)

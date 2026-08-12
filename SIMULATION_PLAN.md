@@ -1,5 +1,41 @@
 # Validation plan: a convergent winding-free band protocol
 
+## Manuscript figure audit (2026-08-11) — production complete
+
+Panel-level provenance lives in `paper/DATA_PROVENANCE.md`. All four main-text
+figures now rebuild from current campaign outputs:
+
+- Figs. 1 and 2 passed regeneration job `18812950`.
+- Fig. 3 includes matched-sample `ell=2,3` checks at both
+  `Jpm/Jzz=-0.20` and `-0.30`; the latter completed in restart job `18834493`.
+- Fig. 4 uses the seven-coupling causal ladder and off-diagonal norm budget
+  from jobs `18812872` and `18812972`. Final Figs. 3 and 4 were rendered by
+  job `18868198`.
+
+### Final causal result: the simple-loop ladder does not converge
+
+The cached masked maps were truncated as `H6`, `H6+H8`, `H6+H8+H10`, and
+`H6+H8+H10+H12` and compared with the full map. At `Jpm/Jzz=-0.20`, their
+ring-scale peak errors are 45.0%, 41.4%, 48.6%, and 49.8%; the same
+nonmonotonic pattern persists across the strong-coupling points.
+
+The completed norm budget resolves the interpretation. Simple loops carry
+99.1--99.9% of the total off-diagonal Frobenius norm because `L=6` dominates,
+but beyond `L=8` each newly added simple-loop class carries less norm than the
+composite processes and longer tail that the truncation omits. The measured
+simple-loop hierarchy is therefore a controlled diagnostic of operator range,
+not a closed perimeter-ordered effective expansion. The canonical manuscript
+states this negative result directly rather than presenting longer simple
+loops as a convergent repair of ring exchange.
+
+The final robustness calculation is complete. Optimized job `18871563` used a
+one-state scan to locate the contributing transport sector and then resolved
+120 states only there. At `Jpm/Jzz=-0.20`, Gamma carries `1.42e-29` while all
+seven nonzero momenta carry finite weight (`0.214--0.299`), confirming the
+converged `-0.05` result and the exact `q=0` selection rule at stronger
+coupling. The redundant all-sector fallback job `18834494` was cancelled after
+the optimized result passed.
+
 ## Campaign status and goal (updated 2026-08-09) — physics-first remote phase
 
 **The method, current form.**  The optimized protocol is the direct
@@ -53,10 +89,153 @@ Ce2Hf2O7 as dressed gauge dynamics, or can it be rigorously excluded?*
 terms).  Decision tree: WP2 positive -> build the PRL around the material;
 WP2 null -> build it around WP1, with WP2 as the material corollary.
 
+### WP0 results (2026-08-09) — both pre-flight questions answered
+
+**WP0a: the bare couplings organize the loop structure; `Z` does not.**
+Settled by two independent certified routes, and the answer is negative for
+the `Z` story.
+
+- *Single-valuedness, the decisive one.*  Two points at essentially the same
+  residue, reached through different dials, disagree by nearly an order of
+  magnitude: `(Jpm, pp) = (-0.180, 0)` has `1-Z = 0.4554`, `long/hex = 0.846`,
+  while `(-0.125, 0.30)` has `1-Z = 0.4874`, `long/hex = 7.518` -- a ratio of
+  8.9x at matched `1-Z` (8.6x for `K_8/K_6`).  If the loop ratios were a
+  function of `1-Z` alone this is impossible.  No fit, no interpolation, and
+  every point band-complete.
+- *Sign leg.*  Across the sign of `Jpm` at matched `|Jpm|`, `|Jpm|` predicts
+  `K_8/K_6` to 3.8% where `1-Z` manages 28.5%.
+- *Why the ambiguity in the old data resolved this way.*  The two dials reach
+  the same residue through visibly different states: `Jpmpm` drives `Z` to
+  0.33 while keeping all 90 roots, whereas `|Jpm|` starts losing roots by
+  `Z ~ 0.44` (89 at -0.24, 77 at -0.28, 71 at -0.35).
+- Consequence: **organize WP1 by coupling**; report `Z` as a downstream
+  observable, never as a scaling coordinate.  Do not open the paper with it.
+- Method note for anyone re-running this: the cubic-16 ladder is band-complete
+  only to `|Jpm| <= 0.22`, i.e. `1-Z <= 0.544`, so a prediction test trained on
+  it silently drops the informative half of the `Jpmpm` column as
+  extrapolation and reports a spurious collapse.  Coverage is now gated.
+
+**WP0b: PASS -- the Gamma selection rule is a theorem of the construction.**
+On the 2970 FCC-32 ice states (85 transport sectors, dims 1-396) the within-
+sector spread of every `2 m_mu` is exactly zero, and the commutator of each
+sublattice `S^z_{q=0}` with an arbitrary mask-block-diagonal operator is
+exactly zero, against an unmasked control of 55.9.  **WP3 may claim it.**
+Stronger than assumed: the transport label and the `q=0` sublattice
+magnetisation tuple are in *bijection* (85 distinct tuples for 85 sectors, and
+25 for 25 on cubic-16) -- the label *is* the magnetisation, not merely
+determined by it.
+
+**Positive `Jpm`, and a solver trap that must not be repeated.**  The band
+survives to `Jpm = +0.06` on the XXZ line (90/90, flux `+1/4` exactly at every
+positive point).  At `+0.10` `run_feshbach_anatomy.py` reports 25/90 -- but
+that is an ARTIFACT of `solve_roots`, which brackets only below the *global*
+continuum edge; the bordered per-sector solver gives **89/90** at the same
+point, recovering 64 roots with `Z = 0.323..0.723`.  There is no XXZ band
+collapse by `+0.10`.  Any `Z`, flux or peak computed from a partial band is
+meaningless, so the `Z = 0.150` and flux `= 0` once recorded at `+0.10` are
+withdrawn.
+
+The same trap caught the WP2 seeds (QMC_ordered: anchor 0/90, bordered 90/90).
+**Rule: no dissolution claim from `solve_roots` or the multi-anchor solve.
+Dissolution is a bordered-solver statement only.**
+
+Dissolution IS real, but it lives in the `Jpmpm` direction (all bordered):
+
+| `Jpm` \ `Jpmpm` | 0.000 | 0.038-0.040 | 0.085 | 0.130 |
+|---|---|---|---|---|
+| -0.125 | 90 | 90 | 90 | -- |
+| -0.050 | -- | -- | 90 | 90 |
+| 0.000 | -- | 90 | 90 | 90 |
+| +0.050 | 90 | 90 | 90 | **25** |
+| +0.071 | -- | 90 | **25** | **25** |
+| +0.100 | 89 | -- | **25** | **25** |
+
+The threshold `Jpmpm` falls as `Jpm` rises; negative and zero `Jpm` stay
+complete throughout.  That alone explains QMC_ordered surviving at
+`pp = 0.038` while NLC_B dissolves at `pp = 0.128`, with no `Jpm`-driven
+collapse needed.
+
+*Band completeness is not a phase diagnostic.*  A finite cluster can hold all
+90 ice-descended roots below the continuum and still be ordered in the
+thermodynamic limit, so none of the above tests whether `Jpm > 0.05` orders.
+Dissolution of the winding-free band and the onset of order are different
+statements and must not be conflated.
+
+This matters for WP2: of the three published Ce2Hf2O7 seeds, **two sit at
+positive `Jpm`** -- NLC_B at `(+0.049, 0.128)` and QMC_ordered at
+`(+0.071, 0.038)` -- against NLC_A at `(-0.125, 0.085)`.  Every one of the 114
+pre-existing plane points is at negative `Jpm`.
+
+### WP1 results (2026-08-09) — the gauge Hamiltonian delocalizes, measurably
+
+**`xi_gauge` rises by a factor of two across the coupling range**, FCC-32 at
+`levels = 2`, from the *simple-loop* class amplitudes:
+
+| `Jpm` | `K_8/K_6` | `K_10/K_6` | `K_12/K_6` | `xi(6->8)` | `xi(8->10)` | `xi(10->12)` |
+|---|---|---|---|---|---|---|
+| -0.03 | 0.0848 | 0.00754 | 0.000676 | 0.811 | 0.826 | 0.830 |
+| -0.06 | 0.1360 | 0.0203 | 0.00318 | 1.003 | 1.051 | 1.079 |
+| -0.10 | 0.1673 | 0.0329 | 0.00720 | 1.119 | 1.230 | 1.315 |
+| -0.15 | 0.1811 | 0.0410 | 0.01095 | 1.171 | 1.345 | 1.517 |
+| -0.20 | 0.1861 | 0.0446 | 0.01333 | 1.189 | 1.400 | 1.656 |
+| -0.25 | 0.1884 | 0.0464 | 0.01486 | 1.198 | 1.427 | 1.757 |
+| -0.30 | 0.1896 | 0.0474 | 0.01590 | 1.203 | 1.441 | 1.833 |
+
+At `Jpm = -0.03` the three independent rungs agree to 2%: the decay is a clean
+exponential.  Mild convexity develops with coupling (rung spread 1.02x -> 1.52x)
+-- the envelope flattens at long range as the theory delocalizes, which is a
+second-order statement on top of a good exponential, not a failure of it.
+
+**The classification trap that produced a wrong answer first.**  Excluding
+*disconnected* flipped sets is not enough: two hexagons sharing one vertex form
+a graph-CONNECTED eleven-site set, and their amplitude is a product of hexagon
+amplitudes -- large -- which swamps the genuine long-string signal.  Pooled in,
+they made `K_12/K_10` run to 0.93 (apparent infinite range), gave a 69%
+within-class spread at `L = 12`, and made the decay look non-exponential.  The
+correct test is that every site of a simple loop has degree exactly two inside
+the induced subgraph.  On FCC-32, 87% of the "connected" `L = 12` entries were
+composites (52992 -> 6912 kept).  Any repeat of this measurement must apply the
+degree-two test, not merely a connectivity test.
+
+**Within-class degeneracy does NOT persist to FCC-32** (a question WP1 posed
+explicitly).  cubic-16 spreads are ~1e-8; FCC-32 spreads run 2% at `L = 6` to
+9% at `L = 12` and grow with coupling.  `K_L` needs a median and a quoted
+spread on the production cluster, not a bare mean.
+
+**WP1 feasibility and truncation, as measured.**
+- *cubic-16 cannot measure `xi_gauge` at all* -- and by a wider margin than
+  first thought.  After excluding composites it has exactly ONE surviving
+  perimeter, `L = 6`: its `L = 8` class is 288 pairs of which 0 survive the
+  mask.  FCC-32 has four (6, 8, 10, 12 with 15360 / 10560 / 23808 / 6912 kept)
+  and is the only cluster where the measurement exists.  `K_4 = 0` on both is
+  the mask working exactly as designed.
+- *Truncation, and an open gap.*  The only quantity cubic-16 can still
+  calibrate is `K_6` itself: `levels = 1` is -6.5% to +3.7% off the exact
+  answer, `levels = 2` is +0.3% to +8.4%, `levels = 3` is +0.0% to +1.1%.
+  **No `K_L` RATIO is calibratable on cubic-16**, so the truncation error on
+  `xi_gauge` is currently UNBOUNDED and must come from `levels` self-
+  convergence on FCC-32 itself.  A hexagon needs fewer virtual hops than a
+  twelve-loop, so the `K_6` figures are a floor, not a bound.  Until the
+  `levels = 3` spot check lands, every `xi_gauge` above carries an unquantified
+  bias.  (An earlier version of this gate quoted `K_8/K_6` at -70%/-19%/-1.2%;
+  that was measuring composite amplitudes, which factorise into hexagons and
+  converge far faster than genuine long strings.  Disregard it.)
+- *Cost wall.*  FCC-32 spaces are 140k / 2.5M / 21.7M states (XXZ) and
+  235k / 7.3M / 107M with pair flips.  **`levels = 3` with pair flips is out**
+  (a 256-column dense block alone is 204 GiB), so WP2's FCC-32 leg is capped
+  at `levels = 2` and carries that truncation bias irreducibly.
+
+**WP2 blocking step: PASS.**  The pair-flip `bfs_space`/`build_hamiltonian`
+reproduce `microscopic_character_hamiltonian` to `0.000e+00` at four points
+including the material seed, with the BFS closing on the full even-parity
+space (32768) as pair moves preserve `S^z` parity.  Out-of-space pair targets
+raise rather than being dropped, so a non-closed space cannot silently discard
+amplitude.
+
 ### Work packages, in order
 
 **WP0 — local pre-flight (cubic-16, hours; run before or alongside
-cluster spin-up).**
+cluster spin-up).**  *Both items complete; see WP0 results above.*
 - *0a, organizing-variable discriminator.*  Loop-class anatomy
   (K_6, K_8+/hex ratio, |V/g|, Z) on a POSITIVE-Jpm ladder
   (+0.02 .. +0.20, ~8 points; extend `run_feshbach_anatomy.py`) and at
