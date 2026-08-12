@@ -1,0 +1,114 @@
+{
+ "cluster": "fcc32",
+ "levels": 2,
+ "jpm": -0.2,
+ "k6": 0.01857286013227059,
+ "xi_gauge": 1.5171361034163162,
+ "fit": {
+  "xi_gauge": 1.5171361034163162,
+  "xi_gauge_all_perimeters": 1.3905685442355562,
+  "generated_sector_fit": {
+   "xi_gauge": 1.5171361034163162,
+   "log_residual_rms": 0.05202105969243445,
+   "perimeters": [
+    8,
+    10,
+    12
+   ],
+   "growing": false
+  },
+  "k_reference": 0.01857286013227059,
+  "slope": -0.7191303184193159,
+  "log_residual_rms": 0.11843611277766797,
+  "n_perimeters": 4,
+  "perimeters": [
+   6,
+   8,
+   10,
+   12
+  ],
+  "two_point_ladder": [
+   {
+    "from": 6,
+    "to": 8,
+    "xi": 1.1894519360981026,
+    "ratio": 0.18610454887494224
+   },
+   {
+    "from": 8,
+    "to": 10,
+    "xi": 1.3999459138835149,
+    "ratio": 0.23963780997550732
+   },
+   {
+    "from": 10,
+    "to": 12,
+    "xi": 1.6557388507136672,
+    "ratio": 0.2988181883730672
+   }
+  ],
+  "xi_spread_factor": 1.3920182904953518,
+  "is_exponential": true,
+  "growing": false
+ },
+ "source": "tomo_fcc32_L2_-0p200.npz",
+ "K::4": {
+  "K": 0.0,
+  "count": 0,
+  "count_all_entries": 26304,
+  "kept_fraction": 0.0,
+  "n_geometry_classes": 1,
+  "n_distinct_masks": 24,
+  "max_abs": 0.0,
+  "within_class_spread": 0.0,
+  "spread_over_K": Infinity
+ },
+ "k4_over_k6": 0.0,
+ "K::6": {
+  "K": 0.01857286013227059,
+  "count": 15360,
+  "count_all_entries": 62208,
+  "kept_fraction": 0.24691358024691357,
+  "n_geometry_classes": 1,
+  "n_distinct_masks": 128,
+  "max_abs": 0.01888745177316591,
+  "within_class_spread": 0.0002391170994860367,
+  "spread_over_K": 0.012874543704260584
+ },
+ "K::8": {
+  "K": 0.0034564937562336184,
+  "count": 10560,
+  "count_all_entries": 139008,
+  "kept_fraction": 0.07596685082872928,
+  "n_geometry_classes": 3,
+  "n_distinct_masks": 696,
+  "max_abs": 0.003668831995155577,
+  "within_class_spread": 0.000375965509985024,
+  "spread_over_K": 0.1087707765440017
+ },
+ "k8_over_k6": 0.18610454887494224,
+ "K::10": {
+  "K": 0.0008283065939378393,
+  "count": 23808,
+  "count_all_entries": 177792,
+  "kept_fraction": 0.13390928725701945,
+  "n_geometry_classes": 2,
+  "n_distinct_masks": 2112,
+  "max_abs": 0.0009363893732650997,
+  "within_class_spread": 6.301140737191033e-05,
+  "spread_over_K": 0.07607256519877355
+ },
+ "k10_over_k6": 0.04459768651887092,
+ "K::12": {
+  "K": 0.0002475130758179709,
+  "count": 6912,
+  "count_all_entries": 175872,
+  "kept_fraction": 0.039301310043668124,
+  "n_geometry_classes": 2,
+  "n_distinct_masks": 5024,
+  "max_abs": 0.00026323418540377837,
+  "within_class_spread": 1.9791371536508313e-05,
+  "spread_over_K": 0.07996091305924993
+ },
+ "k12_over_k6": 0.013326599891198969
+}

@@ -1,0 +1,249 @@
+{
+ "jpm": 0.04,
+ "n_raw_roots": 90,
+ "n_masked_roots": 90,
+ "oracle_error": 2.5757521115998827e-13,
+ "continuum_edge": 0.5437942791269741,
+ "gs_energy": -0.16637258693369128,
+ "g_eff": 0.0009725374752345932,
+ "g_spread": 9.66938384564816e-18,
+ "g_bare": 0.0007680000000000001,
+ "v_eff": -1.4794391442362747e-05,
+ "v_r2": 0.2857142857142868,
+ "diagonal_width": 5.523239471817759e-05,
+ "width_over_g": 0.05679204773559452,
+ "rk_ratio": -0.01521215564345639,
+ "long_over_hex": 0.2802993466091005,
+ "hex_over_total": 0.9628891434808939,
+ "ring_peak": 0.0015570031939799143,
+ "ring_peak_over_g6": 2.027347908828013,
+ "gs_flux": 0.24999999999999986,
+ "z_mean": 0.9408789885136914,
+ "z_ground": 0.9270941630585239,
+ "model_error": 0.33077376466227637,
+ "model_peak": 0.0010477862873094867,
+ "k6": 0.00016208957920576552,
+ "one_minus_z": 0.07290583694147612,
+ "runtime": 218.78221037006006,
+ "k4_over_k6": 0.0,
+ "k8_over_k6": 0.08106528052011784,
+ "k10_over_k6": 0.0,
+ "k12_over_k6": 0.0,
+ "class::diagonal": {
+  "count": 90,
+  "mean": -0.04940856917742937,
+  "rms": 0.049408600048759216,
+  "max_abs": 0.04943618537478849,
+  "kept_by_mask": 90
+ },
+ "class::hexagon": {
+  "count": 192,
+  "mean": -0.0009725374752345932,
+  "rms": 0.0009725374752345932,
+  "max_abs": 0.0009725374752346153,
+  "kept_by_mask": 192
+ },
+ "class::hexagon_wrapping": {
+  "count": 576,
+  "mean": -0.0009725374752345942,
+  "rms": 0.0009725374752345942,
+  "max_abs": 0.0009725374752346212,
+  "kept_by_mask": 0
+ },
+ "class::string10": {
+  "count": 1152,
+  "mean": -5.892888556519727e-05,
+  "rms": 5.892888556519727e-05,
+  "max_abs": 5.892888556523513e-05,
+  "kept_by_mask": 0
+ },
+ "class::string12": {
+  "count": 1152,
+  "mean": -2.370013875659319e-05,
+  "rms": 2.3702583416334077e-05,
+  "max_abs": 2.4040555452015343e-05,
+  "kept_by_mask": 0
+ },
+ "class::string16": {
+  "count": 90,
+  "mean": -5.03111627912014e-06,
+  "rms": 5.032585068201438e-06,
+  "max_abs": 5.091905782059879e-06,
+  "kept_by_mask": 12
+ },
+ "class::string6": {
+  "count": 384,
+  "mean": -0.0009725374752345946,
+  "rms": 0.0009725374752345947,
+  "max_abs": 0.0009725374752346179,
+  "kept_by_mask": 0
+ },
+ "class::string8": {
+  "count": 3312,
+  "mean": -0.00020709496477623723,
+  "rms": 0.0002096028951079561,
+  "max_abs": 0.00027682783853200576,
+  "kept_by_mask": 288
+ },
+ "class::wind4_axial": {
+  "count": 768,
+  "mean": -0.007461306597883063,
+  "rms": 0.007461339129879338,
+  "max_abs": 0.007483339833125392,
+  "kept_by_mask": 0
+ },
+ "class::wind4_diagonal": {
+  "count": 384,
+  "mean": -0.007461306597883061,
+  "rms": 0.007461339129879338,
+  "max_abs": 0.007483339833125392,
+  "kept_by_mask": 0
+ },
+ "K::4": {
+  "K": 0.0,
+  "count": 1152,
+  "n_geometry_classes": 2,
+  "max_abs": 0.0,
+  "within_class_spread": 0.0
+ },
+ "K::6": {
+  "K": 0.00016208957920576552,
+  "count": 1152,
+  "n_geometry_classes": 1,
+  "max_abs": 0.0009725374752346151,
+  "within_class_spread": 0.0003624433175484281
+ },
+ "K::8": {
+  "K": 1.3139837207703241e-05,
+  "count": 3024,
+  "n_geometry_classes": 1,
+  "max_abs": 0.00027682783853200127,
+  "within_class_spread": 5.8763782113346756e-05
+ },
+ "K::10": {
+  "K": 0.0,
+  "count": 1152,
+  "n_geometry_classes": 1,
+  "max_abs": 0.0,
+  "within_class_spread": 0.0
+ },
+ "K::12": {
+  "K": 0.0,
+  "count": 1152,
+  "n_geometry_classes": 1,
+  "max_abs": 0.0,
+  "within_class_spread": 0.0
+ },
+ "geom::L4_c1_gd2_rd0.612372": {
+  "perimeter": 4,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.612372,
+  "count": 768,
+  "n_distinct_masks": 24,
+  "mean": 0.0,
+  "abs_mean": 0.0,
+  "spread": 0.0,
+  "abs_spread": 0.0,
+  "max_abs": 0.0,
+  "kept_by_mask": 0
+ },
+ "geom::L4_c1_gd2_rd0.707107": {
+  "perimeter": 4,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 384,
+  "n_distinct_masks": 12,
+  "mean": 0.0,
+  "abs_mean": 0.0,
+  "spread": 0.0,
+  "abs_spread": 0.0,
+  "max_abs": 0.0,
+  "kept_by_mask": 0
+ },
+ "geom::L8_c1_gd2_rd0.707107": {
+  "perimeter": 8,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 3024,
+  "n_distinct_masks": 228,
+  "mean": -1.3139837207703241e-05,
+  "abs_mean": 1.3139837207703241e-05,
+  "spread": 5.8763782113346756e-05,
+  "abs_spread": 5.8763782113346756e-05,
+  "max_abs": 0.00027682783853200127,
+  "kept_by_mask": 144
+ },
+ "geom::L8_c2_gd2_rd0.707107": {
+  "perimeter": 8,
+  "components": 2,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 288,
+  "n_distinct_masks": 18,
+  "mean": -7.572462698022106e-05,
+  "abs_mean": 7.572462698022106e-05,
+  "spread": 7.572732626782408e-05,
+  "abs_spread": 7.572732626782408e-05,
+  "max_abs": 0.00015235348001611056,
+  "kept_by_mask": 144
+ },
+ "geom::L12_c1_gd2_rd0.707107": {
+  "perimeter": 12,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 1152,
+  "n_distinct_masks": 36,
+  "mean": 0.0,
+  "abs_mean": 0.0,
+  "spread": 0.0,
+  "abs_spread": 0.0,
+  "max_abs": 0.0,
+  "kept_by_mask": 0
+ },
+ "geom::L6_c1_gd2_rd0.707107": {
+  "perimeter": 6,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 1152,
+  "n_distinct_masks": 96,
+  "mean": -0.00016208957920576552,
+  "abs_mean": 0.00016208957920576552,
+  "spread": 0.0003624433175484281,
+  "abs_spread": 0.0003624433175484281,
+  "max_abs": 0.0009725374752346151,
+  "kept_by_mask": 192
+ },
+ "geom::L10_c1_gd2_rd0.707107": {
+  "perimeter": 10,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 1152,
+  "n_distinct_masks": 96,
+  "mean": 0.0,
+  "abs_mean": 0.0,
+  "spread": 0.0,
+  "abs_spread": 0.0,
+  "max_abs": 0.0,
+  "kept_by_mask": 0
+ },
+ "geom::long": {
+  "perimeter": -1,
+  "components": -1,
+  "graph_diameter": -1,
+  "real_diameter": -1.0,
+  "count": 90,
+  "n_distinct_masks": -1,
+  "mean": -6.383944356641447e-07,
+  "abs_mean": 6.383944356641447e-07,
+  "spread": 1.6275928424102638e-06,
+  "abs_spread": 1.6275928424102638e-06,
+  "max_abs": 4.787958267494867e-06,
+  "kept_by_mask": 12
+ }
+}

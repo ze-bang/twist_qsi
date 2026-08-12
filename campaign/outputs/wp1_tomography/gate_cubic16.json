@@ -1,0 +1,86 @@
+{
+  "cluster": "cubic16",
+  "couplings": [
+    -0.05,
+    -0.1,
+    -0.2,
+    -0.3
+  ],
+  "depths": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "calibration_vs_deepest": {
+    "k6": {
+      "L1": {
+        "signed_relative_error": [
+          0.03686533337001749,
+          -0.008473085228200464,
+          -0.054720086606701586,
+          -0.0649872530776122
+        ],
+        "worst_magnitude": 0.0649872530776122,
+        "all_biased_low": false
+      },
+      "L2": {
+        "signed_relative_error": [
+          0.00335576249451916,
+          0.013903530454159136,
+          0.04775662298360911,
+          0.08407567207179449
+        ],
+        "worst_magnitude": 0.08407567207179449,
+        "all_biased_low": false
+      },
+      "L3": {
+        "signed_relative_error": [
+          2.7367024630734414e-05,
+          0.0004356412986995146,
+          0.004191778561362264,
+          0.011150245866592112
+        ],
+        "worst_magnitude": 0.011150245866592112,
+        "all_biased_low": false
+      }
+    },
+    "k8_over_k6": {},
+    "k10_over_k6": {}
+  },
+  "deepest_is_untruncated": true,
+  "k6": {
+    "max_L1_to_L2_drift": 0.004312712052258111,
+    "inter_coupling_spread": 0.03047952168498593,
+    "drift_exceeds_physics": false,
+    "degenerate_on_this_cluster": false,
+    "values_at_L2": [
+      0.0008851265789452307,
+      0.004361501510856125,
+      0.01632663515474775,
+      0.031364648263931164
+    ]
+  },
+  "k8_over_k6": {
+    "max_L1_to_L2_drift": 0.0,
+    "inter_coupling_spread": 0.0,
+    "drift_exceeds_physics": false,
+    "degenerate_on_this_cluster": true,
+    "values_at_L2": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "k10_over_k6": {
+    "note": "insufficient data"
+  },
+  "not_calibratable": [
+    "k8_over_k6"
+  ],
+  "calibrated": [
+    "k6"
+  ],
+  "verdict": "clear for k6: the truncation drift is smaller than the coupling trend; quote the drift as the error bar; but k8_over_k6 cannot be calibrated on cubic16 at all, so its truncation error must be established by self-convergence in levels on the production cluster instead"
+}

@@ -1,0 +1,22 @@
+{
+ "jpm": 0.049,
+ "jpmpm": 0.128,
+ "trace_P": 90.0,
+ "n_found": 25,
+ "n_escaped": 65,
+ "z_last_removed": 0.8117622117581854,
+ "z_first_kept": 0.8117622117581843,
+ "fold_peaks": [
+  0.005909060306076975,
+  0.024482198075015154,
+  0.3377071267611109
+ ],
+ "raw_peaks": [
+  0.005850613586969198,
+  0.2034102691735058
+ ],
+ "oracle_max_dev": null,
+ "band_source": "band_+0p049_pp+0p128.json",
+ "n_anchor_found": null,
+ "runtime": 574.4292528270744
+}

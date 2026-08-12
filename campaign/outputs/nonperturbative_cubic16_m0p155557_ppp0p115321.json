@@ -1,0 +1,84 @@
+{
+  "method": "exact microscopic bands, polar pullback, primitive q=2*delta character",
+  "qualification": "nonperturbative finite-character calculation; bulk use requires M convergence and cluster convergence",
+  "jpm": -0.15555742,
+  "jpmpm": 0.11532091,
+  "n_sites": 16,
+  "basis": "full Hilbert",
+  "basis_dimension": 65536,
+  "band_dimension": 90,
+  "sector_dimensions_at_zero_source": {
+    "++": 16576,
+    "+-": 16320,
+    "-+": 16320,
+    "--": 16320
+  },
+  "zero_source": {
+    "model_overlap_min": 0.4951373800287326,
+    "model_overlap_mean": 0.6213816579474524,
+    "model_overlap_max": 0.7449415665812388,
+    "pullback_unitarity_error": 2.626787242568565e-14,
+    "sector_counts": {
+      "++": 36,
+      "+-": 18,
+      "-+": 18,
+      "--": 18
+    },
+    "sector_eigenpairs": {
+      "++": 62,
+      "+-": 31,
+      "-+": 31,
+      "--": 31
+    },
+    "band_minimum": -1.031389364705481,
+    "band_maximum": -0.3816525535352591,
+    "gap_above_band": 0.02329030593661613,
+    "solve_seconds": 29.32638362585567
+  },
+  "grids": {
+    "M2": {
+      "n_characters": 8,
+      "maximum_microscopic_gauge_identity_residual": 1.1434025270431534e-15
+    }
+  },
+  "convergence": {
+    "M1_to_M2_centered_operator_relative_error": 5.20010944847349
+  },
+  "qmc_thermodynamics": {
+    "status": "not_applicable",
+    "reason": "the available QMC curve has J_pm_pm=0 and J_pm/J_zz=0.046"
+  },
+  "pending": {
+    "microscopic_complement": "only selected-band thermodynamics are emitted; a matching full-spectrum or stochastic complement is required for all-temperature observables",
+    "character_convergence": "run --max-grid 3 for the first genuine boundary-twist comparison"
+  },
+  "gates": {
+    "exact_band_overlap": {
+      "status": "pass",
+      "singularity_cutoff": 1e-08
+    },
+    "character_convergence": {
+      "status": "pending",
+      "threshold": 0.05,
+      "error": null
+    },
+    "qmc_heat_capacity": {
+      "status": "not_applicable",
+      "threshold": 0.02,
+      "rmse": null
+    },
+    "qmc_entropy": {
+      "status": "not_applicable",
+      "threshold": 0.02,
+      "rmse": null
+    },
+    "fcc32_full_hamiltonian": {
+      "status": "pending",
+      "reason": "current exact-band campaign is cubic-16 only"
+    },
+    "qmc_sac_dynamics": {
+      "status": "pending",
+      "reason": "matched finite-cluster momenta and spectral normalization required"
+    }
+  }
+}

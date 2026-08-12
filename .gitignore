@@ -16,3 +16,7 @@ __pycache__/
 campaign/pilot/*.npy
 campaign/pilot/fcc32_dir/
 campaign/cache/fcc32_sym/
+
+# Resumable solver checkpoints, not results (~300 MB). The tomo_*.npz
+# products distilled from them are tracked.
+campaign/outputs/wp1_tomography/ckpt_*.npz

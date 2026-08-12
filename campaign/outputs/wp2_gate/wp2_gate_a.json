@@ -1,0 +1,138 @@
+[
+  {
+    "jpm": -0.2,
+    "jpmpm": 0.0,
+    "levels_to_closure": 5,
+    "space_size": 12870,
+    "bfs_ladder": [
+      [
+        1,
+        1242
+      ],
+      [
+        2,
+        5754
+      ],
+      [
+        3,
+        11130
+      ],
+      [
+        4,
+        12870
+      ],
+      [
+        5,
+        12870
+      ]
+    ],
+    "reference_imaginary_part": 0.0,
+    "max_abs_difference": 0.0,
+    "space_is_closed": true,
+    "failure": "",
+    "passed": true,
+    "seconds": 16.316383027937263
+  },
+  {
+    "jpm": -0.2,
+    "jpmpm": 0.1,
+    "levels_to_closure": 5,
+    "space_size": 32768,
+    "bfs_ladder": [
+      [
+        1,
+        2682
+      ],
+      [
+        2,
+        21810
+      ],
+      [
+        3,
+        32226
+      ],
+      [
+        4,
+        32768
+      ],
+      [
+        5,
+        32768
+      ]
+    ],
+    "reference_imaginary_part": 0.0,
+    "max_abs_difference": 0.0,
+    "space_is_closed": true,
+    "failure": "",
+    "passed": true,
+    "seconds": 25.156528449151665
+  },
+  {
+    "jpm": -0.125,
+    "jpmpm": 0.085,
+    "levels_to_closure": 5,
+    "space_size": 32768,
+    "bfs_ladder": [
+      [
+        1,
+        2682
+      ],
+      [
+        2,
+        21810
+      ],
+      [
+        3,
+        32226
+      ],
+      [
+        4,
+        32768
+      ],
+      [
+        5,
+        32768
+      ]
+    ],
+    "reference_imaginary_part": 0.0,
+    "max_abs_difference": 0.0,
+    "space_is_closed": true,
+    "failure": "",
+    "passed": true,
+    "seconds": 25.3780738520436
+  },
+  {
+    "jpm": -0.24,
+    "jpmpm": 0.15,
+    "levels_to_closure": 5,
+    "space_size": 32768,
+    "bfs_ladder": [
+      [
+        1,
+        2682
+      ],
+      [
+        2,
+        21810
+      ],
+      [
+        3,
+        32226
+      ],
+      [
+        4,
+        32768
+      ],
+      [
+        5,
+        32768
+      ]
+    ],
+    "reference_imaginary_part": 0.0,
+    "max_abs_difference": 0.0,
+    "space_is_closed": true,
+    "failure": "",
+    "passed": true,
+    "seconds": 25.199570219032466
+  }
+]

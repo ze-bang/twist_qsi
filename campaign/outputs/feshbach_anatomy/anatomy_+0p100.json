@@ -1,0 +1,249 @@
+{
+ "jpm": 0.1,
+ "n_raw_roots": 10,
+ "n_masked_roots": 25,
+ "oracle_error": 3.61710661422876e-13,
+ "continuum_edge": -0.613076917367854,
+ "gs_energy": -1.079280464283457,
+ "g_eff": 0.010632350422728152,
+ "g_spread": 2.819148040135449e-17,
+ "g_bare": 0.012000000000000004,
+ "v_eff": -0.0001795830919302892,
+ "v_r2": 0.2857142857142796,
+ "diagonal_width": 0.0006704435432065469,
+ "width_over_g": 0.06305694569409404,
+ "rk_ratio": -0.016890253310914673,
+ "long_over_hex": 0.608715526833683,
+ "hex_over_total": 0.8541910155034202,
+ "ring_peak": 0.0039801048502454235,
+ "ring_peak_over_g6": 0.3316754041871185,
+ "gs_flux": 4.405227758386e-32,
+ "z_mean": 0.13859606599137358,
+ "z_ground": 0.14985080027559736,
+ "model_error": NaN,
+ "model_peak": 0.011477636324307828,
+ "k6": 0.0017720584037880253,
+ "one_minus_z": 0.8501491997244026,
+ "runtime": 163.39042062219232,
+ "k4_over_k6": 0.0,
+ "k8_over_k6": 0.15879551415757778,
+ "k10_over_k6": 0.0,
+ "k12_over_k6": 0.0,
+ "class::diagonal": {
+  "count": 90,
+  "mean": -0.19820571760897876,
+  "rms": 0.1982068515148628,
+  "max_abs": 0.1985409393805823,
+  "kept_by_mask": 90
+ },
+ "class::hexagon": {
+  "count": 192,
+  "mean": -0.010632350422728152,
+  "rms": 0.010632350422728153,
+  "max_abs": 0.010632350422728226,
+  "kept_by_mask": 192
+ },
+ "class::hexagon_wrapping": {
+  "count": 576,
+  "mean": -0.010632350422728152,
+  "rms": 0.010632350422728152,
+  "max_abs": 0.010632350422728249,
+  "kept_by_mask": 0
+ },
+ "class::string10": {
+  "count": 1152,
+  "mean": -0.003255866340125738,
+  "rms": 0.0032558663401257384,
+  "max_abs": 0.0032558663401258234,
+  "kept_by_mask": 0
+ },
+ "class::string12": {
+  "count": 1152,
+  "mean": -0.00239545897894062,
+  "rms": 0.0023957086074276376,
+  "max_abs": 0.002430042384146594,
+  "kept_by_mask": 0
+ },
+ "class::string16": {
+  "count": 90,
+  "mean": -0.001533749756325837,
+  "rms": 0.0015341795520462619,
+  "max_abs": 0.0015519059046461418,
+  "kept_by_mask": 12
+ },
+ "class::string6": {
+  "count": 384,
+  "mean": -0.010632350422728148,
+  "rms": 0.01063235042272815,
+  "max_abs": 0.010632350422728244,
+  "kept_by_mask": 0
+ },
+ "class::string8": {
+  "count": 3312,
+  "mean": -0.005183477296946556,
+  "rms": 0.005196546921752221,
+  "max_abs": 0.005976515277131511,
+  "kept_by_mask": 288
+ },
+ "class::wind4_axial": {
+  "count": 768,
+  "mean": -0.037502303927868456,
+  "rms": 0.03750326676737986,
+  "max_abs": 0.03777103860564782,
+  "kept_by_mask": 0
+ },
+ "class::wind4_diagonal": {
+  "count": 384,
+  "mean": -0.037502303927868456,
+  "rms": 0.03750326676737986,
+  "max_abs": 0.03777103860564779,
+  "kept_by_mask": 0
+ },
+ "K::4": {
+  "K": 0.0,
+  "count": 1152,
+  "n_geometry_classes": 2,
+  "max_abs": 0.0,
+  "within_class_spread": 0.0
+ },
+ "K::6": {
+  "K": 0.0017720584037880253,
+  "count": 1152,
+  "n_geometry_classes": 1,
+  "max_abs": 0.010632350422728226,
+  "within_class_spread": 0.003962443050969796
+ },
+ "K::8": {
+  "K": 0.00028139492534677606,
+  "count": 3024,
+  "n_geometry_classes": 1,
+  "max_abs": 0.005976515277131483,
+  "within_class_spread": 0.0012586073414206154
+ },
+ "K::10": {
+  "K": 0.0,
+  "count": 1152,
+  "n_geometry_classes": 1,
+  "max_abs": 0.0,
+  "within_class_spread": 0.0
+ },
+ "K::12": {
+  "K": 0.0,
+  "count": 1152,
+  "n_geometry_classes": 1,
+  "max_abs": 0.0,
+  "within_class_spread": 0.0
+ },
+ "geom::L4_c1_gd2_rd0.612372": {
+  "perimeter": 4,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.612372,
+  "count": 768,
+  "n_distinct_masks": 24,
+  "mean": 0.0,
+  "abs_mean": 0.0,
+  "spread": 0.0,
+  "abs_spread": 0.0,
+  "max_abs": 0.0,
+  "kept_by_mask": 0
+ },
+ "geom::L4_c1_gd2_rd0.707107": {
+  "perimeter": 4,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 384,
+  "n_distinct_masks": 12,
+  "mean": 0.0,
+  "abs_mean": 0.0,
+  "spread": 0.0,
+  "abs_spread": 0.0,
+  "max_abs": 0.0,
+  "kept_by_mask": 0
+ },
+ "geom::L8_c1_gd2_rd0.707107": {
+  "perimeter": 8,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 3024,
+  "n_distinct_masks": 228,
+  "mean": -0.00028139492534677606,
+  "abs_mean": 0.00028139492534677606,
+  "spread": 0.0012586073414206154,
+  "abs_spread": 0.0012586073414206154,
+  "max_abs": 0.005976515277131483,
+  "kept_by_mask": 144
+ },
+ "geom::L8_c2_gd2_rd0.707107": {
+  "perimeter": 8,
+  "components": 2,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 288,
+  "n_distinct_masks": 18,
+  "mean": -0.002276906284381889,
+  "abs_mean": 0.002276906284381889,
+  "spread": 0.0022776163539925385,
+  "abs_spread": 0.0022776163539925385,
+  "max_abs": 0.004634236795418817,
+  "kept_by_mask": 144
+ },
+ "geom::L12_c1_gd2_rd0.707107": {
+  "perimeter": 12,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 1152,
+  "n_distinct_masks": 36,
+  "mean": 0.0,
+  "abs_mean": 0.0,
+  "spread": 0.0,
+  "abs_spread": 0.0,
+  "max_abs": 0.0,
+  "kept_by_mask": 0
+ },
+ "geom::L6_c1_gd2_rd0.707107": {
+  "perimeter": 6,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 1152,
+  "n_distinct_masks": 96,
+  "mean": -0.0017720584037880253,
+  "abs_mean": 0.0017720584037880253,
+  "spread": 0.003962443050969796,
+  "abs_spread": 0.003962443050969796,
+  "max_abs": 0.010632350422728226,
+  "kept_by_mask": 192
+ },
+ "geom::L10_c1_gd2_rd0.707107": {
+  "perimeter": 10,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 1152,
+  "n_distinct_masks": 96,
+  "mean": 0.0,
+  "abs_mean": 0.0,
+  "spread": 0.0,
+  "abs_spread": 0.0,
+  "max_abs": 0.0,
+  "kept_by_mask": 0
+ },
+ "geom::long": {
+  "perimeter": -1,
+  "components": -1,
+  "graph_diameter": -1,
+  "real_diameter": -1.0,
+  "count": 90,
+  "n_distinct_masks": -1,
+  "mean": -0.00019481668840599028,
+  "abs_mean": 0.00019481668840599028,
+  "spread": 0.0004966870478778349,
+  "abs_spread": 0.0004966870478778349,
+  "max_abs": 0.001461125163044956,
+  "kept_by_mask": 12
+ }
+}

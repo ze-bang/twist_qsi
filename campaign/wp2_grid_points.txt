@@ -1,0 +1,40 @@
+# WP2 first-pass grid: Jpm/Jzz  Jpmpm/Jzz
+#
+# The reduced model depends on exactly two parameters -- Ja is a pure energy
+# scale -- so this two-dimensional grid IS the full (Ja, Jb, Jc) scan, with the
+# scale restored only when converting to Kelvin.  The inverse map is
+#   Jb/Ja = -2 Jpm + 2 Jpmpm,   Jc/Ja = -2 Jpm - 2 Jpmpm,
+# and every point below sits inside the fit domain of material_fit_config.json
+# (|Jb|,|Jc| <= Ja and Jb >= Jc, the latter automatic for Jpmpm >= 0).
+#
+# Coverage spans BOTH signs of Jpm.  Two of the three published seeds are at
+# positive Jpm, and all 114 pre-existing plane points are at negative Jpm, so
+# the positive half has never been scanned.  It is also where the best
+# certified two-peak ratio so far lives: QMC_ordered at (+0.071, 0.038) gives
+# 0.111, against the negative side's certified ceiling of ~0.098.
+#
+# (0.000, 0.000) is omitted: with no transverse coupling at all there is no
+# band and no dynamics to measure.
+-0.125 0.000
+-0.125 0.040
+-0.125 0.085
+-0.125 0.130
+-0.050 0.000
+-0.050 0.040
+-0.050 0.085
+-0.050 0.130
+ 0.000 0.040
+ 0.000 0.085
+ 0.000 0.130
+ 0.050 0.000
+ 0.050 0.040
+ 0.050 0.085
+ 0.050 0.130
+ 0.071 0.000
+ 0.071 0.038
+ 0.071 0.085
+ 0.071 0.130
+ 0.100 0.000
+ 0.100 0.040
+ 0.100 0.085
+ 0.100 0.130

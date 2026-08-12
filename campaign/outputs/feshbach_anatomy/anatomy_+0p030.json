@@ -1,0 +1,249 @@
+{
+ "jpm": 0.03,
+ "n_raw_roots": 90,
+ "n_masked_roots": 90,
+ "oracle_error": 2.755851102875795e-13,
+ "continuum_edge": 0.6893919397379975,
+ "gs_energy": -0.08956565957443682,
+ "g_eff": 0.00040152875724289405,
+ "g_spread": 4.901132992658456e-18,
+ "g_bare": 0.00032399999999999996,
+ "v_eff": -4.925413448288477e-06,
+ "v_r2": 0.28571428571434865,
+ "diagonal_width": 1.8388210206951293e-05,
+ "width_over_g": 0.045795500011541736,
+ "rk_ratio": -0.012266651788800723,
+ "long_over_hex": 0.21086616406648873,
+ "hex_over_total": 0.9784826968127484,
+ "ring_peak": 0.0005540513830446284,
+ "ring_peak_over_g6": 1.7100351328537917,
+ "gs_flux": 0.2500000000000002,
+ "z_mean": 0.9678637944152109,
+ "z_ground": 0.9548704314757577,
+ "model_error": 0.22735558426056862,
+ "model_peak": 0.00043162309421443786,
+ "k6": 6.692145954048235e-05,
+ "one_minus_z": 0.045129568524242325,
+ "runtime": 218.61040392518044,
+ "k4_over_k6": 0.0,
+ "k8_over_k6": 0.06227793606477259,
+ "k10_over_k6": 0.0,
+ "k12_over_k6": 0.0,
+ "class::diagonal": {
+  "count": 90,
+  "mean": -0.028761939817192224,
+  "rms": 0.028761945695207448,
+  "max_abs": 0.028771133922295737,
+  "kept_by_mask": 90
+ },
+ "class::hexagon": {
+  "count": 192,
+  "mean": -0.00040152875724289405,
+  "rms": 0.00040152875724289405,
+  "max_abs": 0.000401528757242905,
+  "kept_by_mask": 192
+ },
+ "class::hexagon_wrapping": {
+  "count": 576,
+  "mean": -0.0004015287572428946,
+  "rms": 0.0004015287572428946,
+  "max_abs": 0.00040152875724290825,
+  "kept_by_mask": 0
+ },
+ "class::string10": {
+  "count": 1152,
+  "mean": -1.3127295018429375e-05,
+  "rms": 1.3127295018429374e-05,
+  "max_abs": 1.3127295018445515e-05,
+  "kept_by_mask": 0
+ },
+ "class::string12": {
+  "count": 1152,
+  "mean": -4.065104868118721e-06,
+  "rms": 4.065488186682533e-06,
+  "max_abs": 4.120931450086398e-06,
+  "kept_by_mask": 0
+ },
+ "class::string16": {
+  "count": 90,
+  "mean": -5.171563956041009e-07,
+  "rms": 5.173018554504724e-07,
+  "max_abs": 5.232897498892362e-07,
+  "kept_by_mask": 12
+ },
+ "class::string6": {
+  "count": 384,
+  "mean": -0.000401528757242895,
+  "rms": 0.000401528757242895,
+  "max_abs": 0.00040152875724290635,
+  "kept_by_mask": 0
+ },
+ "class::string8": {
+  "count": 3312,
+  "mean": -6.291522276403681e-05,
+  "rms": 6.393417568891315e-05,
+  "max_abs": 8.767643462784281e-05,
+  "kept_by_mask": 288
+ },
+ "class::wind4_axial": {
+  "count": 768,
+  "mean": -0.004131173618188843,
+  "rms": 0.00413118054756981,
+  "max_abs": 0.004138740189386692,
+  "kept_by_mask": 0
+ },
+ "class::wind4_diagonal": {
+  "count": 384,
+  "mean": -0.004131173618188843,
+  "rms": 0.00413118054756981,
+  "max_abs": 0.004138740189386691,
+  "kept_by_mask": 0
+ },
+ "K::4": {
+  "K": 0.0,
+  "count": 1152,
+  "n_geometry_classes": 2,
+  "max_abs": 0.0,
+  "within_class_spread": 0.0
+ },
+ "K::6": {
+  "K": 6.692145954048235e-05,
+  "count": 1152,
+  "n_geometry_classes": 1,
+  "max_abs": 0.0004015287572429049,
+  "within_class_spread": 0.0001496409326860204
+ },
+ "K::8": {
+  "K": 4.167730378623425e-06,
+  "count": 3024,
+  "n_geometry_classes": 1,
+  "max_abs": 8.767643462783919e-05,
+  "within_class_spread": 1.8638717543903574e-05
+ },
+ "K::10": {
+  "K": 0.0,
+  "count": 1152,
+  "n_geometry_classes": 1,
+  "max_abs": 0.0,
+  "within_class_spread": 0.0
+ },
+ "K::12": {
+  "K": 0.0,
+  "count": 1152,
+  "n_geometry_classes": 1,
+  "max_abs": 0.0,
+  "within_class_spread": 0.0
+ },
+ "geom::L4_c1_gd2_rd0.612372": {
+  "perimeter": 4,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.612372,
+  "count": 768,
+  "n_distinct_masks": 24,
+  "mean": 0.0,
+  "abs_mean": 0.0,
+  "spread": 0.0,
+  "abs_spread": 0.0,
+  "max_abs": 0.0,
+  "kept_by_mask": 0
+ },
+ "geom::L4_c1_gd2_rd0.707107": {
+  "perimeter": 4,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 384,
+  "n_distinct_masks": 12,
+  "mean": 0.0,
+  "abs_mean": 0.0,
+  "spread": 0.0,
+  "abs_spread": 0.0,
+  "max_abs": 0.0,
+  "kept_by_mask": 0
+ },
+ "geom::L8_c1_gd2_rd0.707107": {
+  "perimeter": 8,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 3024,
+  "n_distinct_masks": 228,
+  "mean": -4.167730378623425e-06,
+  "abs_mean": 4.167730378623425e-06,
+  "spread": 1.8638717543903574e-05,
+  "abs_spread": 1.8638717543903574e-05,
+  "max_abs": 8.767643462783919e-05,
+  "kept_by_mask": 144
+ },
+ "geom::L8_c2_gd2_rd0.707107": {
+  "perimeter": 8,
+  "components": 2,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 288,
+  "n_distinct_masks": 18,
+  "mean": -2.1783954693286517e-05,
+  "abs_mean": 2.1783954693286517e-05,
+  "spread": 2.178423024852961e-05,
+  "abs_spread": 2.178423024852961e-05,
+  "max_abs": 4.372286384307013e-05,
+  "kept_by_mask": 144
+ },
+ "geom::L12_c1_gd2_rd0.707107": {
+  "perimeter": 12,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 1152,
+  "n_distinct_masks": 36,
+  "mean": 0.0,
+  "abs_mean": 0.0,
+  "spread": 0.0,
+  "abs_spread": 0.0,
+  "max_abs": 0.0,
+  "kept_by_mask": 0
+ },
+ "geom::L6_c1_gd2_rd0.707107": {
+  "perimeter": 6,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 1152,
+  "n_distinct_masks": 96,
+  "mean": -6.692145954048235e-05,
+  "abs_mean": 6.692145954048235e-05,
+  "spread": 0.0001496409326860204,
+  "abs_spread": 0.0001496409326860204,
+  "max_abs": 0.0004015287572429049,
+  "kept_by_mask": 192
+ },
+ "geom::L10_c1_gd2_rd0.707107": {
+  "perimeter": 10,
+  "components": 1,
+  "graph_diameter": 2,
+  "real_diameter": 0.707107,
+  "count": 1152,
+  "n_distinct_masks": 96,
+  "mean": 0.0,
+  "abs_mean": 0.0,
+  "spread": 0.0,
+  "abs_spread": 0.0,
+  "max_abs": 0.0,
+  "kept_by_mask": 0
+ },
+ "geom::long": {
+  "perimeter": -1,
+  "components": -1,
+  "graph_diameter": -1,
+  "real_diameter": -1.0,
+  "count": 90,
+  "n_distinct_masks": -1,
+  "mean": -6.568306380467344e-08,
+  "abs_mean": 6.568306380467344e-08,
+  "spread": 1.6745961202629488e-07,
+  "abs_spread": 1.6745961202629488e-07,
+  "max_abs": 4.926229785449173e-07,
+  "kept_by_mask": 12
+ }
+}

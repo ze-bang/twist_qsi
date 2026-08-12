@@ -1,0 +1,52 @@
+{
+ "jpm": -0.2,
+ "jpmpm": 0.3,
+ "z_star": -1.7102732135186625,
+ "continuum_edge": -1.3255982012030996,
+ "masked_root": -1.400130164463998,
+ "root_residual": 7.265299473147024e-13,
+ "z_ground": 0.33013886906986717,
+ "runtime": 125.26170957699651,
+ "k6": 0.001944584523803341,
+ "long_over_hex": 2.5364533830255684,
+ "worst_within_class_spread": 0.006826321722954224,
+ "K::4": {
+  "K": 0.0,
+  "count": 1152,
+  "n_geometry_classes": 2,
+  "max_abs": 0.0,
+  "within_class_spread": 0.0
+ },
+ "k4_over_k6": 0.0,
+ "K::6": {
+  "K": 0.001944584523803341,
+  "count": 1152,
+  "n_geometry_classes": 1,
+  "max_abs": 0.011667507142863586,
+  "within_class_spread": 0.0043482231832183285
+ },
+ "K::8": {
+  "K": 0.0015262508781708787,
+  "count": 3024,
+  "n_geometry_classes": 1,
+  "max_abs": 0.03237259495911446,
+  "within_class_spread": 0.006826321722954224
+ },
+ "k8_over_k6": 0.7848724802076184,
+ "K::10": {
+  "K": 0.0,
+  "count": 1152,
+  "n_geometry_classes": 1,
+  "max_abs": 0.0,
+  "within_class_spread": 0.0
+ },
+ "k10_over_k6": 0.0,
+ "K::12": {
+  "K": 0.0,
+  "count": 1152,
+  "n_geometry_classes": 1,
+  "max_abs": 0.0,
+  "within_class_spread": 0.0
+ },
+ "k12_over_k6": 0.0
+}

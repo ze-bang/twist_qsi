@@ -1,0 +1,27 @@
+{
+  "cluster": "cubic16",
+  "per_perimeter": {
+    "4": {
+      "classes": 2,
+      "pairs": 1152,
+      "kept": 0,
+      "distinct_masks": 36
+    },
+    "6": {
+      "classes": 1,
+      "pairs": 1152,
+      "kept": 192,
+      "distinct_masks": 96
+    },
+    "8": {
+      "classes": 1,
+      "pairs": 288,
+      "kept": 0,
+      "distinct_masks": 72
+    }
+  },
+  "usable_perimeters": [
+    6
+  ],
+  "measurable": false
+}

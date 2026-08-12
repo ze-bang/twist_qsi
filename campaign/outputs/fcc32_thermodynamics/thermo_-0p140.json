@@ -1,0 +1,29 @@
+{
+ "cluster": "fcc32",
+ "virtual_depth": 1,
+ "jpm": -0.14,
+ "space": 140442,
+ "n_ice": 2970,
+ "microscopic_ground": -0.8643010435499974,
+ "continuum_edge": 0.26650519472773493,
+ "n_anchors": 16,
+ "runtime": 1927.2791770689655,
+ "periodic_n_found": 2970,
+ "periodic_complete": true,
+ "periodic_band_bottom": -0.8643159716047201,
+ "periodic_band_top": -0.37084410280399766,
+ "periodic_peaks": [
+  0.002561303785479043,
+  0.012322035357617809
+ ],
+ "periodic_low_peak": 0.002561303785479043,
+ "masked_n_found": 2970,
+ "masked_complete": true,
+ "masked_band_bottom": -0.7244714877801489,
+ "masked_band_top": -0.6316568332468598,
+ "masked_peaks": [
+  0.002456121481904433
+ ],
+ "masked_low_peak": 0.002456121481904433,
+ "comparison_complete": true
+}

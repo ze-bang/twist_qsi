@@ -1,0 +1,244 @@
+[
+  {
+    "cluster": "cubic16",
+    "n_sites": 16,
+    "n_ice": 90,
+    "n_sectors": 25,
+    "sector_dims": [
+      1,
+      2,
+      2,
+      8,
+      2,
+      2,
+      1,
+      2,
+      8,
+      2,
+      1,
+      8,
+      12,
+      8,
+      1,
+      2,
+      8,
+      2,
+      1,
+      2,
+      2,
+      8,
+      2,
+      2,
+      1
+    ],
+    "two_m_within_sector_spread": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "gamma_rule_holds": true,
+    "distinct_magnetisation_tuples": 25,
+    "label_equivalent_to_magnetisation": true,
+    "masked_commutator_max": 0.0,
+    "masked_operator_scale": 5.456605999824226,
+    "unmasked_commutator_max": 19.96338216334111,
+    "total_magnetisation_is_constant": true,
+    "nonzero_momentum_contrast": [
+      {
+        "momentum": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "max_spread": 4.0
+      },
+      {
+        "momentum": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "max_spread": 4.0
+      },
+      {
+        "momentum": [
+          0.0,
+          1.0,
+          1.0
+        ],
+        "max_spread": 4.0
+      }
+    ],
+    "verdict_pass": true,
+    "build_seconds": 0.06288337707519531,
+    "seconds": 0.13379454612731934
+  },
+  {
+    "cluster": "fcc32",
+    "n_sites": 32,
+    "n_ice": 2970,
+    "n_sectors": 85,
+    "sector_dims": [
+      1,
+      4,
+      4,
+      4,
+      4,
+      6,
+      12,
+      12,
+      6,
+      72,
+      6,
+      12,
+      12,
+      6,
+      4,
+      12,
+      12,
+      12,
+      140,
+      12,
+      4,
+      140,
+      140,
+      4,
+      12,
+      140,
+      12,
+      12,
+      12,
+      4,
+      1,
+      4,
+      4,
+      6,
+      72,
+      6,
+      4,
+      140,
+      140,
+      4,
+      1,
+      72,
+      396,
+      72,
+      1,
+      4,
+      140,
+      140,
+      4,
+      6,
+      72,
+      6,
+      4,
+      4,
+      1,
+      4,
+      12,
+      12,
+      12,
+      140,
+      12,
+      4,
+      140,
+      140,
+      4,
+      12,
+      140,
+      12,
+      12,
+      12,
+      4,
+      6,
+      12,
+      12,
+      6,
+      72,
+      6,
+      12,
+      12,
+      6,
+      4,
+      4,
+      4,
+      4,
+      1
+    ],
+    "two_m_within_sector_spread": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "gamma_rule_holds": true,
+    "distinct_magnetisation_tuples": 85,
+    "label_equivalent_to_magnetisation": true,
+    "masked_commutator_max": 0.0,
+    "masked_operator_scale": 7.164377637674315,
+    "unmasked_commutator_max": 55.893300714119825,
+    "total_magnetisation_is_constant": true,
+    "nonzero_momentum_contrast": [
+      {
+        "momentum": [
+          -0.5,
+          0.5,
+          0.5
+        ],
+        "max_spread": 4.0
+      },
+      {
+        "momentum": [
+          0.5,
+          -0.5,
+          0.5
+        ],
+        "max_spread": 8.0
+      },
+      {
+        "momentum": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "max_spread": 4.0
+      },
+      {
+        "momentum": [
+          0.5,
+          0.5,
+          -0.5
+        ],
+        "max_spread": 8.0
+      },
+      {
+        "momentum": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "max_spread": 4.0
+      },
+      {
+        "momentum": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "max_spread": 8.0
+      },
+      {
+        "momentum": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "max_spread": 8.0
+      }
+    ],
+    "verdict_pass": true,
+    "build_seconds": 0.23986411094665527,
+    "seconds": 1.4039106369018555
+  }
+]

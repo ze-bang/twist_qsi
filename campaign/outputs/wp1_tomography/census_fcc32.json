@@ -1,0 +1,42 @@
+{
+  "cluster": "fcc32",
+  "per_perimeter": {
+    "4": {
+      "classes": 1,
+      "pairs": 26304,
+      "kept": 0,
+      "distinct_masks": 24
+    },
+    "6": {
+      "classes": 1,
+      "pairs": 62208,
+      "kept": 15360,
+      "distinct_masks": 128
+    },
+    "8": {
+      "classes": 3,
+      "pairs": 139008,
+      "kept": 10560,
+      "distinct_masks": 696
+    },
+    "10": {
+      "classes": 2,
+      "pairs": 177792,
+      "kept": 23808,
+      "distinct_masks": 2112
+    },
+    "12": {
+      "classes": 2,
+      "pairs": 175872,
+      "kept": 6912,
+      "distinct_masks": 5024
+    }
+  },
+  "usable_perimeters": [
+    6,
+    8,
+    10,
+    12
+  ],
+  "measurable": true
+}

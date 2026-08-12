@@ -1,0 +1,1323 @@
+{
+  "measured_ratio": 0.38461538461538464,
+  "dip_fraction": 0.7,
+  "verdict": "NULL: no certified nearest-neighbour XYZ point in the fit-constrained region reaches the measured two-peak ratio. The 25 mK anomaly is not accounted for by dressed gauge dynamics of the NN model -- which is a rigorous exclusion, and answers the experiment's own open question about beyond-NN terms.",
+  "points": [
+    {
+      "jpm": 0.0,
+      "jpmpm": 0.04,
+      "n_found": 90,
+      "source": "point_jpm+0p0000_pp+0p0400_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "single maximum",
+      "n_maxima": 1,
+      "maxima_T": [
+        0.2471790656398246
+      ]
+    },
+    {
+      "jpm": 0.0,
+      "jpmpm": 0.085,
+      "n_found": 90,
+      "source": "point_jpm+0p0000_pp+0p0850_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        4.0947354448843004e-05,
+        0.23778539865827367
+      ],
+      "gauge_T": 4.0947354448843004e-05,
+      "spinon_T": 0.23778539865827367,
+      "ratio": 0.0001722029808385724
+    },
+    {
+      "jpm": 0.0,
+      "jpmpm": 0.13,
+      "n_found": 90,
+      "source": "point_jpm+0p0000_pp+0p1300_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.0003107287233914909,
+        0.0010296951190806015,
+        0.22603791579518515
+      ],
+      "gauge_T": 0.0010296951190806015,
+      "spinon_T": 0.22603791579518515,
+      "ratio": 0.004555408836867956
+    },
+    {
+      "jpm": 0.049,
+      "jpmpm": 0.128,
+      "n_found": 25,
+      "source": "point_jpm+0p0490_pp+0p1280_bordered.npz",
+      "certified": false,
+      "near_certified": false,
+      "status": "uncertified band 25/90"
+    },
+    {
+      "jpm": 0.05,
+      "jpmpm": 0.0,
+      "n_found": 90,
+      "source": "point_jpm+0p0500_pp+0p0000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.003676161373696492,
+        0.25694382765016227
+      ],
+      "gauge_T": 0.003676161373696492,
+      "spinon_T": 0.25694382765016227,
+      "ratio": 0.014307256988098233
+    },
+    {
+      "jpm": 0.05,
+      "jpmpm": 0.04,
+      "n_found": 90,
+      "source": "point_jpm+0p0500_pp+0p0400_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.005939971183829864,
+        0.2577107505975844
+      ],
+      "gauge_T": 0.005939971183829864,
+      "spinon_T": 0.2577107505975844,
+      "ratio": 0.02304898484078041
+    },
+    {
+      "jpm": 0.05,
+      "jpmpm": 0.085,
+      "n_found": 90,
+      "source": "point_jpm+0p0500_pp+0p0850_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.054062362660713424,
+        0.27272510490260865
+      ],
+      "gauge_T": 0.054062362660713424,
+      "spinon_T": 0.27272510490260865,
+      "ratio": 0.1982302387600853
+    },
+    {
+      "jpm": 0.05,
+      "jpmpm": 0.13,
+      "n_found": 25,
+      "source": "point_jpm+0p0500_pp+0p1300_bordered.npz",
+      "certified": false,
+      "near_certified": false,
+      "status": "uncertified band 25/90"
+    },
+    {
+      "jpm": 0.071,
+      "jpmpm": 0.0,
+      "n_found": 90,
+      "source": "point_jpm+0p0710_pp+0p0000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.0022414706929715466,
+        0.017009385253854148,
+        0.27272510490260865
+      ],
+      "gauge_T": 0.017009385253854148,
+      "spinon_T": 0.27272510490260865,
+      "ratio": 0.0623682416766446
+    },
+    {
+      "jpm": 0.071,
+      "jpmpm": 0.038,
+      "n_found": 90,
+      "source": "point_jpm+0p0710_pp+0p0380_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.03059671906400234,
+        0.27517448140767864
+      ],
+      "gauge_T": 0.03059671906400234,
+      "spinon_T": 0.27517448140767864,
+      "ratio": 0.11119024884677606
+    },
+    {
+      "jpm": 0.071,
+      "jpmpm": 0.085,
+      "n_found": 25,
+      "source": "point_jpm+0p0710_pp+0p0850_bordered.npz",
+      "certified": false,
+      "near_certified": false,
+      "status": "uncertified band 25/90"
+    },
+    {
+      "jpm": 0.071,
+      "jpmpm": 0.13,
+      "n_found": 25,
+      "source": "point_jpm+0p0710_pp+0p1300_bordered.npz",
+      "certified": false,
+      "near_certified": false,
+      "status": "uncertified band 25/90"
+    },
+    {
+      "jpm": 0.1,
+      "jpmpm": 0.0,
+      "n_found": 89,
+      "source": "point_jpm+0p1000_pp+0p0000_bordered.npz",
+      "certified": false,
+      "near_certified": true,
+      "status": "merged: dip 0.76 of the smaller peak, needs < 0.7",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.1057116768426772,
+        0.3054290073671872
+      ]
+    },
+    {
+      "jpm": 0.1,
+      "jpmpm": 0.04,
+      "n_found": 30,
+      "source": "point_jpm+0p1000_pp+0p0400_bordered.npz",
+      "certified": false,
+      "near_certified": false,
+      "status": "uncertified band 30/90"
+    },
+    {
+      "jpm": 0.1,
+      "jpmpm": 0.085,
+      "n_found": 25,
+      "source": "point_jpm+0p1000_pp+0p0850_bordered.npz",
+      "certified": false,
+      "near_certified": false,
+      "status": "uncertified band 25/90"
+    },
+    {
+      "jpm": 0.1,
+      "jpmpm": 0.13,
+      "n_found": 25,
+      "source": "point_jpm+0p1000_pp+0p1300_bordered.npz",
+      "certified": false,
+      "near_certified": false,
+      "status": "uncertified band 25/90"
+    },
+    {
+      "jpm": -0.05,
+      "jpmpm": 0.0,
+      "n_found": 90,
+      "source": "point_jpm-0p0500_pp+0p0000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.0012572737928036302,
+        0.2531433117362819
+      ],
+      "gauge_T": 0.0012572737928036302,
+      "spinon_T": 0.2531433117362819,
+      "ratio": 0.004966648275951392
+    },
+    {
+      "jpm": -0.05,
+      "jpmpm": 0.04,
+      "n_found": 90,
+      "source": "point_jpm-0p0500_pp+0p0400_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.001234990977021858,
+        0.250890038551172
+      ],
+      "gauge_T": 0.001234990977021858,
+      "spinon_T": 0.250890038551172,
+      "ratio": 0.004922439265239967
+    },
+    {
+      "jpm": -0.05,
+      "jpmpm": 0.05,
+      "n_found": 90,
+      "source": "point_jpm-0p0500_pp+0p0500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.0012203556017060223,
+        0.24939901013719507
+      ],
+      "gauge_T": 0.0012203556017060223,
+      "spinon_T": 0.24939901013719507,
+      "ratio": 0.004893185426175915
+    },
+    {
+      "jpm": -0.05,
+      "jpmpm": 0.085,
+      "n_found": 90,
+      "source": "point_jpm-0p0500_pp+0p0850_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.001156613251495586,
+        0.24279828110722015
+      ],
+      "gauge_T": 0.001156613251495586,
+      "spinon_T": 0.24279828110722015,
+      "ratio": 0.004763679735380101
+    },
+    {
+      "jpm": -0.05,
+      "jpmpm": 0.1,
+      "n_found": 90,
+      "source": "point_jpm-0p0500_pp+0p1000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.0011260016999044206,
+        0.23849513774973474
+      ],
+      "gauge_T": 0.0011260016999044206,
+      "spinon_T": 0.23849513774973474,
+      "ratio": 0.004721277383382098
+    },
+    {
+      "jpm": -0.05,
+      "jpmpm": 0.13,
+      "n_found": 90,
+      "source": "point_jpm-0p0500_pp+0p1300_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.00019812309063345078,
+        0.0010735678660247219,
+        0.22806798911902362
+      ],
+      "gauge_T": 0.0010735678660247219,
+      "spinon_T": 0.22806798911902362,
+      "ratio": 0.004707227306083936
+    },
+    {
+      "jpm": -0.05,
+      "jpmpm": 0.15,
+      "n_found": 90,
+      "source": "point_jpm-0p0500_pp+0p1500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.0009759114622524963,
+        0.21874769415739784
+      ],
+      "gauge_T": 0.0009759114622524963,
+      "spinon_T": 0.21874769415739784,
+      "ratio": 0.00446135656886188
+    },
+    {
+      "jpm": -0.05,
+      "jpmpm": 0.2,
+      "n_found": 90,
+      "source": "point_jpm-0p0500_pp+0p2000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.0016294385991446388,
+        0.19015563642472644
+      ],
+      "gauge_T": 0.0016294385991446388,
+      "spinon_T": 0.19015563642472644,
+      "ratio": 0.008568973446073243
+    },
+    {
+      "jpm": -0.05,
+      "jpmpm": 0.25,
+      "n_found": 86,
+      "source": "point_jpm-0p0500_pp+0p2500_bordered.npz",
+      "certified": false,
+      "near_certified": true,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        4.8097284064001214e-05,
+        0.002688364769127458,
+        0.23011629477209566
+      ],
+      "gauge_T": 0.002688364769127458,
+      "spinon_T": 0.23011629477209566,
+      "ratio": 0.011682635390031728
+    },
+    {
+      "jpm": -0.05,
+      "jpmpm": 0.3,
+      "n_found": 25,
+      "source": "point_jpm-0p0500_pp+0p3000_bordered.npz",
+      "certified": false,
+      "near_certified": false,
+      "status": "uncertified band 25/90"
+    },
+    {
+      "jpm": -0.09,
+      "jpmpm": 0.0,
+      "n_found": 90,
+      "source": "point_jpm-0p0900_pp+0p0000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.005765551743502624,
+        0.2608014018410818
+      ],
+      "gauge_T": 0.005765551743502624,
+      "spinon_T": 0.2608014018410818,
+      "ratio": 0.02210705810168857
+    },
+    {
+      "jpm": -0.09,
+      "jpmpm": 0.05,
+      "n_found": 90,
+      "source": "point_jpm-0p0900_pp+0p0500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.005782760695268775,
+        0.2577107505975844
+      ],
+      "gauge_T": 0.005782760695268775,
+      "spinon_T": 0.2577107505975844,
+      "ratio": 0.02243895794746476
+    },
+    {
+      "jpm": -0.09,
+      "jpmpm": 0.1,
+      "n_found": 90,
+      "source": "point_jpm-0p0900_pp+0p1000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.005869579003434967,
+        0.24791684283920395
+      ],
+      "gauge_T": 0.005869579003434967,
+      "spinon_T": 0.24791684283920395,
+      "ratio": 0.023675595962803987
+    },
+    {
+      "jpm": -0.09,
+      "jpmpm": 0.15,
+      "n_found": 90,
+      "source": "point_jpm-0p0900_pp+0p1500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.0001528716514592549,
+        0.0061196671601275576,
+        0.23149204174813834
+      ],
+      "gauge_T": 0.0061196671601275576,
+      "spinon_T": 0.23149204174813834,
+      "ratio": 0.02643575612325244
+    },
+    {
+      "jpm": -0.09,
+      "jpmpm": 0.2,
+      "n_found": 90,
+      "source": "point_jpm-0p0900_pp+0p2000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.006137933071469384,
+        0.20670496202733188
+      ],
+      "gauge_T": 0.006137933071469384,
+      "spinon_T": 0.20670496202733188,
+      "ratio": 0.029694173817935664
+    },
+    {
+      "jpm": -0.09,
+      "jpmpm": 0.25,
+      "n_found": 90,
+      "source": "point_jpm-0p0900_pp+0p2500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.0071882389897868285,
+        0.17080977966112523
+      ],
+      "gauge_T": 0.0071882389897868285,
+      "spinon_T": 0.17080977966112523,
+      "ratio": 0.042083298766896114
+    },
+    {
+      "jpm": -0.09,
+      "jpmpm": 0.3,
+      "n_found": 90,
+      "source": "point_jpm-0p0900_pp+0p3000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.0008458274816429231,
+        0.1834750632526741
+      ],
+      "gauge_T": 0.0008458274816429231,
+      "spinon_T": 0.1834750632526741,
+      "ratio": 0.0046100405507318734
+    },
+    {
+      "jpm": -0.1,
+      "jpmpm": 0.1,
+      "n_found": 90,
+      "source": "point_jpm-0p1000_pp+0p1000.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.00765250782299534,
+        0.250890038551172
+      ],
+      "gauge_T": 0.00765250782299534,
+      "spinon_T": 0.250890038551172,
+      "ratio": 0.03050144145692943
+    },
+    {
+      "jpm": -0.1,
+      "jpmpm": -0.1,
+      "n_found": 90,
+      "source": "point_jpm-0p1000_pp-0p1000.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.00765250782299534,
+        0.250890038551172
+      ],
+      "gauge_T": 0.00765250782299534,
+      "spinon_T": 0.250890038551172,
+      "ratio": 0.03050144145692943
+    },
+    {
+      "jpm": -0.125,
+      "jpmpm": 0.0,
+      "n_found": 90,
+      "source": "point_jpm-0p1250_pp+0p0000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.012109692855666392,
+        0.2743555880404164
+      ],
+      "gauge_T": 0.012109692855666392,
+      "spinon_T": 0.2743555880404164,
+      "ratio": 0.044138677626943276
+    },
+    {
+      "jpm": -0.125,
+      "jpmpm": 0.04,
+      "n_found": 90,
+      "source": "point_jpm-0p1250_pp+0p0400_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.012182090481151752,
+        0.27272510490260865
+      ],
+      "gauge_T": 0.012182090481151752,
+      "spinon_T": 0.27272510490260865,
+      "ratio": 0.044668020149820936
+    },
+    {
+      "jpm": -0.125,
+      "jpmpm": 0.05,
+      "n_found": 90,
+      "source": "point_jpm-0p1250_pp+0p0500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.01221845144309044,
+        0.27191350064937936
+      ],
+      "gauge_T": 0.01221845144309044,
+      "spinon_T": 0.27191350064937936,
+      "ratio": 0.04493506726922545
+    },
+    {
+      "jpm": -0.125,
+      "jpmpm": 0.085,
+      "n_found": 90,
+      "source": "point_jpm-0p1250_pp+0p0850_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.012513273543560707,
+        0.26629949708715916
+      ],
+      "gauge_T": 0.012513273543560707,
+      "spinon_T": 0.26629949708715916,
+      "ratio": 0.04698947493492691
+    },
+    {
+      "jpm": -0.125,
+      "jpmpm": 0.1,
+      "n_found": 90,
+      "source": "point_jpm-0p1250_pp+0p1000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.01270113904516472,
+        0.2631436901551223
+      ],
+      "gauge_T": 0.01270113904516472,
+      "spinon_T": 0.2631436901551223,
+      "ratio": 0.048266933695721305
+    },
+    {
+      "jpm": -0.125,
+      "jpmpm": 0.13,
+      "n_found": 90,
+      "source": "point_jpm-0p1250_pp+0p1300_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.0017090215631365504,
+        0.013202895129221466,
+        0.2561791869932768
+      ],
+      "gauge_T": 0.013202895129221466,
+      "spinon_T": 0.2561791869932768,
+      "ratio": 0.05153773530231386
+    },
+    {
+      "jpm": -0.125,
+      "jpmpm": 0.15,
+      "n_found": 90,
+      "source": "point_jpm-0p1250_pp+0p1500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        3.216501730092134e-05,
+        0.013642909055417323,
+        0.2501434134010828
+      ],
+      "gauge_T": 0.013642909055417323,
+      "spinon_T": 0.2501434134010828,
+      "ratio": 0.0545403489539104
+    },
+    {
+      "jpm": -0.125,
+      "jpmpm": 0.2,
+      "n_found": 90,
+      "source": "point_jpm-0p1250_pp+0p2000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.003463439769340502,
+        0.014918919691255556,
+        0.23080314321150153
+      ],
+      "gauge_T": 0.014918919691255556,
+      "spinon_T": 0.23080314321150153,
+      "ratio": 0.06463915301874497
+    },
+    {
+      "jpm": -0.125,
+      "jpmpm": 0.25,
+      "n_found": 90,
+      "source": "point_jpm-0p1250_pp+0p2500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.016025134740207437,
+        0.20486504476872158
+      ],
+      "gauge_T": 0.016025134740207437,
+      "spinon_T": 0.20486504476872158,
+      "ratio": 0.07822288452526736
+    },
+    {
+      "jpm": -0.125,
+      "jpmpm": 0.3,
+      "n_found": 90,
+      "source": "point_jpm-0p1250_pp+0p3000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.018544907157911905,
+        0.16878558249736625
+      ],
+      "gauge_T": 0.018544907157911905,
+      "spinon_T": 0.16878558249736625,
+      "ratio": 0.10987257847216472
+    },
+    {
+      "jpm": -0.16,
+      "jpmpm": 0.0,
+      "n_found": 90,
+      "source": "point_jpm-0p1600_pp+0p0000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.019566939341229113,
+        0.30091133588359753
+      ],
+      "gauge_T": 0.019566939341229113,
+      "spinon_T": 0.30091133588359753,
+      "ratio": 0.06502559727028115
+    },
+    {
+      "jpm": -0.16,
+      "jpmpm": 0.05,
+      "n_found": 90,
+      "source": "point_jpm-0p1600_pp+0p0500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.019801600042290955,
+        0.2991230331096759
+      ],
+      "gauge_T": 0.019801600042290955,
+      "spinon_T": 0.2991230331096759,
+      "ratio": 0.06619884746565316
+    },
+    {
+      "jpm": -0.16,
+      "jpmpm": 0.1,
+      "n_found": 90,
+      "source": "point_jpm-0p1600_pp+0p1000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.020645296949895805,
+        0.29294725379232234
+      ],
+      "gauge_T": 0.020645296949895805,
+      "spinon_T": 0.29294725379232234,
+      "ratio": 0.07047445122845143
+    },
+    {
+      "jpm": -0.16,
+      "jpmpm": 0.15,
+      "n_found": 90,
+      "source": "point_jpm-0p1600_pp+0p1500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.0005556213803110245,
+        0.02217611410346231,
+        0.2826553918138518
+      ],
+      "gauge_T": 0.02217611410346231,
+      "spinon_T": 0.2826553918138518,
+      "ratio": 0.07845636328093404
+    },
+    {
+      "jpm": -0.16,
+      "jpmpm": 0.2,
+      "n_found": 90,
+      "source": "point_jpm-0p1600_pp+0p2000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.004679900569355016,
+        0.02439520839300796,
+        0.26949315070815355
+      ],
+      "gauge_T": 0.02439520839300796,
+      "spinon_T": 0.26949315070815355,
+      "ratio": 0.09052255439110082
+    },
+    {
+      "jpm": -0.16,
+      "jpmpm": 0.25,
+      "n_found": 90,
+      "source": "point_jpm-0p1600_pp+0p2500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.010309519451613356,
+        0.02707738103430175,
+        0.2531433117362819
+      ],
+      "gauge_T": 0.02707738103430175,
+      "spinon_T": 0.2531433117362819,
+      "ratio": 0.10696463141206851
+    },
+    {
+      "jpm": -0.16,
+      "jpmpm": 0.3,
+      "n_found": 90,
+      "source": "point_jpm-0p1600_pp+0p3000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.027730737999294288,
+        0.23011629477209566
+      ],
+      "gauge_T": 0.027730737999294288,
+      "spinon_T": 0.23011629477209566,
+      "ratio": 0.12050749394673883
+    },
+    {
+      "jpm": -0.2,
+      "jpmpm": 0.0,
+      "n_found": 90,
+      "source": "point_jpm-0p2000_pp+0p0000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.0274021123121792,
+        0.36090564849103324
+      ],
+      "gauge_T": 0.0274021123121792,
+      "spinon_T": 0.36090564849103324,
+      "ratio": 0.07592597241619511
+    },
+    {
+      "jpm": -0.2,
+      "jpmpm": 0.05,
+      "n_found": 90,
+      "source": "point_jpm-0p2000_pp+0p0500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.027730737999294288,
+        0.3587608021680289
+      ],
+      "gauge_T": 0.027730737999294288,
+      "spinon_T": 0.3587608021680289,
+      "ratio": 0.07729589696453612
+    },
+    {
+      "jpm": -0.2,
+      "jpmpm": 0.1,
+      "n_found": 90,
+      "source": "point_jpm-0p2000_pp+0p1000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.0022616016070439,
+        0.028740451368702832,
+        0.35345428770381493
+      ],
+      "gauge_T": 0.028740451368702832,
+      "spinon_T": 0.35345428770381493,
+      "ratio": 0.08131306471174159
+    },
+    {
+      "jpm": -0.2,
+      "jpmpm": 0.15,
+      "n_found": 90,
+      "source": "point_jpm-0p2000_pp+0p1500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.0020375767669666874,
+        0.030688043795094773,
+        0.34512663985385034
+      ],
+      "gauge_T": 0.030688043795094773,
+      "spinon_T": 0.34512663985385034,
+      "ratio": 0.08891821219042999
+    },
+    {
+      "jpm": -0.2,
+      "jpmpm": 0.2,
+      "n_found": 90,
+      "source": "point_jpm-0p2000_pp+0p2000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.006612730272508934,
+        0.03247594422765039,
+        0.33300160472726326
+      ],
+      "gauge_T": 0.03247594422765039,
+      "spinon_T": 0.33300160472726326,
+      "ratio": 0.09752488806847946
+    },
+    {
+      "jpm": -0.2,
+      "jpmpm": 0.25,
+      "n_found": 90,
+      "source": "point_jpm-0p2000_pp+0p2500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.01324230297699742,
+        0.03247594422765039,
+        0.312798781017797
+      ],
+      "gauge_T": 0.03247594422765039,
+      "spinon_T": 0.312798781017797,
+      "ratio": 0.10382375571279046
+    },
+    {
+      "jpm": -0.2,
+      "jpmpm": 0.3,
+      "n_found": 90,
+      "source": "point_jpm-0p2000_pp+0p3000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.02015887828491482,
+        0.2991230331096759
+      ],
+      "gauge_T": 0.02015887828491482,
+      "spinon_T": 0.2991230331096759,
+      "ratio": 0.06739326649420341
+    },
+    {
+      "jpm": -0.24,
+      "jpmpm": 0.0,
+      "n_found": 90,
+      "source": "point_jpm-0p2400_pp+0p0000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.001498981595779948,
+        0.034676671773863375,
+        0.41517190812824173
+      ],
+      "gauge_T": 0.034676671773863375,
+      "spinon_T": 0.41517190812824173,
+      "ratio": 0.08352364669902511
+    },
+    {
+      "jpm": -0.24,
+      "jpmpm": 0.05,
+      "n_found": 90,
+      "source": "point_jpm-0p2400_pp+0p0500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.0022616016070439,
+        0.03509253916973144,
+        0.4139363955905216
+      ],
+      "gauge_T": 0.03509253916973144,
+      "spinon_T": 0.4139363955905216,
+      "ratio": 0.08477761207653275
+    },
+    {
+      "jpm": -0.24,
+      "jpmpm": 0.1,
+      "n_found": 90,
+      "source": "point_jpm-0p2400_pp+0p1000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 4,
+      "maxima_T": [
+        0.0002677096835538202,
+        0.004129277570287048,
+        0.03647886326009842,
+        0.40903100387587116
+      ],
+      "gauge_T": 0.03647886326009842,
+      "spinon_T": 0.40903100387587116,
+      "ratio": 0.08918361423567951
+    },
+    {
+      "jpm": -0.24,
+      "jpmpm": 0.15,
+      "n_found": 90,
+      "source": "point_jpm-0p2400_pp+0p1500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.004008026766120535,
+        0.037247893883618176,
+        0.39820536820090185
+      ],
+      "gauge_T": 0.037247893883618176,
+      "spinon_T": 0.39820536820090185,
+      "ratio": 0.09353940669334708
+    },
+    {
+      "jpm": -0.24,
+      "jpmpm": 0.2,
+      "n_found": 90,
+      "source": "point_jpm-0p2400_pp+0p2000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.008882211338106844,
+        0.03509253916973144,
+        0.38079559373357036
+      ],
+      "gauge_T": 0.03509253916973144,
+      "spinon_T": 0.38079559373357036,
+      "ratio": 0.09215584357387416
+    },
+    {
+      "jpm": -0.24,
+      "jpmpm": 0.25,
+      "n_found": 90,
+      "source": "point_jpm-0p2400_pp+0p2500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.016857981721108865,
+        0.3740467072823911
+      ],
+      "gauge_T": 0.016857981721108865,
+      "spinon_T": 0.3740467072823911,
+      "ratio": 0.04506918893522495
+    },
+    {
+      "jpm": -0.24,
+      "jpmpm": 0.3,
+      "n_found": 89,
+      "source": "point_jpm-0p2400_pp+0p3000_bordered.npz",
+      "certified": false,
+      "near_certified": true,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.011966185815372416,
+        0.03488398575994752,
+        0.35135372448874386
+      ],
+      "gauge_T": 0.011966185815372416,
+      "spinon_T": 0.35135372448874386,
+      "ratio": 0.03405737574799999
+    },
+    {
+      "jpm": -0.27,
+      "jpmpm": 0.0,
+      "n_found": 89,
+      "source": "point_jpm-0p2700_pp+0p0000_bordered.npz",
+      "certified": false,
+      "near_certified": true,
+      "status": "merged: dip 0.71 of the smaller peak, needs < 0.7",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.0033818385333334237,
+        0.039890702869532085,
+        0.4553577143754314
+      ]
+    },
+    {
+      "jpm": -0.27,
+      "jpmpm": 0.05,
+      "n_found": 90,
+      "source": "point_jpm-0p2700_pp+0p0500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.002688364769127458,
+        0.03953562870030121,
+        0.4472873544249461
+      ],
+      "gauge_T": 0.03953562870030121,
+      "spinon_T": 0.4472873544249461,
+      "ratio": 0.08838977518407623
+    },
+    {
+      "jpm": -0.27,
+      "jpmpm": 0.1,
+      "n_found": 90,
+      "source": "point_jpm-0p2700_pp+0p1000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.0012953088328197138,
+        0.04036910064743546,
+        0.4341533496276451
+      ],
+      "gauge_T": 0.04036910064743546,
+      "spinon_T": 0.4341533496276451,
+      "ratio": 0.0929835061322418
+    },
+    {
+      "jpm": -0.27,
+      "jpmpm": 0.15,
+      "n_found": 90,
+      "source": "point_jpm-0p2700_pp+0p1500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.005367555707427436,
+        0.03953562870030121,
+        0.4239243714136036
+      ],
+      "gauge_T": 0.03953562870030121,
+      "spinon_T": 0.4239243714136036,
+      "ratio": 0.09326104221955218
+    },
+    {
+      "jpm": -0.27,
+      "jpmpm": 0.2,
+      "n_found": 90,
+      "source": "point_jpm-0p2700_pp+0p2000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.012109692855666392,
+        0.41890061626348196
+      ],
+      "gauge_T": 0.012109692855666392,
+      "spinon_T": 0.41890061626348196,
+      "ratio": 0.028908271760692716
+    },
+    {
+      "jpm": -0.27,
+      "jpmpm": 0.25,
+      "n_found": 90,
+      "source": "point_jpm-0p2700_pp+0p2500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.013806524557445353,
+        0.40298093116652683
+      ],
+      "gauge_T": 0.013806524557445353,
+      "spinon_T": 0.40298093116652683,
+      "ratio": 0.03426098728165373
+    },
+    {
+      "jpm": -0.27,
+      "jpmpm": 0.3,
+      "n_found": 89,
+      "source": "point_jpm-0p2700_pp+0p3000_bordered.npz",
+      "certified": false,
+      "near_certified": true,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.006029149739871086,
+        0.0406104467380992,
+        0.38536236625882186
+      ],
+      "gauge_T": 0.006029149739871086,
+      "spinon_T": 0.38536236625882186,
+      "ratio": 0.015645403567565063
+    },
+    {
+      "jpm": -0.3,
+      "jpmpm": 0.0,
+      "n_found": 90,
+      "source": "point_jpm-0p3000_pp+0p0000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.008146762519194075,
+        0.043751850565690836,
+        0.48188707740473935
+      ],
+      "gauge_T": 0.008146762519194075,
+      "spinon_T": 0.48188707740473935,
+      "ratio": 0.016905957642751993
+    },
+    {
+      "jpm": -0.3,
+      "jpmpm": 0.05,
+      "n_found": 90,
+      "source": "point_jpm-0p3000_pp+0p0500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "merged: dip 0.82 of the smaller peak, needs < 0.7",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.007427801996943491,
+        0.045344914134848896,
+        0.4949876891820962
+      ]
+    },
+    {
+      "jpm": -0.3,
+      "jpmpm": 0.1,
+      "n_found": 90,
+      "source": "point_jpm-0p3000_pp+0p1000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.004583278009590792,
+        0.04362164917473913,
+        0.48332540834698356
+      ],
+      "gauge_T": 0.04362164917473913,
+      "spinon_T": 0.48332540834698356,
+      "ratio": 0.09025316778592109
+    },
+    {
+      "jpm": -0.3,
+      "jpmpm": 0.15,
+      "n_found": 90,
+      "source": "point_jpm-0p3000_pp+0p1500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.006399455127284281,
+        0.04085323571291307,
+        0.47193789958650934
+      ],
+      "gauge_T": 0.006399455127284281,
+      "spinon_T": 0.47193789958650934,
+      "ratio": 0.01355995170739878
+    },
+    {
+      "jpm": -0.3,
+      "jpmpm": 0.2,
+      "n_found": 90,
+      "source": "point_jpm-0p3000_pp+0p2000_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 2,
+      "maxima_T": [
+        0.012891825027482278,
+        0.45400261265914504
+      ],
+      "gauge_T": 0.012891825027482278,
+      "spinon_T": 0.45400261265914504,
+      "ratio": 0.0283959269572776
+    },
+    {
+      "jpm": -0.3,
+      "jpmpm": 0.25,
+      "n_found": 90,
+      "source": "point_jpm-0p3000_pp+0p2500_bordered.npz",
+      "certified": true,
+      "near_certified": false,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.010558280449987054,
+        0.0406104467380992,
+        0.4406714231371007
+      ],
+      "gauge_T": 0.010558280449987054,
+      "spinon_T": 0.4406714231371007,
+      "ratio": 0.02395953060632703
+    },
+    {
+      "jpm": -0.3,
+      "jpmpm": 0.3,
+      "n_found": 89,
+      "source": "point_jpm-0p3000_pp+0p3000_bordered.npz",
+      "certified": false,
+      "near_certified": true,
+      "status": "resolved",
+      "n_maxima": 3,
+      "maxima_T": [
+        0.0011361144546850983,
+        0.044144791123426494,
+        0.4264587972030535
+      ],
+      "gauge_T": 0.0011361144546850983,
+      "spinon_T": 0.4264587972030535,
+      "ratio": 0.0026640661703694443
+    }
+  ]
+}
