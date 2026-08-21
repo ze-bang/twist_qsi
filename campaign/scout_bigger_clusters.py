@@ -26,13 +26,12 @@ sys.path.insert(0, str(ROOT / "campaign"))
 import recompute_finite_size_artifact as geometry               # noqa: E402
 
 # measured on our own clusters
-REF = {48: (87_546, 9_104), 64: (2_756_394, 249_180)}
-RATE = np.log(REF[64][0] / REF[48][0]) / 16.0     # per site
-FRAC = 0.5 * (REF[48][1] / REF[48][0] + REF[64][1] / REF[64][0])
+REF = {48: (87_546, 9_104), 64: (2_756_394, 249_180), 72: (12_846_186, 973_008)}
+RATE = np.log(REF[72][0] / REF[48][0]) / 24.0
+FRAC = REF[72][1] / REF[72][0]
 
-SHAPES = [(2, 2, 3), (1, 3, 4), (1, 2, 6), (3, 4, 1), (2, 2, 4), (1, 4, 4),
-          (2, 8, 1), (1, 2, 8), (2, 3, 3), (2, 2, 5), (1, 3, 5), (2, 2, 6),
-          (2, 3, 4), (3, 3, 3), (2, 4, 4), (2, 2, 7), (2, 3, 5)]
+SHAPES = [(2, 2, 3), (2, 2, 4), (2, 3, 3), (2, 2, 5), (1, 3, 5), (3, 3, 3),
+          (2, 2, 6), (2, 3, 4), (3, 3, 4), (2, 4, 4), (2, 3, 5), (3, 3, 5)]
 
 
 def momenta_of(Lvecs, shape):
@@ -61,7 +60,7 @@ def has_L(qs):
 
 def main() -> int:
     print(f"ice-manifold growth {RATE:.4f} /site, "
-          f"sector fraction {FRAC:.3f}  (from 48- and 64-site data)\n")
+          f"sector fraction {FRAC:.3f}  (calibrated 48 -> 72)\n")
     print("shape      sites   L point?   est. ice states   est. sector   "
           "vector (complex128)")
     for shape in SHAPES:
