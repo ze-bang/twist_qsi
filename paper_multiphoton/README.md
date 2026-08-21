@@ -723,3 +723,128 @@ Photon box shaded; roton isolated outside on BOTH axes. Caption states
 explicitly that neither axis alone separates it (one photon level also has
 marginally positive census; another also sits below the free-photon line)
 -- the conjunction is the diagnostic. Text ranges updated in both places.
+
+================================================================================
+REFEREE RESPONSE ROUND (2026-08-21) -- converted to PRB, claims re-grounded
+================================================================================
+
+Referee recommended reject-with-resubmit; 13 numbered points. User chose PRB.
+Structural: revtex4-2 aps,prb + numbered sections + five appendices.
+Length is no longer a constraint (referee point 12 dissolved).
+
+NUMBERS CORRECTED THIS ROUND (all traced to stored outputs, none cosmetic):
+
+C1. Eq.(f1) was missing the factor K -- dimensionally wrong as printed.
+    Code had K=1 hard-coded (ring48_roton_landing.f1_analytic docstring).
+    Fixed to f_1 = (K/2N) sum_p <W+W^dag> sum_mu |g|^2.
+
+C2. OFF-POLE WEIGHT "13-38%" WAS NOT REPRODUCIBLE. Traced: it merged the
+    48-site upper end with the 64-site lower end of two different ranges.
+    Worse, the old criterion called an exact level "one photon" if its
+    energy fell within 20% of a fitted Gaussian line -- which counts the
+    ROTON ITSELF as off-pole (67.7% at L) because it sits at half the
+    Gaussian energy. Window scan (referee_response_checks.py): stable on
+    [0.161,0.677] for windows 15-30%, blows up at 10%.
+    REPLACED by a window-free, scale-free definition (polarization_all_
+    momenta.py): photon descendants = brightest level in each transverse
+    polarization channel. Gives 16-38% on 48 sites at every momentum, and
+    the independent "two brightest levels" variant gives IDENTICAL numbers.
+    Paper now says 16-38% (48) with 13% (64) quoted as the 64-site minimum.
+
+C3. f_1 ABSOLUTE VALUES WERE 2x TOO LARGE (1.367/1.759 -> 0.684/0.880).
+    My plaquette helper summed 2*gs[a]*gs[b] over ALL flippable states,
+    counting each (a,b) pair twice. Caught by the gate printing exactly
+    2.00000000 instead of 1. The RATIO 0.777 is unaffected (global factor
+    cancels) and matches the gated f1_exact values, so only the absolute
+    numbers were wrong. Gate now reported in the methods appendix.
+
+C4. TWO DIFFERENT "SINGLE-MODE" ENERGIES were being conflated: f1/S =
+    1.85K (sublattice-summed probe, = spectral centroid) vs 1.450K (lowest
+    eigenvalue in the 4-dim space of sublattice-resolved probes). The
+    paper's 29% backflow recovery uses the SECOND. Both are now defined
+    explicitly and distinguished.
+
+C5. "splitting below one percent at the smallest momentum" -- that is the
+    64-site number. On 48 sites it is 4.4%. Now stated per cluster.
+
+NEW RESULTS (all gated, all from jobs; nothing computed on a login node):
+
+R1. THREE-PHOTON KINEMATICS (referee 7: parity only excludes EVEN n).
+    Thresholds at L: 1ph 2.03K, 2ph 4.03K, 3ph 5.55K. Roton at 1.02K is
+    5.4x below the 3-photon threshold; softest photon on the cluster is
+    1.76K so no 3ph state anywhere falls below 5.28K. Caveated as a
+    weakly-renormalized-constituent argument.
+
+R2. THE 3/4 REDUCTION IS EXACT AS GEOMETRY, NOT AS f_1 (referee 13).
+    Per-family geometric factor at L = (96,96,96,0), at X = (96,96,96,96)
+    -> exactly 3/4. Full f_1 ratio 0.777 because w_p is non-uniform.
+    BONUS: the same decoupling occurs at the SMALL [111] momentum too,
+    (72,0,72,72), and there is NO anomaly there -- so geometric decoupling
+    is necessary but NOT sufficient. Strengthens the mechanism argument.
+
+R3. POLARIZATION IS BASIS-INDEPENDENT AFTER ALL (referee 1, 9).
+    Trap avoided: the two Gaussian branches are EXACTLY degenerate at
+    every q, so SVD polarization fractions ("68% pol-1") are arbitrary.
+    Computed the invariants instead (polarization_invariant.py): purity
+    tr M^2/(tr M)^2 and cross-level overlap tr(M_A M_B)/(tr M_A tr M_B).
+    RESULT: every bright level has purity 1.000000, and the two bright
+    levels are mutually orthogonal (1e-28..1e-31 at (1/3,1/3,1/3),
+    (1/3,1/3,2/3), X; 3e-3 at L; 4e-2 at (1/6,1/6,5/6)). So they ARE the
+    two transverse branches, identified with no energy scale at all.
+    Longitudinal residue 1e-31 everywhere = exact div E = 0 gate.
+    CONSEQUENCE, conceded in the paper: the "polarization splitting" and
+    the "roton" are THE SAME FACT. No longer claimed as two results.
+
+R4. CLASSICAL CONTROL, NOW WITH ERROR BARS (referee 13).
+    (a) Exact, same cluster: equal-amplitude state over the same 9104
+        configs gives S(L)=0.297 vs quantum 0.370; enhancement over other
+        momenta 11% (classical) vs 48% (quantum). ~4/5 of the L
+        enhancement is made by the quantum dynamics. NO sampling error.
+    (b) 2048-site loop MC, 30 bins: S(L)=0.2488(67), S(X)=0.2538(73),
+        S(W)=0.2475(52), S(K)=0.2467(46). Spread 0.007 vs typical error
+        0.006 -> flat within resolution; L not distinguished.
+
+R5. SHAPE VARIATION AT FIXED SIZE IS NOT AVAILABLE (referee 3).
+    Scouted all 48/64-site tori containing an L point. Every alternative
+    is one cell thick in some direction and loses most of its hexagons to
+    torus winding: (1,3,4) keeps only 24 contractible hexagons on 48
+    sites vs 48 for (2,2,3). Half the ring terms per site = a different
+    model, not the same model in a different box. Admissibility criterion
+    stated in the paper: n_hex must equal n_sites. Shape test abandoned
+    honestly; finite-size evidence rests on the size sequence.
+
+R6. 72 SITES: BROKE THE 64-BIT BARRIER (ring_big_cluster128.py).
+    Every prior pipeline stored a configuration in one uint64 -> hard cap
+    at 64 spins (the old 72-site attempt died with OverflowError). Rewrote
+    the state as a (lo,hi) uint64 PAIR with exact 128-bit lookup: sort by
+    (hi,lo), group queries by hi (hi < 2^8 at 72 sites), one vectorized
+    binary search on lo per block. VALIDATED against 48 sites: reproduces
+    E0 = -10.55601176, S(L) = 0.37036, omega = 1.0235/1.7303 exactly.
+    (2,3,3) is the next genuinely 3D cluster: 72 sites, 36 tetrahedra,
+    72/72 hexagons. Run in progress.
+
+REFRAMED, NOT RECOMPUTED:
+
+F1. CIRCULARITY (referee 4, the sharpest point -- and correct). f1/S IS
+    identically the spectral centroid; "the centroid is low where a low
+    pole exists" is a restatement, not evidence. New subsection concedes
+    this outright and moves the weight onto the two places where f1/S is
+    used as a GROUND-STATE PREDICTOR: the 64-site L-class prediction, and
+    the V-trajectory (f1 flat to <1%, S grows, mode softens).
+
+F2. "NEUTRON INTENSITY" (referee 6) -> defined as the sublattice-summed
+    longitudinal pseudospin correlator, Eq.(szz). No g-tensor, no local
+    <111> frame rotation, no polarization projector. Ratios at fixed q
+    are unaffected by those factors; absolute q-dependence is NOT claimed.
+
+F3. REPRODUCIBILITY (referee 11). All dependence on the unavailable
+    companion ZhouKimMask removed: the torus-winding filter is now
+    justified inline (keep winding-zero loops; 48 on the 48-site cluster,
+    12 per <111> family), and the acknowledgment no longer points to it.
+    Methods appendix added with the three standing gates.
+
+OPEN / NOT CLAIMED:
+- Adiabatic branch tracking from compact to Gaussian is NOT possible here
+  (E^2 is a c-number, so there is no continuous knob); title stays at the
+  hedged "roton-like mode" unless 72 sites changes the picture.
+- X-point splitting still not size-converged (53% at 48 -> 6% at 64).
