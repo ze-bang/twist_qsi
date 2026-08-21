@@ -1,0 +1,461 @@
+% =====================================================================
+% PAPER C.  Emergent permittivity, speed of light and fine structure
+% constant of quantum spin ice, from electric-flux sector energies.
+% Draft.  Numbers marked \pending{} are NOT yet computed -- see README.md.
+% =====================================================================
+\documentclass[aps,prb,preprint,amsmath,amssymb,superscriptaddress,
+longbibliography,floatfix]{revtex4-2}
+
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,citecolor=blue!55!black,
+urlcolor=blue!55!black,linkcolor=blue!55!black]{hyperref}
+
+\newcommand{\Jzz}{J_{zz}}
+\newcommand{\Jpm}{J_{\pm}}
+\DeclareRobustCommand{\bq}{\bm q}
+\DeclareRobustCommand{\bT}{\bm{\mathcal T}}
+\setlength{\emergencystretch}{3em}
+\newcommand{\pending}[1]{{\color{red}\textbf{[PENDING: #1]}}}
+
+\begin{document}
+
+\title{Emergent electrostatics of quantum spin ice:\\
+measuring the permittivity, the speed of light and the fine structure
+constant from electric-flux sectors}
+
+\author{Zhengbang Zhou}
+\email{zhengbang.zhou@mail.utoronto.ca}
+\affiliation{Department of Physics, University of Toronto, Toronto,
+Ontario M5S 1A7, Canada}
+
+\author{Yong Baek Kim}
+\email{ybkim@physics.utoronto.ca}
+\affiliation{Department of Physics, University of Toronto, Toronto,
+Ontario M5S 1A7, Canada}
+
+\date{\today}
+
+\begin{abstract}
+\textbf{\color{red}[SUPERSEDED BY ITS OWN TEST --- see \texttt{README.md} and
+Sec.~\ref{sec:falsified}.  The quadratic law proposed below FAILS at every
+coupling, cluster and virtual depth measured: 29 of 29 fits, best residual
+$21.5\%$.  The text below describes the calculation as planned; the
+measurement returned a null.]}
+
+A deconfined compact $U(1)$ gauge theory on a three-torus carries 't Hooft
+electric-flux sectors whose ground energies obey an emergent electrostatics,
+$\Delta E(\bT)=|\bT|^2/2\varepsilon_{\rm eff}L$, with a single renormalized
+permittivity.  Quantum spin ice realizes exactly this structure --- the flux
+label is the total polarization of the ice configuration --- but a periodic
+cluster cannot ordinarily be used to measure it, because the finite lattice
+supports virtual processes that tunnel between flux sectors and destroy the
+label.  Removing those processes by transport masking makes the sectors exact
+and turns a $32$-site cluster into an electrostatics experiment.  We resolve
+the ground energy of all $85$ flux sectors of the $32$-site FCC cluster at
+thirteen couplings.  The sector energies organize into seven shells whose
+members are degenerate to $1.5\times10^{-15}$; the lowest excited shell lies
+$1.374\times10^{-3}\Jzz$ above the zero-flux ground state at
+$\Jpm/\Jzz=-0.05$.  From the small-flux shells we extract
+$\varepsilon_{\rm eff}$, and combining it with the independently measured
+nonperturbative ring amplitude $K_6$ gives the emergent light speed and hence
+the fine structure constant $\alpha$ --- for the $\pi$-flux background, which
+is inaccessible to sign-free quantum Monte Carlo.  The extraction is
+overdetermined: the same $c$ must reproduce the directly computed excitation
+energies at the $X$ and $L$ points, giving three independent routes to one
+number.  We further find that the flux-sector splitting \emph{shrinks} with
+cluster size at weak coupling, as the Coulomb phase requires, but \emph{grows}
+by factors of $2.8$--$3.5$ at $\Jpm/\Jzz=-0.22$ and $-0.30$, which locates the
+breakdown of emergent electrostatics on the XXZ line.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+The emergent electrodynamics of quantum spin ice is usually characterized by
+two numbers: the speed of light $c$ of the emergent photon and the fine
+structure constant $\alpha$ that measures how strongly that photon couples to
+the emergent charges~\cite{Hermele2004,Benton2012,Savary2012}.  The second is
+the more interesting and the less well determined.  Unlike its counterpart in
+nature, $\alpha$ in quantum spin ice is predicted to be
+\emph{large}~\cite{Pace2021}, of order unity or above over much of the phase
+diagram, which is why the emergent photon is strongly renormalized and why
+photon--photon and photon--spinon effects are expected to be observable at all.
+The available determinations are perturbative or variational.
+
+The obstruction to a nonperturbative determination is not one of raw computing
+power.  Sign-free quantum Monte Carlo is restricted to $\Jpm>0$, the $0$-flux
+side, whereas every candidate material sits at $\Jpm<0$, in the $\pi$-flux
+background~\cite{Kato2015,Huang2018,Smith2025}.  Exact diagonalization works at
+both signs, but the standard route --- fit a photon dispersion to a
+finite-cluster spectrum --- fails because the accessible momenta are a handful
+of zone-boundary points and nothing is converged in system size.
+
+This paper takes a different observable, one that is a \emph{ground-state}
+property and therefore far better behaved on small clusters: the energy of the
+electric-flux sectors.  In a deconfined phase these energies are not accidental
+numbers; they are fixed by the emergent Maxwell action, and their pattern
+measures the permittivity directly.  The construction requires one ingredient
+that has only recently become available: the flux sectors must be \emph{exact},
+which on a finite torus they are not.
+
+\section{Electric-flux sectors of quantum spin ice}
+\label{sec:sectors}
+
+\subsection{The label}
+
+We study the nearest-neighbour XXZ model on the pyrochlore lattice,
+\begin{equation}
+ H=\Jzz\sum_{\langle ij\rangle}S^z_iS^z_j
+ -\Jpm\sum_{\langle ij\rangle}\left(S^+_iS^-_j+\mathrm{h.c.}\right),
+ \label{eq:model}
+\end{equation}
+with $\Jzz>0$.  At $\Jpm=0$ the ground manifold is the two-in--two-out ice
+manifold, on which the emergent electric field is $E_i=S^z_i$ and the ice rule
+is Gauss's law.  An ice configuration $a$ carries the polarization
+\begin{equation}
+ \bm p_a=\sum_{i}S^z_i(a)\,\bm r_i ,\qquad \bT_a=2\bm p_a ,
+ \label{eq:pol}
+\end{equation}
+with $\bm r_i$ the lifted site position.  $\bT$ is the total electric flux
+through the three cross-sections of the torus, i.e.\ the 't Hooft electric-flux
+sector label~\cite{tHooft1978}, and it is the finite-volume remnant of the
+one-form symmetry of the deconfined phase~\cite{Gaiotto2015}.  On the $32$-site
+FCC cluster (FCC-32) the $2970$ ice configurations fall into $85$ sectors, with
+dimensions from $1$ to $396$.
+
+\subsection{Why a naive cluster has no flux sectors}
+
+A contractible rearrangement of spins cannot change $\bT$; a rearrangement that
+closes only through a periodic image changes it by a box vector.  The infinite
+lattice has only the first kind, so $\bT$ is exactly conserved in the
+thermodynamic limit and the flux sectors are superselected.  A finite periodic
+cluster has both.  Worse, on the clusters that are actually diagonalizable the
+flux-changing process is \emph{shorter} than the physical one: on FCC-32 a
+four-spin winding path appears at order $\Jpm^2/\Jzz$, one order before the
+hexagon ring exchange at $12|\Jpm|^3/\Jzz^2$~\cite{ZhouKimMask}.  The naive
+periodic ground state is therefore a coherent superposition of all flux sectors
+and the sector energies do not exist as observables.
+
+This is why the measurement proposed here has not been made before, and it is
+also why it is now possible.  We use the transport-masked Feshbach map of
+Ref.~\cite{ZhouKimMask}: virtual spinon excursions are summed exactly through
+$F(z)=PHP+PHQ(z-QHQ)^{-1}QHP$, and every matrix element connecting different
+$\bT$ is deleted.  The resulting theory is block diagonal in $\bT$ by
+construction, each block is solved as a bordered Hermitian problem whose Schur
+complement is the masked block, and the ground energy of each of the $85$
+blocks is a well-defined number.
+
+\subsection{What the emergent theory predicts}
+
+Coarse-graining Eq.~(\ref{eq:model}) on the ice manifold gives the emergent
+Maxwell energy
+\begin{equation}
+ \mathcal E=\int d^3r\left[\frac{1}{2\varepsilon}|\bm D|^2
+ +\frac{1}{2\mu}|\bm B|^2\right],\qquad c=\frac{1}{\sqrt{\varepsilon\mu}} .
+ \label{eq:maxwell}
+\end{equation}
+A uniform flux $\bT$ through a box of linear size $L$ corresponds to
+$|\bm D|=|\bT|/L^2$ and volume $L^3$, so
+\begin{equation}
+ \boxed{\ \Delta E(\bT)\equiv E_0(\bT)-E_0(\bm 0)
+ =\frac{|\bT|^2}{2\varepsilon_{\rm eff}L}\ }
+ \label{eq:law}
+\end{equation}
+in the deconfined phase.  Three features of Eq.~(\ref{eq:law}) make it a good
+test rather than a fit.  It is \emph{isotropic}: $\Delta E$ may depend on $\bT$
+only through $|\bT|$, so sectors in different point-group stars that happen to
+share $|\bT|$ must be degenerate --- a nontrivial prediction the lattice
+symmetry does not by itself require.  It is \emph{quadratic}, with a single
+coefficient for all shells.  And its size dependence is $1/L$: the splitting
+must \emph{shrink} as the cluster grows, in contrast to a confining phase where
+it would grow linearly.
+
+One physical remark is essential to interpreting what follows.  On the ice
+manifold the Ising energy is the same for every configuration and every link
+carries $|E|=1/2$, so $\sum_{\rm links}E^2$ is a constant and contributes
+nothing to Eq.~(\ref{eq:law}).  \textbf{The entire emergent electric stiffness
+is generated dynamically by the ring exchange}: a polarized sector has fewer
+flippable hexagons and therefore loses resonance energy.  Consequently the
+observation that $\Delta E$ increases as the sector dimension falls is not an
+alternative, ``entropic'' explanation competing with electrostatics --- it is
+the microscopic mechanism \emph{of} the emergent electrostatics.  What
+distinguishes the two readings is quantitative and is exactly the content of
+Eq.~(\ref{eq:law}): whether $\Delta E$ is a function of $|\bT|^2$ alone, with
+one coefficient.
+
+\section{Sector spectroscopy of FCC-32}
+\label{sec:results}
+
+\subsection{The shell structure}
+
+Table~\ref{tab:shells} lists the ground energy of every one of the $85$ sectors
+at $\Jpm/\Jzz=-0.05$, virtual depth $d=1$ (a common $140\,442$-state
+microscopic space).  The $85$ numbers collapse onto \emph{seven} distinct
+values.  Within each shell the sector ground energies agree to
+$1.5\times10^{-15}$, i.e.\ to solver precision: the degeneracy is exact, not
+approximate.
+
+\begin{table}[t]
+\caption{FCC-32 electric-flux sector ground energies, $\Jpm/\Jzz=-0.05$,
+virtual depth $d=1$.  ``mult'' is the number of sectors in the shell, ``dim''
+the ice-manifold dimension of each.  Energies in units of $\Jzz$; $\Delta E$ is
+measured from the zero-flux sector.  All $85$ sectors and $2970$ ice states are
+accounted for ($\sum$mult$=85$, $\sum$mult$\times$dim$=2970$).}
+\label{tab:shells}
+\begin{ruledtabular}
+\begin{tabular}{ccrl}
+mult & dim & $\Delta E\ (10^{-3}\Jzz)$ & ratio to first\\ \hline
+ 1 & 396 & $0.000000$ & --- \\
+12 & 140 & $1.373749$ & $1.000$\\
+ 6 &  72 & $1.896027$ & $1.380$\\
+24 &  12 & $6.722887$ & $4.894$\\
+12 &   6 & $6.729408$ & $4.899$\\
+24 &   4 & $6.896969$ & $5.020$\\
+ 6 &   1 & $7.090524$ & $5.161$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+The multiplicities $1,12,6,24,12,24,6$ are exactly the star sizes of the cubic
+point group, so each shell is a single orbit of $\bT$ under the space group.
+The unique $1$-dimensional shell of multiplicity $6$ is the set of fully
+polarized ``frozen'' sectors, which contain one configuration each and no ring
+exchange at all; the unique $396$-dimensional sector is $\bT=\bm 0$ and is the
+global ground state.
+
+\subsection{The two tests Eq.~(\ref{eq:law}) must pass}
+
+\paragraph{Isotropy.}  Two of the seven shells have multiplicity $24$ and two
+have multiplicity $12$.  If any two distinct point-group stars share the same
+$|\bT|$, Eq.~(\ref{eq:law}) requires them to be degenerate.  Table
+\ref{tab:shells} shows the two multiplicity-$12$ shells at
+$1.374$ and $6.729$, and the two multiplicity-$24$ shells at $6.723$ and
+$6.897$ --- the latter pair differing by only $2.6\%$ while the former differ
+by a factor of five.  \pending{the assignment of $|\bT|$ to each shell requires
+joining the sector indices to the polarization vectors, which is pure
+combinatorics on the $2970$ ice states
+(\texttt{protocol.polarization\_sector\_labels}); until it is done we cannot
+say whether the near-degenerate multiplicity-$24$ and multiplicity-$12$ pairs
+share $|\bT|$, which is the isotropy test.  Script:
+\texttt{analysis/sector\_labels.py}.}
+
+\paragraph{Quadraticity.}  The observed ratios $1.000$, $1.380$, $4.894$,
+$4.899$, $5.020$, $5.161$ do \emph{not} continue to grow across the full set:
+after the third shell they saturate, changing by only $5\%$ across the last
+four.  A pure $|\bT|^2$ law with shells at increasing $|\bT|$ cannot do this.
+We therefore expect Eq.~(\ref{eq:law}) to hold only in a weak-field window ---
+plausibly the first two or three shells --- with the saturation marking the
+field strength at which the compact lattice theory departs from its continuum
+limit.  This is a physically sensible outcome on a cluster only two conventional
+cells across, where the largest sectors are fully polarized, but it must be
+stated as a limitation of the extraction and not hidden.  \pending{the fit of
+Eq.~(\ref{eq:law}), and hence $\varepsilon_{\rm eff}$, awaits the $|\bT|$
+join.}
+
+\subsection{Coupling and depth dependence}
+
+Sector ground energies are available at thirteen couplings from
+$\Jpm/\Jzz=-0.05$ to $-0.32$ at depth $d=1$, and at four couplings
+($-0.05,-0.22,-0.26,-0.30$) at depth $d=2$, which enlarges the virtual space
+from $1.4\times10^5$ to $2.5\times10^6$ states and the cost from $51$~s to
+$5.8\times10^3$~s per coupling.  The depth sensitivity is not negligible: at
+$\Jpm/\Jzz=-0.05$ the first shell gap moves from $1.374\times10^{-3}$ at $d=1$
+to $1.837\times10^{-3}$ at $d=2$, an increase of $34\%$.  Since
+$\varepsilon_{\rm eff}\propto1/\Delta E$, the permittivity carries at least
+this systematic, and any quoted $\alpha$ must be accompanied by the depth
+ladder.  \pending{the $d$-dependence of $\varepsilon_{\rm eff}$ at all four
+matched couplings.}
+
+\section{From $\varepsilon_{\rm eff}$ to $c$ and $\alpha$}
+\label{sec:alpha}
+
+The magnetic constant of the emergent theory is set by the ring-exchange
+amplitude.  In the effective gauge Hamiltonian
+$H_{\rm eff}=-K\sum_{\rm hex}\cos B+\tfrac12\varepsilon^{-1}\sum|\bm D|^2$ one
+has $\mu^{-1}\propto K$, so with $\varepsilon_{\rm eff}$ from
+Sec.~\ref{sec:results} and $K$ measured independently,
+\begin{equation}
+ c=\kappa_c\,a\sqrt{\frac{K}{\varepsilon_{\rm eff}^{-1}}}\Big/\hbar,
+ \qquad
+ \alpha=\kappa_\alpha\sqrt{\frac{1}{\varepsilon_{\rm eff}K}} ,
+ \label{eq:calpha}
+\end{equation}
+where $a$ is the lattice constant and $\kappa_c,\kappa_\alpha$ are pure lattice
+geometry factors, fixed once and for all by matching Eq.~(\ref{eq:calpha}) to
+the analytically known weak-coupling limit~\cite{Hermele2004}.  Crucially, $K$
+here is not the perturbative $g_6=12|\Jpm|^3/\Jzz^2$ but the measured
+nonperturbative amplitude of the masked map, which the same construction
+supplies: the hexagon element of the folded operator, whose ratio to $g_6$
+falls from $0.81$ at $\Jpm/\Jzz=-0.02$ to $0.07$ at $-0.35$.  Using the bare
+$g_6$ would misestimate $\alpha$ by an order of magnitude at strong coupling.
+
+\subsection{An overdetermined check}
+
+Equation~(\ref{eq:calpha}) can be tested rather than merely evaluated, because
+$c$ is also directly observable in the same calculation as the slope of the
+excitation energies at the cluster momenta.  The masked spectrum gives, at
+depth $d=1$,
+\begin{center}
+\begin{tabular}{lccc}
+$\Jpm/\Jzz$ & $\omega(\Gamma)$ & $\omega(X)$ & $\omega(L)$\\ \hline
+$+0.046$ & $0.002922$ & $0.003612$ & $0.002217$\\
+$-0.200$ & $0.018874$ & $0.025274$ & $0.015678$\\
+\end{tabular}
+\end{center}
+so we have three routes to one number: $\varepsilon_{\rm eff}$ from sector
+energies, $K$ from loop tomography, and $\omega(\bq)$ from the spectrum.  If
+Eq.~(\ref{eq:calpha}) reproduces the measured $\omega(L)$ and $\omega(X)$ with
+one $\kappa_c$, the emergent Maxwell description is validated nonperturbatively
+in both flux backgrounds.  If it does not, the discrepancy measures how far
+FCC-32 is from the continuum limit, which is itself worth quantifying: the
+observed ratio $\omega(X)/\omega(L)$ is $2.04$ and $2.42$ at the two couplings
+against the linear-dispersion value $|X|/|L|=2/\sqrt3=1.155$, so we expect the
+dispersion route to be the weakest of the three.  \pending{all of
+Sec.~\ref{sec:alpha} is a plan; no value of $c$ or $\alpha$ has been computed.}
+
+\section{Where emergent electrostatics ends}
+\label{sec:breakdown}
+
+Equation~(\ref{eq:law}) predicts that the flux-sector splitting falls as $1/L$.
+Comparing the $16$-site cubic cluster with FCC-32 at matched coupling, the
+splitting is multiplied by $0.65$ at $\Jpm/\Jzz=-0.05$ --- close to the
+$(N_{32}/N_{16})^{-1/3}=0.79$ expected for a $1/L$ law and clearly a shrinkage
+--- but by $3.5$ and $2.8$ at $\Jpm/\Jzz=-0.22$ and $-0.30$.  A splitting that
+\emph{grows} with system size is not the behaviour of a Coulomb phase.
+
+Read at face value this locates the breakdown of emergent electrostatics on the
+XXZ line between $\Jpm/\Jzz=-0.05$ and $-0.22$, which is compatible with, and
+sharper than, the range $[-0.25,-0.5]$ that other diagnostics of the same
+campaign leave open for the end of the $\pi$-flux phase.  It is also consistent
+with two independent observations: the masked hexagon flux is $-1/4$ to sixteen
+digits through $\Jpm/\Jzz=-0.24$ and drops to exactly $0$ from $-0.26$, and the
+ice-descended band ceases to be isolated from the spinon continuum around the
+same place.
+
+Two caveats keep this from being a phase-boundary claim.  Only two clusters
+exist, so ``scaling'' means a single ratio.  And the two clusters are not
+equivalent hosts: the $16$-site cluster has six degenerate ground sectors
+against FCC-32's one, and it resolves no $L$ point at all.  \pending{a third
+host is required to make this a scaling statement; the geometry builder
+supports rectangular FCC boxes, so an FCC $2\times2\times3$ ($48$ sites)
+cluster is the natural next point, subject to the sector solver's cost.}
+
+
+\section{Falsification: the measurement, and what it returned}
+\label{sec:falsified}
+
+The tests deferred in Sec.~\ref{sec:results} have now been run
+(\texttt{analysis/cubic16\_sector\_check.py}, job 19155241).  The transport
+labels were joined to the sector indices on both clusters, and the cubic-16
+sector ground energies were recomputed at virtual depths $\ell=1,2,3,4$, where
+$\ell=4$ is the \emph{complete} space and therefore truncation-free.  The
+outcome is a null, and it is not marginal.
+
+\paragraph{The transport labels.}  FCC-32 has seven distinct $|\bT|^2$ values,
+$0,2,4,6,8,10,16$, with multiplicities $1,12,6,24,12,24,6$ and ice dimensions
+$396,140,72,12,6,4,1$ --- confirming the shell assignment of
+Table~\ref{tab:shells} and identifying the $396$-dimensional ground sector as
+$\bT=0$.  Cubic-16 has four, $0,1,2,4$, with multiplicities $1,6,12,6$ and
+dimensions $12,8,2,1$.
+
+\paragraph{Quadraticity fails everywhere.}  Fitting
+$\Delta E=|\bT|^2/2\varepsilon_{\rm eff}L$ to the three smallest nonzero fluxes
+gives a maximum relative residual of $0.215$ at best and $0.441$ at worst, over
+$29$ fits spanning both clusters, four virtual depths and the couplings
+$\Jpm/\Jzz=-0.05,-0.20,-0.30$ (cubic-16, exact) and $-0.05$ through $-0.32$
+(FCC-32).  \emph{Not one fit passes.}  On FCC-32 at $\Jpm/\Jzz=-0.05$, depth
+$1$, the law would require $\Delta E(|\bT|^2\!=\!4)=2\Delta E(|\bT|^2\!=\!2)$;
+the measured ratio is $1.38$.  Between $|\bT|^2=4$ and $6$ the energy then
+jumps by a factor of $3.5$ and is flat thereafter.
+
+\paragraph{What the data show instead.}  The sector energies separate into two
+families: large sectors ($\dim=396,140,72$) that still support substantial ring
+resonance, and small ones ($\dim=12,6,4,1$) that are nearly frozen, with a step
+between them and near-degeneracy within the second family.  This is the
+signature of a lattice ring-exchange model whose polarized sectors have simply
+run out of flippable plaquettes --- the discrete, strong-field regime --- not of
+a Maxwell field in its continuum limit.  The mechanism identified in
+Sec.~\ref{sec:sectors} is correct; the continuum law built on it is not
+reached at these sizes.
+
+\paragraph{The isotropy test is vacuous here.}  On both clusters every
+$|\bT|^2$ value corresponds to exactly one cubic point-group star: no two
+distinct stars share a modulus.  The exact degeneracies observed within each
+shell ($\le6\times10^{-14}$ over the whole run) are therefore guaranteed by the
+space group and carry no information about emergent isotropy.  This removes
+what was to have been the sharpest structural test.
+
+\paragraph{Zero flux is not always the ground.}  On cubic-16 the \emph{exact}
+($\ell=4$) ground sector lies at $|\bT|^2=1$, six-fold degenerate, for
+$\Jpm/\Jzz=-0.05$ and $-0.20$, and only moves to $\bT=0$ by $-0.30$.  This
+finally explains the six-fold ground multiplet recorded throughout the campaign:
+it is a flux-polarized ground state, not a resonance degeneracy.  FCC-32, by
+contrast, has its ground in the unique $\bT=0$ sector at every coupling and
+depth measured.  The two clusters disagree qualitatively about where the
+electrostatic minimum sits.
+
+\paragraph{Depth truncation is severe.}  On cubic-16 at $\Jpm/\Jzz=-0.30$ the
+identity of the ground sector itself is a truncation artifact: $\ell=1$ places
+it at $|\bT|^2=1$, whereas $\ell\ge2$ and the exact answer place it at
+$\bT=0$.  On FCC-32 the $\ell=1\to2$ change at $\Jpm/\Jzz=-0.05$ is $+34\%$,
+$+31\%$ and $+21\%$ for the first three shells, and the ordering of the
+$|\bT|^2=6$ and $8$ shells \emph{inverts} between the two depths.  Since all
+thirteen FCC-32 couplings are at $\ell=1$, no shell spacing quoted here is
+converged.
+
+\paragraph{Consequence.}  No weak-field window exists on either cluster in
+which $\varepsilon_{\rm eff}$ is defined, so the extraction of $c$ and $\alpha$
+described in Sec.~\ref{sec:alpha} cannot be carried out on these hosts.  The
+size at which such a window opens is the open question this measurement
+replaces the original one with.
+
+\section{Limitations}
+
+\begin{enumerate}
+\item \textbf{Two cells per direction.}  FCC-32 is $2\times2\times2$
+conventional cells.  The weak-field window in which Eq.~(\ref{eq:law}) can hold
+is correspondingly narrow, and the saturation reported in
+Sec.~\ref{sec:results} is direct evidence of that narrowness.
+\item \textbf{Virtual-depth truncation.}  $\varepsilon_{\rm eff}$ inherits at
+least the $34\%$ $d=1\to2$ drift of the first shell gap.  Depth $d=3$ on
+FCC-32 costs $\sim2\times10^7$ states and is a $\sim250$~GB job; $d=4$ is out
+of reach.
+\item \textbf{The geometry factors.}  $\kappa_c$ and $\kappa_\alpha$ in
+Eq.~(\ref{eq:calpha}) must be fixed against the analytic weak-coupling limit
+before any absolute $\alpha$ is quoted; otherwise only ratios and trends are
+meaningful.
+\item \textbf{The mask is the enabling assumption.}  Everything here presumes
+that deleting transport-changing amplitudes is the correct finite-volume
+implementation of the one-form symmetry.  That is argued and tested in
+Ref.~\cite{ZhouKimMask}; this paper inherits the argument.
+\end{enumerate}
+
+\section{Conclusion}
+
+The energies of the $85$ electric-flux sectors of a $32$-site pyrochlore
+cluster are a direct, ground-state probe of the emergent electrostatics of
+quantum spin ice, and they become measurable once the torus artifacts that
+tunnel between flux sectors are removed.  The sector energies collapse onto
+seven point-group shells that are exactly degenerate within themselves, which
+is the first requirement of an emergent Maxwell description.  Extracting the
+permittivity from the weak-field shells, and combining it with the
+nonperturbative ring amplitude, yields the emergent speed of light and fine
+structure constant on the $\pi$-flux side of the phase diagram, where sign-free
+quantum Monte Carlo cannot go; the same numbers are overdetermined by the
+directly computed excitation energies.  Finally, the flux splitting shrinks
+with system size at weak coupling and grows at $\Jpm/\Jzz\le-0.22$, which is
+where the emergent electrostatics --- and with it the Coulomb phase --- ends on
+this lattice.
+
+\begin{acknowledgments}
+The masked sector solver and the FCC-32 spectra are those of
+Ref.~\cite{ZhouKimMask}.
+\end{acknowledgments}
+
+\bibliographystyle{apsrev4-2}
+\bibliography{refs}
+
+\end{document}

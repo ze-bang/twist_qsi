@@ -1,0 +1,196 @@
+{
+ "cluster": "cubic16",
+ "method": "periodic",
+ "jpm": -0.2,
+ "jpmpm": 0.0,
+ "virtual_depth": 1,
+ "nstates_computed": 200,
+ "ground_sectors": [
+  0
+ ],
+ "ground_energy": -1.0742259362895972,
+ "projector_completeness": 1.6209256159527285e-14,
+ "levels": [
+  {
+   "excitation": 0.0,
+   "degeneracy": 1,
+   "per_star": {
+    "Gamma": 1.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.13663537215446908,
+   "degeneracy": 4,
+   "per_star": {
+    "Gamma": 4.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.19741976861002875,
+   "degeneracy": 9,
+   "per_star": {
+    "Gamma": 3.0,
+    "X": 6.0
+   }
+  },
+  {
+   "excitation": 0.30918133302422524,
+   "degeneracy": 12,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 12.0
+   }
+  },
+  {
+   "excitation": 0.33293843856356065,
+   "degeneracy": 18,
+   "per_star": {
+    "Gamma": 6.0,
+    "X": 12.0
+   }
+  },
+  {
+   "excitation": 0.39535606177444405,
+   "degeneracy": 4,
+   "per_star": {
+    "Gamma": 4.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.401691731271139,
+   "degeneracy": 4,
+   "per_star": {
+    "Gamma": 4.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.41493968096909284,
+   "degeneracy": 9,
+   "per_star": {
+    "Gamma": 3.0,
+    "X": 6.0
+   }
+  },
+  {
+   "excitation": 0.47345970456721753,
+   "degeneracy": 9,
+   "per_star": {
+    "Gamma": 3.0,
+    "X": 6.0
+   }
+  },
+  {
+   "excitation": 0.48809005638108804,
+   "degeneracy": 6,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 6.0
+   }
+  },
+  {
+   "excitation": 0.5788353896980472,
+   "degeneracy": 9,
+   "per_star": {
+    "Gamma": 3.0,
+    "X": 6.0
+   }
+  },
+  {
+   "excitation": 0.6560165774363773,
+   "degeneracy": 4,
+   "per_star": {
+    "Gamma": 4.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.717967280088579,
+   "degeneracy": 1,
+   "per_star": {
+    "Gamma": 1.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 1.0437322349697205,
+   "degeneracy": 6,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 6.0
+   }
+  },
+  {
+   "excitation": 1.068571164555478,
+   "degeneracy": 12,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 12.0
+   }
+  },
+  {
+   "excitation": 1.1802388908435206,
+   "degeneracy": 12,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 12.0
+   }
+  },
+  {
+   "excitation": 1.213812546876168,
+   "degeneracy": 9,
+   "per_star": {
+    "Gamma": 3.0,
+    "X": 6.0
+   }
+  },
+  {
+   "excitation": 1.2742259362895951,
+   "degeneracy": 24,
+   "per_star": {
+    "Gamma": 6.0,
+    "X": 18.0
+   }
+  },
+  {
+   "excitation": 1.3076329849808228,
+   "degeneracy": 4,
+   "per_star": {
+    "Gamma": 4.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 1.3136883422670098,
+   "degeneracy": 9,
+   "per_star": {
+    "Gamma": 3.0,
+    "X": 6.0
+   }
+  },
+  {
+   "excitation": 1.361915373727829,
+   "degeneracy": 22,
+   "per_star": {
+    "Gamma": 4.4897,
+    "X": 17.5103
+   }
+  },
+  {
+   "excitation": 1.399769671635792,
+   "degeneracy": 12,
+   "per_star": {
+    "Gamma": 4.1287,
+    "X": 7.8713
+   }
+  }
+ ],
+ "lowest_by_star": {
+  "Gamma": 0.13663537215446908,
+  "X": 0.19741976861002875
+ },
+ "runtime": 2.878731921999133
+}

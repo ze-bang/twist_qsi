@@ -1,0 +1,520 @@
+% =====================================================================
+% PAPER A.  Photon-number parity in quantum spin ice.
+% Draft.  Numbers marked \pending{} are NOT yet computed -- see README.md.
+% =====================================================================
+\documentclass[aps,prl,preprint,amsmath,amssymb,superscriptaddress,
+longbibliography,floatfix]{revtex4-2}
+
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,citecolor=blue!55!black,
+urlcolor=blue!55!black,linkcolor=blue!55!black]{hyperref}
+
+\newcommand{\Jzz}{J_{zz}}
+\newcommand{\Jpm}{J_{\pm}}
+\newcommand{\Jpmpm}{J_{\pm\pm}}
+\DeclareRobustCommand{\bq}{\bm q}
+\DeclareRobustCommand{\br}{\bm r}
+\newcommand{\PP}{\mathcal{P}}
+% Every \pending{...} is a number or statement that has NOT been computed.
+\setlength{\emergencystretch}{3em}
+\newcommand{\pending}[1]{{\color{red}\textbf{[PENDING: #1]}}}
+
+\begin{document}
+
+\title{Photon-number parity in quantum spin ice:\\
+exact selection rules for neutron, Raman and ultrasound spectroscopy}
+
+\author{Zhengbang Zhou}
+\email{zhengbang.zhou@mail.utoronto.ca}
+\affiliation{Department of Physics, University of Toronto, Toronto,
+Ontario M5S 1A7, Canada}
+
+\author{Yong Baek Kim}
+\email{ybkim@physics.utoronto.ca}
+\affiliation{Department of Physics, University of Toronto, Toronto,
+Ontario M5S 1A7, Canada}
+
+\date{\today}
+
+\begin{abstract}
+The nearest-neighbour pseudospin Hamiltonian of quantum spin ice (QSI) is
+invariant under a global $\pi$ rotation $\PP$ of the pseudospins about the
+$\tilde x$ axis.  We show that on the ice manifold this operation is the
+\emph{charge conjugation} of the emergent compact electrodynamics: it reverses
+both the emergent electric and magnetic fields, so an $n$-photon state carries
+parity $(-1)^n$ and photon-number parity is exactly conserved at zero magnetic
+field.  Three consequences follow, none of which is perturbative or
+model-detail dependent.  (i) Spectroscopic probes split into two closed
+families: the emergent electric field $E=S^z$ and the linear magnetic field
+$\sin B$ reach only odd-photon states, whereas every bond bilinear ---
+$\cos B$, the Fleury--Loudon Raman operator, magnetostriction and the
+ultrasound strain vertex --- reaches only even-photon states.  The one-photon
+line and the two-photon continuum therefore appear in \emph{disjoint}
+experiments.  (ii) At $\bq=0$ every single-site magnetic operator is a constant
+on each electric-flux sector, so uniform magnetic probes are blind to the gauge
+sector to all orders and only bond operators survive; this is why ultrasound,
+not ESR or uniform susceptibility, is the natural $\bq\to0$ gauge probe.
+(iii) A magnetic field is $\PP$-odd and switches the forbidden channels on at
+order $h^2$, providing a parameter-free field protocol that distinguishes a
+gauge excitation from any conventional mode.  We verify the selection rule on
+the transport-masked FCC-32 spectrum, where every computed level is bright in
+exactly one channel with a complement between $10^{-25}$ and $10^{-35}$, and we
+show that the rule survives the pair-flip ($\Jpmpm$) term relevant to the Ce
+pyrochlores.  In octupolar QSI the neutron dipole operator has no projection on
+the gauge sector at all, so the even channel --- Raman and ultrasound --- is
+the \emph{only} spectroscopic access to the emergent photon, and it sees the
+two-photon continuum whose onset lies at twice the photon gap.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+The experimental case for quantum spin ice rests on identifying, in a measured
+spectrum, an excitation that is the emergent photon of a compact $U(1)$ gauge
+theory~\cite{Hermele2004,Gingras2014,Benton2012,RauGingras2019}.  In practice
+this identification is made by exclusion: a low-lying feature that is not a
+crystal-field level, not a spinon, and not a phonon is assigned to the gauge
+sector.  Exclusion is weak evidence.  What is missing is a positive,
+falsifiable statement of the form ``\emph{this} probe must see the mode and
+\emph{that} probe must not.''
+
+We provide such a statement.  It rests on a symmetry that is already present in
+every nearest-neighbour pseudospin model used to describe the Ce and Yb
+pyrochlores, and that has, to our knowledge, not been exploited
+spectroscopically: the global $\pi$ rotation of the pseudospins about the
+$\tilde x$ axis,
+\begin{equation}
+ \PP:\quad S^z_i\mapsto -S^z_i,\qquad S^{\pm}_i\mapsto S^{\mp}_i .
+ \label{eq:PP}
+\end{equation}
+$\PP$ is one of the three $\mathbb{Z}_2$ elements of the Klein group of any
+XYZ model with real couplings, and is therefore exact for the full
+dipole--octupole Hamiltonian, not only for the XXZ limit.  Its gauge-theoretic
+content is what matters here.  In the standard
+dictionary~\cite{Hermele2004} the emergent electric field is $E_i = S^z_i$ and
+the emergent vector potential is defined through $S^+_i = e^{iA_i}$, so
+Eq.~(\ref{eq:PP}) reads
+\begin{equation}
+ \PP:\quad E\mapsto -E,\qquad A\mapsto -A,\qquad B\mapsto -B .
+ \label{eq:C}
+\end{equation}
+This is charge conjugation.  Because the photon field is $C$-odd, an
+$n$-photon state has $\PP$ eigenvalue $(-1)^n$: \textbf{photon-number parity is
+an exactly conserved quantum number of quantum spin ice at zero field}.  The
+statement is the lattice analogue of Furry's theorem in
+QED~\cite{Furry1937}, and it is exact --- not a leading-order result of the
+ring-exchange expansion, and not tied to any particular flux background.
+
+The spectroscopic payoff is immediate and is the subject of this paper.  The
+operators that experiments actually measure fall into two parity classes, and
+the classes cannot talk to each other.  We state the classification in
+Sec.~\ref{sec:rule}, verify it numerically in Sec.~\ref{sec:numerics} on
+finite-cluster spectra from which the torus artifacts have been
+removed~\cite{ZhouKimMask}, and translate it into a menu of experiments in
+Sec.~\ref{sec:experiment}.  Section~\ref{sec:field} gives the field protocol
+that turns the selection rule into a positive test rather than a null one.
+
+\section{The selection rule}
+\label{sec:rule}
+
+\subsection{$\PP$ on the ice manifold}
+
+Write the nearest-neighbour pseudospin Hamiltonian in the exchange-diagonal
+local frame,
+\begin{equation}
+ H=\Jzz\sum_{\langle ij\rangle}S^z_iS^z_j
+ -\Jpm\sum_{\langle ij\rangle}\left(S^+_iS^-_j+\mathrm{h.c.}\right)
+ +\Jpmpm\sum_{\langle ij\rangle}\left(S^+_iS^+_j+\mathrm{h.c.}\right),
+ \label{eq:model}
+\end{equation}
+with $\Jzz>0$.  Under Eq.~(\ref{eq:PP}) the Ising term is invariant, the
+$\Jpm$ term maps to its Hermitian conjugate, and the $\Jpmpm$ pair-flip term
+maps to its Hermitian conjugate as well.  Hence $[\PP,H]=0$ for the full XYZ
+model.  In terms of the principal-axis components, $\PP$ acts as
+$S^{\tilde x}\mapsto S^{\tilde x}$, $S^{\tilde y}\mapsto -S^{\tilde y}$,
+$S^{\tilde z}\mapsto -S^{\tilde z}$, i.e.\ it is the $\pi$ rotation about
+$\tilde x$.  The other two Klein elements are not independent on the ice
+manifold: $R_{\tilde z}(\pi)=\exp[i\pi\sum_i(S^z_i+\tfrac12)]$ is a
+$c$-number on any fixed-$S^z_{\rm tot}$ sector, so
+$R_{\tilde y}(\pi)\equiv\PP$ there up to a phase.  \emph{One} nontrivial
+$\mathbb{Z}_2$ acts on the gauge sector, and it is $\PP$.
+
+Two structural remarks are needed before the rule can be used.
+
+\emph{First}, $\PP$ reverses the total polarization
+$\bm p=\sum_iS^z_i\br_i$ and therefore maps the electric-flux (transport)
+sector $\mathcal T$ to $-\mathcal T$.  It is a symmetry \emph{within} a block
+only for self-conjugate sectors, $\mathcal T=-\mathcal T$.  On FCC-32 the
+ground state of the masked theory lies in the unique $\mathcal T=0$ sector, so
+$\PP$ is a good quantum number of the ground state and of every state a
+sector-preserving probe can reach.
+
+\emph{Second}, both probes considered below \emph{are} sector preserving.  The
+longitudinal probe $S^z_\mu(\bq)$ is diagonal in the Ising basis and cannot
+change a configuration, let alone its transport label; the ring-exchange
+operator around a \emph{contractible} hexagon returns the configuration to the
+same sector by construction.  The selection rule therefore lives entirely
+inside the $\mathcal T=0$ block, where $\PP$ is exact.  (Ring exchange around a
+non-contractible six-cycle does change the sector; on FCC-32, $96$ of the $128$
+six-cycles wrap the periodic box, and using them is exactly the torus artifact
+that must be removed first~\cite{ZhouKimMask}.)
+
+\subsection{Parity of the measurable operators}
+
+Table~\ref{tab:parity} classifies the operators that appear in real
+experiments.  The classification uses only Eq.~(\ref{eq:PP}) and is
+independent of coupling strength, flux background and cluster.
+
+\begin{table}[t]
+\caption{Parity of gauge-sector operators under $\PP$, and the photon-number
+change they can produce from a $\PP$-even ground state.  $W_{\mathcal C}
+=S^+_1S^-_2\cdots S^-_L$ is the loop-flip (Wilson) operator, so
+$W+W^\dagger=2\cos B$ and $i(W-W^\dagger)=-2\sin B$.}
+\label{tab:parity}
+\begin{ruledtabular}
+\begin{tabular}{lccl}
+operator & $\PP$ & $\Delta n$ & experimental channel\\ \hline
+$E=S^z_\mu(\bq)$              & $-$ & odd  & neutron (dipolar QSI)\\
+$\sin B \sim i(W-W^\dagger)$  & $-$ & odd  & --- (no linear-response probe)\\
+$\cos B \sim W+W^\dagger$     & $+$ & even & Raman, THz two-photon\\
+$S^+_iS^-_j+\mathrm{h.c.}$    & $+$ & even & Fleury--Loudon Raman~\cite{Fleury1968}\\
+$S^z_iS^z_j$                  & $+$ & even & bond striction, ultrasound\\
+$\varepsilon_{ab}\,\partial H/\partial\varepsilon_{ab}$ & $+$ & even & ultrasound, elastic constants\\
+$h\sum_iS^z_i$                & $-$ & ---  & uniform field (breaks $\PP$)\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+The content of the table is the statement
+\begin{equation}
+ \langle n|\,\mathcal O_+\,|0\rangle=0 \ \ \text{for odd } n,
+ \qquad
+ \langle n|\,\mathcal O_-\,|0\rangle=0 \ \ \text{for even } n,
+ \label{eq:rule}
+\end{equation}
+where $\mathcal O_\pm$ is any $\PP$-even (odd) operator and $|n\rangle$ is an
+$n$-photon state built on a $\PP$-even vacuum.  Three corollaries are worth
+isolating.
+
+\paragraph{(C1) The one-photon line and the two-photon continuum never appear
+together.}  A neutron measurement of $S^{zz}(\bq,\omega)$ in a dipolar QSI
+contains the single-photon pole and, at higher energy, the \emph{three}-photon
+continuum --- but not the two-photon continuum, at any order in $\Jpm/\Jzz$.
+Conversely a Raman or ultrasound spectrum contains the two-photon continuum
+with \emph{no} one-photon line to sit on top of it.  The frequently invoked
+worry that a broad two-magnon-like background contaminates the photon line, or
+that an elastic one-photon peak swamps a weak continuum, is excluded by
+symmetry.
+
+\paragraph{(C2) $\langle\sin B\rangle=0$ and $\langle\cos B\rangle\neq0$ are
+both consequences of the same rule.}  The measured hexagon flux
+$\langle W+W^\dagger\rangle=\pm1/4$ of the $0$- and $\pi$-flux backgrounds is
+$\PP$-even and may be finite; the conjugate quantity is forced to vanish.  A
+nonzero $\langle\sin B\rangle$ in any calculation is a diagnostic of broken
+$\PP$, i.e.\ of an applied field, a symmetry-breaking approximation, or a
+finite-size artifact.
+
+\paragraph{(C3) Photon decay $1\to2$ is exactly forbidden.}  The lowest
+allowed photon-number-changing process is $1\to3$.  Together with the vanishing
+of the polarization bubble below the two-spinon
+threshold~\cite{Savary2012}, this makes the one-photon line intrinsically
+sharp on symmetry grounds, not merely kinematically.  The leading photon
+self-interaction is $2\to2$, whose strength is set by the emergent fine
+structure constant~\cite{Pace2021}.
+
+\subsection{The zero-momentum theorem}
+\label{sec:qzero}
+
+A second, independent superselection rule constrains the long-wavelength
+limit.  On the ice manifold the four sublattice magnetizations
+$m_\mu=\sum_{i\in\mu}S^z_i$ are \emph{constants} of each electric-flux sector.
+We have verified on FCC-32 that the map from the $85$ transport sectors to the
+$85$ magnetization tuples $(2m_0,2m_1,2m_2,2m_3)$ is a \emph{bijection}: the
+transport label is not merely determined by the $\bq=0$ magnetizations, it
+\emph{is} them (the same holds for the $25$ sectors of the $16$-site cubic
+cluster).  The within-sector spread of every $2m_\mu$ is exactly zero, and the
+commutator of each $S^z_\mu(\bq=0)$ with an arbitrary sector-block-diagonal
+operator vanishes identically, against an unmasked control value of $55.9$.
+
+Consequently every single-site magnetic operator at $\bq=0$ --- the uniform
+magnetization, the staggered sublattice magnetizations, any ESR or uniform
+susceptibility vertex --- is a $c$-number on the gauge sector and produces
+\emph{zero} inelastic weight there, to all orders and at any coupling.  Only
+operators that are bilinear in the spins on a bond, and therefore able to move
+a configuration within a sector, couple to the gauge sector at $\bq\to0$.  This
+is a symmetry-level explanation of why bond-striction and strain vertices,
+rather than magnetic dipole vertices, are the correct $\bq\to0$ probes of the
+photon~\cite{Patri2020,SimonPatriKim2022}.
+
+\section{Numerical verification}
+\label{sec:numerics}
+
+The rule is exact, but it can only be \emph{exhibited} on a cluster whose gauge
+sector is not contaminated.  A periodic pyrochlore cluster is a torus and
+supports ice-preserving loops that close only through a periodic image; on
+FCC-32 the shortest is a four-spin process at order $\Jpm^2$, one order
+\emph{before} the physical hexagon at $|\Jpm|^3$~\cite{ZhouKimMask}.  Such a
+process changes the transport sector, so the naive periodic spectrum has no
+sharp $\PP$ classification at $\bq=0$ and no sharp flux sectors.  We therefore
+work with the transport-masked Feshbach map of Ref.~\cite{ZhouKimMask}: virtual
+spinon excursions are folded onto the $2970$-state FCC-32 ice manifold and all
+matrix elements between different transport sectors are deleted.
+
+We resolve every level of the masked block by cluster momentum with
+$P_{\bq}=N_t^{-1}\sum_t\chi_{\bq}(t)^*T_t$ (projector exact to
+$4\times10^{-13}$), and evaluate two channels: the longitudinal weight
+$|\langle n|S^z_\mu(\bq)|0\rangle|^2$ and the magnetic weight
+$|\langle n|\Phi(\bq)|0\rangle|^2$ with
+$\Phi(\bq)=\sum_he^{-i\bq\cdot\br_h}(W_h+W_h^\dagger)$ summed over the $32$
+\emph{contractible} hexagons only.
+
+\begin{table}[t]
+\caption{Masked FCC-32, virtual depth $d=1$.  Every level is bright in exactly
+one channel.  $E$ is the longitudinal ($\PP$-odd) weight, $\cos B$ the
+contractible ring-exchange ($\PP$-even) weight.  Energies in units of $\Jzz$,
+measured from the ground state.}
+\label{tab:levels}
+\begin{ruledtabular}
+\begin{tabular}{llll}
+$\Jpm/\Jzz$ & $\omega$ \ (star) & $E$ weight & $\cos B$ weight\\ \hline
+$-0.200$ & $0.015678$ \ ($L$) & $1.055$              & $9.9\times10^{-26}$\\
+         & $0.025274$ \ ($X$) & $1.1\times10^{-27}$  & $1.645$\\
+         & $0.033699$ \ ($L$) & $6.4\times10^{-26}$  & $0.201$\\
+         & $0.037928$ \ ($X$) & $0.642$              & $9.2\times10^{-26}$\\ \hline
+$+0.046$ & $0.002217$ \ ($L$) & $1.110$              & $1.6\times10^{-25}$\\
+         & $0.003612$ \ ($X$) & $1.3\times10^{-26}$  & $2.891$\\
+         & $0.004097$ \ ($L$) & $6.2\times10^{-27}$  & $0.560$\\
+         & $0.004525$ \ ($X$) & $0.712$              & $9.2\times10^{-26}$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+Table~\ref{tab:levels} is the result.  The complement of the bright channel
+lies between $10^{-25}$ and $10^{-35}$ throughout, on both sides of the sign of
+$\Jpm$, i.e.\ in both the $\pi$-flux and the $0$-flux background.  The
+selection is level by level, not channel by channel: every level the
+longitudinal probe reaches has all four sublattice channels exactly equal, and
+every level it misses is at machine zero in all four.  An earlier conjecture
+that different irreducible representations of the little group carry the two
+channels is thereby excluded --- the classification is the global parity, not a
+spatial label.
+
+Two further checks confirm that the rule is not an accident of the
+construction.  Restricted to the $32$ contractible hexagons, the ring exchange
+conserves the transport sector exactly (out-of-block weight $0.0$); including
+the $96$ wrapping six-cycles instead moves $10$--$28\%$ of the flippable ice
+weight out of the block, which is the artifact, correctly present.  And the
+longitudinal $\bq=0$ response of Sec.~\ref{sec:qzero} is $1.42\times10^{-29}$
+in the masked theory against $0.3126$ in the naive periodic theory at
+$\Jpm/\Jzz=-0.20$ ($1.36\times10^{-30}$ against $0.4879$ at $-0.05$).
+
+\pending{the $\PP$ classification has not yet been checked at $\Jpmpm\neq0$;
+the proof in Sec.~\ref{sec:rule} covers it, but a numerical spot check at the
+Ce$_2$Hf$_2$O$_7$ point $(\Jpm,\Jpmpm)/\Jzz=(-0.125,0.085)$ should be run.}
+
+\subsection{The missing probe, and a two-photon bound state}
+\label{sec:sinB}
+
+Table~\ref{tab:levels} contains only one of the two odd operators.  Adding the
+conjugate ring channel
+\begin{equation}
+ \Phi_-(\bq)=\sum_he^{-i\bq\cdot\br_h}\,i\left(W_h-W_h^\dagger\right)
+ \ \sim\ \sin B ,
+ \label{eq:sinB}
+\end{equation}
+which is $\PP$-\emph{odd}, completes the classification and makes a positive
+photon assignment possible.  A single photon carries both an electric and a
+magnetic amplitude, so it must be bright in $S^z$ \emph{and} in $\Phi_-$; a
+two-photon state must be bright in $\cos B$ and dark in both.  The prediction
+is therefore sharp:
+\begin{equation}
+ \text{levels bright in } S^z \ \Longleftrightarrow\ \text{bright in }\Phi_-
+ \ \Longleftrightarrow\ \text{odd photon number.}
+ \label{eq:assign}
+\end{equation}
+\pending{$\Phi_-$ has not been measured.  This is a few-hour run reusing
+\texttt{campaign/run\_flux\_diagnostic.py}; see README.}
+
+If Eq.~(\ref{eq:assign}) holds, Table~\ref{tab:levels} already contains a
+striking hint.  On the fcc reciprocal lattice two $L$ points add to an $X$
+point, $(1,1,1)+(1,-1,-1)=(2,0,0)$, so a non-interacting two-photon state at
+$X$ built from the lowest $L$ excitation would sit at $2\omega(L)$.  Compare:
+\begin{center}
+\begin{tabular}{lccc}
+$\Jpm/\Jzz$ & $2\omega(L)$ & $\omega_{\rm even}(X)$ & deficit\\ \hline
+$-0.200$ & $0.031356$ & $0.025274$ & $19.4\%$\\
+$+0.046$ & $0.004434$ & $0.003612$ & $18.5\%$\\
+\end{tabular}
+\end{center}
+The lowest $\PP$-even level at $X$ lies below twice the lowest $\PP$-odd level
+at $L$ by the same fraction, $\simeq19\%$, across a $4.3\times$ change of
+coupling and across the flux-sector boundary.  If this is a two-photon bound
+state, its binding energy is a direct nonperturbative measure of the emergent
+photon--photon attraction --- i.e.\ of the emergent fine structure
+constant~\cite{Pace2021} --- and it would appear in Raman and ultrasound as a
+\emph{sharp line below the onset of the two-photon continuum}.
+
+We flag two reasons this reading is a hypothesis and not yet a result.  First,
+the ratio $\omega_{\rm odd}(X)/\omega(L)$ is $2.42$ and $2.04$ at the two
+couplings, whereas a linear photon dispersion on this cluster would give
+$|X|/|L|=2/\sqrt3=1.155$; the FCC-32 spectrum is far from the continuum limit.
+Second, nothing here is converged in cluster size: between the $16$-site cubic
+cluster and FCC-32 the lowest $X$ excitation moves by a factor $1.5$--$2.2$
+and the $\Gamma$ excitation by $3.5$--$6.1$, and the $\Gamma/X$ ordering
+inverts.  The selection rule (\ref{eq:rule}) is exact and size independent; the
+energies it acts on are not.  The falsification test is stated in
+Sec.~\ref{sec:tests}.
+
+\section{Breaking the rule on purpose: the field protocol}
+\label{sec:field}
+
+A selection rule that only forbids is hard to use: an absent peak can always be
+blamed on an intensity.  The remedy is that $\PP$ has a controlled breaking
+parameter.  A uniform magnetic field enters as $-h\sum_i S^z_i$, which is
+$\PP$-odd, so at finite $h$ the two families mix.  Standard perturbation theory
+in the field gives, for a channel forbidden at $h=0$,
+\begin{equation}
+ I_{\rm forbidden}(h)= \left|\frac{h\,\langle n|M|n'\rangle
+ \langle n'|\mathcal O|0\rangle}{E_n-E_{n'}}\right|^2 + O(h^4)
+ \ \propto\ h^2 ,
+ \label{eq:h2}
+\end{equation}
+with $M=\sum_iS^z_i$ the uniform magnetization.  The protocol is then:
+
+\begin{enumerate}
+\item At $h=0$, measure the Raman/ultrasound continuum (even) and the neutron
+spectrum (odd).  The two must not share a feature.
+\item Ramp $h$.  A gauge excitation acquires weight in its forbidden channel
+with an intensity that grows as $h^2$ from exactly zero, with no threshold.
+\item Any conventional excitation --- crystal-field level, phonon, magnon of an
+ordered state, impurity mode --- has no reason to have zero weight at $h=0$ in
+either channel, and no reason to turn on quadratically.
+\end{enumerate}
+The signature is the \emph{vanishing at $h=0$}, which is a property no
+conventional mode shares.  Because $M$ is itself a sector label
+(Sec.~\ref{sec:qzero}), the field also drives a staircase of transitions
+between electric-flux sectors; on the $16$-site cluster the number of occupied
+band sectors falls $25\to19\to16\to9$ as $h/\Jzz$ passes
+$0.14$, $0.20$ and $0.28$ at $\Jpm/\Jzz=-0.05$, and the naive periodic
+calculation delays this polarization crossover by a factor $2$--$3$ in $h$.
+\pending{the $h^2$ onset of forbidden weight has not been computed; the field
+term is not yet wired into the FCC-32 solvers (see README).}
+
+\section{What each experiment sees}
+\label{sec:experiment}
+
+\subsection{Dipolar versus octupolar quantum spin ice}
+
+For dipole--octupole doublets~\cite{HuangChenHermele2014} the neutron couples
+only to the dipolar component of the pseudospin.  In the exchange-diagonal
+frame the magnetic dipole is $m\propto\cos\theta\,\tilde\tau^z+
+\sin\theta\,\tilde\tau^{x}$.  Within the ice manifold, $\tilde\tau^{x}$ flips a
+spin and therefore leaves the manifold entirely --- it creates a spinon pair
+and cannot contribute to the gauge sector.  The gauge-sector content of the
+neutron vertex is thus $\cos\theta\,\tilde\tau^z=\cos\theta\,E$, a purely
+$\PP$-odd operator.  Two limits follow:
+\begin{itemize}
+\item \textbf{Dipolar QSI} ($\cos\theta$ finite, ice built from a dipolar
+component): neutrons see the one-photon line and the three-photon continuum,
+and are blind to the two-photon continuum.
+\item \textbf{Octupolar QSI} (ice built from the octupolar component): the
+neutron vertex has \emph{no} projection on the gauge sector at all.  The photon
+is neutron-dark for a reason stronger than a small form factor, and the even
+channel is the only access.
+\end{itemize}
+The second case is the experimentally pressing one: the Ce pyrochlores
+Ce$_2$Zr$_2$O$_7$ and Ce$_2$Hf$_2$O$_7$ are the leading QSI candidates
+\cite{Gao2019,Gaudet2019,Bhardwaj2022,Smith2025} and the octupolar assignment
+is under active discussion.  Our statement is then constructive rather than
+pessimistic: \textbf{in octupolar QSI, Raman and ultrasound measure the
+two-photon continuum, whose onset is at $2\omega_{\min}$ and therefore
+determines the photon gap that neutrons cannot reach.}
+
+\subsection{The menu}
+
+\begin{table}[t]
+\caption{Which probe reaches which part of the gauge sector.  ``--'' denotes an
+exactly vanishing coupling at $h=0$, not a small one.}
+\label{tab:menu}
+\begin{ruledtabular}
+\begin{tabular}{llll}
+probe & vertex & parity & gauge sector, $h=0$\\ \hline
+neutron, dipolar QSI      & $E(\bq)$        & $-$ & 1-photon, 3-photon\\
+neutron, octupolar QSI    & spinon only     & --- & --\\
+uniform susceptibility, ESR & $M$           & $-$ & -- (Sec.~\ref{sec:qzero})\\
+Raman (Fleury--Loudon)    & $S_i\!\cdot\!S_j$ & $+$ & 2-photon continuum\\
+THz two-photon absorption & $\cos B$        & $+$ & 2-photon\\
+ultrasound / elastic const.& strain--bond   & $+$ & 2-photon\\
+magnetostriction          & strain--bond    & $+$ & 2-photon\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+Table~\ref{tab:menu} is the practical summary.  Three points deserve emphasis.
+(i) The even-channel experiments do not compete with the one-photon line; they
+measure a different object, and they measure it without an elastic background.
+(ii) At $\bq\to0$, which is where ultrasound and Raman work, the magnetic
+vertices are dead by the theorem of Sec.~\ref{sec:qzero}, so the bond/strain
+vertex is not merely the largest coupling, it is the only one.  (iii) The
+two-photon onset at $2\omega_{\min}$ is a \emph{lower} edge with a
+characteristic density-of-states shape, and any sharp line below it is a bound
+state of emergent light (Sec.~\ref{sec:sinB}).
+
+\subsection{A warning about small-cluster calibrations}
+
+Because the rule is exact, any calculation that violates it is diagnosing its
+own artifacts.  Naive periodic exact diagonalization does violate it: the
+winding processes mix transport sectors and convert the artifact into
+observable $\bq=0$ spectral weight ($0.31$--$0.49$ of the sum rule on FCC-32,
+against $\le10^{-29}$ after masking).  The same artifact inverts the measured
+flux sign for every $\Jpm<0$, because the winding amplitude
+$g_4=4\Jpm^2/\Jzz$ is even in $\Jpm$ while the physical hexagon amplitude
+$g_6=12|\Jpm|^3/\Jzz^2$ is odd.  Published identifications calibrated on small
+periodic clusters should be re-examined against these two diagnostics.
+
+\section{Falsification tests}
+\label{sec:tests}
+
+The paper stands or falls on the following, in decreasing order of cost.
+
+\begin{enumerate}
+\item \textbf{$\Phi_-$ complementarity.}  Every level bright in $S^z$ must be
+bright in $\Phi_-$ and dark in $\cos B$, and conversely.  Failure at machine
+precision falsifies the identification $\PP=C$.
+\item \textbf{Two-photon bound state.}  $2\omega_{\rm odd}(L)-\omega_{\rm
+even}(X)$ must remain positive and approach a finite fraction as the cluster
+grows, and the even level must be dark in $\Phi_-$.  If instead the deficit
+tracks the finite-size drift of $\omega(X)$ it is not a bound state.
+\item \textbf{$h^2$ onset.}  Forbidden-channel weight must vanish at $h=0$ and
+rise quadratically, with the coefficient set by Eq.~(\ref{eq:h2}).
+\item \textbf{$\Jpmpm$ robustness.}  The complementarity must survive the
+pair-flip term at the Ce-relevant couplings, where $S^z_{\rm tot}$ is no longer
+conserved.
+\end{enumerate}
+
+\section{Conclusion}
+
+Quantum spin ice has an exact charge conjugation, inherited from the Klein
+group of the XYZ pseudospin model, under which the emergent electric and
+magnetic fields both change sign.  Photon-number parity is therefore an exact
+quantum number at zero field, and the spectroscopic probes split into two
+families that reach disjoint sets of excitations.  The one-photon line belongs
+to neutrons; the two-photon continuum belongs to Raman, THz and ultrasound; a
+uniform field breaks the rule at order $h^2$ and converts a null test into a
+positive one.  In octupolar quantum spin ice the even channel is the only
+access to the emergent photon at all.  These statements are exact, carry no
+fitted parameter, and are independent of cluster size --- which matters,
+because the energies they organize are not.
+
+\begin{acknowledgments}
+Computations used the transport-masked FCC-32 spectra of
+Ref.~\cite{ZhouKimMask}.
+\end{acknowledgments}
+
+\bibliographystyle{apsrev4-2}
+\bibliography{refs}
+
+\end{document}

@@ -1,0 +1,394 @@
+% =====================================================================
+% PAPER B.  Is the 25 mK anomaly of Ce2Hf2O7 the emergent photon?
+% Draft.  Numbers marked \pending{} are NOT yet computed -- see README.md.
+% =====================================================================
+\documentclass[aps,prb,preprint,amsmath,amssymb,superscriptaddress,
+longbibliography,floatfix]{revtex4-2}
+
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,citecolor=blue!55!black,
+urlcolor=blue!55!black,linkcolor=blue!55!black]{hyperref}
+
+\newcommand{\Jzz}{J_{zz}}
+\newcommand{\Jpm}{J_{\pm}}
+\newcommand{\Jpmpm}{J_{\pm\pm}}
+\newcommand{\CHO}{\mathrm{Ce_2Hf_2O_7}}
+\setlength{\emergencystretch}{3em}
+\newcommand{\pending}[1]{{\color{red}\textbf{[PENDING: #1]}}}
+
+\begin{document}
+
+\title{Is the 25~mK anomaly of $\mathrm{Ce_2Hf_2O_7}$ the emergent photon?\\
+A torus-artifact-free exact-diagonalization test and a parameter-free
+entropy budget}
+
+\author{Zhengbang Zhou}
+\email{zhengbang.zhou@mail.utoronto.ca}
+\affiliation{Department of Physics, University of Toronto, Toronto,
+Ontario M5S 1A7, Canada}
+
+\author{Yong Baek Kim}
+\email{ybkim@physics.utoronto.ca}
+\affiliation{Department of Physics, University of Toronto, Toronto,
+Ontario M5S 1A7, Canada}
+
+\date{\today}
+
+\begin{abstract}
+The heat capacity of $\CHO$ shows two peaks, at $T_1\simeq64.6$~mK and
+$T_2\simeq24.2$~mK, and the lower one has been discussed as the crossover into
+the quantum-spin-ice gauge sector.  We test that identification with exact
+diagonalization of the nearest-neighbour dipole--octupole XYZ model, after
+removing a finite-size effect that has not previously been separated from the
+physics.  A periodic cluster is a torus and supports ice-preserving spin
+rearrangements that close only through a periodic image; they enter at order
+$\Jpm^2/\Jzz$, one order \emph{before} the physical hexagon ring exchange at
+$12|\Jpm|^3/\Jzz^2$, and they manufacture the dominant low-temperature scale.
+At the published NLC-A couplings this artifact places a spurious heat-capacity
+peak at $28.7$~mK --- within $19\%$ of the measured $T_2$, and therefore
+capable of confirming the gauge interpretation for the wrong reason.  Deleting
+the artifact exactly, by masking transport-changing matrix elements of the
+Feshbach map, moves the nearest-neighbour gauge crossover to $6.0$~mK.  Across
+$66$ certified points of the fit-constrained coupling region the largest
+attainable ratio $T_{\rm gauge}/T_{\rm spinon}$ is $0.198$, against the
+measured $0.374$.  We supplement this model-dependent statement with a
+model-independent one: any crossover that is the ordering of the ice manifold
+must release the Pauling entropy $\tfrac{R}{2}\ln\tfrac32=1.687$~J\,mol$^{-1}$
+K$^{-1}$, i.e.\ $29\%$ of $R\ln2$, and any gauge-sector crossover must be
+followed below it by a photon $T^3$ tail.  We show what the currently available
+digitized data can and cannot decide, and specify the measurement --- heat
+capacity below $20$~mK --- that settles it.  Our conclusion is that within the
+nearest-neighbour XYZ model the $25$~mK feature is not the gauge crossover; the
+honest alternatives are beyond-nearest-neighbour exchange, a larger $|\Jpm|$
+than the high-temperature fit constrains, or a non-gauge origin.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+$\CHO$ is one of a small set of dipole--octupole pyrochlores in which a
+quantum-spin-ice (QSI) ground state is plausible on symmetry, chemistry and
+spectroscopic grounds~\cite{HuangChenHermele2014,Gao2019,Gaudet2019,%
+Bhardwaj2022,RauGingras2019}.  The two-peak heat capacity reported by Smith
+\textit{et al.}~\cite{Smith2025} is the sharpest quantitative handle available:
+an upper feature near $T_1\simeq65$~mK, naturally read as the spinon (magnetic
+monopole) crossover, and a lower feature near $T_2\simeq25$~mK for which the
+emergent photon is the natural candidate.  If correct, this is the first
+thermodynamic sighting of the QSI gauge sector.
+
+The claim is calibrated by numerics, and the numerics have a problem that is
+topological rather than statistical.  Every finite periodic cluster of a
+pyrochlore is a three-torus.  On a torus there exist ice-preserving spin
+rearrangements whose flipped set closes only after a periodic identification.
+Such a process does not exist on the infinite lattice, and on the clusters used
+in practice it is \emph{shorter} than the physical process it competes with.
+Its amplitude and that of the hexagon ring exchange are
+\begin{equation}
+ g_4=\frac{4\Jpm^2}{\Jzz},\qquad
+ g_6=\frac{12|\Jpm|^3}{\Jzz^2},\qquad
+ \frac{g_4}{g_6}=\frac{\Jzz}{3|\Jpm|},
+ \label{eq:g4g6}
+\end{equation}
+so the artifact does not shift the gauge scale, it \emph{replaces} it, with a
+different power of the coupling.  At the couplings relevant to $\CHO$,
+$|\Jpm|/\Jzz\simeq0.125$, the ratio is $g_4/g_6\simeq2.7$ and the artifact wins.
+
+This paper does three things.  Section~\ref{sec:artifact} shows that at the
+published NLC-A couplings the artifact peak lands at $28.7$~mK --- on top of the
+measured $24.2$~mK anomaly --- so a small-cluster calculation appears to confirm
+the photon interpretation while measuring the box.  Section~\ref{sec:masked}
+removes the artifact exactly and reports what the nearest-neighbour model then
+predicts.  Section~\ref{sec:entropy} steps outside the model entirely and gives
+two parameter-free constraints, an entropy budget and a $T^3$ tail, that the
+data must satisfy for \emph{any} gauge interpretation.  Section~\ref{sec:caveat}
+states the limitations honestly; they are substantial and they all push in the
+same direction.
+
+\section{Model, couplings, and the digitized data}
+\label{sec:model}
+
+We use the nearest-neighbour pseudospin Hamiltonian of
+Eq.~(\ref{eq:model}) below in the exchange-diagonal local frame,
+\begin{equation}
+ H=\Jzz\!\!\sum_{\langle ij\rangle}\!S^z_iS^z_j
+ -\Jpm\!\!\sum_{\langle ij\rangle}\!\left(S^+_iS^-_j+\mathrm{h.c.}\right)
+ +\Jpmpm\!\!\sum_{\langle ij\rangle}\!\left(S^+_iS^+_j+\mathrm{h.c.}\right),
+ \label{eq:model}
+\end{equation}
+related to the published $(J_a,J_b,J_c)$ parametrization by
+\begin{equation}
+ \Jzz=J_a,\qquad \Jpm=-(J_b+J_c)/4,\qquad \Jpmpm=(J_b-J_c)/4 .
+\end{equation}
+The three published seeds of Ref.~\cite{Smith2025} are, in meV,
+\begin{equation}
+ \begin{aligned}
+  \text{NLC-A}&=(0.050,\ 0.021,\ 0.004),\\
+  \text{NLC-B}&=(0.051,\ 0.008,-0.018),\\
+  \text{QMC (ordered)}&=(0.046,-0.003,-0.010).
+ \end{aligned}
+\end{equation}
+NLC-A maps to $(\Jpm,\Jpmpm)/\Jzz=(-0.125,+0.085)$.  Note that $\Jpmpm$ is not
+small: omitting it is not a controlled approximation for this material, so all
+calculations below use the full XYZ Hamiltonian and its complete $2^{16}$
+cubic-16 basis where required.
+
+Measured peak positions, extracted from the published figure, are
+$T_2=24.19$~mK and $T_1=64.65$~mK, giving
+\begin{equation}
+ \mathcal R_{\rm exp}\equiv T_2/T_1=0.374 .
+ \label{eq:Rexp}
+\end{equation}
+The digitized trace begins at $T=20.6$~mK with
+$C_{\rm mag}=1.93$~J\,mol$_{\rm Ce}^{-1}$K$^{-1}$, rises to $2.25$ at
+$23.7$~mK and falls thereafter.  \textbf{There is no digitized data below the
+low-temperature peak}, a fact that limits Sec.~\ref{sec:entropy} and that we do
+not paper over.  The extraction carries no experimental uncertainties; it is
+used for visual comparison and for the integrals of Sec.~\ref{sec:entropy}, not
+for a $\chi^2$.
+
+\section{The artifact lands on the anomaly}
+\label{sec:artifact}
+
+Table~\ref{tab:artifact} compares, at fixed couplings and on the same cluster
+and the same virtual space, the low-temperature heat-capacity peak of the naive
+periodic calculation with the transport-masked one of Ref.~\cite{ZhouKimMask}.
+The masking deletes every ice-block matrix element of the exact Feshbach map
+$F(z)=PHP+PHQ(z-QHQ)^{-1}QHP$ that connects different transport (polarization)
+sectors; a contractible rearrangement preserves the label, a rearrangement
+closed through a periodic image changes it by a box vector.  No counterterm and
+no fitted coefficient is involved.
+
+\begin{table}[t]
+\caption{Low-temperature heat-capacity peak at the $\CHO$-relevant couplings,
+in mK, using $\Jzz=J_a$ of the corresponding seed.  ``periodic'' is naive exact
+diagonalization of the same cluster and virtual space; ``masked'' has the torus
+artifact deleted.  The measured anomaly is at $24.2$~mK.}
+\label{tab:artifact}
+\begin{ruledtabular}
+\begin{tabular}{lccc}
+$(\Jpm,\Jpmpm)/\Jzz$ & periodic (mK) & masked (mK) & masked/$g_6$\\ \hline
+$(-0.050,\ 0.000)$ & $7.52$  & $0.71$ & $0.821$\\
+$(-0.125,\ 0.085)$ (NLC-A) & $17.40$ & $6.01$ & $0.442$\\
+$(-0.150,\ 0.000)$ & $17.40$ & $7.72$ & $0.329$\\
+$(-0.152,\ 0.085)$ & $17.40$ & $8.11$ & $0.335$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+A second, independent extraction on the same cluster with the full two-peak
+analysis gives, at NLC-A, a periodic low peak at $28.7$~mK against a masked one
+at $6.0$~mK, and at $(-0.152,0.085)$ a periodic $37.5$~mK against a masked
+$8.1$~mK.  The two extractions differ in how the peak is located in a
+multi-feature curve; the qualitative statement is identical and is the point of
+this section:
+
+\begin{quote}
+\emph{At the published couplings, naive periodic exact diagonalization predicts
+a low-temperature heat-capacity peak within $19\%$ of the measured $24.2$~mK
+anomaly.  Essentially all of that peak is the torus artifact.  Removing it moves
+the prediction down by a factor of $3$--$5$.}
+\end{quote}
+
+The coincidence is not a small perturbation of a correct answer.  Because
+$g_4\propto\Jpm^2$ and $g_6\propto|\Jpm|^3$, the artifact carries a different
+power of the coupling: a log--log fit of the peak position against $|\Jpm|$
+gives $1.80$ for the periodic branch and $2.79$ for the masked branch,
+approaching the second and third orders of Eq.~(\ref{eq:g4g6}) with no fitted
+subtraction.  A calculation that reproduces $T_2$ through the artifact would
+also reproduce the wrong dependence on pressure, chemical substitution, or any
+other knob that moves $\Jpm/\Jzz$.
+
+The same artifact has a second, unrelated symptom worth recording for anyone
+calibrating on small clusters: it inverts the measured gauge flux.  The winding
+amplitude $g_4$ is even in $\Jpm$ while $g_6$ is odd, so for $\Jpm<0$ --- the
+sign relevant to every Ce pyrochlore --- artifact and physics oppose and the
+artifact wins.  On the $16$-site cluster the raw ground state reports
+$\langle O_{\rm hex}\rangle>0$ ($0$-flux) over the entire $(J_x,J_y)$ plane,
+whereas the winding-free state reports $\pi$-flux throughout $\Jpm<0$.
+
+\section{What the nearest-neighbour model predicts once the artifact is gone}
+\label{sec:masked}
+
+\subsection{The peak-ratio gate}
+
+The absolute position of a finite-cluster gauge peak carries a host-dependent
+prefactor: the combinatorial hexagon-flippability coefficient is $1.070$ on the
+$16$-site cubic cluster and $0.521$ on the $32$-site FCC cluster, so the
+prediction moves down by roughly a factor of two on the larger host and is not
+converged even there.  The \emph{ratio} of the two peaks is a better-controlled
+observable, because the spinon peak sits at $\simeq0.25\,\Jzz$ and is untouched
+by the mask (we verify it moves by less than $1\%$ for $|\Jpm|/\Jzz\le0.09$).
+
+We therefore scan the fit-constrained region and ask whether any certified point
+reaches $\mathcal R_{\rm exp}=0.374$.  Of $80$ grid points, $66$ are certified
+in the sense that the complete ice-descended band is resolved (all $90$ roots on
+cubic-16); the remainder dissolve into the spinon continuum and cannot support
+any peak statement at all.  The result is
+\begin{equation}
+ \max_{\rm certified}\ \mathcal R_{\rm masked}=0.198
+ \quad\text{at}\quad (\Jpm,\Jpmpm)/\Jzz=(+0.050,+0.085),
+ \label{eq:maxratio}
+\end{equation}
+with the next two values $0.121$ and $0.111$.  The maximum sits at
+\emph{positive} $\Jpm$, i.e.\ in the $0$-flux sector, and is still short of the
+measurement by a factor $1.9$.  Restricted to the physically favoured
+$\pi$-flux side the shortfall is far larger.
+
+\pending{The repository contains a second, more conservative estimate of the
+same quantity --- ``largest reachable ratio $0.050$ at $\Jpm/\Jzz=-0.17$,
+shortfall $7.5\times$'' --- computed with a different peak-identification rule.
+The two must be reconciled, and one rule adopted, before submission.  Both
+support the null; they differ by a factor of four in how badly.}
+
+\subsection{Best available fit}
+
+Ranking the winding-free curves against the digitized $C_{\rm mag}$ over
+$0.025$--$2.35$~K by unweighted RMSE in $\log T$ selects
+$(\Jpm,\Jpmpm)/\Jzz=(-0.156,+0.115)$ with $\Jzz=0.236$~K $=0.0203$~meV.  That
+point puts its two winding-free maxima at $3.53$~mK and $67.2$~mK.  The high
+peak is essentially on the measured $T_1$; the low peak is $6.9$ times below
+the measured $T_2$.  The nearest-neighbour model can reproduce the spinon scale
+and the high-temperature tail while missing the low peak by almost an order of
+magnitude.
+
+This is consistent with an independent observation about the fit itself.  At
+high temperature the heat capacity depends on the exchange parameters only
+through $\sum J^2$ at leading order, so raising $|\Jpm|$ while lowering $J_a$ to
+hold $\sum J^2$ fixed is a nearly flat direction of the high-temperature
+objective.  An order-$5$ exact numerical linked-cluster calculation reproduces
+the published $0.25$--$1.2$~K data with mean residual $2.2\%$ at a point with
+$(\Jpm,\Jpmpm)/J_a=(-0.156,0.115)$, better than either published minimum
+($3.7\%$ for A, $5.1\%$ for B).  \textbf{The published fit does not constrain
+the gauge scale}, because the gauge scale is set by $|\Jpm|^3$ and lives an
+order of magnitude below the fitted window.  The material is, on this evidence,
+more quantum than the fit says --- but not by enough to close the factor of
+seven.
+
+\section{Two constraints that do not depend on the model}
+\label{sec:entropy}
+
+Because the model-dependent test above inherits a finite-size prefactor, we add
+two constraints that any gauge interpretation must satisfy regardless of
+Hamiltonian.
+
+\subsection{The Pauling entropy budget}
+
+If the lower peak is the ordering of the emergent gauge field within the ice
+manifold, then integrating the magnetic heat capacity across it must release
+exactly the residual ice entropy~\cite{Pauling1935,Ramirez1999},
+\begin{equation}
+ S_{\rm ice}=\frac{R}{2}\ln\frac32
+ =1.687\ \mathrm{J\,mol_{Ce}^{-1}K^{-1}}
+ =0.293\,R\ln2 .
+ \label{eq:pauling}
+\end{equation}
+Equivalently, of the total $R\ln2=5.763$~J\,mol$^{-1}$K$^{-1}$ available to an
+effective spin-$1/2$ doublet, $71\%$ must be released above the ice plateau (by
+the spinon peak and the high-temperature tail) and $29\%$ below it.  This is a
+counting statement about the ice manifold, not about any effective gauge
+Hamiltonian, and it holds for the $\pi$-flux and $0$-flux sectors alike.
+
+The test is then:
+\begin{equation}
+ \Delta S_{\rm low}=\int_0^{T_{\rm dip}}\frac{C_{\rm mag}(T)}{T}\,dT
+ \ \stackrel{?}{=}\ S_{\rm ice},
+ \label{eq:test}
+\end{equation}
+with $T_{\rm dip}$ the minimum between the two peaks.  A result significantly
+below $S_{\rm ice}$ means the low peak is not the ice-manifold crossover
+(something else, e.g.\ a fraction of sites or a disorder-broadened subset, is
+ordering); a result significantly above it means the peak is not confined to
+the ice manifold.
+
+\pending{Eq.~(\ref{eq:test}) has not yet been evaluated.  The obstruction is
+real: the digitized trace starts at $20.6$~mK, above the peak's low-temperature
+flank, and the unmeasured tail is not negligible --- with
+$C_{\rm mag}(20.6~\mathrm{mK})=1.93$, a $T^3$ tail contributes
+$\simeq0.64$ and a linear tail $\simeq1.93$~J\,mol$^{-1}$K$^{-1}$, i.e.\
+between $38\%$ and $114\%$ of $S_{\rm ice}$ by itself.  The partial integral
+from $20.6$~mK to the dip is computable now and is worth reporting with the
+tail treated as a stated systematic; a decisive test requires author data below
+$20$~mK.  Script: \texttt{analysis/entropy\_budget.py}.}
+
+\subsection{The photon $T^3$ tail}
+
+Below a genuine gauge crossover the specific heat of a linearly dispersing
+emergent photon with two polarizations must be
+\begin{equation}
+ \frac{C}{N}=\frac{2\pi^2}{15}\left(\frac{k_BT}{\hbar c}\right)^3
+ \frac{V}{N} ,
+ \label{eq:T3}
+\end{equation}
+with $c$ the emergent light speed~\cite{Benton2012}.  This is the most
+distinctive fingerprint the gauge sector has, and it is a two-parameter-free
+prediction once $c$ is known: the exponent is $3$ and the coefficient is fixed
+by $c$, which is itself computable from the ring-exchange amplitude.  A
+measurement of $C_{\rm mag}$ from $5$ to $20$~mK therefore does more than fill
+in a tail --- it discriminates the photon ($T^3$) from a Schottky anomaly
+(activated), a nuclear contribution ($T^{-2}$), a spin-glass or disorder
+contribution (roughly linear), and a conventional magnon ($T^3$ but with a
+coefficient set by the ordered moment and a magnetic Bragg peak to accompany
+it).  We regard this, not the peak position, as the decisive measurement.
+
+\section{Limitations, and which way they push}
+\label{sec:caveat}
+
+\begin{enumerate}
+\item \textbf{Cluster size.}  The coupling-plane scan is on the $16$-site
+cluster, the only one on which the complete $\Jpmpm$ basis is affordable.  The
+host coefficient falls from $1.070$ to $0.521$ between that cluster and the
+$32$-site FCC cluster, i.e.\ the larger and more reliable host pushes the gauge
+peak \emph{colder}, widening the discrepancy rather than closing it.  This is
+the single most important caveat and it does not rescue the gauge reading.
+\item \textbf{Virtual-depth truncation.}  On the larger host the virtual space
+must be truncated; the measured error of the shallowest truncation is up to
+$40\%$ low at strong coupling, again in the direction of a colder peak.
+\item \textbf{Band completeness.}  For $\Jpm/\Jzz\lesssim-0.19$ the ice-descended
+band is no longer isolated from the spinon continuum on this cluster and no peak
+statement is admissible; the minimum ice-manifold overlap falls from $0.89$ at
+$\Jpm/\Jzz=-0.05$ to $0.36$ at $-0.18$.  The scan is gated on this, which is why
+$14$ of $80$ grid points are excluded.
+\item \textbf{Digitized data.}  No experimental uncertainties are available, so
+we quote no $\chi^2$ and no confidence interval, and the entropy integral is
+incomplete below $20.6$~mK.
+\item \textbf{Nearest-neighbour only.}  The model contains no further-neighbour
+or dipolar exchange.  The experimental paper itself raises beyond-NN terms as a
+possibility, and our result is one of the reasons to take that seriously.
+\end{enumerate}
+
+Every numerical caveat pushes the predicted gauge peak to lower temperature.
+The null result is therefore robust in the only direction that matters.
+
+\section{Conclusion}
+
+Within the nearest-neighbour dipole--octupole XYZ model, and after the torus
+artifact is removed exactly, no certified set of couplings in the
+fit-constrained region places a gauge-sector heat-capacity feature at $25$~mK
+relative to a $65$~mK spinon feature: the best attainable ratio is $0.198$
+against a measured $0.374$, and the best RMSE fit misses the low peak by a
+factor of seven.  The coincidence that makes this worth stating carefully is
+that the \emph{uncorrected} periodic calculation does place a peak at
+$28.7$~mK, so a small-cluster calibration confirms the gauge interpretation by
+reproducing its own finite-size artifact.
+
+We do not claim that $\CHO$ is not a quantum spin ice; the spinon scale and the
+high-temperature thermodynamics are reproduced well, and the flat direction of
+the high-temperature fit means the true $|\Jpm|$ may be appreciably larger than
+published.  We claim that the $25$~mK feature is not accounted for as dressed
+gauge dynamics of the nearest-neighbour model, and that the question is settled
+not by a better fit but by a measurement: the heat capacity between $5$ and
+$20$~mK, whose exponent and entropy content decide the matter without reference
+to any Hamiltonian.
+
+\begin{acknowledgments}
+Heat-capacity data digitized from Ref.~\cite{Smith2025}; the winding-free
+construction is that of Ref.~\cite{ZhouKimMask}.
+\end{acknowledgments}
+
+\bibliographystyle{apsrev4-2}
+\bibliography{refs}
+
+\end{document}

@@ -1,0 +1,597 @@
+% =====================================================================
+% A roton in the emergent photon spectrum of quantum spin ice.
+% Rewritten for intuition: physical pictures first, numbers into figures.
+% =====================================================================
+\documentclass[aps,prl,twocolumn,amsmath,amssymb,superscriptaddress,
+longbibliography,floatfix]{revtex4-2}
+
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,citecolor=blue!55!black,
+urlcolor=blue!55!black,linkcolor=blue!55!black]{hyperref}
+\graphicspath{{figs/}}
+\setlength{\emergencystretch}{3em}
+
+\newcommand{\bq}{\bm q}
+\newcommand{\Szz}{S^{zz}}
+
+\begin{document}
+
+\title{A roton in the emergent photon spectrum of quantum spin ice}
+
+\author{Zhengbang Zhou}
+\email{zhengbang.zhou@mail.utoronto.ca}
+\affiliation{Department of Physics, University of Toronto, Toronto,
+Ontario M5S 1A7, Canada}
+
+\author{Yong Baek Kim}
+\email{ybkim@physics.utoronto.ca}
+\affiliation{Department of Physics, University of Toronto, Toronto,
+Ontario M5S 1A7, Canada}
+
+\date{\today}
+
+\begin{abstract}
+Quantum spin ice is expected to host an emergent photon, and every
+analytic prediction of what neutrons should see treats that photon as
+free: one sharp line carrying all of the spectral weight.  We compute
+the spectrum exactly instead, diagonalizing the ring-exchange model in
+the full spin-ice configuration space of 48- and 64-site pyrochlore
+clusters.  The free-photon picture holds at long wavelength and fails
+at the zone boundary, where a \emph{roton} takes over: at the $L$
+point a mode falls to half the free-photon energy, carries half of the
+neutron intensity, and is the lowest excitation of the model.  Its
+origin is the one Feynman identified in liquid helium, with a single
+ingredient replaced.  In helium a sound wave becomes a roton because
+the liquid can no longer be compressed and must rearrange instead.
+Here the emergent electric field is the spin itself,
+$E=S^z=\pm\frac12$ on every bond, so the field is saturated: a wave
+cannot be made by increasing $E$, only by rearranging which bonds
+point which way.  That rearrangement twists the magnetic flux and
+destroys ring-exchange coherence, and the excitation energy is exactly
+the coherence destroyed.  Plaquettes lying in the wavefronts enclose no
+flux from the wave and cost nothing, and at $L$ alone --- the one
+zone-boundary momentum along a hexagon normal --- a quarter of all
+plaquettes are of this type.  Two further consequences of compactness accompany the
+roton: the two photon polarizations, exactly degenerate in the free
+theory, are split by their mutual interaction, and $13$--$38\%$ of the
+neutron weight moves into multiparticle states.  A selection rule ---
+reversing all spins leaves the Hamiltonian invariant, and neutrons see
+only the odd states --- sends the complementary even spectrum to Raman
+scattering and ultrasound.  The zone-boundary feature experiments
+should expect is therefore not the photon but the roton.
+\end{abstract}
+
+\maketitle
+
+\emph{Introduction.}---In quantum spin ice the low-energy physics is
+not made of spins but of a field.  Virtual exchange on the
+two-in--two-out ice manifold of the pyrochlore
+lattice~\cite{Castelnovo2008} flips the six spins around a hexagon,
+and the resulting theory is a compact $U(1)$ lattice gauge theory with
+an emergent photon~\cite{Hermele2004,Gingras2014,SavaryBalents2017,
+RauGingras2019,Broholm2020}, confirmed by quantum Monte
+Carlo~\cite{Shannon2012,KatoOnoda2015} and realized equivalently by
+three-dimensional quantum dimer models~\cite{Sikora2009}.  The
+dictionary is simple and exact: the local moment \emph{is} the
+emergent electric field, $S^z=E$, so the neutron structure factor
+$\Szz(\bq,\omega)$ measures electric-field fluctuations.  A gapless
+linearly dispersing mode carrying little low-energy weight is the
+signature now pursued in a growing family of
+materials~\cite{Benton2012,Ross2011,Sibille2018,Gaudet2019,Gao2019,
+Sibille2020,Smith2022,Poree2025,Gao2025,Gao2026}.
+
+Every analytic prediction of that signature describes a \emph{free}
+photon, and the approximation behind it is stated openly in the
+literature.  The emergent magnetic field is an angle, so its energy is
+a cosine; one assumes that averaging over fast fluctuations both
+softens the discreteness of the spin variable and keeps the flux
+small, expands the cosine to quadratic order, and arrives, in the
+words of Benton \emph{et al.}, at ``the Hamiltonian for non-compact
+quantum electromagnetism''~\cite{Benton2012,Hermele2004}.  Later
+treatments of the neutron response inherit
+it~\cite{Desrochers2023,DesrochersKim2023PRL}.  The approximation is a
+statement about long wavelengths, and there it is justified: in three
+spatial dimensions the deconfined phase does flow to free
+electrodynamics, monopoles are gapped, and the corrections are
+irrelevant.
+
+At the zone boundary none of that protection applies, and the reasons
+to worry are concrete: the emergent fine-structure constant is
+large~\cite{Pace2021}, semiclassical treatments find order-one
+anharmonic renormalizations~\cite{Kwasigroch2017,Kwasigroch2020,
+Szabo2019}, and quantum Monte Carlo finds a zone-boundary linewidth
+comparable to the whole photon bandwidth, explicitly ``not captured''
+by the Gaussian theory~\cite{Huang2018}.  Monte Carlo cannot say what
+replaces the photon, because recovering a spectrum from imaginary time
+smears exactly the structure in question.  That is the gap we close.
+The zone boundary is not a corner case: it is where the
+neutron-accessible momenta lie.
+
+\emph{The model, and why nothing is missing from it.}---We study the
+ring-exchange Hamiltonian on the ice manifold,
+\begin{equation}
+ H=-K\sum_{p}\left(W_{p}+W_{p}^{\dagger}\right),\qquad
+ W_{p}=S_1^+S_2^-S_3^+S_4^-S_5^+S_6^-,
+ \label{eq:ring}
+\end{equation}
+summed over contractible hexagons.  $W_p$ reverses the six spins
+around a hexagon when they alternate and annihilates the state
+otherwise, so $H$ rewards \emph{resonance}: a configuration gains
+energy by being connected, through flippable hexagons, to its
+neighbors.  In gauge language $W_p=e^{iB_p}$ and Eq.~(\ref{eq:ring})
+is $-2K\sum_p\cos B_p$, the full cosine, never expanded.  Every
+difference from the free-photon theory below comes from that one
+refusal.
+
+Compact electrodynamics is normally written
+$\frac{U}{2}\sum_\ell E_\ell^2-K\sum_p\cos B_p$, and
+Eq.~(\ref{eq:ring}) appears to be missing the electric term.  It is
+not.  For spin one-half the electric field is the spin,
+$E_\ell=S^z_\ell$, so $E_\ell^2=\frac14$ on \emph{every} bond of the
+ice manifold: there the electric term is a constant and generates no
+dynamics.  Equation~(\ref{eq:ring}) is the whole gauge Hamiltonian at
+this order.  This is worth saying plainly, because it is the physical
+reason the problem is hard: spin-one-half quantum spin ice is compact
+$U(1)$ gauge theory with \emph{zero} bare electric stiffness, the
+extreme of strong coupling, and whatever stiffness the photon has is
+generated by the ring dynamics
+itself~\cite{Hermele2004,Benton2012,Kwasigroch2017}.  There is no
+small parameter to tune.  (For spin $S>\frac12$, or in rotor and
+quantum-link regularizations, $E^2$ is dynamical and the coupling can
+be made weak; the spin-one-half magnet cannot be.)
+
+Equation~(\ref{eq:ring}) conserves the winding of the spin
+configuration around the periodic box, contains no spinons --- the
+Hilbert space is the ice manifold --- and excludes the noncontractible
+six-cycles responsible for torus artifacts in finite-cluster
+calculations~\cite{ZhouKimMask}.  It does retain the full magnetic
+sector, so weight beyond the photon could in principle be magnetic
+rather than multi-photon; we test that below.
+
+\emph{One operator does everything.}---Because $S^z=E$, the neutron
+operator is also the photon creation operator, and this single fact
+organizes what follows.  In the free theory $E(\bq)\vert0\rangle$
+\emph{is} one photon, exactly, which is why that theory places all of
+the weight on one line.  In the compact theory the same state is a
+superposition of everything the probe can reach, and our question is
+what that superposition contains.
+
+The two fields have a plain meaning in spins, and we use both languages
+throughout.  The electric field is the moment itself, $E_\ell=S^z_\ell$,
+so an electric-field wave is a modulation of the up--down pattern.  The
+magnetic flux $B_p$ threads a hexagon, and $\cos B_p$ is the
+ring-exchange resonance: a hexagon with a large $\langle\cos
+B_p\rangle$ is one whose six spins are flipping back and forth
+coherently.  The ground-state energy is the sum of those resonances.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.95\textwidth]{fig_hero.pdf}
+\caption{The exact excitation spectrum of the compact gauge theory, and
+what each excitation is.  Left: every level carrying spectral weight at
+nine inequivalent momenta, ordered by $|\bq|$ (48-site cluster;
+$\dagger$ marks momenta of the 64-site cluster).  Marker area, and
+every percentage quoted in this paper, is the level's \emph{share} of
+the total neutron intensity at that momentum,
+$|\langle n|S^z(\bq)|0\rangle|^2/\sum_m|\langle
+m|S^z(\bq)|0\rangle|^2$; open squares mark levels invisible to
+neutrons that appear instead in Raman scattering and ultrasound ---
+by the parity selection rule no level is seen by both.  Colors state
+the character established by the diagnostics of the text, not by
+position: \emph{photons} are the two levels that project onto the
+transverse polarizations of the free theory, sit within
+$0.82$--$1.46$ of the free-photon energy, and do not gain flippable
+hexagons; the \emph{roton} is the level that is anomalous on both
+counts at once --- half the free-photon energy, and the only level in
+the spectrum that appreciably \emph{gains} flippable hexagons
+($+0.34$, against at most $+0.01$ for every other bright level) ---
+and which the flux diagnostic distinguishes from a monopole pair;
+\emph{multiphoton} is the remaining neutron-visible weight, absent
+from the free theory at any parameters.  At daggered momenta
+the assignment follows the dominant line and the class analysis of
+the text.  The dashed curve is the free-photon theory on the same
+lattice, which puts \emph{all} of the weight on that single line.
+Three $L$-type columns test the roton directly.  It appears on both
+clusters --- at $L$ (48 sites: $1.02K$, $51\%$ of the intensity) and at
+$L^{\dagger}$ (64 sites: $0.95K$, $50\%$) --- while $L'$, the second
+$L$-type class of the anisotropic 64-site box, whose ground-state
+structure factor is suppressed, does not rotonize: rotonization
+follows $S(\bq)$, as the mechanism requires.  Right: what each
+excitation is, drawn on the pyrochlore lattice with every plaquette
+colored by the flux $\Phi_p$ the wave drives through it (colorbars).
+A \emph{photon} is a long-wavelength wave, here $\bq\perp[111]$: the
+flux varies slowly from plaquette to plaquette.  The \emph{roton} is
+the shortest wave along $[111]$, shown in a side view with $[111]$
+vertical, the alternating kagome and triangular planes labeled, and
+the layer spacing exaggerated: the kagome plaquettes appear
+edge-on as white slats and enclose \emph{exactly} zero flux, because
+their normal is parallel to $\bq$; within one interlayer region the
+three tilted families carry flux in the exact ratio
+$(+1,-\tfrac12,-\tfrac12)$ --- summing to zero, as a divergence-free
+flux pattern must --- and every tilted plaquette's flux reverses sign
+in the next region.  The lattice drawing shows the strongest family;
+the profile plots $\Phi_p$ against height for all three (solid and
+dashed guides).  Flux is quoted in units of its maximum; the overall
+amplitude is the mode's and is arbitrary here.
+The multiphoton levels (teal) are weight with no free-theory
+counterpart: they exist because the cosine carries the quartic vertex
+$-\frac{K}{12}B_p^4$ that the free theory discards, which lets one
+photon become three.}
+\label{fig:main}
+\end{figure*}
+
+\emph{What replaces the photon.}---Figure~\ref{fig:main} shows the
+exact $\Szz$ beside the free-photon prediction evaluated on the same
+lattice, so that every difference is an effect of compactness alone.
+Two diagnostics classify the levels.  Projecting the probe onto the
+two transverse polarization directions of the free theory says which
+photon branch a level belongs to.  The second uses the one other
+coupling this model is conventionally given.  Write
+\begin{equation}
+ H(V)=-K\sum_p\!\left(W_p+W_p^\dagger\right)+V\sum_p n_p^{\rm flip},
+ \label{eq:rk}
+\end{equation}
+where $K$ is the ring-exchange amplitude, which sets every energy
+quoted here, and $n_p^{\rm flip}$ is the projector onto hexagons whose
+six spins alternate --- the flippable ones --- so that $\sum_p n_p^{\rm
+flip}$ simply counts them.  The $V$ term is the Rokhsar--Kivelson
+potential~\cite{RokhsarKivelson1988}, the standard second axis of the
+quantum-ice phase diagram~\cite{Shannon2012,Gingras2014}, and at $V=K$
+it reaches the exactly solvable point where the ground state is the
+equal-amplitude superposition of ice configurations.  We use it only
+as an infinitesimal probe at $V=0$, because the Hellmann--Feynman
+theorem makes its slope an exact census:
+\begin{equation}
+ \frac{d\omega_n}{dV}
+ =\langle n|\!\sum_p n_p^{\rm flip}|n\rangle
+ -\langle 0|\!\sum_p n_p^{\rm flip}|0\rangle ,
+ \label{eq:hf}
+\end{equation}
+the number of flippable hexagons the excitation adds or removes
+relative to the ground state.  It is a measurement of what the state
+is made of, not a fitted parameter.
+
+At $L$ the two dominant levels behave completely differently.  One
+sits at $1.73K$, near the free-photon line at $2.03K$, and loses
+flippable hexagons under the deformation: an ordinary dressed photon.
+The other falls to $1.02K$, half the free-photon energy, takes $51\%$
+of the neutron intensity, \emph{gains} flippable hexagons, and is the
+lowest excitation of the entire model --- we scanned all $9104$ levels
+of the ground sector, labeled by spin-reversal parity, and nothing of
+either parity lies beneath it.  It is not two photons or three; those
+are excluded by parity and by kinematics, and the flux-correlation
+test below excludes a magnetic pair.  It is a roton, and the rest of
+this paper is about what that means microscopically.
+
+\emph{What an electric-field wave costs.}---Electric and magnetic
+variables are conjugate, so an electric-field wave necessarily disturbs
+the flux, and the ring exchange is the entire energy of the problem.
+The cost is therefore magnetic, and for Eq.~(\ref{eq:ring}) it can be
+written down in closed form.  The first moment of the structure factor
+is
+\begin{equation}
+ f_1(\bq)=\frac{1}{2N}\sum_p\big\langle W_p+W_p^\dagger\big\rangle
+          \sum_\mu\big|g^\mu_p(\bq)\big|^2 ,
+ \label{eq:f1}
+\end{equation}
+where $g^\mu_p(\bq)$ is the lattice curl --- the flux the wave drives
+through hexagon $p$.  Equation~(\ref{eq:f1}) is exactly the Maxwell
+magnetic energy $\sum_p({\rm stiffness})\times|\nabla\!\times\!A|^2$ of
+the configuration the neutron creates, with one difference from the
+usual lattice gauge theory: the stiffness is not a parameter but a
+measured property of the ground state, $\langle
+W_p+W_p^\dagger\rangle=2\langle\cos B_p\rangle$, the strength with
+which that hexagon is already resonating.  This is the stiffness that
+free-photon treatments must introduce by
+hand~\cite{Hermele2004,Benton2012}; here it is computed.
+Equation~(\ref{eq:f1}) contains no free parameter, reproduces the exact
+spectral first moment at every momentum, and obeys $\sum_p\langle
+W_p+W_p^\dagger\rangle=-E_0/K$ identically.  It plays the role that the
+free-particle recoil $\hbar^2q^2/2m$ plays in helium.
+
+In spin language the same statement reads: twisting the flux through a
+hexagon spoils the coherence of the six-spin resonance there, and the
+energy lost is the resonance strength times the square of the twist.
+
+The energy of the state the neutron creates is then
+$f_1(\bq)/S(\bq)$~\cite{Feynman1954}, where the equal-time structure
+factor $S(\bq)$ measures how much of that electric-field pattern the
+ground state already contains: where the field is already fluctuating
+that way, exciting it costs less.  \emph{The magnetic cost, divided by
+what was already there} --- that is the whole argument, and it is the
+argument Feynman used for the helium roton.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_mechanism.pdf}
+\caption{The sharp diagnostic is two-dimensional.  (a) Every bright
+level of the 48-site spectrum placed on two exactly computed axes.
+Vertical: the energy in units of what the \emph{free-photon} theory
+assigns to that same momentum, so a photon must sit near $1$.
+Horizontal: $\Delta\langle n^{\rm flip}\rangle$, the Hellmann--Feynman
+census of Eq.~(\ref{eq:hf}) --- how many flippable hexagons the
+excitation adds or removes.  The photon branches fill the shaded box:
+$0.82$--$1.46$ of the free-photon energy, and never appreciably
+gaining hexagons (at most $+0.01$).  The roton lies outside on
+\emph{both} axes: half the free-photon energy, and $+0.34$.  Neither
+axis alone separates it --- one photon-branch level also has a
+marginally positive census, another also lies below the free-photon
+line --- but no other level is anomalous in both.  (b) The data behind
+the horizontal axis: each level tracked through the bias $V$.  Census
+values are evaluated exactly at $V=0$; the finite-difference slopes
+agree with them to $\sim\!0.01$ except where levels cross, which is
+why the census, not the fit, defines the axis.}
+\label{fig:mech}
+\end{figure}
+
+\emph{Why at $L$.}---Two things happen there at once, one geometric
+and one dynamical [Figs.~\ref{fig:main} and \ref{fig:mech}].
+
+The geometric one is exact, and it is ordinary electromagnetism on a
+lattice.  A hexagon lying \emph{in} a wavefront --- in a plane of
+constant phase, perpendicular to $\bq$ --- encloses no net flux from
+the wave: the curl $g_p$ vanishes identically, because the six sites
+sit at one phase and the alternating signs of the loop cancel.  Such
+plaquettes are threaded by nothing, so by Eq.~(\ref{eq:f1}) they
+contribute no magnetic energy, and their resonance is left intact.
+Each pyrochlore hexagon is perpendicular to one of the four
+$\langle111\rangle$ axes, and $L$ is the only zone-boundary momentum
+lying along such an axis.  There, one family of hexagons in four lies
+in the wavefronts and drops out of the cost exactly, reducing $f_1$ to
+three quarters of its value at neighboring zone-boundary momenta.  A
+wave can be built at $L$ while a quarter of the plaquettes never
+notice it.
+
+The dynamical one is that $S(\bq)$ is largest at $L$
+(0.370 at $L$ against 0.19--0.29 elsewhere).  A smaller cost divided by a larger head
+start makes $f_1/S$ minimal at $L$ among all twelve cluster momenta,
+and $L$ is the only momentum where it falls below the free-photon
+line.
+
+Neither effect is inherited from the ice rule.  Sampling the classical
+ice manifold directly, on a $2048$-site pyrochlore, gives a structure
+factor flat across the zone to within a few percent, and the
+equal-amplitude ice state on our own cluster favors $L$ by only about
+ten percent.  The interacting ground state concentrates far more
+weight there while \emph{suppressing} other momenta.  Unlike the
+helium roton, this one is not a property of the medium it lives in;
+the ring dynamics manufactures it.
+
+\emph{What the roton is made of.}---The exact state answers this
+directly, and the answer is the same in either language.  Relative to
+the ground state it carries \emph{less} magnetic coherence: $\sum_p
+\langle\cos B_p\rangle$ falls, and the amount it falls by, $1.02K$, is
+exactly the excitation energy.  The flux has spread away from
+$B_p\simeq0$.  In spins, the six-spin resonances have gone out of phase
+with one another.  At the same time the state contains \emph{more}
+hexagons in a flippable arrangement ($+0.34$).  The two facts are not
+in conflict --- how many plaquettes \emph{can} resonate and how
+coherently they \emph{do} are different questions --- and together they
+say what the roton is: a rearrangement of the electric-field pattern
+that leaves more plaquettes able to fluctuate while destroying the
+phase agreement among them.  It pays in coherence, not in ice-rule
+strain, which is why it costs half of what stiffening the flux into a
+photon costs.
+
+A second stage happens where the neutron cannot look.  The bare
+electric-field wave costs $1.45K$; the true roton costs $1.02K$, so the
+system recovers $29\%$ of the price.  Resolved plaquette by plaquette,
+$71\%$ of that recovery comes from the one family lying in the
+wavefronts.  The reason is that those plaquettes carry none of the
+wave: their flux can be rearranged \emph{without} reducing the state's
+overlap with what the neutron created, so they are free to be spent.
+The wave is built on three families of plaquettes and paid for largely
+by reorganizing the fourth.  This is the lattice counterpart of
+backflow in helium~\cite{FeynmanCohen1956}, where the liquid recovers
+energy through motion the density wave does not specify, and it is why
+the exact energy lies well below $f_1/S$
+[Fig.~\ref{fig:mech}(a)].
+
+\emph{Is this not simply another photon?}---Genealogically, it is: the
+polarization decomposition connects the level continuously to the
+second transverse branch of the free theory, and no new particle
+appears from nowhere.  The situation is exactly that of helium, where
+the roton is not a separate species but the high-momentum portion of
+the very branch that starts as sound --- one dispersion curve whose
+\emph{character} changes along the way.  ``Renormalized photon,''
+however, would mean the same character with shifted numbers, and that
+reading fails every test that probes character rather than ancestry.
+A photon's energy \emph{falls} under the flippability bias; the
+roton's \emph{rises} --- a sign flip, not a shifted magnitude
+[Fig.~\ref{fig:mech}(b)].  A photon pays its energy in flux stiffness
+while preserving ring-exchange coherence; the roton carries \emph{more}
+flippable plaquettes with \emph{less} coherence.  A photon's energy is
+set by the generated stiffness; the roton's is set by the equal-time
+structure factor through $f_1/S$, tracking $S(\bq)$ class by class on
+the 64-site cluster and point by point along the deformation.  And no
+photon detaches from its band: the roton sits below the entire photon
+spectrum and is the lowest excitation of the model.  The name marks a
+change of character, not of ancestry, and the change is measured in
+sign flips, not percentages.
+
+\emph{Relation to known soft modes.}---The closest antecedents are the
+``resonons'' of quantum dimer models.  At the fine-tuned
+Rokhsar--Kivelson point the ground state is an equal-amplitude sum, its
+correlations are those of the \emph{classical} dimer ensemble, and the
+same single-mode logic then predicts soft modes wherever those
+classical correlations peak~\cite{RokhsarKivelson1988}: on the square
+lattice, soft resonons at $(\pi,\pi)$ and $(\pi,0)$, confirmed
+dynamically~\cite{Lauchli2008}.  In three dimensions the same analysis
+finds nothing of the kind: at the cubic-lattice RK point the only soft
+mode is the remnant of the photon itself~\cite{Lauchli2008}, because
+the classical Coulomb-phase correlations are featureless --- the same
+flatness we measure for the classical ice manifold.  The roton
+reported here therefore has no RK-point ancestor.  It lives deep in
+the deconfined phase with no fine-tuning, at finite energy rather
+than at a critical zero, and it exists only because the quantum ring
+dynamics manufactures the correlation peak that the classical
+ensemble lacks.  Where the resonon is a critical precursor read off
+from classical correlations, this roton is an interaction effect of
+the deconfined gauge field itself.
+
+\emph{Why compactness is what makes this happen.}---In the free theory
+$E$ is a continuous field and a photon is a small-amplitude
+oscillation of it: the electric field grows a little, the flux
+stiffens a little, and the two exchange energy indefinitely.  In the
+magnet $E=S^z=\pm\frac12$ on every bond, so the field is
+\emph{saturated}.  A wave cannot be made by increasing $E$ anywhere,
+because there is nowhere for it to go; it can be made only by
+rearranging which bonds carry which sign, and that rearrangement is
+exactly what changes the flux and costs the resonance.  At long
+wavelength the rearrangement can be spread over many bonds and is
+indistinguishable from a small oscillation --- which is why the free
+photon survives in the infrared and why the multiparticle weight falls
+toward small $\bq$.  At the zone boundary the two part company, and the
+rearrangement is the cheaper option.  \emph{The roton is what an
+electric-field wave becomes when the field can no longer change its
+magnitude, only its arrangement.}  In helium the binding constraint is
+that the liquid cannot be compressed below the interparticle spacing;
+here it is that a spin one-half cannot exceed one-half.  The
+constraint differs; the consequence is the same.
+
+\emph{Evidence that this is one mode and not an accident.}---Three
+checks.  First, the mode is collective: improving the electric-field wave
+variationally --- the systematic version of adding backflow ---
+converges onto the exact energy within a few steps at $L$, faster than
+at any other momentum ($1.450\to1.074\to1.034\to1.026K$, against $1.024K$ exact).  Second, the mechanism
+predicts \emph{which} momenta rotonize.  On the 64-site cluster the
+$L$-type momenta split into two inequivalent classes, and the class
+with the larger $S(\bq)$ develops the low mode carrying half the
+intensity while the other stays photon-dominated: rotonization follows
+the structure factor, not the label $L$.  Third, it predicts how the
+mode moves.  Deforming toward more flippable states leaves $f_1$
+constant to under a percent while $S(L)$ grows, and the roton softens
+monotonically as $f_1/S$ requires [Fig.~\ref{fig:mech}(b)], from
+$1.02K$ to $0.73K$ without condensing in the range scanned.  With
+$f_1$ fixed, the softening is not merely correlated with the growth of
+$S$; it is caused by it.
+
+\emph{The other two consequences of compactness.}---Compactness does
+two more things visible in Fig.~\ref{fig:main}.  The free theory makes
+the two transverse polarizations exactly degenerate at every momentum
+of this cluster; the exact spectrum splits them, by under a percent at
+the smallest momentum and by order one at the zone boundary.  Because
+the degeneracy is exact in the free theory, the splitting measures the
+photon--photon interaction directly.  And beyond both branches,
+$13$--$38\%$ of the neutron weight sits in higher states that the free
+theory does not contain at all.  Their character is multiparticle
+rather than magnetic: the plaquette flux correlations of every bright
+state are weak and spatially spread out, without the localized
+disturbance a bound monopole pair would produce, and their response to
+the deformation matches sums of single-mode responses.  This weight
+falls to $13\%$ at the smallest momentum reachable, as the recovery of
+the free-photon description at long wavelength requires.
+
+Leading-order perturbation theory in the quartic term of the cosine
+accounts for none of this.  Evaluated on the same modes, it predicts
+polarization splittings and transferred weight below $0.1\%$ at the
+coupling this model generates, and a few percent even with the
+coupling tripled --- one to two orders of magnitude short.  The
+photon--photon problem here is not a perturbation of the free theory.
+
+\emph{A rule that divides the labor between experiments.}---Reversing
+every spin leaves Eq.~(\ref{eq:ring}) unchanged, so every eigenstate is
+even or odd under it, and $S^z$, being odd, connects the ground state
+only to odd states.  (In gauge language this is charge conjugation,
+and an $n$-photon state carries parity $(-1)^n$.)  The rule is exact,
+and we confirm it at machine precision: every even level carries
+neutron weight below $10^{-28}$.  Its consequence is practical.  The
+two-photon continuum, and the even half of the spectrum generally, is
+\emph{invisible} to neutrons and appears instead in probes coupling to
+pairs of spins --- Raman scattering~\cite{Fu2017} and
+ultrasound~\cite{Simon2022}.  Figure~\ref{fig:channels} shows both
+channels; no level appears in both.  A bilinear-channel onset at twice
+the neutron line would identify the emergent photon pair with no
+adjustable parameter.  Stray-field noise
+magnetometry~\cite{Naik2026} couples to the magnetization and so sits
+on the neutron side of the division.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_maps.pdf}
+\caption{Simulated measurements along $\Gamma$--$L$--$X$ (48-site
+cluster, broadening $\eta=0.08K$, each panel normalized to its own
+maximum).  (a) The free-photon prediction for neutrons: one sharp line
+with all of the weight.  (b) The exact compact theory: both
+polarizations, the roton dominating at $L$ a factor of two below the
+free-photon line, and multiparticle weight above.  (c) The
+spin-flip-even channel seen by Raman scattering and ultrasound, which
+by the selection rule shares no state with (a) or (b).}
+\label{fig:channels}
+\end{figure}
+
+\emph{Consequences for experiment.}---Free-photon fits to neutron data
+are least reliable exactly where the accessible momenta lie.  At the
+zone boundary between a sixth and two thirds of the weight is not in
+the one-photon line; at $L$ the photon retains only a third of it; and
+the line itself is split.  The dominant zone-boundary feature is the
+roton, at half the energy the free theory assigns to the photon there,
+so a measured low-energy peak should not be read as a photon whose
+speed has been renormalized.  The zone-boundary damping reported by
+quantum Monte Carlo~\cite{Huang2018} acquires a concrete assignment:
+weight moved into the split doublet and the multiparticle states.
+Because the theory is gapless, multi-quantum continua reach down to
+the one-photon line in the thermodynamic limit, so lineshape rather
+than peak counting is the appropriate analysis.
+
+\emph{Limitations.}---Two cluster sizes.  The roton's energy, its
+share of the weight, and the mechanism are stable between them; the
+splitting at $X$ is not, and we do not build on it.  We locate the
+roton at the momenta the clusters provide but do not predict its
+position throughout the zone: that requires $S(\bq)$ of the
+interacting ground state at momenta these sizes cannot reach, and the
+classical ice manifold cannot be substituted for it.  Since
+Eq.~(\ref{eq:f1}) holds at any $\bq$, that one ingredient would turn
+the mechanism into a zone-wide prediction.  Longer ring exchanges
+present in microscopic models lie outside Eq.~(\ref{eq:ring}).  The
+connection to those models is not made here: a companion analysis of
+the XXZ model with torus artifacts removed~\cite{ZhouKimMask} finds
+comparable off-pole weight at $L$, but there the photon-band states
+carry virtual-spinon admixture and the comparison is deferred; the
+overall scale $K$ can be targeted
+thermodynamically~\cite{ZhouAnKim2026}.
+
+\emph{Choice of cluster.}---One technical point deserves recording,
+because it affects any small-cluster study of this problem.  The
+standard 16- and 32-site pyrochlore cells cannot be used.  On the
+32-site cell every configuration of the connected zero-flux sector has
+exactly eight flippable hexagons, which makes the equal-amplitude
+state an exact eigenstate and the spectrum integer-valued; on the
+16-site cell only six transport sectors have any dynamics at all.
+Neither supports the interacting photon problem.  We therefore use the
+$2{\times}2{\times}3$ cluster (48 sites, $87\,546$ ice states, ground
+sector of dimension $9104$, diagonalized completely, so the weights
+saturate the equal-time correlator identically) and, for the size
+check, $2{\times}2{\times}4$ (64 sites, $2\,756\,394$ ice states,
+ground sector $249\,180$, by Lanczos after reproducing every 48-site
+benchmark).  Momentum assignments are certified by exact translation
+projectors.
+
+\emph{Conclusion.}---Treating the compactness of the emergent gauge
+field exactly changes what quantum spin ice is predicted to show.  The
+free photon survives at long wavelength, where the field can be tipped
+gently.  At the zone boundary, where it cannot, the response is
+dominated by a roton at half the free-photon energy, carrying half of
+the neutron weight and forming the lowest excitation of the model.
+The mechanism is Feynman's, adapted to a saturated field: a wave that
+cannot be made by increasing $E$ must be made by rearranging it, and
+the price is the ring-exchange coherence that rearrangement destroys.
+Alongside the roton the photon line splits and a multiparticle
+continuum appears, and an exact parity rule routes half the spectrum
+to non-magnetic probes.  Seen from outside magnetism, these are exact
+strong-coupling spectra of a compact $U(1)$ gauge theory of the kind
+quantum simulators are being built to
+approximate~\cite{Bauer2023,Xu2026glueball}, obtained here from a
+gauge field that a magnet supplies for free.
+
+\begin{acknowledgments}
+Exact diagonalizations used the winding-free campaign infrastructure of
+Ref.~\cite{ZhouKimMask}.
+\end{acknowledgments}
+
+\bibliographystyle{apsrev4-2}
+\bibliography{refs}
+
+\end{document}

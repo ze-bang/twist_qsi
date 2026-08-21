@@ -297,13 +297,26 @@ has energy $E_n$, and the final factor is a Dirac delta.
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{fig_fcc32_dssf.pdf}
-\caption{Longitudinal dynamical structure factor at all eight FCC-32 momenta
-for $\Jpm/\Jzz=-0.20$.  (a) Naive periodic dynamics and (b) the
-transport-masked theory use the same depth-$d=1$ space, 120 final states, four
-sublattice probes, Gaussian width $\eta/\Jzz=1.2\times10^{-3}$, and common
-color scale.  Periodic dynamics produces strong inelastic response at
-$\Gamma$ and a higher apparent excitation scale.  The mask removes the
-$\Gamma$ response while retaining finite weight at every nonzero momentum.}
+\caption{Longitudinal dynamical structure factor along
+$\Gamma$--$X$--$L$--$\Gamma$ at $\Jpm/\Jzz=-0.20$.  The eight FCC-32 momenta
+form three high-symmetry stars -- one $\Gamma$, three $X$, four $L$ -- and each
+block is one star, averaged over its symmetry-equivalent members; the weights
+within a star agree to $3\times10^{-14}$, so the average discards nothing.
+Blocks are deliberately not interpolated: these are the only momenta the
+cluster resolves, and both nonzero stars lie on the zone boundary, so no
+small-$\bq$ information exists to disperse through.  Each block carries a
+single dominant excitation ($88$--$100\%$ of the weight), consistent with the
+two transverse photon polarizations being degenerate at both $X$ and $L$.
+(a) Naive periodic dynamics and (b) the transport-masked theory use the same
+depth-$d=1$ space, 120 final states, four sublattice probes, Gaussian width
+$\eta/\Jzz=1.2\times10^{-3}$, and common color scale.  Periodic dynamics
+produces strong inelastic response at $\Gamma$ and a higher apparent
+excitation scale.  The mask removes the $\Gamma$ response while retaining
+finite weight at both nonzero stars.  The removed weight is not in the
+$U(1)$-protected channel: $\sum_i S_i^z$ commutes with $H$, so the total
+longitudinal probe gives exactly zero at $\Gamma$ in both theories
+($<10^{-31}$), and the periodic $\Gamma$ intensity resides entirely in the
+three sublattice-staggered $\bq=0$ channels, which nothing protects.}
 \label{fig:dssf}
 \end{figure*}
 
@@ -321,6 +334,8 @@ so the projected longitudinal probe cannot connect different eigenstates of
 a masked ice block.  Periodic dynamics mixes those sectors and converts the
 torus artifact into observable spectral weight.  The response comparison is
 therefore a second, independent benchmark of what the mask removes.
+
+\input{parity_section}
 
 \section{Operator-resolved loop hierarchy}
 \label{sec:loops}

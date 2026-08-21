@@ -154,10 +154,106 @@ def momentum_label(momentum: list[float]) -> str:
     return r"$(" + ",".join(pieces) + r")$"
 
 
-def broaden(record: dict, energy: np.ndarray, width: float) -> np.ndarray:
-    intensity = np.zeros((len(energy), len(record["momenta"])))
+# The eight FCC-32 momenta are not eight unrelated points: they are three
+# high-symmetry stars of the fcc Brillouin zone -- one Gamma, three X, four L.
+# `allowed_momenta` returns them in the order the cluster enumerates them,
+# which interleaves the stars (Gamma, L, L, X, L, X, X, L) and makes the
+# response look like eight arbitrary columns.  Ordering them along the
+# canonical L-Gamma-X traversal instead turns the panel into a path through
+# the zone, and puts Gamma -- where the mask sends the weight to zero -- in the
+# middle where the contrast is legible.
+STAR_ORDER = ("L", r"$\Gamma$", "X")
+
+
+def momentum_star(momentum) -> str:
+    """Which high-symmetry star of the fcc zone this cluster momentum sits on.
+
+    Classified by the multiset of |components| in cubic r.l.u., which is the
+    invariant the cubic point group preserves: (0,0,0) is Gamma, one unit
+    component is X, three half components is L.  Anything else (W, K, U --
+    absent on this cluster, but a larger one would have them) is returned
+    verbatim so it groups separately rather than being silently mislabelled.
+    """
+    magnitudes = sorted(abs(float(value)) for value in momentum)
+    if np.allclose(magnitudes, [0.0, 0.0, 0.0]):
+        return r"$\Gamma$"
+    if np.allclose(magnitudes, [0.0, 0.0, 1.0]):
+        return "X"
+    if np.allclose(magnitudes, [0.5, 0.5, 0.5]):
+        return "L"
+    return "?"
+
+
+def path_order(momenta) -> list[int]:
+    """Indices of `momenta` sorted along the L-Gamma-X path.
+
+    Within a star the members are symmetry-equivalent and their order carries
+    no meaning, so they are sorted by coordinate purely for reproducibility --
+    the same input always yields the same figure.  Unrecognised stars are
+    appended at the end rather than dropped.
+    """
+    def key(index):
+        star = momentum_star(momenta[index]["momentum"])
+        rank = (STAR_ORDER.index(star) if star in STAR_ORDER
+                else len(STAR_ORDER))
+        return (rank, tuple(float(v) for v in momenta[index]["momentum"]))
+    return sorted(range(len(momenta)), key=key)
+
+
+def star_groups(momenta, order) -> list[tuple[str, int, int]]:
+    """(star, first column, last column) for each contiguous group."""
+    groups: list[tuple[str, int, int]] = []
+    for column, index in enumerate(order):
+        star = momentum_star(momenta[index]["momentum"])
+        if groups and groups[-1][0] == star:
+            groups[-1] = (star, groups[-1][1], column)
+        else:
+            groups.append((star, column, column))
+    return groups
+
+
+# The circuit the panel walks.  Gamma appears twice because the path closes;
+# both columns are the same data and are meant to be.
+PATH_STARS = (r"$\Gamma$", "X", "L", r"$\Gamma$")
+
+
+def star_columns(record, energy, width):
+    """One broadened column per high-symmetry star, averaged over its members.
+
+    FCC-32 has eight momenta but only three stars, and the members of a star
+    are related by the cubic point group -- exactly degenerate when the
+    calculation is converged.  Averaging them is therefore free of information
+    loss and the spread across members is a convergence gauge, so it is
+    returned rather than discarded.  Nothing is interpolated: a cluster with
+    three stars gets three distinct columns and no more.
+    """
+    columns, spreads = {}, {}
+    per_momentum = broaden(record, energy, width)          # (n_energy, 8)
+    for index, entry in enumerate(record["momenta"]):
+        columns.setdefault(momentum_star(entry["momentum"]), []).append(index)
+    averaged, report = {}, {}
+    for star, members in columns.items():
+        block = per_momentum[:, members]
+        averaged[star] = block.mean(axis=1)
+        totals = np.array([record["momenta"][m]["total_inelastic_weight"]
+                           for m in members], dtype=float)
+        scale = float(np.mean(np.abs(totals)))
+        spreads[star] = (float(totals.max() - totals.min()) / scale
+                         if scale > 1e-14 else 0.0)
+        report[star] = (len(members), spreads[star])
+    return averaged, report
+
+
+def broaden(record: dict, energy: np.ndarray, width: float,
+            order=None) -> np.ndarray:
+    momenta = record["momenta"]
+    if order is None:
+        order = range(len(momenta))
+    order = list(order)
+    intensity = np.zeros((len(energy), len(order)))
     normalizer = 1.0 / (np.sqrt(2.0 * np.pi) * width)
-    for column, momentum in enumerate(record["momenta"]):
+    for column, index in enumerate(order):
+        momentum = momenta[index]
         excitation = np.asarray(momentum["excitation"], dtype=float)
         weight = np.asarray(momentum["weight"], dtype=float)
         keep = (excitation > 1.0e-9) & (weight > 0.0)
@@ -169,17 +265,30 @@ def broaden(record: dict, energy: np.ndarray, width: float) -> np.ndarray:
     return intensity
 
 
-def dssf_figure(coupling: float = -0.20) -> None:
+def dssf_figure(coupling: float = -0.20, stem: str = "fig_fcc32_dssf",
+                periodic_path: Path | None = None,
+                masked_path: Path | None = None) -> None:
     tag = f"{coupling:+.3f}".replace(".", "p")
-    periodic = json.loads(
-        (DSSF / f"dssf_periodic_fcc32_L1_{tag}.json").read_text())
-    masked = json.loads(
-        (DSSF / f"dssf_fcc32_L1_{tag}_pp+0p000.json").read_text())
+    periodic_path = periodic_path or DSSF / f"dssf_periodic_fcc32_L1_{tag}.json"
+    masked_path = masked_path or DSSF / f"dssf_fcc32_L1_{tag}_pp+0p000.json"
+    periodic = json.loads(periodic_path.read_text())
+    masked = json.loads(masked_path.read_text())
     if len(periodic["momenta"]) != len(masked["momenta"]):
         raise RuntimeError("periodic/masked momentum counts do not match")
     for raw_q, masked_q in zip(periodic["momenta"], masked["momenta"]):
         if not np.allclose(raw_q["momentum"], masked_q["momentum"]):
             raise RuntimeError("periodic/masked momentum order does not match")
+    # The two panels must be the same calculation up to the mask.  A state
+    # count mismatch silently changes the integrated weight per momentum, so
+    # it is a hard error rather than a caption footnote.
+    states = (periodic.get("nstates_computed") or
+              periodic.get("nstates_requested"))
+    masked_states = (masked.get("nstates_computed") or
+                     masked.get("nstates_requested"))
+    if states != masked_states:
+        raise RuntimeError(
+            f"periodic uses {states} states, masked {masked_states}; "
+            "the panels would not be comparable")
 
     maximum = max(
         max(max(momentum["excitation"]) for momentum in periodic["momenta"]),
@@ -188,48 +297,83 @@ def dssf_figure(coupling: float = -0.20) -> None:
     width = maximum / 90.0
     width_power = int(np.floor(np.log10(width)))
     width_coefficient = width / 10.0**width_power
-    raw_map = broaden(periodic, energy, width)
-    masked_map = broaden(masked, energy, width)
+
+    raw_stars, raw_report = star_columns(periodic, energy, width)
+    masked_stars, masked_report = star_columns(masked, energy, width)
+    raw_map = np.stack([raw_stars[s] for s in PATH_STARS], axis=1)
+    masked_map = np.stack([masked_stars[s] for s in PATH_STARS], axis=1)
     vmax = max(float(raw_map.max()), float(masked_map.max()))
-    labels = [momentum_label(row["momentum"]) for row in periodic["momenta"]]
 
     figure, axes = plt.subplots(
-        1, 2, figsize=(7.05, 3.25), sharey=True,
-        gridspec_kw={"wspace": 0.10})
+        1, 2, figsize=(6.6, 3.3), sharey=True,
+        gridspec_kw={"wspace": 0.09})
     images = []
     for axis, matrix, title in zip(
             axes, (raw_map, masked_map),
             ("(a) periodic FCC-32", "(b) transport-masked FCC-32")):
+        # Blocky on purpose: FCC-32 resolves exactly these momenta, so each
+        # column is one measured point and the sharp edge between columns is
+        # the truth.  A smooth image here would draw a dispersion the cluster
+        # cannot see -- the nearest momenta to Gamma are the zone-boundary X
+        # and L, so there is no small-q information to interpolate through.
         image = axis.imshow(
             matrix, origin="lower", aspect="auto", interpolation="nearest",
-            extent=(-0.5, len(labels) - 0.5, energy[0], energy[-1]),
+            extent=(0.0, len(PATH_STARS), energy[0], energy[-1]),
             cmap="magma", norm=PowerNorm(gamma=0.45, vmin=0.0, vmax=vmax))
         images.append(image)
-        axis.set_xticks(np.arange(len(labels)))
-        axis.set_xticklabels(labels, rotation=35, ha="right")
-        axis.set_xlabel("FCC-32 momentum (cubic r.l.u.)")
+        for edge in range(1, len(PATH_STARS)):
+            axis.axvline(edge, color="white", linewidth=0.9, alpha=0.8,
+                         zorder=3)
+        axis.set_xticks(np.arange(len(PATH_STARS)) + 0.5)
+        axis.set_xticklabels(PATH_STARS)
+        axis.set_xlabel("cluster momentum")
         axis.set_title(title, loc="left")
         axis.spines["top"].set_visible(True)
         axis.spines["right"].set_visible(True)
     axes[0].set_ylabel(r"$\omega/J_{zz}$")
+    for name, report in (("periodic", raw_report), ("masked", masked_report)):
+        for star, (members, spread) in sorted(report.items()):
+            print(f"    {name:8s} {star:10s} {members} member(s), "
+                  f"weight spread {spread:.2e}")
     colorbar = figure.colorbar(images[-1], ax=axes, pad=0.018, fraction=0.035)
     colorbar.set_label(r"broadened $S^{zz}(\mathbf{q},\omega)$")
     figure.suptitle(
-        rf"Longitudinal response at $J_\pm/J_{{zz}}={coupling:+.2f}$; "
-        rf"Gaussian width $\eta/J_{{zz}}="
+        rf"Longitudinal response at $J_\pm/J_{{zz}}={coupling:+.3f}$, "
+        rf"{states} states; Gaussian width $\eta/J_{{zz}}="
         rf"{width_coefficient:.1f}\times10^{{{width_power}}}$",
         y=0.995, fontsize=9.0)
-    figure.subplots_adjust(left=0.075, right=0.90, bottom=0.20, top=0.88)
-    figure.savefig(FIGS / "fig_fcc32_dssf.pdf")
-    figure.savefig(FIGS / "fig_fcc32_dssf.png", dpi=220)
+    figure.subplots_adjust(left=0.085, right=0.90, bottom=0.155, top=0.855)
+    figure.savefig(FIGS / f"{stem}.pdf")
+    figure.savefig(FIGS / f"{stem}.png", dpi=220)
     plt.close(figure)
-    print(f"wrote {FIGS / 'fig_fcc32_dssf.pdf'}")
+    print(f"wrote {FIGS / (stem + '.pdf')}  path={list(PATH_STARS)}")
 
 
 def main() -> None:
     FIGS.mkdir(parents=True, exist_ok=True)
     thermodynamics_figure()
-    dssf_figure()
+    dssf_figure()                                  # Fig. 2, Jpm/Jzz = -0.20
+
+    # The QMC-comparable coupling.  Its masked run must come from the clean
+    # 144-state window: at 120 states the window cuts a degenerate multiplet
+    # and the four L-point weights, which cubic symmetry forces to be equal,
+    # split by 5.6%.  See campaign/run_dssf_window_check.sbatch.
+    scan = DSSF / "window_scan"
+    for coupling, stem, masked_file in (
+            (+0.046, "fig_fcc32_dssf_qmc",
+             scan / "dssf_fcc32_L1_+0p046_n144.json"),
+            (-0.046, "fig_fcc32_dssf_signcheck",
+             DSSF / "dssf_fcc32_L1_-0p046_pp+0p000.json")):
+        tag = f"{coupling:+.3f}".replace(".", "p")
+        periodic_file = DSSF / f"dssf_periodic_fcc32_L1_{tag}.json"
+        if not (masked_file.exists() and periodic_file.exists()):
+            print(f"skip {stem}: missing input")
+            continue
+        try:
+            dssf_figure(coupling, stem=stem, periodic_path=periodic_file,
+                        masked_path=masked_file)
+        except RuntimeError as error:
+            print(f"skip {stem}: {error}")
 
 
 if __name__ == "__main__":

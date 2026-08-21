@@ -1,0 +1,321 @@
+{
+ "cluster": "cubic16",
+ "method": "masked",
+ "jpm": 0.046,
+ "jpmpm": 0.0,
+ "virtual_depth": 1,
+ "nstates_computed": 1200,
+ "ground_sectors": [
+  3,
+  8,
+  11,
+  13,
+  16,
+  21
+ ],
+ "ground_energy": -0.07615484703059702,
+ "projector_completeness": 1.3988810110276972e-14,
+ "levels": [
+  {
+   "excitation": 0.0,
+   "degeneracy": 6,
+   "per_star": {
+    "Gamma": 1.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.005504953372424973,
+   "degeneracy": 24,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 4.0
+   }
+  },
+  {
+   "excitation": 0.005731883710978755,
+   "degeneracy": 12,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 2.0
+   }
+  },
+  {
+   "excitation": 0.010354210646855974,
+   "degeneracy": 6,
+   "per_star": {
+    "Gamma": 1.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.7484919882521847,
+   "degeneracy": 6,
+   "per_star": {
+    "Gamma": 1.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.7608119486715654,
+   "degeneracy": 6,
+   "per_star": {
+    "Gamma": 1.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.8143819506944484,
+   "degeneracy": 66,
+   "per_star": {
+    "Gamma": 5.0,
+    "X": 6.0
+   }
+  },
+  {
+   "excitation": 0.8211668976098022,
+   "degeneracy": 24,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 4.0
+   }
+  },
+  {
+   "excitation": 0.8221545772250504,
+   "degeneracy": 12,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 2.0
+   }
+  },
+  {
+   "excitation": 0.8376347236352545,
+   "degeneracy": 6,
+   "per_star": {
+    "Gamma": 1.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.8419909035397602,
+   "degeneracy": 48,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 8.0
+   }
+  },
+  {
+   "excitation": 0.8506357802645714,
+   "degeneracy": 24,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 4.0
+   }
+  },
+  {
+   "excitation": 0.8690026958364598,
+   "degeneracy": 96,
+   "per_star": {
+    "Gamma": 6.0,
+    "X": 10.0
+   }
+  },
+  {
+   "excitation": 0.8704365931006101,
+   "degeneracy": 12,
+   "per_star": {
+    "Gamma": 2.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.873045271260633,
+   "degeneracy": 6,
+   "per_star": {
+    "Gamma": 1.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.874455235747369,
+   "degeneracy": 6,
+   "per_star": {
+    "Gamma": 1.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.8842308688466531,
+   "degeneracy": 72,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 12.0
+   }
+  },
+  {
+   "excitation": 0.8850772162588908,
+   "degeneracy": 12,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 2.0
+   }
+  },
+  {
+   "excitation": 0.8921548470305903,
+   "degeneracy": 132,
+   "per_star": {
+    "Gamma": 2.0,
+    "X": 20.0
+   }
+  },
+  {
+   "excitation": 0.9009890584518738,
+   "degeneracy": 24,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 4.0
+   }
+  },
+  {
+   "excitation": 0.9058829895696346,
+   "degeneracy": 108,
+   "per_star": {
+    "Gamma": 6.0,
+    "X": 12.0
+   }
+  },
+  {
+   "excitation": 0.9123234176413824,
+   "degeneracy": 36,
+   "per_star": {
+    "Gamma": 6.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.9133804594131685,
+   "degeneracy": 6,
+   "per_star": {
+    "Gamma": 1.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.9137125712485966,
+   "degeneracy": 6,
+   "per_star": {
+    "Gamma": 1.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.9146294709692444,
+   "degeneracy": 66,
+   "per_star": {
+    "Gamma": 5.0,
+    "X": 6.0
+   }
+  },
+  {
+   "excitation": 0.9164224308116611,
+   "degeneracy": 12,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 2.0
+   }
+  },
+  {
+   "excitation": 0.9165664058867039,
+   "degeneracy": 24,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 4.0
+   }
+  },
+  {
+   "excitation": 0.9200150950283765,
+   "degeneracy": 66,
+   "per_star": {
+    "Gamma": 5.0,
+    "X": 6.0
+   }
+  },
+  {
+   "excitation": 0.9204302673642878,
+   "degeneracy": 6,
+   "per_star": {
+    "Gamma": 1.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.9204343974614646,
+   "degeneracy": 36,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 6.0
+   }
+  },
+  {
+   "excitation": 0.9204346659786172,
+   "degeneracy": 66,
+   "per_star": {
+    "Gamma": 5.0,
+    "X": 6.0
+   }
+  },
+  {
+   "excitation": 0.9240923470221609,
+   "degeneracy": 6,
+   "per_star": {
+    "Gamma": 1.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.9249409353903886,
+   "degeneracy": 12,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 2.0
+   }
+  },
+  {
+   "excitation": 0.9252450663532575,
+   "degeneracy": 24,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 4.0
+   }
+  },
+  {
+   "excitation": 0.9258765361772643,
+   "degeneracy": 6,
+   "per_star": {
+    "Gamma": 1.0,
+    "X": 0.0
+   }
+  },
+  {
+   "excitation": 0.9381548470305894,
+   "degeneracy": 72,
+   "per_star": {
+    "Gamma": 0.0,
+    "X": 12.0
+   }
+  },
+  {
+   "excitation": 0.9460471992922658,
+   "degeneracy": 48,
+   "per_star": {
+    "Gamma": 2.0,
+    "X": 6.0
+   }
+  }
+ ],
+ "lowest_by_star": {
+  "X": 0.005504953372424973,
+  "Gamma": 0.010354210646855974
+ },
+ "runtime": 6.103529847008758
+}

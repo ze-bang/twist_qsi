@@ -1,0 +1,725 @@
+# Seeing multiple photons — exact S^zz of the compact gauge theory
+
+Draft. Every not-yet-computed item is wrapped in `\pending{}` (renders red).
+
+**Thesis.** The compact U(1) gauge theory of QSI, diagonalized exactly on a
+48-site torus and compared against the Gaussian theory quantized on the SAME
+lattice, shows three effects invisible at Gaussian order: interaction-split
+polarization doublets (Gaussian degeneracy is exact -> the split IS the
+photon-photon interaction), strongly momentum-dependent renormalization
+(fit-free omega_X/omega_L: 1.155 Gaussian vs 2.18 exact), and a 16-38%
+odd-photon-number continuum (Gaussian: exactly 0).
+
+## Provenance — every number
+
+| Number | Source | Job |
+|---|---|---|
+| cluster scout (fcc222 8-regular RK-degenerate; cubic16 frozen sector; fcc223 usable) | `campaign/scout_ring_clusters.py` | 19293022 |
+| exact ED, sector dim 9104, E0=-10.556K, level-resolved S^zz | `campaign/run_ring48_dssf.py` + `ring48_momenta_fix.py` | 19308013, 19311271 |
+| momentum validation (completeness=1, probe r_q=1 exact; group traces integer) | `campaign/ring48_projector_check.py` | 19311054 (FAIL->diagnosis), 19311271 (PASS) |
+| Gaussian same-lattice (gauge check 0, rank 22, sigma closed forms, exact polarization degeneracy, scale 0.5699) | `campaign/ring48_gaussian.py` | 19312260 |
+| Table I / Fig 1 | `outputs/ring_model_dssf/ring48_gaussian_match.json`, `campaign/make_multiphoton_figure.py` | 19313963 |
+| HFB 384+12 zero-flux counts (fcc32) | Hermele-Fisher-Balents PRB 69, 064404, Sec on L=2 enumeration | literature |
+| literature positioning (nobody computed multi-photon S^zz; KDC loophole; Huang damping) | search agent report, 2026-08-18 | — |
+
+## Gotchas encoded in the pipeline (do not re-learn these)
+
+1. Momenta on anisotropic fcc boxes: q = m @ inv(Lvecs).T — the transpose is
+   invisible on isotropic boxes. `run_wp0b_gamma_rule.allowed_momenta` is WRONG
+   for anisotropic shapes.
+2. Per-state momentum-concentration tests are invalid under degeneracy; only
+   group-summed quantities are basis-independent. The projector gate
+   (completeness + probe identity) is the correct validation.
+3. enumerate-tets BFS bipartition needs the self-adjacency skip.
+
+## PENDING (red in PDF)
+
+1. **V-scan: DONE 2026-08-20** (job 19321262, V/K = -0.5..+0.5, 5 points).
+   VERDICT: the L-point 1.024K level has d(dE)/dV = +0.34 (linear), OPPOSITE
+   in sign to every photon-family line (band [-0.37, +0.02] incl. the 1.730K
+   L level at -0.05). It is a distinct P-odd resonance-rich excitation BELOW
+   the photon; the photon at L is 1.730K (12% below Gaussian, in line with
+   all momenta). Even-channel X onset = 2 x 1.024 = two intruder quanta
+   (L+L=X). Data: ring_fixed_fcc223_v*.json.
+2. **One-loop / quartic-vertex lineshape**: predicted continuum onset, q
+   dependence, weight — the theory section's centerpiece, not started.
+3. **Second usable cluster**: fcc(2,2,4) = 2.76M ice states, needs sparse
+   methods; no size trend exists without it.
+
+## Claims deliberately NOT made
+
+- No claim about microscopic materials couplings (the masked-XXZ ~10% at L is
+  mentioned once, as deferred corroboration, with the 36% virtual-spinon
+  admixture caveat).
+- No thermodynamic-limit extrapolation from one cluster.
+- The L-point 1.024K level is NOT asserted to be a bound state — both readings
+  stated, discriminator marked pending.
+- The 68%-multi-photon reading of L under strict Gaussian matching is not used;
+  the conservative doublet convention (16-38%) is.
+
+## Build
+
+    sbatch fig.sbatch && sbatch --dependency=afterok:<figjob> build.sbatch
+
+`refs.bib` partly from memory — verify (esp. Kwasigroch2020 title, Fu2017
+authors, Gao2025 metadata).
+
+## External review response (2026-08-20, group-internal referee)
+
+Review verdict: idea 9+/10, current evidentiary strength lower; four issues.
+All four addressed:
+
+1. **"Photon physics, full stop" / visons.** CORRECT objection: the ice
+   manifold removes spinons but retains the full magnetic sector; monopole
+   pairs can contribute (Kwasigroch PRB 102, 125113). Sentence removed;
+   beyond-pole weight relabeled `f_res`, confined by exact C-parity to the
+   C-odd sector with candidates {multi-photon, monopole pairs}; V-scan slopes
+   of the two largest beyond-doublet groups (-0.57, -0.62 vs photon band
+   [-0.37, +0.02]) added as first composite-character evidence; flux-resolved
+   diagnostic (<cos B_p> correlations per state) added as pending.
+2. **"Continuum" on one torus.** Robust statement (discrete-level weight
+   budget) now separated from thermodynamic-limit interpretation; second
+   cluster remains pending.
+3. **"Every existing calculation is Gaussian."** Narrowed to "every analytic
+   prediction"; abstract now carries the defensible novelty sentence (no
+   calculation has resolved the weight decomposition); Huang et al. QMC
+   properly positioned (interacting lineshape, but SAC cannot decompose).
+4. **Doublet naming / L conflict.** Already resolved by the V-scan before the
+   review arrived: L pair = photon (1.730, slope -0.05) + non-photon intruder
+   (1.024, slope +0.34); abstract and text updated; monopole-pair bound state
+   (gauge-ball analogue, Cox et al.) named as candidate for the intruder.
+
+## PENDING (current)
+
+1. Flux-resolved state diagnostic: <cos B_p>/flux correlations for the
+   intruder and the beyond-doublet groups (multi-photon vs monopole-pair).
+2. One-loop / quartic-vertex lineshape.
+3. Second usable cluster: fcc(2,2,4), 2.76M ice states, sparse Lanczos.
+
+## Second review pass (2026-08-20): bookkeeping + terminology fixed
+
+1. **Bookkeeping inconsistency (correct objection).** The "top-two = doublet"
+   convention predated the V-scan and contradicted its verdicts at L and X.
+   Table I restructured: levels classified by RK slope (photon band
+   [-0.37,+0.02] / other / unresolved). Corrected numbers: non-one-photon
+   weight is 16-68% (not 16-38%); f_1gamma = 0.84/0.79/0.32/0.62/0.46 across
+   the path; AT L THE PHOTON RETAINS ONLY 32% (51% intruder + 17% unresolved);
+   at X 46% (25% composite + 29% unresolved). Abstract/implications/conclusion
+   updated to the stronger, correct numbers.
+2. **Terminology.** "multi-photon continuum" -> "C-odd multiparticle /
+   non-photon weight" everywhere outside explicitly-hedged contexts; exact
+   selection rule restated as C = -1 coupling (photon number is the
+   photon-basis reading, not the conserved label).
+3. **Title** -> "Beyond the free photon: exact spectroscopy of the compact
+   emergent gauge field of quantum spin ice".
+
+## Referee-data job 19325763 (2026-08-20): one claim refuted, cubic-16 verified
+
+- Even-channel X-edge RK slope = +0.297: REFUTES the "two intruder quanta"
+  reading (+0.68 predicted) and the photon-pair reading (-0.1); matches a
+  single C-even sibling of the intruder (+0.34). (iv), abstract, and captions
+  rewritten: the non-photon states form a two-parity FAMILY; 2.23 = 2x1.02 was
+  coincidence.
+- cubic-16 pure ring model verified: E0 = -4K exact, six-fold sector-degenerate
+  (sectors 3,8,11,13,16,21), only 6/25 sectors dynamical (8-state blocks).
+  Cluster-selection text now states verified facts.
+- Degeneracy counts: every bright line = ONE state per momentum. At L and X the
+  two bright states = exactly the transverse count -> new hypothesis: the
+  intruder is the SECOND POLARIZATION, rotonized. Polarization-projection job
+  19331900 decides. scale_photon=0.587 written; figures regenerating.
+
+## Consolidated landing (2026-08-20 evening): THE ROTON
+
+Final picture after polarization projection (19331942), SMA + extended-V
+(19328485), and the 64-site pipeline (19327389, all gates passed):
+
+- NO new particle. Both transverse photon branches survive everywhere
+  (polarization decomposition exact: completeness 1e-17, longitudinal 1e-32;
+  exactly orthogonal at X, 30% hybridized at L).
+- THE SECOND BRANCH ROTONIZES AT L: 1.02K (51%) vs photon 1.73K (32%);
+  mechanism = Feynman-Bijl (S(q) max at L 0.370, omega_SMA min 1.85). The
+  64-site cluster makes it PREDICTIVE: L-class with S=23.6 rotonizes
+  (0.955K, 50.0%), L-class with S=14.5 does not (1.998K, 77% photon).
+  Roton stable 48->64 (energy -7%, share 0.51->0.50). Softens to 0.73K by
+  V=-1.1 without condensing; lowest excitation of the model at negative V.
+- Multiparticle weight 16-38% (48) / 13-34% (64); f_1gamma = 85% at the new
+  smallest momentum (IR protection observed).
+- X not size-converged (53% split at 48 -> 6% at 64): demoted to descriptive.
+- KNOWN BUG (harmless, noted): the sin-B/E ratio in ring64_pipeline stage A
+  summed sublattice channels coherently -> w_E=0 by interference; ratios
+  invalid. Identity question was settled by polarization projection instead.
+- Manuscript fully rewritten around the branch/roton picture; Table I
+  reclassified by polarization; abstract/conclusion final.
+
+## Pending closure (2026-08-20)
+
+The last `\pending` in main.tex is closed; the manuscript carries zero red marks.
+
+**Flux diagnostic (job 19339031, `campaign/ring48_close_pendings.py`, part C).**
+Connected plaquette flux-flux correlator per bright state, binned by
+min-image plaquette-center distance. Every bright state — roton, both
+photons, both large residual levels — shows a weak, delocalized profile
+(roton +0.0045 at the nearest shell, same magnitude as the photons); no
+state shows a localized flux disturbance. Monopole-pair character for the
+residual weight is disfavored; multiparticle photon/roton reading stands.
+Cross-check: state-resolved <n_flip> reproduces every RK slope measured
+independently by the V-scan (roton +0.339 vs +0.34; photon_L -0.064 vs
+-0.05; photon_111 -0.373 vs -0.37; resid_4p34 -0.597 vs -0.57).
+
+**One-loop quartic vertex (job 19339213, `campaign/ring48_oneloop2.py`, gate v3).**
+H4 = -(K/12) sum_p B_p^4; Wick matrix elements <1_a|B^4|1_b> - vac =
+12 S_p g_pa g_pb with self-consistent g = G/sqrt(2w); degenerate-PT block
+per sigma-multiplet; 1->3 amplitudes with symmetry factors 24/12sqrt2/4sqrt6.
+Gate v3 (degeneracy-aware, eigenvalue-level comparison against exact 3-mode
+Fock diagonalization, 8 plaquettes, nmax=7): ALL ratios 1.000 — PASS.
+Two earlier gate failures were gate bugs, not formula bugs: (v1) exact test
+used amplitudes G where Wick used g; (v2) compared mode-by-mode inside a
+degenerate multiplet. Production at self-consistent U/K = 0.1722:
+polarization splittings <= 0.1% and 1->3 transferred weight <= 0.1% on all
+five sigma values; at U/K = 0.5 still only ~1% / 2-3%. Measured: 4.5-19%
+splittings (O(1) at zone boundary) and 16-38% residual weight. Leading-order
+perturbation theory in the vertex undershoots by 1-2 orders of magnitude —
+the quantitative demonstration that the photon-photon sector is
+nonperturbative and exact treatment is necessary. Written into main.tex as
+the closure of result (iii); Limitations sentence about pending items removed.
+
+## Literature sweep + bibliography expansion (2026-08-20)
+
+refs.bib: 15 -> 43 entries; every entry cited, no dangling keys. Header note
+"verify against published record before submission" retained.
+
+Novelty check (web sweep, five angles):
+- NO prior roton claim in any emergent-gauge-field spectrum. Closest matches:
+  Kwasigroch semiclassical anharmonics (cited), Szabo-Castelnovo PRB 100,
+  014417 (2019) semiclassical vison-photon (now cited), Du-Xu-Son PRB 109,
+  035135 (2024) interacting LIFSHITZ (quadratic) photon theory (now cited;
+  different dispersion class). Explicit novelty sentence added to result (ii).
+- NO prior branch-splitting or multi-photon spectral-weight computation in QSI.
+- arXiv 2608.11305 (Zhou-An-Kim, thermodynamic ring-exchange probe) and
+  arXiv 2601.03202 (Gao et al., field demarcation of photons/spinons in
+  Ce2Zr2O7) are OUR OWN companions - both cited as such.
+- New probe: stray-field noise magnetometry (Naik-Hallen-Jayarama-Moessner-
+  Laumann, PRL 2026, arXiv 2512.14843) - cited; couples to magnetization so
+  it lives on the C-odd (neutron) side of the parity division.
+- LGT quantum-simulation frame added (intro + conclusion): Bauer et al. PRX
+  Quantum 4, 027001 (2023); trapped-ion Z2 glueballs arXiv 2604.07435 (2026).
+
+Text additions: reviews + materials (Castelnovo2008, Ross2011, Gaudet2019,
+Gao2019, Sibille2020, Smith2022, Poree2025), QMC verification (Shannon2012,
+KatoOnoda2015), 3D dimer models (Sikora2009), RK originals (RokhsarKivelson
+1988, Henley2004), compact QED (Polyakov1977), Feynman-Bijl provenance
+(Feynman1954, FeynmanCohen1956) + FQH magnetoroton (GMP1986), GMFT DSSF
+(DesrochersKim2023PRL), spinon spectroscopy (Morampudi2020).
+
+## Readability pass for experimentalists (2026-08-20)
+
+User direction: language read confusingly to experimentalists (neutron AND
+quantum-simulation); wanted clear implications and precise physics without
+deep gauge-theory jargon. Rewrites (all physics statements unchanged):
+- Abstract fully rewritten message-first: what a neutron experiment sees
+  (single line -> split line + roton + continuum), selection rule stated as
+  "even or odd under reversing all spins", method details dropped.
+- "Gaussian" glossed at first use: cosine energy of angle-valued field vs
+  its quadratic expansion; W_p glossed as the flippable-hexagon rotation.
+- Charge conjugation introduced via spin flip first, C label kept as
+  notation with explicit "read as even/odd under flipping all spins".
+- RK response glossed as "rewards flippable hexagons; slope tells whether
+  the excitation has more or fewer than the ground state".
+- "Lattice versus continuum" retitled "Where the free photon survives, and
+  where it fails"; RG language demoted to parenthetical.
+- "electric-flux superselection" (fig 3 caption) -> conserved uniform S^z;
+  topological rank count demoted to bracketed aside; "stiffness generated
+  not bare" -> "coefficient U generated by the ring dynamics itself".
+- One-loop closure: "Wick combinatorics/Fock/self-consistent stiffness" ->
+  "leading interaction correction, validated against exact few-mode
+  diagonalization, at the fitted coupling"; ending now "no small correction
+  to the free photon reproduces ...; must be treated exactly".
+
+- 2026-08-20 (later): abstract overclaim fixed per user — "Every existing
+  prediction ... free" restored to "All analytic predictions ..." with QMC
+  explicitly credited as non-free but unable to resolve the spectrum behind
+  the broadening (Huang 2018 / Kato-Onoda 2015). Referee 1 had flagged this
+  overclaim class before; the readability rewrite had reintroduced it.
+
+## Roton landing: what survived and what broke (2026-08-20, jobs 19345353/19345359)
+
+USER ASK: land "roton" properly — operator form, does it fall out of the
+model, why is the signature roton and not something else, why at L, do we
+predict other points.
+
+**GATE A PASSED (new exact analytic result).** The first-moment sum rule of
+the ring model is analytic:
+    [S^z_mu(q), W_p] = +g^mu_p(q) W_p ,  [S^z_mu(q), W_p^dag] = -g^mu_p W_p^dag
+    f_1(q) = (1/2N) sum_p w_p sum_mu |g^mu_p(q)|^2 ,  w_p = <W_p + W_p^dag>
+Verified f1_analytic/f1_exact = 1.0000 at every cluster momentum, and
+GATE0 sum_p w_p = -E_0 to 8 decimals. This is the pyrochlore analogue of
+helium's f_1 = hbar^2 q^2/2m: pure lattice geometry times ground-state
+plaquette expectations, evaluable at ANY q.
+GOTCHA: w_p is NOT uniform on the anisotropic 2x2x3 box (0.196 to 0.268,
+7.2e-2 spread) because hexagon orientations are inequivalent there. Using a
+uniform w = -E0/N_p gives an 8% error. Per-plaquette w_p is required.
+
+**GATE B FAILED — the stated mechanism is wrong as worded.** Classical
+(equal-amplitude ice) S(q) vs quantum S(q) on the same sector:
+    (1/3,1/3,1/3): quantum 0.189 vs classical 0.253  (classical HIGHER)
+    L            : quantum 0.370 vs classical 0.297  (classical LOWER)
+    (1/6,1/6,5/6): quantum 0.258 vs classical 0.266
+    X            : quantum 0.273 vs classical 0.269
+Full-manifold classical MC (L=8, 2048 sites, loop updates, ice-exact) gives
+S(q) ~ 0.25 NEARLY FLAT across the whole zone, S(L) = 0.259.
+=> The L enhancement is mostly a QUANTUM ring-resonance effect, only weakly
+seeded by the ice manifold (classical L is the max but by just ~12%).
+=> The manuscript phrase "the equal-time structure factor OF THE ICE LIQUID
+is maximal at L" is misleading and must be reworded: it is the structure
+factor of the ring-model GROUND STATE.
+=> Full-BZ omega_SMA(q) from classical S(q) is INVALID as a predictor: with
+flat classical S it puts its minima near K (0.688,0.688,0), NOT at L. So the
+"predict other roton momenta" deliverable is NOT achievable by this route.
+Do not use roton_bz.npz for any prediction; it is a negative control.
+
+**Backflow (block Krylov from the probe) — strong positive evidence.**
+Lowest Ritz value in span{H^j S^z_mu(q)|0>}:
+    L            : 1.450 -> 1.074 -> 1.034 -> 1.026 -> 1.024 (converged k=4)
+    (1/3,1/3,1/3): 2.405 -> 1.980 -> 1.917 -> 1.902 -> 1.895
+    (1/6,1/6,5/6): 3.100 -> 2.676 -> 2.586 -> 2.556 -> 2.533
+    X            : 2.858 -> 2.401 -> 2.293 -> 2.249 -> 2.235
+The roton is captured to 3 digits by a 4-step Krylov space built on the
+neutron operator: it is a collective density-wave state of the emergent
+electric field with modest backflow. Ratio omega_exact/omega_SMA is
+0.82/0.83/0.79/0.69 elsewhere but 0.55 at L: the SMA is loosest exactly at
+the roton, which is the helium phenomenology (Feynman exact for phonons,
+~2x high at the roton, repaired by Feynman-Cohen backflow).
+
+**OPEN / POSSIBLE CONTRADICTION.** The same block Krylov keeps descending to
+0.149K at X and 1.026K at (1/3,1/3,1/3) — far below the bright lines. If
+those are real C-odd states, the claim "the roton is the lowest excitation"
+is FALSE. Under direct verification against the complete sector spectrum
+(check_lowest_excitations.py, job 19345474). Do not restructure the paper
+around "lowest excitation" until this returns.
+
+## VERDICT on "is the roton the lowest excitation" (job 19345474)
+
+VERIFIED AND STRONGER THAN CLAIMED. Direct scan of the complete 9104-state
+sector spectrum with spin-flip parity labels:
+  - lowest excitation overall = 1.02352 K, parity -1 (C-odd), S^zz weight
+    0.188, two-fold degenerate (idx 1,2)
+  - "number of levels below the lowest bright line: 0"
+  - ground-state parity +1 (C-even), spin flip closes on the sector exactly
+    (0 escapes)
+So the roton is the lowest excitation of the model, not merely the lowest
+neutron-visible one. The 0.149K value the block Krylov reached at X was a
+GHOST (no such level exists).
+
+GOTCHA (new): block Krylov with a growing Rayleigh-Ritz basis produces
+ghost eigenvalues at large k (k>~12, basis dim >~50) even with two rounds
+of reorthogonalization. The k<=6 Ritz values are the meaningful ones.
+Never quote a large-k Ritz value without checking it against the exact
+spectrum.
+
+BONUS: the same table is an independent verification of the parity
+selection rule at machine level -- every C-even level carries S^zz weight
+1e-28 to 1e-30 (levels 7, 11, 16-20, 22-27), every bright level is C-odd.
+Note also that C-odd does NOT imply bright: levels 10 (1.93367) and others
+are C-odd yet dark, so parity is necessary but not sufficient.
+
+## RK-trajectory Feynman-Bijl test (job 19345716, complete)
+
+Part 1 (all 12 cluster momenta, V=0): L is SIMULTANEOUSLY the momentum of
+  max S(q)      = 0.3704
+  min omega_SMA = 1.8456
+  min bright line = 1.0235
+The three extrema coincide at L. That is the Feynman argument in one line,
+and it holds over the full accessible momentum set, not a chosen subset.
+
+Part 2 (RK trajectory at L). V*n_flip is DIAGONAL in the ice basis, so it
+commutes with S^z(q) and does not enter f_1 at all; f_1 keeps its form with
+w_p evaluated in the V-dependent ground state. Result:
+
+   V      S_L      f1_L     om_SMA   om_roton  ratio
+  +0.00  0.37036  0.68354  1.8456   1.0235   0.5546
+  -0.20  0.38142  0.68682  1.8007   0.9584   0.5323
+  -0.40  0.39159  0.68848  1.7582   0.8989   0.5113
+  -0.60  0.40078  0.68865  1.7183   0.8449   0.4917
+  -0.80  0.40884  0.68741  1.6814   0.7962   0.4735
+  -1.00  0.41562  0.68482  1.6477   0.7527   0.4568
+  -1.10  0.41848  0.68301  1.6321   0.7329   0.4491
+
+READING (honest): f_1 is CONSTANT to 0.8% across the whole trajectory (and
+non-monotonic: rises then falls), while S_L grows 13% and omega_SMA falls
+11.6%. So 100% of the Feynman-Bijl softening is driven by the growth of the
+structure factor -- exactly what the mechanism requires, and a stronger
+statement than "S_L grows and the roton softens" (which is mere
+correlation). The exact roton softens FASTER, 28% vs 12%, so the ratio
+drifts 0.5546 -> 0.4491 (mean 0.4956, spread 0.1055 = 21% relative).
+=> The bound does NOT track quantitatively; the excess is backflow, whose
+importance grows monotonically as the mode softens. This is the same trend
+as in helium approaching the roton minimum, so it supports the
+identification, but do NOT claim the SMA "tracks" the trajectory.
+
+STATUS vs the user's condensed main.tex (218 lines, compiled 8 pp clean):
+line 168 already says "S_L grows and the roton softens monotonically from
+1.02K to 0.73K by V/K=-1.1" -- CORRECT and consistent, no fix needed. The
+available upgrade is one sentence: f_1 is constant to 0.8%, so the
+softening is CAUSED by the S_L growth rather than merely accompanying it.
+
+## WHAT THE ROTON IS, CONCRETELY (job 19351840) -- the missing physics
+
+L = (0.5,-0.5,0.5) points along a <111> axis. Each pyrochlore hexagon lies
+perpendicular to one of the four <111> axes (family = the sublattice the
+hexagon omits; 12 hexagons each).
+
+(1) EXACT GEOMETRIC DECOUPLING. Probe form factor |g_p(L)|^2 by family:
+      family 0 (perp [111])   : 8.0000
+      family 1 (perp [1-1-1]) : 8.0000
+      family 2 (perp [-11-1]) : 0.0000   <-- L's OWN axis
+      family 3 (perp [-1-11]) : 8.0000
+    The hexagons lying in planes PERPENDICULAR TO q have all six spins at
+    the same phase of the wave, and their alternating +-1 signs cancel:
+    g = e^{-iq.r} sum(delta_i) = 0. One quarter of the ring-exchange
+    channels decouples from the neutron EXACTLY, and only at L, because L
+    is the only zone-boundary momentum lying along a hexagon normal.
+    Quantitative consequence: f_1(L) = 0.684 vs 0.880 (X) and 0.831
+    (1/6,1/6,5/6) -- a 3/4 reduction, 0.684/0.880 = 0.78 ~ 3/4. So "why L"
+    has a GEOMETRIC half (f_1 suppressed by the decoupling) and a DYNAMICAL
+    half (S enhanced by the ring dynamics); omega = f_1/S is minimized by
+    both at once. This is much better than "S is big there".
+
+(2) WHAT THE STATE IS. Totals, roton vs ground state:
+      sum <W_p + W_p^dag> : 10.556 -> 9.532,  delta = -1.02352
+      sum <n_p^flip>      : delta = +0.33934
+    ENERGY CHECK: -sum(delta W) = +1.02352 K = omega EXACTLY (5 decimals).
+    And +0.339 reproduces the independently measured RK slope +0.34.
+    => The roton has MORE flippable hexagons (+0.34) but LESS coherent
+    resonance (-1.02). It costs energy by losing ring-exchange COHERENCE,
+    not by straining the ice pattern. n_flip (diagonal, counts what CAN
+    flip) and W+W^dag (off-diagonal, the actual resonance) move in
+    OPPOSITE directions -- that is the whole content of the +0.34 slope.
+
+(3) PER FAMILY (delta <W+Wd>, delta <n_flip>):
+      family 0: -0.028, +0.018
+      family 1: +0.040, +0.047   <-- the only family that GAINS resonance
+      family 2: -0.059, -0.037   <-- the probe-blind family, loses most
+      family 3: -0.038, +0.001
+    Modulation at wavevector L: families 0,1,3 carry the standing wave
+    (L-component 0.025-0.034); family 2 has ZERO L-component and changes
+    UNIFORMLY (0.0585). So the neutron builds the wave on three families,
+    and the state responds by rearranging the fourth -- the one the probe
+    cannot touch -- most strongly of all, and as a uniform background
+    rather than a wave. THAT IS THE BACKFLOW, made concrete.
+
+## Backflow confirmed and quantified (job 19354974)
+
+CAUGHT A BUG FIRST: summing the four sublattice probe channels COHERENTLY
+gives a meaningless state (energy 8.87K, vs the SMA value 1.85K) -- the
+same interference trap noted earlier for the sin-B/E ratio. The painted
+wave is the best state in the 4-dim space the channels span, NOT their
+coherent sum. Corrected value 1.45016 K, which matches the independent
+block-Krylov k=1 Ritz value exactly.
+
+  painted wave (SMA)  1.45016 K
+  true roton          1.02352 K   -> the state recovers 29% of the cost
+
+Per hexagon family (delta <W+Wd> vs ground state):
+   family 0 (g=8):  SMA -0.42154   true -0.34144   relief +0.08010
+   family 1 (g=8):  SMA +0.54038   true +0.47617   relief -0.06421
+   family 2 (g=0):  SMA -1.00363   true -0.70245   relief +0.30118  DECOUPLED
+   family 3 (g=8):  SMA -0.56537   true -0.45580   relief +0.10957
+   TOTAL            -1.45016       -1.02352        +0.42664
+   (-total = energy exactly, both columns: 5-decimal check)
+
+=> 71% of the total relief (0.301 of 0.427) comes from the ONE family the
+neutron cannot see. Physical reason: those hexagons do not enter the probe,
+so rearranging their resonances costs no overlap with the state the neutron
+made -- they are free to be spent. THIS IS THE BACKFLOW, quantified.
+
+NOTE a subtlety corrected against my first guess: the decoupled family is
+NOT protected in the SMA state (it loses the most resonance there,
+-1.004), because the |phi(c)|^2 reweighting degrades resonances even when
+g_p = 0. What is special is that it is the cheapest family to REPAIR.
+
+## Figure redesign per user direction (2026-08-20 late)
+
+Hero figure (fig_hero, now Figure 1, figure* full width): left = full
+spectrum, energy vs momentum, every level a marker with area=intensity,
+color=character (indigo photon / rose roton / teal multiphoton), open
+violet squares = Raman-only (parity rule: no level in both probes), amber
+dashed = free-photon line. Right = three cartoons: photon (kagome patch,
+gentle flux twist), roton (side view along [111]: wavefront plaquettes
+Phi=0, tilted plaquettes alternate sign), multiphoton (cosine expansion
+with the -K/12 B^4 vertex marked + 1->3 splitting).
+BUG CAUGHT: momentum columns were labeled by position not by reduced
+coordinates -> L was mislabeled and the roton initially colored as a
+photon. Columns now identified by coordinates (MOMENTA dict).
+
+Figure 2 (fig_mechanism) rebuilt around the three reader questions ONLY:
+(a) what it is - energy ladder at L (free 2.03 / dressed 1.73 / roton
+1.02, x1/2 marked) + composition line; (b) why it is not a photon - RK
+deformation moves photon DOWN and roton UP (opposite sign = different
+object); (c) how it shows up - exact vs free spectrum at L, roton peak
+shaded, 51%. Krylov + classical-ice panels dropped (moved to text).
+
+Style: Computer Modern (mathtext.fontset=cm) + slate/indigo/rose/teal
+palette across both figures. All figure numbers in text re-pointed.
+
+## Figure replot round 2 (user critique, 2026-08-20 latest)
+
+HERO v3: spectrum stretched (width ratio 1.62), free-photon line moved to
+legend, legend labels experimentalized ("seen by neutrons" / "hidden from
+neutrons -> Raman, ultrasound"), Raman squares neutral gray (content of
+even levels not asserted). Illustrations now on an ACTUAL pyrochlore
+lattice: slab fragments (wide perp to [111], thin along it — a cube
+viewed down its diagonal projects to a useless narrow diamond).
+  photon: single-kagome-layer slab, family-0 hexagons filled with a slow
+    flux wave.
+  roton: three-layer slab; per-plaquette fill = EXACT wave amplitude
+    g_p = e^{-iq.ra} - e^{-iq.rb} over the two sublattice-0 sites,
+    q = 2pi(1/2,-1/2,1/2). Kagome plaquettes -> 0 automatically (white,
+    labeled 0), tilted plaquettes alternate red/blue. NOT hand-drawn.
+  GOTCHAS (each cost a cycle):
+    - all-six-site g_p = sum delta_i e^{-iq.r} vanishes identically at L
+      by inter-sublattice cancellation: must use the sublattice-resolved
+      channel (the object in f_1).
+    - q = 2pi(1/2,+1/2,+1/2) is dark in the sublattice-0 channel; the
+      cluster's actual member 2pi(1/2,-1/2,1/2) is bright. Star members
+      are NOT interchangeable for channel-resolved pictures.
+    - plaquettes must be drawn far-to-near (depth sort by view ez).
+
+FIG 2 v3 (per user: (a)/(c) redundant, figure was hand-feeding): two
+data panels only. (a) exact omega vs f_1/S with y=x line: the Feynman
+relation as data; roton = extreme point, furthest below the line
+(backflow). (b) RK bias: photon slope -0.05, roton +0.34 — opposite sign,
+different object. No coaching annotations. Captions updated in main.tex.
+
+## Hero v4 (user round 3: panels too small/clustered; multiphoton unaligned;
+## "should we add more momentum?")
+
+SPECTRUM: now EIGHT momentum columns sorted by |q| — the five 48-site plus
+three 64-site (dagger-marked): (1/4,1/4,1/4), (1/4,1/4,3/4), and L' (the
+NON-rotonizing 64-site L class, dominant 1.998@77%). L and L' sit side by
+side: L has the red roton at 1.02, L' has none — the class-by-class
+prediction is now VISIBLE in the hero. Free-photon curve for all eight
+columns by interpolating scale*path_sigma at each momentum's Gamma-L-X
+path coordinate t (0.5, 2/3, 4/3, 1.5, 1.0, 1.0, 5/3, 2.0). 64-site data
+parsed from ring64_results.json fcc224.momenta (top-6 lines, weights are
+shares); 64-site markers get gray edge. Even/Raman squares only exist for
+48-site columns (even channel not computed at 64).
+
+ILLUSTRATIONS enlarged and decluttered:
+  photon: pure kagome ROW of five big hexagons (spins drawn on vertices,
+    alternating filled/open = flippable), flux-wave fill, one arrow.
+  roton: cropped slab (plaquette in-plane radius < 0.8 only, bonds only
+    between kept plaquettes' sites) so survivors render LARGE; exact
+    g_p fill as before (kagome 0, tilted alternate red/blue).
+  multiphoton: single left anchor X0; equation, 1->3 diagram, and side
+    text all hung off it — alignment fixed by construction.
+Figure 1 caption in main.tex rewritten (eight momenta, dagger, L vs L').
+
+## Hero v5-v6: the 64-site roton question + 3D-rendered lattice (2026-08-21)
+
+USER CONCERN (critical): "64 site cluster does not see roton? I really need
+to make sure roton is real not a manifestation of the cluster." — caused by
+my L' column showing only the NON-rotonizing 64-site class.
+ANSWER (all data in hand): 64 sites DOES see the roton. The anisotropic
+2x2x4 box has two inequivalent L classes; the large-S(q) class rotonizes at
+0.954K carrying 50.0% (vs 48-site 1.024K, 51%), the suppressed-S class
+stays photonic at 1.998K@77%. Figure now shows all three columns L / L† /
+L'† — two red rotons side by side (size stability visible), plus the
+no-roton class (mechanism prediction visible). Caption rewritten to state
+the numbers. Artifact defense recorded earlier still stands (complete-
+spectrum verification, mechanism ingredients size-robust, XXZ companion).
+
+ILLUSTRATIONS (user: "plot pyrochlore, align along 111, tilt, use
+opaqueness and shadow"): wrote a mini depth-sorted renderer in
+make_hero_figure.py: tetrahedra as 4-cliques of the bond graph, per-face
+normal lighting (light dir view-space), backface culling, opacity+size
+falling off with view depth, translucent plaquette fills drawn in global
+depth order. Photon panel = thin slab, kagome plaquettes with slow wave;
+roton panel = 3-layer slab at q exactly || [111] (channel combination
+g^1-g^2 so bands are uniform and alternate; kagome -> 0 exactly).
+Rendering gotchas this round: orphan sites (draw only sites belonging to a
+tetrahedron); in-panel labels vs captions (keep one, not both).
+
+## Round: percentages defined, classification written down, roton view rotated
+## (2026-08-21, build 19360868 clean, 7pp)
+
+- All percentages = the level's SHARE of total neutron intensity at that
+  momentum, |<n|S^z(q)|0>|^2 / sum_m |<m|S^z(q)|0>|^2. Now defined in the
+  Fig. 1 caption; in-figure note reads "area = share of S(q)".
+- Classification criteria now IN THE CAPTION (not only in the text):
+  photon = projects onto a transverse polarization AND energy falls under
+  the flippability bias (slope in [-0.37,+0.02]); roton = opposite-sign
+  bias response (+0.34) + dominant single-mode overlap + flux diagnostic
+  excludes monopole pair; multiphoton = remaining odd weight (absent from
+  the free theory at any parameters); squares = exact parity (even weight
+  < 1e-28). Daggered momenta: dominant-line + class analysis.
+- Roton render: azimuth 16 deg about [111] + tilt 58 unstacked the
+  plaquettes; renderer now takes (tilt, az).
+
+## Roton illustration final (2026-08-21) + "is this not just another photon"
+
+Roton panel converged after a contact-sheet + 4 iterations:
+- EXPLODED view (stretch=1.75 along [111]) — rotation alone can NEVER fix
+  this panel: tilted plaquettes (70.5 deg from [111]) project near-face-on
+  at any tilt and visually merge into the layers. Separating the layers is
+  the only fix. render_pyro now takes (tilt, az, stretch).
+- Plaquettes drawn as a SECOND PASS over the tetrahedra (depth-sorted
+  among themselves): strict occlusion hid the far flux band — the object
+  the panel exists to show.
+- LADDER selection: per interlayer band, the 2 tilted plaquettes with the
+  largest PROJECTED area (min-axis-distance picks edge-on slivers), signs
+  saturated to +-0.88; kagome plaquettes near the axis shown white "0".
+  Alternation verified in-log: band1 +0.88, band2 -0.88.
+- Title alignment: aspect="equal" shrinks axes boxes and misaligns titles;
+  adjustable="datalim" pins the boxes. (matplotlib gotcha worth keeping.)
+
+TEXT: new titled paragraph "Is this not simply another photon?" — yes by
+ancestry (2nd transverse branch, continuously connected), no by character:
+sign-flipped bias response, more-flippable/less-coherent composition,
+energy set by S(q) not stiffness, detaches below the whole band; helium
+precedent (roton = the phonon branch at high q; the name marks character).
+
+## Distortion fix + resonon novelty check (2026-08-21)
+
+- Roton illustration stretch reduced 1.75 -> 1.40 (tetrahedra visibly less
+  elongated); caption now DISCLOSES the exploded view ("layer spacing
+  exaggerated for visibility"). Blue band / white-0 wavefront / red band
+  all remain visible at the reduced stretch.
+- NOVELTY ("I feel I've seen something like this"): the antecedent is the
+  RK RESONON. Verified via Lauchli-Capponi-Assaad (our Lauchli2008 cite):
+  square-lattice RK point has soft resonons at (pi,pi),(pi,0) from
+  CLASSICAL dimer correlation peaks via the same single-mode logic; the
+  CUBIC RK point has ONLY the photon remnant soft mode — no zone-boundary
+  minimum — because classical Coulomb-phase correlations are featureless
+  (matches our flat classical ice S(q)). New paragraph "Relation to known
+  soft modes." added after "Is this not simply another photon?": our roton
+  has no RK-point ancestor — deep in the deconfined phase, no fine-tuning,
+  finite energy, correlation peak MANUFACTURED by quantum ring dynamics.
+  Novelty stands, now with the nearest antecedent cited and distinguished.
+
+## Real flux values + colorbars + precise alternation statement (2026-08-21)
+
+USER: "literally plot the flux value, colormap on the side, real values,
+be precise about what alternates."
+
+PRECISE STATEMENT (now in caption): for q || [111]:
+ (i) a plaquette whose normal is || q lies in a wavefront -> drives
+     EXACTLY zero flux (any polarization);
+ (ii) each tilted plaquette's flux reverses sign from one interlayer
+     region to the next (phase advances by pi per kagome layer at L).
+ SUBTLETY LEARNED: "uniform within a region ACROSS families" is FALSE for
+ a linear polarization — the three tilted families carry different
+ polarization phase factors. The clean alternation is a PER-FAMILY
+ statement; the panel shows one family (strongest in eps=(0,1,-1,0)).
+
+IMPLEMENTATION: driven_flux() computes Phi_p = sum_i delta_i eps_mu(i)
+e^{-iq.r_i} with CANONICALLY ORIENTED loops (fixed chirality about the
+family axis + fixed starting sublattice) — the cycle-search path's
+arbitrary start/direction had been randomizing signs (the earlier
+mixed-color bands). Shared FLUXCMAP colormap + colorbars (flux_face now
+samples the same cmap). Roton row = lattice + Phi_p-vs-height profile
+(dots on the sine, kagome at 0). Photon panel: q->0 envelope
+Re[C e^{iq.r_c}] (exact limit: internal factor common per orientation);
+the finite-q six-site sum on a 6-hex patch superposes internal-structure
+oscillations and is NOT pedagogical.
+
+## Flat side view wins (2026-08-21, final roton illustration)
+
+User round: photon looked short-wavelength; profile x-axis unlabeled
+(collision casualty); "why normalized to +-1"; "the fundamental problem is
+the roton pyrochlore is poorly illustrated".
+
+Fixes:
+- ROTON: abandoned 3D perspective entirely. Flat orthographic side view:
+  x along [1,-1,0], y along [111] (stretch 1.55). Kagome plaquettes render
+  edge-on as white slats ("0"); one tilted family as full-width colored
+  bands: red region / white slat layer / blue region. The
+  triangular-kagome-triangular stacking is visible as alternating dot rows
+  (filled = triangular-layer sites, open = kagome sites). After ~10
+  iterations of 3D attempts, LESSON: for layered structure + sign
+  alternation, a flat projection with zero perspective beats any shaded
+  3D render.
+- PHOTON: fragment widened (rmax 2.15, ~30 plaquettes), lambda = 1.9 x
+  patch => genuinely gentle gradient.
+- UNITS: colorbars + profile x-axis labeled Phi_p/Phi_max; caption states
+  the mode amplitude is arbitrary, flux quoted in units of its maximum.
+- Profile x-label restored (was deleted in a collision fix); caption moved
+  below it.
+
+## Lattice identity restored to the flat view (2026-08-21)
+
+User: "hard to see this is pyrochlore, what's kagome vs triangular, where
+do the hexagonal plaquettes sit." Fixes, all without reintroducing 3D:
+- projected tetrahedra filled light gray -> the side view reads as the
+  familiar rows of up/down corner-sharing triangles;
+- every plane labeled on the left margin (kagome / triangular), from the
+  site data (open dots = kagome sites, filled = triangular);
+- two callouts name the plaquettes: "hexagonal plaquette, edge-on (⊥q)"
+  -> a white slat; "tilted hexagonal plaquette" -> a colored polygon;
+- photon caption states it is the top view of one kagome layer (links the
+  two panels: same lattice, two views).
+Paper caption synced.
+
+## More structure in the hexagon colors (2026-08-21)
+
+User: "vary the color of the hexagons to show more structures." Computed
+the full per-family table (canonical loops, eps=(0,1,-1,0), q||[111]):
+   family 1: -0.500 / +0.500   (region 1 / region 2)
+   family 2: -0.500 / +0.500
+   family 3: +1.000 / -1.000       -- zero spread everywhere
+NEW EXACT STRUCTURE: within one interlayer region the three tilted
+families carry flux in ratio (+1, -1/2, -1/2), SUMMING TO ZERO (as a
+divergence-free flux pattern must); every plaquette reverses sign in the
+next region. Tried drawing all three families in the lattice: overlapping
+translucent hexes muddy the bands (rejected). Final design: lattice keeps
+the strongest family (crisp bands); the PROFILE carries all three (solid
++-1 sine + dashed -+1/2 sine, dots on both); ratio stated in captions.
+
+## Fig 2 made self-explanatory (2026-08-21)
+
+User: "how are these really the criterion... what does energy per
+flippable hexagon vs level energy mean... what should be the
+expectations." Expectations now DRAWN IN:
+(a) shaded forbidden region above omega = f1/S ("no level above the
+single-mode bound") + backflow arrow at L. Meaning: the state the
+neutron creates has energy AT MOST f1/S; distance below = relaxation
+beyond single mode.
+(b) retitled "what the state is made of". Meaning of the axes: V = energy
+added per flippable hexagon; by Hellmann-Feynman a level's slope =
+number of flippable hexagons the excitation adds/removes vs the ground
+state. EXPECTATION drawn as gray fan anchored at the roton's V=0 point:
+any photon (bare or dressed) responds with slope in [-0.37,+0.02] (the
+measured range of every photon level on both clusters); renormalization
+changes magnitudes not signs. The roton line exits the fan at +0.34.
+Slopes labeled on both lines. Caption rewritten to carry the full
+Hellmann-Feynman reading and the expectation statement.
+
+## RK slopes recomputed; two claims CORRECTED (2026-08-21, job 19376815)
+
+User asked how the flippable-hexagon weight is computed, where "+0.02"
+comes from, and whether the slope is really an anomaly. Recomputed all ten
+dominant-line slopes TWO independent ways (rk_slopes_table.py):
+  (i) exact census at V=0: d omega/dV = <n|sum n_flip|n> - <0|...|0>;
+  (ii) finite-difference fit over V in [-0.5,+0.5].
+They agree to ~0.01 EXCEPT at (1/6,1/6,5/6) br2 (census -0.117 vs fit
+-0.426) where levels cross and weight-tracking follows a different state
+=> the CENSUS is the exact quantity; the fit is a convenience. <n_flip>
+ground = 10.95 of 48 hexagons.
+
+CORRECTION 1: the paper's photon range [-0.37,+0.02] was wrong at the
+lower end. Measured: [-0.62, +0.02]. The +0.02 IS real -- (1/3,1/3,2/3)
+branch 1 has census +0.012, fit +0.017.
+CORRECTION 2: my claim "no photon can have positive slope" was TOO STRONG
+and is now removed. Honest statement: the roton is the only level that
+APPRECIABLY gains flippable hexagons, +0.34 vs at most +0.01 for all
+others (factor 28 outlier), not a sign rule.
+
+NEW FIG 2 = CHARACTER MAP (user: "no distinct sharp diagnostic ... most
+photons are below the linear line anyway ... plot the free Gaussian line").
+Correct: the f1/S panel was weak (everything is below a bound). Replaced
+by a 2D map with the FREE-PHOTON energy as the reference:
+  y = omega/omega_free : photons 0.82-1.46, roton 0.50 (64% gap)
+  x = census           : photons <= +0.01, roton +0.34
+Photon box shaded; roton isolated outside on BOTH axes. Caption states
+explicitly that neither axis alone separates it (one photon level also has
+marginally positive census; another also sits below the free-photon line)
+-- the conjunction is the diagnostic. Text ranges updated in both places.

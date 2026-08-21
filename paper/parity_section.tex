@@ -1,0 +1,101 @@
+% ---------------------------------------------------------------------------
+% Drop-in subsection for main.tex, to follow \subsection{Longitudinal response
+% at every momentum} (sec:szz).  Requires \Jpm, \Jzz, \bq as already defined,
+% and the figure paper/figs/fig_fcc32_parity.pdf.
+%
+% What it establishes, in order:
+%   1. why the eight cluster momenta are three stars and nothing disperses;
+%   2. that S^zz misses the lowest excitation at X entirely;
+%   3. that the miss is an exact spin-flip selection rule, not a small number,
+%      demonstrated by the complementary magnetic channel.
+% ---------------------------------------------------------------------------
+
+\subsection{What the longitudinal probe can and cannot see}
+\label{sec:parity}
+
+The eight FCC-32 momenta are not eight independent points: they are three
+high-symmetry stars of the fcc Brillouin zone -- one $\Gamma$, three $X$, four
+$L$ -- and both nonzero stars lie on the zone boundary.  The cluster therefore
+carries no small-$\bq$ information at all, and no statement about a photon
+\emph{dispersion} can be made on it.  What can be made, and is the subject of
+this subsection, is a statement about which excitations the longitudinal probe
+is able to reach.
+
+To separate the probe from the spectrum we resolve the eigenvalues by momentum
+directly, projecting each eigenvector of the masked block onto the cluster
+momenta with $P_{\bq}=N_t^{-1}\sum_t \chi_{\bq}(t)^{*}T_t$, where $T_t$ runs over
+the lattice translations.  The projector is exact to $4\times10^{-13}$.  Each
+level then carries a degeneracy equal to its star size times two.
+
+The result is that $S^{zz}$ does not couple to the lowest excitation at $X$.
+At $\Jpm/\Jzz=-0.20$ the lowest $X$ level lies at $\omega/\Jzz=0.025274$ and
+carries longitudinal weight $3.2\times10^{-27}$, while the weight the structure
+factor does show at $X$ sits on a higher level at $0.037928$.  The same holds
+at $\Jpm/\Jzz=+0.046$: the lowest $X$ level at $0.003612$ carries
+$4.6\times10^{-27}$, and the visible weight sits at $0.004525$.  At $L$, by
+contrast, the probe sits on the lowest level and takes $88$--$90\%$ of that
+star's weight.  Resolving the four sublattice channels separately does not
+change this: every level the probe reaches has all four channels exactly equal,
+and every level it misses is at machine zero in all four.  The miss is a
+selection rule, not a form factor.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_fcc32_parity.pdf}
+\caption{Electric and magnetic probes reach disjoint sets of levels.
+(a), (b) Every computed level of the masked block, drawn at its own energy in
+the column of its momentum star, coloured by which probe reaches it and with
+bar width encoding the weight; levels reached by neither probe are shown as
+hairlines so that they remain visible.  (c) The electric weight of each level
+against its magnetic weight.  Points pin to one axis or the other over more
+than twenty-five decades and the diagonal region, where a level reached by both
+probes would sit, is empty.  This is Eq.~(\ref{eq:parity}) at work rather than
+a numerical coincidence.}
+\label{fig:parity}
+\end{figure*}
+
+The rule is spin-flip parity.  The Hamiltonian is invariant under the global
+flip $\mathcal{P}: S^z_i\mapsto-S^z_i$, $S^\pm_i\mapsto S^\mp_i$, which
+preserves the $\Jzz$ term trivially and maps the $\Jpm$ term onto its Hermitian
+conjugate.  The longitudinal probe is odd under it, while the hexagon ring
+exchange -- the lattice magnetic flux
+$\Phi_h=S^+S^-S^+S^-S^+S^-+\mathrm{h.c.}$ -- is even:
+\begin{equation}
+ \mathcal{P}\,S^z_\mu(\bq)\,\mathcal{P}^{-1}=-S^z_\mu(\bq),
+ \qquad
+ \mathcal{P}\,\Phi_h\,\mathcal{P}^{-1}=+\Phi_h .
+ \label{eq:parity}
+\end{equation}
+Since the ground state is a parity eigenstate, $S^z(\bq)|0\rangle$ and
+$\Phi(\bq)|0\rangle$ lie in opposite parity sectors and can reach no level in
+common.
+
+Figure~\ref{fig:parity} confirms this directly.  Alongside $S^{zz}$ we evaluate
+the magnetic channel $|\langle n|\Phi(\bq)|0\rangle|^2$ with
+$\Phi(\bq)=\sum_h e^{-i\bq\cdot\br_h}\Phi_h$ summed over the $32$ contractible
+plaquettes.  Every level is bright in exactly one channel, with the complement
+between $10^{-25}$ and $10^{-35}$; at $\Jpm/\Jzz=-0.20$ the lowest $X$ level
+carries magnetic weight $1.645$ against longitudinal weight
+$1.1\times10^{-27}$, and at $+0.046$ the figures are $2.891$ and
+$1.3\times10^{-26}$.  The excitation the longitudinal probe misses is therefore
+an ordinary gauge excitation seen plainly in the magnetic channel, not a
+missing or anomalous state.
+
+Two consequences follow for how Fig.~\ref{fig:dssf} should be read.  First, the
+$X$ block of the longitudinal response is not the lowest excitation at $X$ and
+must not be quoted as one.  Second, because no level is reached by both probes,
+no single level on this cluster satisfies the criterion of carrying both an
+electric and a magnetic component, so we make no photon assignment here.  We
+note that only the $32$ contractible hexagons enter $\Phi$: three quarters of
+the six-cycles on this cluster wrap the periodic box, and their ring exchange
+transports polarization between transport sectors, which is precisely the
+winding artifact the mask removes.  Restricted to the contractible set the ring
+exchange conserves the sector exactly, which is an independent confirmation of
+the construction of Sec.~\ref{sec:method}.
+
+Finally, none of these energies is converged in system size.  Between cubic-16
+and FCC-32 the lowest excitation at $X$ moves by a factor $1.5$--$2.2$ and at
+$\Gamma$ by $3.5$--$6.1$, and the ordering of the $\Gamma$ and $X$ levels
+inverts.  The selection rule (\ref{eq:parity}) is exact and size-independent;
+the energies it acts on are not, and we quote them only as the spectrum of the
+finite cluster.

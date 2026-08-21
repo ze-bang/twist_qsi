@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021 Gentoo Linux) (preloaded format=pdflatex 2023.8.23)  11 AUG 2026 20:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021 Gentoo Linux) (preloaded format=pdflatex 2023.8.23)  15 AUG 2026 22:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -6,7 +6,7 @@ entering extended mode
 (./main.tex
 LaTeX2e <2020-10-01> patch level 4
 L3 programming layer <2021-02-18>
-(/tmp/twist_qsi_revtex.h6enPh/tds/tex/latex/revtex/revtex4-2.cls
+(/home/zhouzb79/texmf/tex/latex/revtex/revtex4-2.cls
 Document Class: revtex4-2 2022/06/05 4.2f (https://journals.aps.org/revtex/ for
  documentation)
  Copyright (c) 2019 American Physical Society.
@@ -68,7 +68,7 @@ Class revtex4-2 Info: Overriding \@vspace, \@vspacer, \@no@pgbk, \@newline, and
 \widetext@top=\box60
 \widetext@bot=\box61
 Class revtex4-2 Info: Selecting society aps on input line 7669.
-(/tmp/twist_qsi_revtex.h6enPh/tds/tex/latex/revtex/aps4-2.rtx
+(/home/zhouzb79/texmf/tex/latex/revtex/aps4-2.rtx
 File: aps4-2 2022/06/05 4.2f (https://journals.aps.org/revtex/ for documentatio
 n)
 Class revtex4-2 Info: RevTeX society APS selected on input line 40.
@@ -79,7 +79,7 @@ Class revtex4-2 Info: APS journal PRB selected on input line 7672.
 
 Class revtex4-2 Warning: No type size specified, using default 10.
 
-(/tmp/twist_qsi_revtex.h6enPh/tds/tex/latex/revtex/aps10pt4-2.rtx
+(/home/zhouzb79/texmf/tex/latex/revtex/aps10pt4-2.rtx
 File: aps10pt4-2 2022/06/05 4.2f (https://journals.aps.org/revtex/ for document
 ation)
 Class revtex4-2 Info: RevTeX pointsize 10pt selected on input line 39.
@@ -182,8 +182,7 @@ LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count272
 )
 Class revtex4-2 Info: Repairing natbib's \BibitemShut on input line 7676.
-
-(/tmp/twist_qsi_revtex.h6enPh/tds/tex/latex/revtex/revsymb4-2.sty
+ (/home/zhouzb79/texmf/tex/latex/revtex/revsymb4-2.sty
 Package: revsymb4-2 2022/06/05 4.2f (https://journals.aps.org/revtex/ for docum
 entation)
 LaTeX Info: Redefining \frak on input line 104.
@@ -505,30 +504,45 @@ tex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1{/cvmfs/soft.computecanada.ca/gentoo/2023/x86-64-v3/var/lib/texmf/fonts/map
 /pdftex/updmap/pdftex.map}]
-<figs//fig_fcc32_thermodynamics.pdf, id=95, 451.03862pt x 222.82448pt>
+<figs//fig_fcc32_thermodynamics.pdf, id=99, 443.35262pt x 222.82448pt>
 File: figs//fig_fcc32_thermodynamics.pdf Graphic file (type pdf)
 <use figs//fig_fcc32_thermodynamics.pdf>
 Package pdftex.def Info: figs//fig_fcc32_thermodynamics.pdf  used on input line
- 221.
-(pdftex.def)             Requested size: 510.0pt x 251.95532pt.
+ 225.
+(pdftex.def)             Requested size: 510.0pt x 256.32436pt.
  [2]
-<figs//fig_fcc32_dssf.pdf, id=112, 491.02606pt x 243.53098pt>
+<figs//fig_fcc32_dssf.pdf, id=116, 460.44728pt x 237.857pt>
 File: figs//fig_fcc32_dssf.pdf Graphic file (type pdf)
 <use figs//fig_fcc32_dssf.pdf>
-Package pdftex.def Info: figs//fig_fcc32_dssf.pdf  used on input line 293.
-(pdftex.def)             Requested size: 510.0pt x 252.95409pt.
- [3 <./figs//fig_fcc32_thermodynamics.pdf>]
-<figs//fig_loop_ratios.pdf, id=204, 478.61382pt x 259.38683pt>
+Package pdftex.def Info: figs//fig_fcc32_dssf.pdf  used on input line 299.
+(pdftex.def)             Requested size: 510.0pt x 263.4582pt.
+ (./parity_section.tex
+[3 <./figs//fig_fcc32_thermodynamics.pdf>]
+<figs//fig_fcc32_parity.pdf, id=208, 549.25201pt x 242.10449pt>
+File: figs//fig_fcc32_parity.pdf Graphic file (type pdf)
+<use figs//fig_fcc32_parity.pdf>
+Package pdftex.def Info: figs//fig_fcc32_parity.pdf  used on input line 44.
+(pdftex.def)             Requested size: 510.0pt x 224.8002pt.
+ [4 <./figs//fig_fcc32_dssf.pdf>])
+[5 <./figs//fig_fcc32_parity.pdf>]
+<figs//fig_loop_ratios.pdf, id=376, 478.61382pt x 259.38683pt>
 File: figs//fig_loop_ratios.pdf Graphic file (type pdf)
 <use figs//fig_loop_ratios.pdf>
-Package pdftex.def Info: figs//fig_loop_ratios.pdf  used on input line 371.
+Package pdftex.def Info: figs//fig_loop_ratios.pdf  used on input line 392.
 (pdftex.def)             Requested size: 489.60342pt x 265.35075pt.
- [4 <./figs//fig_fcc32_dssf.pdf>]
-Underfull \hbox (badness 1648) in paragraph at lines 418--428
+
+Underfull \hbox (badness 1648) in paragraph at lines 439--449
 []\OT1/cmr/m/n/10 Neutron scat-ter-ing mea-sures two-spin cor-re-la-tions
  []
 
-[5 <./figs//fig_loop_ratios.pdf>] (./main.bbl
+(./main.bbl
+Overfull \vbox (6.99178pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (6.99178pt too high) has occurred while \output is active []
+
+
+[6]
 Underfull \hbox (badness 1077) in paragraph at lines 131--136
  []\OT1/cmr/m/n/9 G. K. Bren-nen, G. Pupillo, E. Rico, T. M. Stace,
  []
@@ -539,18 +553,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 139--143
  , 034518 (2020)[][],
  []
 
-) [6] (./main.aux)
+) [7 <./figs//fig_loop_ratios.pdf>] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: CFACD8C7821B8255608B147B3D0948A5;2461.
+(rerunfilecheck)             Checksum: 3C1B35E2EF0FBAAAFAAAA42688E679D4;2769.
  ) 
 Here is how much of TeX's memory you used:
- 11437 strings out of 480884
- 165882 string characters out of 5900692
- 490897 words of memory out of 5000000
- 28475 multiletter control sequences out of 15000+600000
+ 11458 strings out of 480884
+ 166154 string characters out of 5900692
+ 510785 words of memory out of 5000000
+ 28488 multiletter control sequences out of 15000+600000
  416597 words of font info for 75 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 82i,8n,88p,736b,432s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 82i,8n,88p,1636b,499s stack positions out of 5000i,500n,10000p,200000b,80000s
 </cvmfs/soft.computecanada.ca/gentoo/2023/x86-64-v3/usr/share/texmf-dist/font
 s/type1/public/amsfonts/cm/cmbx12.pfb></cvmfs/soft.computecanada.ca/gentoo/2023
 /x86-64-v3/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></cvmf
@@ -585,10 +599,10 @@ ist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></cvmfs/soft.computecanada.ca/gent
 oo/2023/x86-64-v3/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pf
 b></cvmfs/soft.computecanada.ca/gentoo/2023/x86-64-v3/usr/share/texmf-dist/font
 s/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on main.pdf (6 pages, 372035 bytes).
+Output written on main.pdf (7 pages, 406716 bytes).
 PDF statistics:
- 508 PDF objects out of 1000 (max. 8388607)
- 283 compressed objects within 3 object streams
- 46 named destinations out of 1000 (max. 500000)
- 120 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 597 PDF objects out of 1000 (max. 8388607)
+ 317 compressed objects within 4 object streams
+ 50 named destinations out of 1000 (max. 500000)
+ 133 words of extra memory for PDF output out of 10000 (max. 10000000)
 
