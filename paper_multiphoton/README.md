@@ -882,3 +882,71 @@ GOTCHA recorded: the CF pipeline seeds once per sublattice channel, so one
 physical level appears as up to 4 lines at the same energy. Only the channel
 SUM is basis-independent -- aggregate_L_branches.py does this. Reading the raw
 top-6 log without aggregating understates every share.
+
+================================================================================
+ALL-MOMENTUM SWEEP + RK CENSUS + f1/S AT EVERY MOMENTUM (2026-08-21, later)
+================================================================================
+
+COVERAGE now: 48 all momenta (full diag), 64 all 16 (CF+census), 72 all 18
+(CF+census), 96 L-only (running). Census method = Ritz vector from the stored
+Krylov basis; VALIDATED against full diagonalization at 48 (+0.3393/-0.0640 vs
+exact +0.339/-0.064) and independently against exact eigsh eigenvectors at
+48/64/72 -- agreement to 4 decimals, so the census is NOT a convergence
+artifact at any size.
+
+64-SITE CROSS-CHECK: the new pipeline independently reproduces the OLD
+ring64_pipeline exactly (ice 2,756,394; sector 249,180; E0 = -13.85728951;
+L(A) S=0.369143 omega 0.9545/1.6518 shares 0.4998/0.3126; L(B) S=0.227002
+omega 1.9976 share 0.7712). Two independent codes agree.
+
+*** THE MAIN RESULT OF THIS ROUND: f1/S ORDERS THE SPECTRUM, AND L IS NOT
+*** SPECIAL -- THE RATIO IS.
+
+f1/S computed from the GROUND STATE ALONE at every momentum (gate
+sum_p w_p = -E0/K reads 1.00000000 on all three clusters):
+
+  48:  L 1.8456 | (1/3,1/3,1/3) 2.4204 | (1/3,1/3,2/3) 2.4907 |
+       (1/6,1/6,5/6) 3.2163 | X 3.2230
+  64:  L(A) 1.8054 | (1/4,1/4,1/4) 2.0929 | L(B) 2.6382 |
+       (1/4,1/4,3/4) 2.8682 | X 3.3463          <- perfectly monotonic in omega
+  72:  L 1.9826 | (1/6,1/2,1/2) 1.9998 | (1/3,1/3,1/3) 2.2082 |
+       (1/6,1/6,5/6) 2.6773 | (1/6,1/2,5/6) 2.7021 | (0,0,2/3) 2.7494 |
+       (0,2/3,2/3) 2.9120
+
+THE 72-SITE SURPRISE IS A CONFIRMATION, NOT A PROBLEM. (1/6,1/2,1/2) has
+nearly L's spectrum (omega 1.0752 / 55.0% vs L's 1.0681 / 54.0%). Reason:
+its f1/S is 1.9998 against L's 1.9826. The ratio differs by 0.87%; the
+observed level energies differ by 0.66%. That is a quantitative prediction
+from ground-state data alone, verified.
+
+WHY it has small f1: per-family geometric factor [36,144,144,108] -- one
+family SUPPRESSED to 25%, not exactly zero. L is [144,144,144,0], an EXACT
+decoupling (same as 48: [96,96,0,96], 64: [128,128,0,128]). So exact
+decoupling is one route to small f1, partial suppression plus large S is
+another. The paper's "why at L" section must be reframed: the mechanism is
+f1/S; L is where it is minimized, not a privileged point.
+
+Not perfectly monotonic at 48 and 72 (e.g. 72: (0,0,2/3) f1/S=2.7494 has
+omega 1.5392, below (1/6,1/6,5/6) f1/S=2.6773 -> omega 1.8927). Monotonic at
+64. Report as "strongly correlated, minimum coincides", not "monotonic".
+
+*** THE CENSUS IS WEAKER THAN CLAIMED. Exact values at the soft level:
+    48 +0.3393 | 64 +0.3379 | 72 +0.1337.  Sign stable, magnitude NOT
+    (factor 2.5 drop at 72). And at 72 many bright levels have positive
+    census (+0.03 to +0.36); the roton is not the largest.
+    THE PAPER'S CLAIM "photon descendants gain at most 0.01 flippable
+    hexagons" IS A 48-SITE ARTIFACT AND MUST BE REMOVED.
+    What survives: (i) the sign is positive at the soft level on all three;
+    (ii) the cleanest evidence is WITHIN one cluster -- at 64 sites the
+    rotonizing L class has +0.3379 and the non-rotonizing L class at the
+    SAME |q| and same Gaussian energy has -0.1660.
+    => demote the census from "the sharp diagnostic" to a consistent
+       signature; lead with f1/S instead.
+
+X SPLITTING CONVENTION BUG: the paper says "53% at 48 -> 6% at 64" using
+(w_hi - w_lo)/w_lo, while Appendix B's table uses mean-normalized
+(w_hi-w_lo)/[(w_hi+w_lo)/2] and lists 0.420 for the same X. Inconsistent
+within the paper. Unify on mean-normalized: 42% at 48, 5.9% at 64.
+
+Also: 64-site <n_flip> = 14.5419/64 = 0.2272 per hexagon (48: 0.2282,
+72: 0.2172) -- the per-hexagon flippability IS stable.
