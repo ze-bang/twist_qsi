@@ -317,7 +317,7 @@ def main() -> int:
     # so it is computed FIRST.  If the L star splits into inequivalent
     # classes, the f_1/S mechanism predicts here, before any spectrum is
     # computed, which class should reconstruct.
-    Ls = [q for q in momenta if star(q) == "L"]
+    Ls = list(momenta)
     Sq = []
     for q in Ls:
         s = 0.0
@@ -326,14 +326,19 @@ def main() -> int:
             s += float(np.vdot(c, c).real) / n
             del c
         Sq.append(s)
-        log(f"  S(L) at {np.round(q, 3)} = {s:.6f}", t0)
-    rec["L_structure_factors"] = [{"q": [float(x) for x in q], "S": s}
+        log(f"  S at {np.round(q, 3)} [{star(q)}] = {s:.6f}", t0)
+    rec["structure_factors"] = [{"q": [float(x) for x in q],
+                                 "star": star(q), "S": s}
                                   for q, s in zip(Ls, Sq)]
     classes = []
     for q, s in zip(Ls, Sq):
-        if not any(abs(s - s2) < 1e-6 for _, s2 in classes):
+        if s < 1e-12:
+            continue
+        if not any(abs(s - s2) < 1e-6 and star(q) == star(q2)
+                   for q2, s2 in classes):
             classes.append((q, s))
-    log(f"{len(Ls)} L momenta in {len(classes)} distinct class(es) by S; "
+    log(f"{len(Ls)} momenta in {len(classes)} distinct class(es) by "
+        f"(star, S); "
         f"running the continued fraction on one representative of each",
         t0)
 
@@ -391,7 +396,7 @@ def main() -> int:
 
 
     tag = "".join(str(s) for s in shape)
-    with open(OUT / f"ring96_fcc{tag}.json", "w") as fh:
+    with open(OUT / f"ring_allq_fcc{tag}.json", "w") as fh:
         json.dump(rec, fh, indent=1, default=float)
     log(f"wrote ring96_fcc{tag}.json", t0)
     return 0
