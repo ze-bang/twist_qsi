@@ -36,11 +36,11 @@ is how the microscopic ring model distributes its longitudinal
 spectral weight at finite momentum. We compute the zero-temperature
 correlation function $\Szz(\bq,\omega)$ of the local Ising pseudospin,
 which is exactly the emergent electric field, in the ground-state
-winding sector of 48- and 64-site pyrochlore clusters, resolving every
+winding sector of 48-, 64- and 72-site pyrochlore clusters, resolving every
 eigenstate and matrix element rather than a broadened lineshape. The
 response is photon-like at the smallest accessible momentum and
 reconstructs at the zone boundary. At $L$ a collective level appears
-at $1.02K$ on 48 sites ($0.95K$ on 64 sites), carries about half of
+at $1.02K$ on 48 sites, $0.95K$ on 64 and $1.07K$ on 72, carries at least half
 the weight at that momentum, and lies near half the Gaussian-photon
 energy. A basis-independent polarization analysis identifies it as
 the lower of the two transverse branches rather than a new species,
@@ -60,7 +60,7 @@ leaves entirely unconstrained, a lattice analogue of backflow. The
 same reconstruction appears as an order-one polarization splitting at
 the zone boundary, and a further $16$--$38\%$ of the weight lies in
 levels absent from the Gaussian one-photon theory. We state
-explicitly which conclusions are limited by the two accessible cluster
+explicitly which conclusions are limited by the accessible cluster
 sizes.
 \end{abstract}
 
@@ -102,8 +102,10 @@ Ref.~\cite{Pace2021} --- but for a different purpose: extracting
 ground-state and low-energy parameters of the emergent
 electrodynamics, for which one does not need the full set of
 eigenstates and matrix elements. Resolving the operator content of
-the spectrum, as we do here, is more expensive per spin than locating
-its lowest levels, and that is the trade we make.
+the spectrum is more expensive per spin than locating its lowest
+levels, and that is the trade we make. Within that more demanding
+calculation we reach $72$ spins, which required abandoning the
+single-word bit-mask representation that caps such work at $64$.
 
 The unresolved question we address is therefore narrower: \emph{how is
 the longitudinal spectral weight of the microscopic ring model distributed
@@ -214,7 +216,7 @@ a property of the cluster geometry and is checked directly on each
 cluster used here; no result below depends on it being taken on faith.
 
 \section{Operator-resolved spectrum}
-The neutron operator has an
+The probe operator has an
 especially direct gauge interpretation. Since $S^z=E$, the state
 $S^z(\bq)|0\rangle$ is the electric-field wave launched by the probe.
 In Gaussian electrodynamics this state lies entirely in the one-photon
@@ -626,12 +628,53 @@ the weight; the class with $S=0.227$ has its dominant level at
 $1.998K$ with $77\%$ of the weight, and no anomalous state at all.
 The effect follows the structure factor rather than the label $L$.
 
-\emph{Stability with size.} Between 48 and 64 sites the anomalous
-level moves from $1.024K$ to $0.954K$ and its share from $50.8\%$ to
-$50.0\%$; the driving structure factor is nearly unchanged, $0.370$
-against $0.369$; and the splitting between the two transverse branches
-is $0.513$ against $0.535$. Not everything is stable --- the splitting
-at $X$ is not, falling from $53\%$ to $6\%$ --- and we say so.
+\emph{Stability with size.} We can now compare three clusters. The
+third, $2{\times}3{\times}3$ with 72 spins, required extending the
+state representation past a single 64-bit word
+(Appendix~\ref{app:methods}); it is also the first cluster here that
+is genuinely three-dimensional in all three directions, so it varies
+the shape as well as the size.
+
+\begin{center}
+\begin{tabular}{lrrr}
+\hline\hline
+ & $2{\times}2{\times}3$ & $2{\times}2{\times}4$ & $2{\times}3{\times}3$\\
+sites & $48$ & $64$ & $72$\\
+ice configurations & $87\,546$ & $2\,756\,394$ & $12\,846\,186$\\
+sector dimension & $9\,104$ & $249\,180$ & $973\,008$\\
+\hline
+$E_0/N$ & $-0.2199$ & $-0.2165$ & $-0.2057$\\
+$S(L)$ & $0.370$ & $0.369$ & $0.321$\\
+$\omega_{\rm low}/K$ & $1.024$ & $0.954$ & $1.068$\\
+share & $50.8\%$ & $50.0\%$ & $54.0\%$\\
+$\omega_{\rm high}/K$ & $1.730$ & $1.652$ & $1.814$\\
+share & $32.3\%$ & $31.3\%$ & $17.8\%$\\
+\hline
+$\omega_{\rm low}/\omega_{\rm high}$ & $0.592$ & $0.578$ & $0.589$\\
+splitting & $0.513$ & $0.535$ & $0.518$\\
+\hline\hline
+\end{tabular}
+\end{center}
+
+The qualitative picture is the same on all three: a single dominant
+level near $1.0K$ carrying at least half of the weight at $L$, and a
+second transverse branch roughly seventy percent higher. The two
+quantities that require no energy scale at all --- the ratio of the
+two branch energies and the fractional splitting --- are stable to a
+few percent across a factor of eleven in Hilbert-space dimension and
+across a change of cluster shape: $0.592$, $0.578$, $0.589$ and
+$0.513$, $0.535$, $0.518$. This is the strongest size evidence we can
+offer, and it is the evidence least contaminated by fitted quantities.
+
+Not everything is stable, and we say which. The equal-time structure
+factor at $L$ falls to $0.321$ on the 72-site cluster from $0.370$ on
+the other two, and the level correspondingly sits slightly higher
+rather than lower --- the direction the $f_1/S$ mechanism requires,
+though the three clusters differ in shape as well as size and we do
+not press this as a quantitative test. The weight retained by the
+upper branch drops from about a third to $18\%$. And the polarization
+splitting at $X$ is not converged at all, falling from $53\%$ at 48
+sites to $6\%$ at 64; no conclusion is drawn from it.
 
 \emph{The deformation trajectory.} Under a bias toward more flippable
 configurations ($V<0$), $f_1(L)$ changes by less than one percent
@@ -766,10 +809,12 @@ Our conclusions are subject to four
 explicit restrictions. First, the calculation is performed in the
 ground-state winding sector of the spin-ice ring model, not over all
 topological sectors and not in the full microscopic spin Hilbert space.
-Second, only two cluster sizes are available. The $L$-point energy,
-its approximately one-half share of the $S^z$ spectral weight, and its
-flippability/structure-factor mechanism are stable between them, but
-some other details, including the splitting at $X$, are not. Third,
+Second, three cluster sizes are available and no more. The scale-free
+diagnostics --- the ratio of the two branch energies and their
+fractional splitting --- are stable across all three to a few percent,
+as is the level's share of the weight, but the equal-time structure
+factor at $L$ and the weight retained by the upper branch are not,
+and neither is the splitting at $X$. Third,
 the discrete cluster momenta do not establish a local minimum of a
 continuous thermodynamic dispersion; this is why we use the qualified
 term roton-like. A zone-wide prediction would require the interacting
@@ -790,11 +835,13 @@ the 16-site cell only six transport sectors have any dynamics. We
 therefore use the $2{\times}2{\times}3$ cluster (48 sites,
 $87\,546$ ice configurations; ground-state winding sector of dimension
 $9104$), which we diagonalize completely so that the operator-resolved
-weights exactly saturate the equal-time sum rule. For the size check
+weights exactly saturate the equal-time sum rule. For the size checks
 we use $2{\times}2{\times}4$ (64 sites, $2\,756\,394$ ice
 configurations; ground-state winding sector of dimension $249\,180$)
-and Lanczos after reproducing all 48-site benchmarks. Momentum labels
-are certified by exact translation projectors.
+and $2{\times}3{\times}3$ (72 sites, $12\,846\,186$ configurations;
+sector dimension $973\,008$), both by Lanczos and both only after
+reproducing all 48-site benchmarks. Momentum labels are certified by
+exact translation projectors.
 
 It is natural to ask why we do not simply vary the \emph{shape} of the
 torus at fixed spin number, which would be the cleanest control of
@@ -1037,6 +1084,34 @@ $249\,180$ and is treated by Lanczos with full reorthogonalization,
 the dynamical response being obtained by a continued-fraction
 expansion seeded with $S^z_\mu(\bq)|0\rangle$; all 48-site benchmarks
 are reproduced before any 64-site number is quoted.
+
+Going beyond $64$ spins requires changing the state representation.
+Storing a configuration in a single $64$-bit word caps the calculation
+at $64$ sites, which is where the published constrained-space
+spectroscopy has stood. We therefore store each configuration as a
+\emph{pair} of $64$-bit words and redefine masking, flipping, sorting
+and lookup on that pair. Lookup is the only part that is not
+immediate: the table is sorted by the pair lexicographically, and
+because the high word takes fewer than $2^8$ distinct values at these
+sizes, queries are grouped by high word and each group resolved with a
+single vectorized binary search on the low word within its block. The
+result is exact, not hashed. The implementation is validated by
+running it on the 48-site cluster, where it reproduces the 64-bit
+pipeline exactly: $E_0=-10.55601176K$, $S(L)=0.37036$ and branch
+energies $1.0235K$ and $1.7303K$.
+
+On the 72-site cluster the ice manifold contains $12\,846\,186$
+configurations in $310$ winding sectors. The ground state lies in the
+zero-polarization sector, of dimension $973\,008$; we verify this
+rather than assume it, by diagonalizing the largest sectors
+independently and comparing, which also exposes the expected exact
+degeneracy between symmetry-related sectors
+($E_0=-14.80971536K$ in two of them). The dynamical response is again
+obtained by continued fraction seeded with the four sublattice
+components of the probe. Because those four seeds produce separate
+lines at the same energy, they are summed by energy before any branch
+energy or weight is quoted; only the channel sum is
+basis-independent.
 
 Momentum labels are certified by explicit translation projectors
 rather than inferred from position in a sorted list. Degenerate

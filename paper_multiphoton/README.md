@@ -848,3 +848,37 @@ OPEN / NOT CLAIMED:
   (E^2 is a c-number, so there is no continuous knob); title stays at the
   hedged "roton-like mode" unless 72 sites changes the picture.
 - X-point splitting still not size-converged (53% at 48 -> 6% at 64).
+
+--------------------------------------------------------------------------------
+R6 COMPLETE: 72 SITES (job 19387503, 19m25s, COMPLETED)
+--------------------------------------------------------------------------------
+fcc(2,3,3): 72 sites, 36 tetrahedra, 72/72 contractible hexagons (admissible).
+12,846,186 ice configurations; 310 winding sectors; ground sector 973,008.
+Ground sector identity VERIFIED not assumed: sectors 179 and 130 both give
+E0 = -14.80971536 K (exact symmetry degeneracy), sector 176 (498,654) gives
+-13.74637488. E0/site = -0.20569049.  <n_flip> = 15.6402/72 = 0.2172 per hex.
+
+L point: S(L) = 0.32097; branches (channel-summed) 1.0681 K share 0.5397 and
+1.8143 K share 0.1782; splitting 0.5178.
+
+THREE-CLUSTER TABLE (this is the finite-size evidence now in the paper):
+                    48        64        72
+  E0/N          -0.2199   -0.2165   -0.2057
+  S(L)            0.370     0.369     0.321
+  w_low/K (share) 1.024(.508) 0.954(.500) 1.068(.540)
+  w_high/K(share) 1.730(.323) 1.652(.313) 1.814(.178)
+  w_low/w_high    0.592     0.578     0.589      <- scale-free, 2.4% spread
+  splitting       0.513     0.535     0.518      <- scale-free, 4% spread
+
+READ: the two SCALE-FREE diagnostics are stable across 11x in sector dimension
+AND across a shape change. Roton persists at all three sizes: dominant level
+near 1.0K with >= half the weight, second transverse branch ~70% higher.
+NOT stable, and stated as such in the paper: S(L) drops to 0.321 on (2,3,3);
+upper-branch share falls 0.32 -> 0.18; X splitting still unconverged.
+Note S(L) down and w_low UP is the direction f1/S requires, but the clusters
+differ in shape too, so this is not pressed as a quantitative test.
+
+GOTCHA recorded: the CF pipeline seeds once per sublattice channel, so one
+physical level appears as up to 4 lines at the same energy. Only the channel
+SUM is basis-independent -- aggregate_L_branches.py does this. Reading the raw
+top-6 log without aggregating understates every share.

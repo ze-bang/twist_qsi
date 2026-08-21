@@ -110,7 +110,37 @@ implementation is validated against the 48-site cluster, which it
 reproduces exactly ($E_0=-10.55601176$, $S(L)=0.37036$,
 $\omega=1.0235/1.7303$).
 
-[72-SITE RESULTS TO BE INSERTED]
+The 72-site cluster $2\times3\times3$ is the next admissible one, and
+it varies the shape as well as the size (it is the first cluster here
+that is genuinely three-dimensional in all three directions). Its ice
+manifold has 12,846,186 configurations and its ground-state winding
+sector has dimension 973,008. We verify rather than assume the
+identity of that sector, by diagonalizing the largest sectors
+independently.
+
+The comparison across all three clusters is:
+
+| | 48 | 64 | 72 |
+|---|---|---|---|
+| $E_0/N$ | $-0.2199$ | $-0.2165$ | $-0.2057$ |
+| $S(L)$ | $0.370$ | $0.369$ | $0.321$ |
+| $\omega_{\rm low}/K$ (share) | $1.024$ (50.8%) | $0.954$ (50.0%) | $1.068$ (54.0%) |
+| $\omega_{\rm high}/K$ (share) | $1.730$ (32.3%) | $1.652$ (31.3%) | $1.814$ (17.8%) |
+| $\omega_{\rm low}/\omega_{\rm high}$ | $0.592$ | $0.578$ | $0.589$ |
+| splitting | $0.513$ | $0.535$ | $0.518$ |
+
+The qualitative picture is identical on all three: one dominant level
+near $1.0K$ carrying at least half the weight at $L$, and a second
+transverse branch about seventy percent higher. The two diagnostics
+that involve no energy scale whatsoever --- the ratio of the branch
+energies and the fractional splitting --- are stable to a few percent
+across a factor of eleven in sector dimension and across a change of
+shape.
+
+We also report what is *not* stable: $S(L)$ falls to $0.321$ on the
+72-site cluster, the upper branch's share drops from about a third to
+18%, and the splitting at $X$ is not converged at all (53% at 48 sites
+against 6% at 64), from which we draw no conclusion.
 
 We also emphasize a check already present but previously undersold: on
 the 64-site cluster the anisotropy splits the $L$ star into two
