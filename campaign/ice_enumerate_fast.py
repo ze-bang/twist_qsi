@@ -184,3 +184,111 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+# ---------------------------------------------------------------------
+# Branched enumeration: bounded peak memory at any cluster size.
+#
+# The breadth-first tetrahedron order above lets site assignments run
+# ahead of the constraints that prune them.  At 96 sites that is fatal:
+# by tetrahedron 19 of 48 it has assigned 54 of 96 sites but imposed
+# only 40% of the tetrahedra, and the frontier passed 4e10
+# configurations -- an OOM kill -- before the late constraint-only steps
+# could cut it back to the ~2e9 that actually satisfy the ice rule.
+#
+# Two changes fix it.  greedy_order visits, at each step, the
+# tetrahedron introducing the FEWEST new sites, so constraints stay
+# close behind assignments.  And enumerate_branched grows the frontier
+# only until it reaches a seed target, then carries each seed through
+# the remaining tetrahedra INDEPENDENTLY.  Peak memory becomes one
+# branch rather than the whole frontier, at no cost in total work,
+# since the same configurations are visited either way.
+# ---------------------------------------------------------------------
+
+def greedy_order(tets):
+    """Visit the tetrahedron adding the fewest new sites at each step."""
+    tsets = [set(int(s) for s in t) for t in tets]
+    remaining = set(range(len(tets)))
+    assigned, order = set(), []
+    while remaining:
+        if not order:
+            pick = 0
+        else:
+            pick = min(remaining,
+                       key=lambda t: (len(tsets[t] - assigned),
+                                      -len(tsets[t] & assigned), t))
+        order.append(pick)
+        assigned |= tsets[pick]
+        remaining.discard(pick)
+    return order
+
+
+def _impose(states, tet, assigned):
+    """Apply one tetrahedron's two-in-two-out constraint to a frontier."""
+    S = [int(x) for x in tet]
+    K = [s for s in S if s in assigned]
+    N = [s for s in S if s not in assigned]
+    if K:
+        upsK = np.zeros(len(states), dtype=np.int8)
+        for s in K:
+            upsK += bit_of(states, s)
+    else:
+        upsK = np.zeros(len(states), dtype=np.int8)
+    pieces = []
+    for k in range(len(K) + 1):
+        need = 2 - k
+        if need < 0 or need > len(N):
+            continue
+        sel = np.where(upsK == k)[0]
+        if not len(sel):
+            continue
+        sub = states[sel]
+        for m in subsets_with_popcount(N, need):
+            new = sub.copy()
+            new[:, 0] |= m[0]
+            new[:, 1] |= m[1]
+            pieces.append(new)
+    if not pieces:
+        return np.zeros((0, 2), dtype=U64), N
+    return np.concatenate(pieces), N
+
+
+def enumerate_ice_branched(n_sites, tets, seed_target=4096, log=print):
+    order = greedy_order(tets)
+    states = np.zeros((1, 2), dtype=U64)
+    assigned = set()
+    step = 0
+    # grow a seed frontier
+    while step < len(order) and len(states) < seed_target:
+        states, new = _impose(states, tets[order[step]], assigned)
+        assigned.update(new)
+        step += 1
+    seeds = states
+    log(f"  {len(seeds):,} seeds after {step} tetrahedra "
+        f"({len(assigned)} sites assigned); carrying each through the "
+        f"remaining {len(order)-step}")
+
+    out, total, peak = [], 0, 0
+    t0 = time.perf_counter()
+    for i in range(len(seeds)):
+        br = seeds[i:i + 1]
+        a = set(assigned)
+        for j in range(step, len(order)):
+            br, new = _impose(br, tets[order[j]], a)
+            a.update(new)
+            if len(br) == 0:
+                break
+            peak = max(peak, len(br))
+        if len(br):
+            out.append(br)
+            total += len(br)
+        if (i + 1) % max(1, len(seeds) // 8) == 0:
+            log(f"  seed {i+1:,}/{len(seeds):,}  collected {total:,}  "
+                f"peak branch {peak:,} ({peak*16/2**30:.2f} GB)  "
+                f"({time.perf_counter()-t0:.0f} s)")
+    if not out:
+        return np.zeros((0, 2), dtype=U64)
+    res = np.concatenate(out)
+    log(f"  peak branch frontier {peak:,} = {peak*16/2**30:.2f} GB; "
+        f"result {len(res):,} = {res.nbytes/2**30:.2f} GB")
+    return res

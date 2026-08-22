@@ -46,8 +46,8 @@ import recompute_finite_size_artifact as geometry               # noqa: E402
 from run_momentum_resolved_spectrum import star                 # noqa: E402
 from run_ring48_dssf import contractible                        # noqa: E402
 from ring48_momenta_fix import fcc_momenta                      # noqa: E402
-from ice_enumerate_fast import (enumerate_ice_fast, bit_of,     # noqa: E402
-                                site_mask)
+from ice_enumerate_fast import (enumerate_ice_branched,        # noqa: E402
+                                bit_of, site_mask)
 
 OUT = ROOT / "campaign" / "outputs" / "ring_model_dssf"
 U64 = np.uint64
@@ -228,8 +228,8 @@ def main() -> int:
         log("  cluster fails the admissibility gate -- aborting", t0)
         return 1
 
-    states = enumerate_ice_fast(n, tets, budget_gb=250.0,
-                                log=lambda m: log(m.strip(), t0))
+    states = enumerate_ice_branched(n, tets,
+                                    log=lambda m: log(m.strip(), t0))
     log(f"enumerated {len(states):,} ice configurations "
         f"({states.nbytes/2**30:.2f} GB)", t0)
 
