@@ -25,6 +25,8 @@ continued fraction fit in memory at a sector dimension of order 10^8.
 Invoke as:  ring96_pipeline.py 2 3 4 [n_iter]
 """
 
+_TAGSUFFIX = ""
+
 from __future__ import annotations
 
 import json
@@ -337,6 +339,18 @@ def main() -> int:
         if not any(abs(s - s2) < 1e-6 and star(q) == star(q2)
                    for q2, s2 in classes):
             classes.append((q, s))
+    # optional class slicing so a 96-site sweep fits the wall clock:
+    # args 5,6 select [cls0, cls1) of the class list AFTER dropping the
+    # L classes (already computed by the dedicated L run)
+    if len(sys.argv) >= 7:
+        cls0, cls1 = int(sys.argv[5]), int(sys.argv[6])
+        classes = [c for c in classes if star(c[0]) != "L"]
+        log(f"class slice [{cls0}:{cls1}) of {len(classes)} non-L "
+            f"classes: "
+            + ", ".join(star(c[0]) for c in classes[cls0:cls1]), t0)
+        classes = classes[cls0:cls1]
+        global _TAGSUFFIX
+        _TAGSUFFIX = f"_c{cls0}-{cls1}"
     log(f"{len(Ls)} momenta in {len(classes)} distinct class(es) by "
         f"(star, S); "
         f"running the continued fraction on one representative of each",
@@ -396,7 +410,7 @@ def main() -> int:
 
 
     tag = "".join(str(s) for s in shape)
-    with open(OUT / f"ring_allq_fcc{tag}.json", "w") as fh:
+    with open(OUT / f"ring_allq_fcc{tag}{_TAGSUFFIX}.json", "w") as fh:
         json.dump(rec, fh, indent=1, default=float)
     log(f"wrote ring96_fcc{tag}.json", t0)
     return 0

@@ -111,10 +111,14 @@ reproduces exactly ($E_0=-10.55601176$, $S(L)=0.37036$,
 $\omega=1.0235/1.7303$).
 
 The 72-site cluster $2\times3\times3$ is the next admissible one, and
-it varies the shape as well as the size (it is the first cluster here
-that is genuinely three-dimensional in all three directions). Its ice
-manifold has 12,846,186 configurations and its ground-state winding
-sector has dimension 973,008. We verify rather than assume the
+it changes the shape as well as the size: the first two clusters are
+both of the form $2\times2\times n$ and differ only in the length of
+one axis, whereas $2\times3\times3$ is not a member of that family.
+It carries a single $L$-type momentum,
+$2\pi(\frac12,\frac12,-\frac12)$, so it does not repeat the two-class
+test, but it does test survival under a change of both size and shape.
+Its ice manifold has 12,846,186 configurations and its ground-state
+winding sector has dimension 973,008. We verify rather than assume the
 identity of that sector, by diagonalizing the largest sectors
 independently.
 

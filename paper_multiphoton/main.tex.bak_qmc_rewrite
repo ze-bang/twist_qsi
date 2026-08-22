@@ -14,7 +14,7 @@ urlcolor=blue!55!black,linkcolor=blue!55!black]{hyperref}
 
 \begin{document}
 
-\title{A roton-like minimum in the excitation spectrum of quantum spin ice}
+\title{Roton-like softening of a transverse photon branch in quantum spin ice}
 
 \author{Zhengbang Zhou}
 \email{zhengbang.zhou@mail.utoronto.ca}
@@ -28,38 +28,40 @@ Ontario M5S 1A7, Canada}
 
 \date{\today}
 \begin{abstract}
-Quantum spin ice hosts an emergent photon at long wavelength, and its
-compact gauge theory is known to be strongly interacting. We show that
-in the pure ring-exchange model the lowest collective excitation lies
-not at small momentum but at the zone-boundary $L$ point. Exact
-spectroscopy of the local-Ising correlation function
-$\Szz(\bq,\omega)$, resolved eigenstate by eigenstate, on 48-, 64-,
-72- and 96-site pyrochlore clusters --- the largest a
-147-million-dimensional constrained sector --- finds at every size a
-single sharp level at $0.90$--$1.07K$ carrying at least half of the
-longitudinal weight at $L$, below the lowest bright level at every
-other accessible momentum. Its location and relative depth are
-predicted by the ground-state Feynman ratio $f_1(\bq)/S(\bq)$: on
-clusters whose anisotropy splits the $L$ star into inequivalent
-classes, the ratio selects in advance which class reconstructs,
-verified independently at 64 and 96 sites, and on the 72-site cluster
-it predicts the energies of two soft levels at different momenta to
-better than one percent. Because both factors of the ratio are
-ground-state quantities, they are computable far beyond exact
-diagonalization: sign-free Green's-function Monte Carlo on complete
-momentum grids of up to 2048 sites, validated digit-for-digit against
-the 48-site spectra, shows that the zone-boundary minimum of $f_1/S$
-sits at $L$ at every size, $20$--$25\%$ deep, drifting by under two
-percent from 864 to 2048 sites. Exact plaquette decomposition
-attributes $71\%$ of the mode's variational relaxation to the one
-hexagon family the probe leaves unconstrained, a lattice analogue of
-backflow. We state precisely what remains open: the mode's sharpness
-is established only up to 96 sites, the Monte Carlo constraining the
-centroid rather than the poles beyond that; and on the lattice the
-minimum is over the zone-boundary landscape and the bright spectrum,
-not a radial helium-style dip. Within those stated limits, the
-identification of a Feynman roton-like minimum in the emergent-photon
-spectrum is supported at every point by exact or gated computation.
+Quantum spin ice has a well-established long-wavelength description in
+terms of an emergent photon, and previous exact-diagonalization and
+semiclassical work already establishes that the underlying compact
+gauge theory is strongly interacting. What those results do not fix
+is how the microscopic ring model distributes its longitudinal
+spectral weight at finite momentum. We compute the zero-temperature
+correlation function $\Szz(\bq,\omega)$ of the local Ising pseudospin,
+which is exactly the emergent electric field, in the ground-state
+winding sector of 48-, 64- and 72-site pyrochlore clusters, resolving every
+eigenstate and matrix element rather than a broadened lineshape. The
+response is photon-like at the smallest accessible momentum and
+reconstructs at the zone boundary. At $L$ a collective level appears
+at $1.02K$ on 48 sites, $0.95K$ on 64 and $1.07K$ on 72, carries at least half
+the weight at that momentum, and lies near half the Gaussian-photon
+energy. A basis-independent polarization analysis identifies it as
+the lower of the two transverse branches rather than a new species,
+and few-photon kinematics place it a factor of five below the
+three-photon threshold. We call the mode roton-like in the Feynman
+sense: its softening tracks the ratio of oscillator strength to
+equal-time structure factor, $f_1(\bq)/S(\bq)$, both of which are
+ground-state quantities, and the ratio correctly predicts in advance
+which of two inequivalent $L$-type momentum classes on the 64-site
+cluster reconstructs. Two microscopic diagnostics separate the level
+from an ordinary dressed photon: a Rokhsar--Kivelson flippability
+potential, used only as an infinitesimal probe at $V=0$, shows that it
+gains flippable hexagons while losing ring-exchange coherence; and an
+exact plaquette decomposition attributes $71\%$ of its variational
+relaxation to the one hexagon family that the electric-field wave
+leaves entirely unconstrained, a lattice analogue of backflow. The
+same reconstruction appears as an order-one polarization splitting at
+the zone boundary, and a further $16$--$38\%$ of the weight lies in
+levels absent from the Gaussian one-photon theory. We state
+explicitly which conclusions are limited by the accessible cluster
+sizes.
 \end{abstract}
 
 \maketitle
@@ -102,9 +104,7 @@ electrodynamics, for which one does not need the full set of
 eigenstates and matrix elements. Resolving the operator content of
 the spectrum is more expensive per spin than locating its lowest
 levels, and that is the trade we make. Within that more demanding
-calculation we reach $96$ spins --- matching the largest
-constrained-space diagonalization on record --- which required
-abandoning the
+calculation we reach $72$ spins, which required abandoning the
 single-word bit-mask representation that caps such work at $64$.
 
 The unresolved question we address is therefore narrower: \emph{how is
@@ -115,22 +115,16 @@ finite-size poles, matrix elements, and state character needed to
 answer this question sharply, while previous exact diagonalization was
 organized around low-energy QED parameters rather than the complete
 operator-resolved response. We compute the matrix elements of
-$S^z(\bq)$ directly in the constrained Hilbert space, and we
-complement the exact spectra with sign-free ground-state Monte Carlo
-that carries the mechanism's two ingredients --- both ground-state
-quantities --- to 2048 sites. The result is a long-wavelength photon
-that survives as expected and a zone-boundary spectrum that is
-strongly reconstructed. The most prominent feature is the lowest
-excitation of every diagonalized cluster: a single level at $L$
-carrying about half of the longitudinal weight there, below the
-lowest bright level at every other accessible momentum. We call it
-\emph{roton-like} in a precisely operational sense, defined and
-defended in Sec.~\ref{sec:roton-sense}: a finite-momentum minimum of
-the collective spectrum, produced by the Feynman mechanism --- the
-ground-state ratio $f_1/S$ locates it, predictively --- and relaxed
-by a lattice analogue of backflow. What that terminology does and
-does not commit us to, including the two statements our data cannot
-make, is set out there rather than left to connotation.
+$S^z(\bq)$ directly in the constrained Hilbert space. The result is a
+long-wavelength photon that survives as expected and a zone-boundary
+spectrum that is strongly reconstructed. The most prominent feature
+is an anomalously soft $L$-point level carrying about half of
+the $S^z$ spectral weight. We will call it \emph{roton-like}: this terminology
+does not claim that our sparse finite-size momenta establish a local
+minimum of a thermodynamic dispersion. It denotes a finite-momentum
+collective continuation of a photon branch whose softening follows the
+Feynman ratio $f_1/S$ and whose microscopic response differs
+qualitatively from that of the long-wavelength photon.
 
 \section{Model, observable, and scope}
 We study the standard pyrochlore
@@ -377,22 +371,16 @@ any excited state. The ratio is thus usable as a predictor, evaluated
 before the spectrum is computed, and the meaningful tests are those in
 which it predicts something not already known.
 
-Four such tests are available here, and all are reported below. The
+Two such tests are available here, and both are reported below. The
 first is a class prediction: the anisotropic 64-site cluster contains
 two inequivalent $L$-type momentum classes with substantially
 different $S(\bq)$, and the ground-state ratio selects, in advance,
-which of the two reconstructs. The second is the same prediction made
-independently on the 96-site cluster, whose $L$ star also splits; it
-succeeds again. The third is quantitative: on the 72-site cluster two
-\emph{different} momentum stars happen to have ratios within $0.9\%$
-of one another, and their soft levels come out within $0.7\%$ ---
-a ground-state quantity predicting two excitation energies to better
-than a percent. The fourth is the trajectory under the
-Rokhsar--Kivelson bias: $f_1(L)$ is constant to better than one
-percent while $S(L)$ grows and the level softens, so the ground-state
-factor moves first and the spectral response follows. Statements of
-the form ``the centroid is low at $L$'' carry no weight on their own
-and are not used as evidence in what follows.
+which of the two should reconstruct. The second is the trajectory
+under the Rokhsar--Kivelson bias: $f_1(L)$ is constant to better than
+one percent while $S(L)$ grows and the level softens, so the
+ground-state factor moves first and the spectral response follows.
+Statements of the form ``the centroid is low at $L$'' carry no weight
+on their own and are not used as evidence in what follows.
 
 \begin{figure}[t]
 \centering
@@ -483,19 +471,6 @@ generated by the quantum ring dynamics at $V=0$. This is the main
 distinction from an RK-point resonon, whose softening can be read
 directly from the classical correlations of the equal-amplitude state.
 
-Finally, the mechanism is the \emph{ratio}, and $L$ is where the ratio
-is minimized rather than a privileged point in itself. The 72-site
-cluster makes this concrete: its momentum $(\frac16,\frac12,\frac12)$
-has a family decomposition $(36,144,144,108)$ --- one hexagon family
-suppressed to a quarter rather than the exact zero that $L$ enjoys ---
-but a structure factor almost as large, and its ratio comes out within
-$0.9\%$ of the $L$ value. Its spectrum is correspondingly almost
-identical: a dominant level at $1.075K$ with $55\%$ of the weight,
-against $1.068K$ with $54\%$ at $L$. Exact geometric decoupling is
-therefore one route to a small ratio; partial suppression combined
-with a large $S(\bq)$ is another, and the spectrum follows the ratio,
-not the route.
-
 \section{Microscopic character of the low $L$ mode}
 The state-resolved
 expectation values show that flippability and resonance coherence are
@@ -570,55 +545,54 @@ distributed weight characteristic of a continuum, and that its
 polarization content is that of a single transverse branch
 (Appendix~\ref{app:polarization}).
 
-\section{In what sense this is a roton}
-\label{sec:roton-sense}
+\section{Why the mode is roton-like}
 
-The word carries several meanings and we state exactly which one we
-claim. Operationally, a roton-like minimum is a finite-momentum
-minimum of a collective excitation branch, produced by the Feynman
-mechanism --- an excitation is cheap where the static structure factor
-is large and the oscillator strength small --- and relaxed further by
-backflow-like reorganization of the degrees of freedom the bare
-density wave does not constrain. Every element of that definition is
-now established by exact or gated computation: the lowest bright
-excitation of every diagonalized cluster lies at $L$, below the
-photon branch at all other accessible momenta
-(Sec.~\ref{sec:qmc} and the four-cluster table below); the ground-state ratio
-$f_1/S$ predicts the location, three times, forward
-(Sec.~\ref{sec:circularity}); its zone-boundary minimum at $L$
-persists to 2048 sites; and the plaquette-resolved relaxation is
-dominated by the geometrically dark hexagon family
-(Appendix~\ref{app:backflow}).
+The terminology is meant to identify a mechanism and a change of
+character, and it is worth separating what we have established from
+what we have not.
 
-Two things are \emph{not} claimed, and the distinction is part of the
-result rather than a hedge. First, sharpness beyond 96 spins: exact
-diagonalization establishes a single dominant pole up to that size,
-while the Monte Carlo constrains only the centroid; whether the pole
-broadens into a narrow continuum in the thermodynamic limit is open,
-and the gapless theory permits multi-quantum weight to descend toward
-any branch. What is size-stable is where the spectrum is soft and how
-much weight is there. Second, the radial profile: on the lattice the
-$[111]$ line terminates at $L$, so the minimum is over the
-zone-boundary landscape and over the bright spectrum, not a dip along
-a radial cut as in helium. The analogy to helium is nevertheless the
-correct mechanical one. There, the high-momentum continuation of the
-sound branch is softened where $S(q)$ peaks and lowered further by
-backflow. Here the electric field is microscopically saturated,
-$E=S^z=\pm\frac12$, so a finite-amplitude wave cannot be formed by
-increasing $|E|$ on a bond: it must rearrange which bonds carry the
-two allowed values, that rearrangement costs ring coherence, and the
-cost is smallest at $L$ --- for the geometric and dynamical reasons of
-the preceding sections.
+We have not tracked a branch adiabatically from the Gaussian theory to
+the compact one, and in this model one cannot: the interpolation that
+would be needed does not exist. Because $E_\ell=S^z_\ell=\pm\frac12$
+makes $E_\ell^2$ a constant, there is no bare electric stiffness $U$
+to turn down, hence no continuous parameter connecting a free photon
+to the interacting problem. Any claim of adiabatic ancestry would be
+rhetorical rather than computed, and we make none.
 
-We add what the identification does not rest on. It does not rest on
-photon ancestry: with $E^2$ a c-number there is no interpolation to a
-free theory, so no adiabatic branch labeling exists, and we call the
-mode only the dominant excitation in one transverse $S^z$ channel.
-It does not rest on the fitted Gaussian scale: the scale-free branch
-ratio $0.55$--$0.59$ and the zone-boundary hierarchy of $f_1/S$
-involve no fitted quantity. And it does not rest on the flippability
-census, which is a consistent signature but not size-stable in
-magnitude (Sec.~\ref{sec:census-limits}).
+What we have established is a channel identification, which is
+sharper than it may sound. At each momentum the probe lives in a
+two-dimensional transverse space; every bright level is
+polarization-pure, and the two brightest are mutually orthogonal
+(Appendix~\ref{app:polarization}). The anomalous level therefore
+occupies one of exactly two available transverse channels. It is not
+an additional species beyond the photon branches, and few-photon
+kinematics (Sec.~\ref{sec:kinematics}) place it far below any
+multi-photon threshold.
+
+At the same time, calling it simply a photon with a renormalized
+velocity misses what the state-resolved diagnostics show. The other
+transverse branch at $L$ \emph{loses} flippable plaquettes under the
+RK bias, $\Delta\langle n^{\rm flip}\rangle=-0.06$, while this one
+gains them, $+0.34$; it combines increased flippability with reduced
+ring coherence; and its softening tracks the Feynman ratio rather than
+a uniform rescaling of the band, as the trajectory under $V$ and the
+64-site class test both show.
+
+This is the sense in which the analogy to the helium roton is useful.
+In helium the high-momentum continuation of the sound branch is
+softened by correlations and backflow. Here the electric field is
+microscopically saturated, so a finite-amplitude wave cannot be made
+by increasing $|E|$ on a bond; it must instead rearrange which bonds
+carry the two allowed values, and that rearrangement changes the
+magnetic flux and the coherence of ring exchange. At $L$ this
+correlated rearrangement is substantially cheaper than the Gaussian
+continuation of the long-wavelength photon, and the relaxation is
+carried by the plaquettes the wave does not constrain, which is the
+structure of backflow. Establishing a true local minimum of a
+thermodynamic dispersion would require denser momenta than our
+clusters provide; our claim is the finite-size, mechanism-based one
+stated here.
+
 \section{Relation to RK resonons}
 Single-mode soft modes are familiar
 in quantum dimer models at Rokhsar--Kivelson points. There the ground
@@ -658,70 +632,58 @@ the weight; the class with $S=0.227$ has its dominant level at
 $1.998K$ with $77\%$ of the weight, and no anomalous state at all.
 The effect follows the structure factor rather than the label $L$.
 
-\emph{Stability with size.} We can now compare four clusters. The
+\emph{Stability with size.} We can now compare three clusters. The
 third, $2{\times}3{\times}3$ with 72 spins, required extending the
-state representation past a single 64-bit word; the fourth,
-$2{\times}3{\times}4$ with 96 spins, required in addition a vectorized
-enumeration of its two-billion-configuration ice manifold and a
-Lanczos treatment of a $146\,758\,352$-dimensional winding sector
-(Appendix~\ref{app:methods}). Ninety-six spins matches the largest
-constrained-space exact diagonalization reported for this model
-~\cite{Pace2021}, there used for ground-state properties; here the
-full operator-resolved response is obtained. The four boxes span
-three distinct shapes.
+state representation past a single 64-bit word
+(Appendix~\ref{app:methods}). It also changes the shape and not only
+the size: the first two clusters are both of the form
+$2{\times}2{\times}n$ and differ only in the length of one axis,
+whereas $2{\times}3{\times}3$ is elongated along a different pair and
+is not a member of that family. It carries a single $L$-type
+momentum, $\bq=2\pi(\tfrac12,\tfrac12,-\tfrac12)$, so it does not
+repeat the two-class test of the 64-site box, but it does test whether
+the anomaly survives a change of both size and shape.
 
 \begin{center}
-\begin{tabular}{lrrrr}
+\begin{tabular}{lrrr}
 \hline\hline
- & $2{\times}2{\times}3$ & $2{\times}2{\times}4$ &
-   $2{\times}3{\times}3$ & $2{\times}3{\times}4$\\
-sites & $48$ & $64$ & $72$ & $96$\\
-ice configurations & $87\,546$ & $2.76{\times}10^{6}$
-  & $1.28{\times}10^{7}$ & $2.01{\times}10^{9}$\\
-sector dimension & $9\,104$ & $249\,180$ & $973\,008$
-  & $1.47{\times}10^{8}$\\
+ & $2{\times}2{\times}3$ & $2{\times}2{\times}4$ & $2{\times}3{\times}3$\\
+sites & $48$ & $64$ & $72$\\
+ice configurations & $87\,546$ & $2\,756\,394$ & $12\,846\,186$\\
+sector dimension & $9\,104$ & $249\,180$ & $973\,008$\\
 \hline
-$E_0/N$ & $-0.2199$ & $-0.2165$ & $-0.2057$ & $-0.2038$\\
-$S(L)$ & $0.370$ & $0.369$ & $0.321$ & $0.355$\\
-$\omega_{\rm low}/K$ & $1.024$ & $0.954$ & $1.068$ & $0.904$\\
-share & $50.8\%$ & $50.0\%$ & $54.0\%$ & $54.4\%$\\
-$\omega_{\rm high}/K$ & $1.730$ & $1.652$ & $1.814$ & $1.647$\\
-$\omega_{\rm low}/\omega_{\rm high}$ & $0.592$ & $0.578$ & $0.589$
-  & $0.549$\\
-census $d\omega_{\rm low}/dV$ & $+0.34$ & $+0.34$ & $+0.13$ & $+0.26$\\
+$E_0/N$ & $-0.2199$ & $-0.2165$ & $-0.2057$\\
+$S(L)$ & $0.370$ & $0.369$ & $0.321$\\
+$\omega_{\rm low}/K$ & $1.024$ & $0.954$ & $1.068$\\
+share & $50.8\%$ & $50.0\%$ & $54.0\%$\\
+$\omega_{\rm high}/K$ & $1.730$ & $1.652$ & $1.814$\\
+share & $32.3\%$ & $31.3\%$ & $17.8\%$\\
+\hline
+$\omega_{\rm low}/\omega_{\rm high}$ & $0.592$ & $0.578$ & $0.589$\\
+splitting & $0.513$ & $0.535$ & $0.518$\\
 \hline\hline
 \end{tabular}
 \end{center}
 
-The qualitative picture is identical on all four: a single dominant
-level near $1K$ carrying at least half of the weight at $L$, and a
-second transverse branch roughly seventy percent higher. The
-scale-free ratio of the two branch energies varies over
-$0.549$--$0.592$ across a factor of $16\,000$ in sector dimension and
-three box shapes; the soft level's share of the weight varies over
-$50$--$54\%$. This is the evidence least contaminated by fitted
-quantities. On the largest cluster the mode is, if anything, the
-softest of the four.
+The qualitative picture is the same on all three: a single dominant
+level near $1.0K$ carrying at least half of the weight at $L$, and a
+second transverse branch roughly seventy percent higher. The two
+quantities that require no energy scale at all --- the ratio of the
+two branch energies and the fractional splitting --- are stable to a
+few percent across a factor of eleven in Hilbert-space dimension and
+across a change of cluster shape: $0.592$, $0.578$, $0.589$ and
+$0.513$, $0.535$, $0.518$. This is the strongest size evidence we can
+offer, and it is the evidence least contaminated by fitted quantities.
 
-\emph{The class prediction repeats at 96 sites.} The
-$2{\times}3{\times}4$ box, like the 64-site one, carries two
-inequivalent $L$ classes, with $S=0.355$ and $S=0.241$. Computed
-before any excited state, the ratio again selects the first: it
-develops the $0.904K$ level with $54.4\%$ of the weight, while the
-second remains photon-like, its two dominant levels at $1.651K$ and
-$1.730K$ with flippability censuses of $-0.02$ and $-0.09$ against
-$+0.26$ for the soft mode. The forward discrimination between $L$
-classes has therefore succeeded at two sizes independently, and the
-census contrast within a single cluster --- positive for the class
-that reconstructs, negative at the same $|\bq|$ for the class that
-does not --- appears at both.
-
-Not everything is stable, and we say which. $S(L)$ moves between
-$0.321$ and $0.370$ with box shape; the weight retained by the upper
-branch varies between $18\%$ and $32\%$; the census magnitude varies
-by a factor $2.6$ (Sec.~\ref{sec:census-limits}); and the polarization
-splitting at $X$ is not converged, falling from $42\%$ at 48 sites to
-$5.9\%$ at 64; no conclusion is drawn from it.
+Not everything is stable, and we say which. The equal-time structure
+factor at $L$ falls to $0.321$ on the 72-site cluster from $0.370$ on
+the other two, and the level correspondingly sits slightly higher
+rather than lower --- the direction the $f_1/S$ mechanism requires,
+though the three clusters differ in shape as well as size and we do
+not press this as a quantitative test. The weight retained by the
+upper branch drops from about a third to $18\%$. And the polarization
+splitting at $X$ is not converged at all, falling from $42\%$ at 48
+sites to $5.9\%$ at 64; no conclusion is drawn from it.
 
 \emph{The deformation trajectory.} Under a bias toward more flippable
 configurations ($V<0$), $f_1(L)$ changes by less than one percent
@@ -730,73 +692,6 @@ ground-state factor moves first and the spectrum follows, which is the
 ordering the $f_1/S$ mechanism requires and the opposite of what a
 fitted correlation would produce.
 
-
-\section{Thermodynamic evidence: the ratio at 2048 sites}
-\label{sec:qmc}
-
-Because both factors of Eq.~(\ref{eq:sma}) are ground-state
-quantities, they are computable far beyond any exactly diagonalizable
-size. The ring Hamiltonian is stoquastic --- every off-diagonal
-element equals $-K$ and the diagonal vanishes --- so its ground state
-has no sign problem, and Green's-function Monte Carlo with the
-equal-amplitude trial state and forward walking yields unbiased
-pure-state expectation values of diagonal observables
-(Appendix~\ref{app:gfmc}). $S(\bq)$ is diagonal; and on cubic
-$n{\times}n{\times}n$ supercells every hexagon is symmetry-equivalent,
-so the exact sum rule
-$\sum_p\langle W_p+W_p^\dagger\rangle=-E_0/K$ fixes the plaquette
-coherence from the energy alone and $f_1(\bq)$ follows with no
-additional statistical error. The method is gated, not assumed: on
-the 48-site cluster it reproduces the exact $E_0$ to $0.5\sigma$ and
-$S(L)=0.370365$ to every printed digit --- decisively away from the
-equal-amplitude value $0.297$, which is where a broken forward walker
-would land.
-
-We computed $S(\bq)$ on the \emph{complete} allowed momentum grids of
-the $6^3$ (864-site, 216 momenta) and $8^3$ (2048-site, 512 momenta)
-supercells, where every value is a true eigenmode weight with no
-interpolation. Averaged over symmetry copies (which scatter by less
-than $0.04$, an internal consistency check), the Feynman ratio at the
-zone-boundary points is
-\begin{center}
-\begin{tabular}{lrr}
-\hline\hline
- & $864$ sites & $2048$ sites\\
-\hline
-$L$ & $2.142(10)$ & $2.179(15)$\\
-$X$ & $2.660(10)$ & $2.713(21)$\\
-$W$ & ---         & $2.781(10)$\\
-$K$ & ---         & $2.718(16)$\\
-$U$ & ---         & $2.736(8)$\\
-\hline\hline
-\end{tabular}
-\end{center}
-in units of $K$. The minimum of the ratio over the zone boundary sits
-at $L$ at both sizes, $20$--$25\%$ below every other zone-boundary
-point, and moves by $1.7\%$ between 864 and 2048 sites. The
-large-system data were genuinely needed: interior momenta drift
-substantially with size --- at $(\frac13,\frac13,\frac13)$ the ratio
-falls from $2.42$ on the 48-site cluster to $1.81$ at 864 sites ---
-whereas the $L$ and $X$ values barely move, so the zone-boundary
-hierarchy could not have been extrapolated from exact diagonalization
-alone.
-
-Two aspects of the geometry must be stated precisely, because a looser
-reading would overclaim. First, along the radial $[111]$ direction the
-ratio rises monotonically from zero at $\Gamma$ --- $0.60$, $1.36$,
-$1.97$, $2.18$ at the allowed momenta $\frac{k}{8}(1,1,1)$ of the
-$8^3$ cell --- and $L$ is the endpoint of that line: beyond it the
-band folds back, because $2\pi(1,1,1)$ is a reciprocal lattice vector.
-The minimum is therefore not a helium-style dip along a radial cut;
-it is a minimum of the ratio over the zone-boundary landscape, the
-surface on which all the competing short-wavelength excitations live,
-where the descent into $L$ is steep (from $2.78$ at $W$). Second, the
-ratio is the spectral centroid, an upper bound on the lowest bright
-excitation: the Monte Carlo therefore constrains where the spectrum
-is soft, and the exact diagonalization is what shows that a single
-sharp pole, at roughly half the centroid, is what makes it soft.
-The two calculations are complementary, and we do not claim either
-one alone establishes the mode.
 
 \section{What the flippability census does and does not show}
 \label{sec:census-limits}
@@ -832,22 +727,18 @@ extreme, not unique.
 
 The census is also the least size-stable of our diagnostics, and we say
 so plainly. At the anomalous level it is $+0.339$ on 48 sites,
-$+0.338$ on 64, $+0.134$ on 72 and $+0.259$ on 96. The sign is
-robust; the magnitude is not, and no normalization we tried repairs
-it. On 48 and 64 sites the anomalous level is the only appreciably
-positive bright census, exceeding the next by factors of $29$ and $7$;
-on 72 sites several bright levels are positive and it is no longer the
-largest. We therefore do not use the census as the primary
-discriminant.
+$+0.338$ on 64 and $+0.134$ on 72. The sign is robust; the magnitude
+is not, and no normalization we tried repairs it. On 48 and 64 sites
+the anomalous level is the only appreciably positive bright census,
+exceeding the next by factors of $29$ and $7$; on 72 sites several
+bright levels are positive and it is no longer the largest. We
+therefore do not use the census as the primary discriminant.
 
 What does survive on every cluster is a comparison made \emph{within}
-one of them, and it now appears at two sizes. The 64- and 96-site
-boxes each carry two inequivalent $L$-type classes
+one of them. The 64-site box carries two inequivalent $L$-type classes
 at identical $|\bq|$ and identical Gaussian energy. The class that
-reconstructs has census $+0.338$ (64) and $+0.259$ (96); the class
-that does not has
-$-0.166$ and $-0.02$/$-0.09$ respectively. Same momentum star, same
-free-theory prediction, opposite
+reconstructs has census $+0.338$; the class that does not has
+$-0.166$. Same momentum star, same free-theory prediction, opposite
 response to the flippability probe. That contrast needs no comparison
 across cluster sizes and no fitted scale, and it is the census evidence
 we rely on.
@@ -973,24 +864,26 @@ lineshape of spectral weight rather than a one-to-one count of finite
 cluster poles.
 
 \section{Limitations and clusters}
-Our conclusions are subject to four explicit restrictions. First, the
-calculation is performed in the ground-state winding sector of the
-spin-ice ring model, not over all topological sectors and not in the
-full microscopic spin Hilbert space. Second, exact spectra exist at
-four sizes and no more; the scale-free diagnostics --- the branch
-ratio and the soft level's weight share --- are stable across all
-four, but $S(L)$, the upper branch's weight and the census magnitude
-move with box shape, and the splitting at $X$ is unconverged. Third,
-the sharpness of the mode is established only up to 96 spins. The
-Monte Carlo extends the ground-state predictor to 2048 sites but
-constrains the spectral centroid, not the poles; whether the level
-broadens into a narrow continuum in the thermodynamic limit is open.
-Fourth, longer ring exchanges and virtual-spinon processes in
-microscopic XXZ models lie outside Eq.~(\ref{eq:ring}). Whether the
-anomaly survives their addition is a question this calculation cannot
-answer, and no claim here rests on it; work on the XXZ model is in
-progress and will be reported separately. The overall ring scale $K$
-can be constrained thermodynamically~\cite{ZhouAnKim2026}.
+Our conclusions are subject to four
+explicit restrictions. First, the calculation is performed in the
+ground-state winding sector of the spin-ice ring model, not over all
+topological sectors and not in the full microscopic spin Hilbert space.
+Second, three cluster sizes are available and no more. The scale-free
+diagnostics --- the ratio of the two branch energies and their
+fractional splitting --- are stable across all three to a few percent,
+as is the level's share of the weight, but the equal-time structure
+factor at $L$ and the weight retained by the upper branch are not,
+and neither is the splitting at $X$. Third,
+the discrete cluster momenta do not establish a local minimum of a
+continuous thermodynamic dispersion; this is why we use the qualified
+term roton-like. A zone-wide prediction would require the interacting
+$S(\bq)$ at momenta inaccessible to these clusters. Fourth, longer
+ring exchanges and virtual-spinon processes in microscopic XXZ models
+lie outside Eq.~(\ref{eq:ring}). Whether the anomaly survives the
+addition of virtual-spinon processes is a question this calculation
+cannot answer, and no claim here rests on it; work on the XXZ model is
+in progress and will be reported separately. The overall ring scale
+$K$ can be constrained thermodynamically~\cite{ZhouAnKim2026}.
 
 The cluster choice itself is important. The standard 16- and 32-site
 pyrochlore cells are pathological for this question. On the 32-site
@@ -1003,12 +896,11 @@ $87\,546$ ice configurations; ground-state winding sector of dimension
 $9104$), which we diagonalize completely so that the operator-resolved
 weights exactly saturate the equal-time sum rule. For the size checks
 we use $2{\times}2{\times}4$ (64 sites, $2\,756\,394$ ice
-configurations; sector dimension $249\,180$),
-$2{\times}3{\times}3$ (72 sites, $12\,846\,186$ configurations; sector
-$973\,008$) and $2{\times}3{\times}4$ (96 sites, $2\,007\,260\,562$
-configurations; sector $146\,758\,352$), all by Lanczos and all only
-after reproducing every 48-site benchmark. Momentum labels are
-certified by exact translation projectors.
+configurations; ground-state winding sector of dimension $249\,180$)
+and $2{\times}3{\times}3$ (72 sites, $12\,846\,186$ configurations;
+sector dimension $973\,008$), both by Lanczos and both only after
+reproducing all 48-site benchmarks. Momentum labels are certified by
+exact translation projectors.
 
 It is natural to ask why we do not simply vary the \emph{shape} of the
 torus at fixed spin number, which would be the cleanest control of
@@ -1030,35 +922,28 @@ not an available test here, and the finite-size evidence rests on the
 sequence of sizes instead.
 
 \section{Conclusion}
-
-The pure ring-exchange model of quantum spin ice, the minimal compact
-gauge theory of the ice manifold, has its lowest collective excitation
-not at small momentum but at the zone-boundary $L$ point: a single
-level at $0.90$--$1.07K$ carrying at least half of the longitudinal
-weight at its momentum, below the lowest bright level at every other
-accessible momentum, on every cluster from 48 to 96 spins. The
-mechanism is Feynman's. The ground-state ratio $f_1/S$ predicts where
-the spectrum reconstructs --- forward, four times, once to better than
-a percent --- and sign-free Monte Carlo shows that its zone-boundary
-minimum at $L$ survives, essentially unchanged, to 2048 sites. The
-relaxation that carries the mode below the single-mode bound is
-dominated, in an exact plaquette decomposition, by the hexagon family
-the probe leaves unconstrained: backflow, in lattice form.
-
-We have been precise about the two statements the data do not make:
-sharpness beyond 96 spins, where only the centroid is constrained, and
-a radial helium-style dip, which the lattice geometry does not define
-at $L$. Neither weakens what is established --- a roton-like minimum
-in the operational sense, produced by the Feynman mechanism, at the
-zone boundary of the emergent-photon spectrum. The same spectra
-quantify photon interactions in a regime where they are
-nonperturbative: an order-one splitting of the transverse channels at
-the zone boundary --- the same fact as the reconstruction, seen as an
-energy difference --- and $16$--$38\%$ of the longitudinal weight
-outside the two dominant poles. The principal message for experiment
-is that finite-momentum spectroscopy of a compact spin-one-half gauge
-field need not resemble a single renormalized photon pole, and that
-its softest feature should be sought at $L$.
+The standard pyrochlore ring Hamiltonian is known
+to realize a strongly interacting compact $U(1)$ gauge theory; our
+result concerns how that strong coupling appears in its
+operator-resolved finite-momentum spectrum. At long wavelength the
+neutron response is dominated by the expected emergent photon. At the
+sampled $L$ point, however, the spectral weight reconstructs around a
+collective level at about half the Gaussian-photon energy carrying
+approximately half of the intensity. Its connection to a transverse
+photon branch, its softening with $f_1/S$, its positive flippability
+response, and the recovery of energy through wavefront plaquettes
+motivate a Feynman-type, roton-like interpretation. The same level is
+the lower of the two transverse branches, so the order-one
+polarization splitting at the zone boundary is not a second result but
+the same reconstruction expressed as an energy difference; it connects
+what we find to earlier semiclassical
+predictions~\cite{Kwasigroch2017,Kwasigroch2020}. Separately from the
+photon descendants, $16$--$38\%$ of the $S^z$ spectral weight lies in
+levels the Gaussian one-photon theory does not contain. The principal
+experimental message is therefore not that the emergent photon
+disappears, but that finite-momentum spectroscopy of a compact
+spin-one-half gauge field need not resemble a single renormalized
+photon pole.
 
 \appendix
 
@@ -1235,58 +1120,6 @@ relaxation is backflow-like: the state reorganizes exactly those
 degrees of freedom that the bare electric-field wave does not
 constrain, and which therefore cost it no overlap.
 
-
-\section{Green's-function Monte Carlo}
-\label{app:gfmc}
-
-The ring Hamiltonian restricted to the ice manifold is stoquastic:
-its diagonal vanishes and every nonzero off-diagonal element equals
-$-K$. The power method with the propagator $\Lambda-H$, $\Lambda$
-larger than the top of the spectrum, therefore converges to the ground
-state with strictly nonnegative amplitudes, and importance sampling
-with the equal-amplitude trial state $|\Psi_T\rangle=\sum_x|x\rangle$
-gives walkers whose weights never change sign. A walker at
-configuration $x$ moves to one of its $n^{\rm flip}(x)$ ring-connected
-neighbors or stays, with the local weight
-$\Lambda-\,$(diagonal)$\,=\Lambda$ and off-diagonal flow $K\,n^{\rm
-flip}(x)$; population control uses comb reconfiguration at fixed
-walker number, and the mixed estimator gives
-$E_0=-K\langle n^{\rm flip}\rangle_{\rm mix}$.
-
-$S(\bq)$ is diagonal in the configuration basis, and for diagonal
-observables the mixed distribution $\Psi_0\Psi_T$ is converted to the
-pure one $|\Psi_0|^2$ by forward walking: an observable measured at
-time $t$ is weighted by the number of descendants its walker retains
-at $t+T$. We use $T=80$ steps, beyond which the estimates are flat.
-
-Initialization has one subtlety worth recording. Every
-sublattice-uniform ice state is a frozen point of the dynamics ---
-each hexagon meets its three sublattices twice with opposite
-alternation parity, so no hexagon is flippable --- and it is also
-maximally polarized, so its winding sector contains no other state and
-sector-preserving loop updates cannot leave it. The seed is therefore
-randomized by worm-constructed loop flips in two phases: first
-accepting loops that monotonically reduce the integer polarization
-$\sum_i(2n_i-1)\,4\bm r_i$ (with a brief relaxation of monotonicity
-when stalled), then, once the minimal reachable polarization is
-attained, loops that preserve it exactly. Not every box reaches zero:
-on fcc$(2,3,3)$ the zero-polarization sector is empty, a fact known
-exactly from the 72-site diagonalization, and the energy gate below is
-what certifies the sector reached.
-
-Every production number is gated against exact diagonalization. On
-the 48-site cluster the method reproduces
-$E_0=-10.556012$ to $0.5\sigma$ and $S(L)=0.370365$ to every printed
-digit; the equal-amplitude value of $S(L)$ is $0.297$, so a defective
-forward walker could not pass. On the 72-site cluster it reproduces
-$E_0/N=-0.205690$ to $1.8\sigma$ in the correct nonzero-polarization
-ground sector. Statistical errors are from binned averages ($16$
-bins); $f_1$ carries no statistical error beyond that of $E_0$, since
-on cubic supercells the sum rule fixes the uniform plaquette coherence
-as $w_p=-E_0/(K\,n_{\rm hex})$ and the remaining factor is exact
-geometry. Production runs used $1024$ walkers and $30\,000$--$60\,000$
-steps; the 2048-site full-grid run measures $S(\bq)$ at all $512$
-allowed momenta as a single matrix product per snapshot.
 \section{Numerical methods}
 \label{app:methods}
 
@@ -1338,26 +1171,6 @@ components of the probe. Because those four seeds produce separate
 lines at the same energy, they are summed by energy before any branch
 energy or weight is quoted; only the channel sum is
 basis-independent.
-
-The 96-site cluster required two further steps. The two-billion-state
-ice manifold is enumerated by a vectorized frontier that imposes one
-tetrahedron at a time, visiting at each step the tetrahedron that
-introduces the fewest new sites and branching the frontier into
-independent seeds so that peak memory is bounded by one branch
-(a hundredth of a gigabyte) rather than the whole frontier; and exact
-state lookup is a single lexicographic \texttt{searchsorted} on the
-$(\mathrm{hi},\mathrm{lo})$ word pairs, since at this size a
-block-by-block search over the $\sim$millions of distinct high words
-is no longer viable. The winding sector is identified from an exact
-integer polarization key without sorting the manifold, candidates
-estimated from a four-million-state sample and each extracted in one
-masked pass; the ground sector (dimension $146\,758\,352$, $2.7\times
-10^{9}$ nonzeros) is identified by diagonalizing the largest
-candidates and comparing. The continued fraction uses real Lanczos on
-the real and imaginary parts of each probe separately, which is exact
-for a real symmetric $H$ and halves the Krylov storage; $120$
-iterations reproduce the $250$-iteration complex results on the
-72-site cluster to every digit.
 
 Momentum labels are certified by explicit translation projectors
 rather than inferred from position in a sorted list. Degenerate
