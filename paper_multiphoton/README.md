@@ -1040,3 +1040,50 @@ proof at 2048 sites; (ii) path points not on the allowed torus grid show
 small-q wiggles (FT of finite-box correlations); zone-boundary values sit
 on/near allowed points and are smooth. Refinement on the FULL allowed
 512-point grid of (8,8,8) queued for the definitive figure.
+
+================================================================================
+96 SITES COMPLETE (job 19413751, 8h49m): THE TWO-CLASS TEST REPRODUCES
+================================================================================
+fcc(2,3,4): 2,007,260,562 ice configs; ground sector 0, dim 146,758,352,
+nnz 2,669,065,920; E0 = -19.56789217, E0/site = -0.20383221;
+<n_flip> = 20.6677/96 = 0.2153/hex. This is level-resolved spectroscopy at
+the 96-spin constrained-ED record size (Pace et al. did ground-state/QED
+parameters at 96; this is the full operator-resolved response + census).
+The index_of fix (structured searchsorted) turned the >24h stall into a
+2.6h matrix stage.
+
+THE RESULT -- fcc(2,3,4) has TWO inequivalent L classes, and the
+ground-state ratio predicts which one reconstructs, exactly as at 64:
+
+  class A  q=(-1/2,1/2,1/2)  S = 0.24115  ->  NO anomaly:
+      1.6506 (38.7%, census -0.015), 1.7296 (30.1%, census -0.088)
+  class B  q=( 1/2,1/2,-1/2)  S = 0.35483  ->  ROTON:
+      0.9040 (54.4%, census +0.259), upper 1.6471 (22.5%, census +0.135)
+
+Sum-rule gates 1.0000 at both momenta.
+
+FOUR-SIZE LADDER AT THE ROTONIZING L CLASS:
+                  48       64       72       96
+  omega_low     1.024    0.954    1.068    0.904
+  share         50.8%    50.0%    54.0%    54.4%
+  omega_high    1.730    1.652    1.814    1.647
+  ratio         0.592    0.578    0.589    0.549
+  splitting     0.513    0.535    0.518    0.583
+  census(soft) +0.339   +0.338   +0.134   +0.259
+  S(L,rot)      0.370    0.369    0.321    0.355
+  E0/site     -0.2199  -0.2165  -0.2057  -0.2038
+
+READ: soft level persists at every size, always carrying >= half the
+weight; the scale-free ratio sits in [0.55, 0.59]; the census sign is
+always positive at the rotonizing class and negative at the
+non-rotonizing one (three independent within-cluster contrasts now:
+64, 96, and the 72-vs-others cross-check), while its magnitude
+fluctuates -- as already conceded in the census-limits section.
+
+WITH THE QMC: the two-class prediction has now succeeded at 64 AND 96
+(four L classes total, S in {0.227, 0.241, 0.355, 0.369}: the two
+large-S ones rotonize, the two small-S ones do not, no exceptions), and
+the QMC shows the ratio minimum at L is thermodynamically robust to
+2048 sites. Referee requests 1 (dense-grid large-N f1/S) and 5 (Lanczos
+documentation now includes sum-rule gates at every momentum) are the
+principal beneficiaries.
