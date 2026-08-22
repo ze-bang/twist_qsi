@@ -393,13 +393,17 @@ on their own and are not used as evidence in what follows.
  The horizontal
  coordinate is the Hellmann--Feynman flippability census of
  Eq.~(\ref{eq:hf}). The photon descendants lie within
- $0.82$--$1.46$ of the Gaussian energy and gain at most $0.01$
- flippable hexagons. The $L$-point roton-like level is anomalous on
- both axes: approximately one-half of the Gaussian energy and
- $\Delta\langle n^{\rm flip}\rangle=+0.34$. (b) Evolution under the
- standard RK bias $V$. The plotted census is evaluated exactly at
- $V=0$; finite-difference slopes agree to about $0.01$ away from level
- crossings.}
+ $0.82$--$1.46$ of the Gaussian energy, and on this cluster only one
+ other bright level carries a positive census at all, $+0.012$, a
+ factor of $29$ below the anomalous one. The $L$-point roton-like
+ level is anomalous on both axes: approximately one-half of the
+ Gaussian energy and $\Delta\langle n^{\rm flip}\rangle=+0.339$.
+ (b) Evolution under the standard RK bias $V$. The plotted census is
+ evaluated exactly at $V=0$; finite-difference slopes agree to about
+ $0.01$ away from level crossings. We stress that the sparseness of
+ positive censuses is specific to this cluster: at 72 sites several
+ bright levels carry a positive census and the anomalous one is no
+ longer the largest (Sec.~\ref{sec:census-limits}).}
 \label{fig:mech}
 \end{figure}
 
@@ -631,9 +635,14 @@ The effect follows the structure factor rather than the label $L$.
 \emph{Stability with size.} We can now compare three clusters. The
 third, $2{\times}3{\times}3$ with 72 spins, required extending the
 state representation past a single 64-bit word
-(Appendix~\ref{app:methods}); it is also the first cluster here that
-is genuinely three-dimensional in all three directions, so it varies
-the shape as well as the size.
+(Appendix~\ref{app:methods}). It also changes the shape and not only
+the size: the first two clusters are both of the form
+$2{\times}2{\times}n$ and differ only in the length of one axis,
+whereas $2{\times}3{\times}3$ is elongated along a different pair and
+is not a member of that family. It carries a single $L$-type
+momentum, $\bq=2\pi(\tfrac12,\tfrac12,-\tfrac12)$, so it does not
+repeat the two-class test of the 64-site box, but it does test whether
+the anomaly survives a change of both size and shape.
 
 \begin{center}
 \begin{tabular}{lrrr}
@@ -673,8 +682,8 @@ rather than lower --- the direction the $f_1/S$ mechanism requires,
 though the three clusters differ in shape as well as size and we do
 not press this as a quantitative test. The weight retained by the
 upper branch drops from about a third to $18\%$. And the polarization
-splitting at $X$ is not converged at all, falling from $53\%$ at 48
-sites to $6\%$ at 64; no conclusion is drawn from it.
+splitting at $X$ is not converged at all, falling from $42\%$ at 48
+sites to $5.9\%$ at 64; no conclusion is drawn from it.
 
 \emph{The deformation trajectory.} Under a bias toward more flippable
 configurations ($V<0$), $f_1(L)$ changes by less than one percent
@@ -683,6 +692,56 @@ ground-state factor moves first and the spectrum follows, which is the
 ordering the $f_1/S$ mechanism requires and the opposite of what a
 fitted correlation would produce.
 
+
+\section{What the flippability census does and does not show}
+\label{sec:census-limits}
+
+It is tempting to read the census as a sign rule: an excitation
+disrupts ring resonance, so it should \emph{lose} flippable plaquettes,
+and a level that gains them is thereby marked as different in kind.
+That reading is too strong, and the exact statement is worth having
+because it says precisely how much is true.
+
+The operator $N=\sum_p n_p^{\rm flip}$ is diagonal in the
+configuration basis, and each flippable hexagon of a configuration
+contributes exactly one off-diagonal element of the ring Hamiltonian.
+Hence $\mathrm{Tr}\,N$ equals the number of nonzero off-diagonal
+elements of $H$, and the census averaged over \emph{all} eigenstates of
+a sector of dimension $D$ is
+\begin{equation}
+ \frac{1}{D}\sum_{n}\frac{d\omega_n}{dV}
+ =\frac{\mathrm{nnz}(H)}{D}-\langle 0|N|0\rangle ,
+ \label{eq:censussum}
+\end{equation}
+which is negative precisely because the ground state is more flippable
+than a typical ice configuration. On the 48-site cluster
+Eq.~(\ref{eq:censussum}) gives $-0.9139$, and direct diagonalization of
+all $9104$ eigenstates returns the same number to $10^{-14}$.
+
+So excitations do lose flippability on average, exactly and provably.
+Nothing, however, constrains an individual level. Of the $9104$
+eigenstates, $58$ --- $0.64\%$ --- have a positive census, and $20$
+exceed $+0.20$. The anomalous $L$ level at $+0.339$ sits in that top
+$0.22\%$ tail, which is the honest form of the statement: it is
+extreme, not unique.
+
+The census is also the least size-stable of our diagnostics, and we say
+so plainly. At the anomalous level it is $+0.339$ on 48 sites,
+$+0.338$ on 64 and $+0.134$ on 72. The sign is robust; the magnitude
+is not, and no normalization we tried repairs it. On 48 and 64 sites
+the anomalous level is the only appreciably positive bright census,
+exceeding the next by factors of $29$ and $7$; on 72 sites several
+bright levels are positive and it is no longer the largest. We
+therefore do not use the census as the primary discriminant.
+
+What does survive on every cluster is a comparison made \emph{within}
+one of them. The 64-site box carries two inequivalent $L$-type classes
+at identical $|\bq|$ and identical Gaussian energy. The class that
+reconstructs has census $+0.338$; the class that does not has
+$-0.166$. Same momentum star, same free-theory prediction, opposite
+response to the flippability probe. That contrast needs no comparison
+across cluster sizes and no fitted scale, and it is the census evidence
+we rely on.
 \section{Polarization splitting and off-pole weight}
 The two transverse polarizations are exactly degenerate in the
 Gaussian theory, and their interaction-induced splitting was predicted
@@ -998,7 +1057,9 @@ $X$                         & $2.235$ & $3.423$ & $0.420$ & $1\times10^{-31}$\\
 \end{center}
 
 The splitting column is
-$|\omega_1-\omega_2|/\tfrac12(\omega_1+\omega_2)$. Orthogonality is
+$|\omega_1-\omega_2|/\tfrac12(\omega_1+\omega_2)$, the convention used
+throughout this paper; normalizing instead by the lower branch would
+give larger numbers for the same data. Orthogonality is
 exact to machine precision at $(\frac13,\frac13,\frac13)$,
 $(\frac13,\frac13,\frac23)$ and $X$, where the little group forbids
 mixing, and holds to $0.3\%$ at $L$ and $4\%$ at
