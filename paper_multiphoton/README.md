@@ -950,3 +950,47 @@ within the paper. Unify on mean-normalized: 42% at 48, 5.9% at 64.
 
 Also: 64-site <n_flip> = 14.5419/64 = 0.2272 per hexagon (48: 0.2282,
 72: 0.2172) -- the per-hexagon flippability IS stable.
+
+--------------------------------------------------------------------------------
+THE "+0.02 POSITIVE PHOTON SLOPE": RESOLVED (job 19400879)
+--------------------------------------------------------------------------------
+Question: should d(omega)/dV always be negative for a photon?
+ANSWER: no. Only the AVERAGE is constrained, and it is constrained EXACTLY.
+
+EXACT SUM RULE (new, belongs in the paper):
+N = sum_p n_p^flip is diagonal, and each flippable hexagon of a configuration
+contributes exactly ONE off-diagonal element of the ring Hamiltonian, so
+      Tr N = nnz(H)      exactly
+and therefore
+      (1/D) sum_n d(omega_n)/dV = nnz(H)/D - <0|N|0>  < 0.
+VERIFIED at 48 sites: sum_states n_flip = 91392.0 vs nnz(H) = 91392 IDENTICAL;
+measured mean census -0.9138535842 vs predicted -0.9138535842, diff 1.1e-14.
+Negative because the ground state is MORE flippable than a typical
+configuration. Nothing forces an individual level negative.
+
+CENSUS DISTRIBUTION over all 9,104 eigenstates (48 sites, dense diag):
+  positive: 58 (0.64%);  min -3.0263, max +0.4278
+  (0,0.05] 10 | (0.05,0.20] 28 | (0.20,0.40] 16 | >0.40 4
+So >=+0.20 is 20 states = 0.22% of the spectrum. The roton (+0.3393) is in
+that top-0.2% tail.
+
+THE +0.012 IS REAL, not noise and not a multiplet artifact:
+(1/3,1/3,2/3) omega 1.7440, BOTH degenerate members give census +0.011852
+identically. (Paper says "+0.02"; census is +0.012, finite-difference fit
++0.017. Quote +0.012.) All degenerate members at 48 sites have IDENTICAL
+censuses, so multiplet averaging was hiding nothing here.
+
+BRIGHT-LEVEL CENSUSES, 48 sites: only TWO positive of ~11 -- the roton
++0.339 and this +0.012. Roton is 29x the next. So the paper's "photon
+descendants gain at most 0.01" is essentially CORRECT AT 48 SITES.
+64 sites: also two positive -- roton +0.3379 and +0.0467; roton is 7x.
+72 sites: MANY positive (+0.03 to +0.36) and the roton (+0.1337) is NOT
+the largest (+0.3582 at (0,2/3,2/3)).
+
+=> the census claim is right at 48 and 64 and fails at 72. Restrict the
+   claim to what holds everywhere: (i) the sign is positive at the soft
+   level on all three clusters; (ii) the within-cluster 64-site contrast
+   (+0.3379 rotonizing L class vs -0.1660 non-rotonizing L class at the
+   same |q| and same Gaussian energy). Drop "at most 0.01".
+   No normalization rescues the magnitude: roton/|mean census| = 0.371,
+   0.203, 0.075 across 48/64/72; per hexagon 0.0071, 0.0053, 0.0019.
