@@ -637,6 +637,23 @@ state rather than by the equal-amplitude classical ensemble.
 
 \section{Finite-size and deformation checks}
 
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_ladder.pdf}
+\caption{The $L$-point spectrum across all four diagonalized cluster
+ sizes. Marker area is the level's share of the longitudinal weight
+ at its momentum. Filled: the soft mode (red) and the upper
+ transverse branch (indigo) of the rotonizing $L$ class. Open: the
+ dominant levels of the \emph{non}-rotonizing $L$ class on the two
+ clusters that possess one (64 and 96 sites) --- the within-cluster
+ control at identical $|\bq|$ and identical free-theory energy. The
+ numbers along the bottom give the scale-free branch ratio
+ $\omega_{\rm low}/\omega_{\rm high}$. All values are exact
+ diagonalization; the Lanczos runs carry an exact sum-rule gate that
+ reads $1.0000$ at every size (Appendix~\ref{app:methods}).}
+\label{fig:ladder}
+\end{figure}
 \emph{Convergence of the collective state.} A systematic variational
 improvement of the electric-field wave converges rapidly to the exact
 48-site eigenvalue, $1.450\to1.074\to1.034\to1.026K$ against $1.024K$
@@ -734,6 +751,29 @@ fitted correlation would produce.
 \section{Thermodynamic evidence: the ratio at 2048 sites}
 \label{sec:qmc}
 
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.98\textwidth]{fig_thermo.pdf}
+\caption{Thermodynamic evidence, with the numerical checks displayed
+ rather than asserted. (a) The Feynman ratio $f_1/S$ at \emph{every}
+ allowed momentum star of the 2048-site supercell (filled circles,
+ with statistical error bars from binned Monte Carlo averages;
+ symmetry copies of each star agree to better than $0.04$ and are
+ merged), overlaid with the 864-site values (open squares). No path
+ or interpolation is involved: each point is a true eigenmode weight.
+ The zone-boundary minimum is at $L$; red marks the shallow soft
+ valley along $(t,\frac12,\frac12)$ (Sec.~\ref{sec:valley}). (b)
+ Ground-state energy per site against $1/N$: exact diagonalization
+ (filled) and Green's-function Monte Carlo (open, with error bars) on
+ one axis. At the two sizes where both methods exist, 48 and 72
+ sites, they agree within statistical errors --- the method gate,
+ shown explicitly. (c) The ratio at $L$ and $X$ across both methods
+ and all sizes: the zone-boundary hierarchy, $L$ softest, holds at
+ every size, while the interior of the zone (not shown) drifts
+ strongly --- the reason large systems were required.}
+\label{fig:thermo}
+\end{figure*}
+
 Because both factors of Eq.~(\ref{eq:sma}) are ground-state
 quantities, they are computable far beyond any exactly diagonalizable
 size. The ring Hamiltonian is stoquastic --- every off-diagonal
@@ -797,6 +837,41 @@ is soft, and the exact diagonalization is what shows that a single
 sharp pole, at roughly half the centroid, is what makes it soft.
 The two calculations are complementary, and we do not claim either
 one alone establishes the mode.
+
+\subsection{The soft region is a valley, and the mode is not only at L}
+\label{sec:valley}
+
+A quasiparticle minimum should be concave up, and one should ask in
+which directions it is, and whether the softness is confined to a
+single point. The complete grid answers both. Away from $L$ the ratio
+rises in \emph{every} allowed non-radial direction: to $2.216(5)$ at
+$(\frac14,\frac12,\frac12)$, to $2.265(5)$ at
+$(\frac38,\frac38,\frac58)$, to $2.484(5)$ at
+$(\frac14,\frac12,\frac34)$, and steeply to $2.78$ at $W$ --- so $L$
+is a genuine minimum of the landscape, not a saddle among the
+zone-boundary momenta. (Along the radial $[111]$ line the point is
+stationary by band periodicity, as at any zone corner; a lattice
+minimum lives in the boundary manifold, exactly as the magnon
+roton-like minima of frustrated antiferromagnets do at their zone
+corners.)
+
+The rise is, however, strongly anisotropic: the landscape at 2048
+sites has a shallow \emph{valley} along the $(t,\frac12,\frac12)$
+lines, with the ratio varying by only two percent from
+$(0,\frac12,\frac12)$ through $(\frac14,\frac12,\frac12)$ to its
+minimum at $L$, while every direction transverse to the valley climbs
+by $15$--$28\%$. The softness is therefore not an isolated point: it
+is the bottom of a flat trough. And this is not only a statement
+about the centroid: the 72-site cluster carries a momentum on exactly
+this line, $(\frac16,\frac12,\frac12)$, and its \emph{exact} spectrum
+shows a soft level at $1.075K$ with $55\%$ of the weight ---
+essentially degenerate with the $L$ mode at $1.068K$
+(Sec.~\ref{sec:circularity}). The prediction that the trough hosts
+soft modes away from $L$ is thus verified spectrally at the one
+accessible momentum on it. A flat valley of nearly degenerate soft
+collective modes, rather than a single deep pocket, is itself a
+statement about the physics: whatever ordering tendency the softening
+signals is frustrated among the wavevectors of the valley.
 
 \section{What the flippability census does and does not show}
 \label{sec:census-limits}

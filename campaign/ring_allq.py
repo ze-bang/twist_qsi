@@ -25,9 +25,10 @@ continued fraction fit in memory at a sector dimension of order 10^8.
 Invoke as:  ring96_pipeline.py 2 3 4 [n_iter]
 """
 
-_TAGSUFFIX = ""
 
 from __future__ import annotations
+
+_TAGSUFFIX = ""
 
 import json
 import sys

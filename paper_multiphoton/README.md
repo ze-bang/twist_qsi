@@ -1139,3 +1139,45 @@ robust from 864 to 2048 sites. State it that way, not as a radial dip.
 Also: interior momenta drift substantially with size ((1/3,1/3,1/3):
 2.42 at 48-ED -> 1.81 at 864-QMC), which retroactively justifies the
 referee's demand for large systems; the L and X values drift far less.
+
+--------------------------------------------------------------------------------
+"IS THE ROTON ONLY AT L?" -- THE SOFT VALLEY (job 19428885, corrected fold)
+--------------------------------------------------------------------------------
+FOLD BUG in the first soft-locus pass: reciprocal-lattice coefficients only
+ran over {-1,0,1}, so corner points of the [0,2)^3 grid (needing g=(2,2,2))
+failed to fold and small-q photon points masqueraded as low-ratio
+zone-boundary stars (e.g. "[0.625,0.875,0.875] ratio 1.32" is really
+[0.125,0.125,0.375]). Range widened to {-2..2}; clean table follows.
+
+CLEAN 2048-site ranking (|q|>0.72, star-averaged):
+  L (1/2,1/2,1/2)      2.179(15)   <- minimum
+  (1/4,1/2,1/2)        2.216(5)    <- 24 copies
+  (3/8,3/8,5/8)        2.265(5)
+  (1/8,3/8,5/8)        2.315(4)
+  (0,0,3/4)            2.430(10)
+  ... everything else 2.48-2.78 (X 2.71, K 2.72, U 2.74, W 2.78)
+
+ANSWER: the softness is NOT a point. It is a shallow VALLEY along the
+(t,1/2,1/2) lines: t=0 -> 2.224(6), t=1/4 -> 2.216(5), t=1/2(L) -> 2.179(15)
+-- 2% variation along the line, 15-28% climb transverse to it. L is the
+(shallow) minimum of the valley; the valley walls are steep.
+
+CONCAVITY (the quasiparticle question): at 2048 sites the ratio rises away
+from L in EVERY allowed non-radial direction: +0.037(16) toward (1/4,1/2,1/2),
++0.086(21) toward (3/8,3/8,5/8), +0.31(2) toward (1/4,1/2,3/4), +0.60(2)
+toward W. Concave up in all sampled boundary directions; stationary along
+radial [111] by band periodicity (like any zone-corner minimum on a lattice,
+cf. magnon roton-minima at zone corners of frustrated AFMs).
+
+SPECTRAL confirmation that the valley is real physics, not centroid
+artifact: the 72-site ED momentum (1/6,1/2,1/2) sits ON this line and its
+exact spectrum has a soft level at 1.075K/55% vs L's 1.068K/54% -- the one
+accessible valley momentum away from L hosts an (essentially degenerate)
+soft mode. New subsection sec:valley added to the QMC section.
+
+FIGURES: fig_thermo (3 panels: full allowed-momentum landscape with error
+bars at 864+2048; E0/N vs 1/N both methods incl. the 48/72 method-agreement
+overlap; L vs X ratio vs 1/N across methods) and fig_ladder (four-size
+L spectroscopy with the non-rotonizing-class controls and branch ratios).
+matplotlib gotcha again: \frac14 shorthand crashes mathtext (use
+\frac{1}{4}) -- as recorded in memory, costs an sbatch cycle each time.
