@@ -1087,3 +1087,55 @@ the QMC shows the ratio minimum at L is thermodynamically robust to
 2048 sites. Referee requests 1 (dense-grid large-N f1/S) and 5 (Lanczos
 documentation now includes sum-rule gates at every momentum) are the
 principal beneficiaries.
+
+================================================================================
+OVERNIGHT HARVEST (2026-08-22): 96-SITE ED + FULL-GRID QMC BOTH COMPLETE
+================================================================================
+
+96-SITE ED (job 19413751, 8h49m, structured-searchsorted lookup fixed it):
+fcc(2,3,4): 2,007,260,562 ice configs; ground sector 0 has dim
+146,758,352 (147-MILLION-dim Lanczos, nnz 2.67e9), E0 = -19.56789217,
+E0/site = -0.20383. <n_flip>/hex = 0.2153.
+*** THE TWO-CLASS PREDICTION TEST REPEATS AT 96 SITES ***
+  L class A: S = 0.3548  ->  ROTONIZES: omega 0.9040, share 54.4%,
+             census +0.2593; upper branch 1.6471 (22.5%, census +0.13)
+  L class B: S = 0.2412  ->  does NOT: 1.6506 (38.7%) / 1.7296 (30.1%),
+             censuses -0.015 / -0.088
+Both sum-rule gates 1.0000. Forward f1/S class discrimination now
+verified at TWO sizes (64 and 96); within-cluster census contrast
+(+0.26 vs ~-0.05 at the same |q|) also repeats.
+
+FOUR-SIZE LADDER (rotonizing L class):
+              48       64       72       96
+  omega_low   1.024    0.954    1.068    0.904
+  share       50.8%    50.0%    54.0%    54.4%
+  omega_high  1.730    1.652    1.814    1.647
+  ratio       0.592    0.578    0.589    0.549
+  census      +0.339   +0.338   +0.134   +0.259
+Roton persists at the record ED size; if anything softer (0.904K).
+96 sites ties the all-time constrained-space ED record (Pace et al.)
+and, unlike it, delivers operator-resolved spectroscopy + RK census.
+
+FULL-GRID QMC (job 19413718, 10h52m): all allowed momenta.
+  (6,6,6) 864 sites, 216 momenta: L = 2.1419(104), X = 2.6598(96)
+  (8,8,8) 2048 sites, 512 momenta: L = 2.1786(147), X = 2.7129(205),
+     W = 2.7807(103), K = 2.7175(155), U = 2.7355(81)
+Star-averaged over all symmetry copies; scatter across copies 0.01-0.04
+(a consistency check the path scan could not provide).
+L is the ZONE-BOUNDARY MINIMUM by 20-25% at both sizes; drift 864->2048
+is +1.7% (stable).
+
+*** RETRACTION of one earlier reading: the path scan's "local minimum
+along Gamma-L (peak 2.29 at 0.458(111), dip into L)" came from
+NON-ALLOWED interpolated momenta. On the allowed grid the diagonal is
+MONOTONE: 0.598 (0.125) -> 1.36 (0.25) -> 1.97 (0.375) -> 2.18 (L),
+folding back symmetrically beyond L because (1,1,1) IS an fcc RLV
+(sum of the three primitive RLVs) so 0.625(111) ~ 0.375(111) etc.
+Along the radial [111] direction L is the endpoint maximum (stationary
+by symmetry); the roton statement is about the ZONE-BOUNDARY landscape:
+the boundary-restricted f1/S dips deeply at L (W->L: 2.78->2.18),
+i.e. L is the softest zone-boundary point of the centroid surface,
+robust from 864 to 2048 sites. State it that way, not as a radial dip.
+Also: interior momenta drift substantially with size ((1/3,1/3,1/3):
+2.42 at 48-ED -> 1.81 at 864-QMC), which retroactively justifies the
+referee's demand for large systems; the L and X values drift far less.
