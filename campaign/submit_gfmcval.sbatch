@@ -11,8 +11,8 @@ export OMP_NUM_THREADS=${SLURM_CPUS_ON_NODE:-32}
 export FLEXIBLAS=AOCL
 cd /lustre09/project/6003507/zhouzb79/twist_qsi/campaign
 PYT="pyth"; PYT="${PYT}on3"
-echo "### GFMC gate, 48 sites. ED truth: E0 = -10.556012, S(L) = 0.370365"
+echo "### GFMC gate, 48 sites. ED truth: E0 = -10.556012, S(L) = 0.370365 at BOTH allowed L momenta"
 echo "### equal-amplitude values (must NOT match if forward walking works):"
 echo "###   S(L) = 0.297  and  E_var = -K<nflip>_RK"
-$PYT -u gfmc_ice.py 2 2 3 8000
+$PYT -u gfmc_ice.py 2 2 3 40000
 rc=$?; echo "exit code $rc"; exit $rc
