@@ -71,23 +71,58 @@ class Table128:
         self.w = np.ascontiguousarray(words[order])
         self.uhi, self.start = np.unique(self.w[:, 1], return_index=True)
         self.end = np.append(self.start[1:], len(self.w))
+        dt = np.dtype([("hi", "<u8"), ("lo", "<u8")])
+        self._struct = np.ascontiguousarray(
+            np.stack([self.w[:, 1], self.w[:, 0]], axis=1)).view(dt).ravel()
 
     def __len__(self):
         return len(self.w)
 
     def index_of(self, q):
+        """Exact lookup of (lo,hi) query rows, fully vectorized.
+
+        The first version looped over distinct high-word blocks in
+        Python with an O(M) mask per block.  At 72 sites the high word
+        spans 8 bits (a few hundred blocks); at 96 it spans 32 bits,
+        the sector has millions of distinct high words, and that loop
+        is effectively O(M x n_blocks) -- hours per hexagon.  Here the
+        whole search is one C-level searchsorted on a structured
+        (hi, lo) view, which numpy compares lexicographically, with
+        the block-sliced search kept only as a fallback for numpy
+        builds whose searchsorted rejects structured dtypes.
+        """
+        try:
+            dt = np.dtype([("hi", "<u8"), ("lo", "<u8")])
+            qq = np.ascontiguousarray(
+                np.stack([q[:, 1], q[:, 0]], axis=1)).view(dt).ravel()
+            pos = np.searchsorted(self._struct, qq)
+            pos = np.clip(pos, 0, len(self.w) - 1)
+            hit = (self.w[pos, 0] == q[:, 0]) & (self.w[pos, 1] == q[:, 1])
+            out = np.full(len(q), -1, dtype=np.int64)
+            out[hit] = pos[hit]
+            return out
+        except (TypeError, ValueError):
+            pass
         out = np.full(len(q), -1, dtype=np.int64)
         bpos = np.searchsorted(self.uhi, q[:, 1])
-        good = bpos < len(self.uhi)
-        good[good] &= (self.uhi[bpos[good]] == q[good, 1])
-        for b in np.unique(bpos[good]):
-            sel = np.where(good & (bpos == b))[0]
-            s, e = self.start[b], self.end[b]
+        ok = bpos < len(self.uhi)
+        ok[ok] &= (self.uhi[bpos[ok]] == q[ok, 1])
+        idx = np.where(ok)[0]
+        if not len(idx):
+            return out
+        bp = bpos[idx]
+        order = np.argsort(bp, kind="stable")
+        idx, bp = idx[order], bp[order]
+        ub, qstart = np.unique(bp, return_index=True)
+        qend = np.append(qstart[1:], len(bp))
+        for k in range(len(ub)):
+            s, e = self.start[ub[k]], self.end[ub[k]]
+            sl = idx[qstart[k]:qend[k]]
             sub = self.w[s:e, 0]
-            p = np.searchsorted(sub, q[sel, 0])
+            p = np.searchsorted(sub, q[sl, 0])
             p = np.clip(p, 0, len(sub) - 1)
-            hit = sub[p] == q[sel, 0]
-            out[sel[hit]] = s + p[hit]
+            hit = sub[p] == q[sl, 0]
+            out[sl[hit]] = s + p[hit]
         return out
 
 
