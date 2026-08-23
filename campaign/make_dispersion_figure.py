@@ -181,7 +181,7 @@ def main():
                    alpha=0.92)
     for kind, lab in (("roton", "soft (roton-like) mode"),
                       ("photon", "transverse-channel doublet"),
-                      ("multi", "residual (multi-photon) weight")):
+                      ("multi", "residual weight")):
         ax.scatter([], [], s=70, color=cols[kind], label=lab)
     ax.legend(loc="upper right", fontsize=7.8, frameon=False,
               borderaxespad=0.3, handletextpad=0.25)

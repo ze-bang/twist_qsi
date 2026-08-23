@@ -57,6 +57,8 @@ OUT = ROOT / "campaign" / "outputs" / "ring_model_dssf"
 
 
 def log(m, t0):
+    if t0 is None:
+        return
     print(f"[{time.perf_counter()-t0:8.1f}s] {m}", flush=True)
 
 
