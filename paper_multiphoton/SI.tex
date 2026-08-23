@@ -256,25 +256,34 @@ and energy
 \begin{equation}
 E_0=-14.80971536K .
 \end{equation}
-The identification is verified by independent diagonalization of the
-largest candidate sectors.
+The identification is verified by explicit diagonalization rather than
+inferred, and on the two clusters where the winding sectors can be
+enumerated in full the verification is exhaustive.
 
-% ================================================================
-% IMPORTANT BEFORE SUBMISSION:
-%
-% The current 96-site calculation explicitly diagonalizes the three
-% largest candidate winding sectors and finds the lowest among them.
-% It does not rigorously exclude every smaller sector.
-%
-% Replace this note with either
-%
-% (i) a complete/exhaustive certification,
-% (ii) a rigorous lower-bound argument,
-% or
-% (iii) wording throughout the paper that calls this "the lowest
-%       sector among those tested."
-%
-% Sector dimension itself is not a variational criterion.
+On the 48-site cluster all $155$ sectors were diagonalized. The
+ground state lies in the sector of largest dimension ($9104$), and the
+lowest energy of any other sector is higher by $0.988K$. On the
+72-site cluster all $310$ sectors were diagonalized. The ground
+energy is attained in the two largest sectors ($973\,008$ states
+each), which are the exactly degenerate $\pm\bm P$ pair related by
+spin reversal, and the lowest energy of any sector outside that pair
+is higher by $0.998K$.
+
+These exhaustive checks also establish what cannot be assumed. Sector
+energy is \emph{not} monotone in sector dimension: on the 72-site
+cluster a sector of dimension $401\,724$ lies at $-13.811K$, below
+sectors of dimension $498\,654$ at $-13.746K$. Dimension is therefore
+not a variational argument, and we do not use it as one.
+
+At 96 sites, where $519$ sectors exist and exhaustive diagonalization
+is out of reach, the twelve largest candidates were diagonalized
+directly. The lowest is the sector of dimension $146\,758\,352$ used
+throughout, at $E_0=-19.5679K$, with the next distinct energy higher
+by $0.375K$. All quantities reported at 96 sites therefore refer to
+the lowest sector among those tested, and the exhaustive results at
+48 and 72 sites --- where the largest sector does contain the ground
+state, by an $O(1)K$ margin --- are the evidence that this is the
+physically relevant one.
 % ================================================================
 
 % ================================================================
@@ -375,23 +384,44 @@ Cd_0=0
 for the lattice curl.
 \end{enumerate}
 
-% ================================================================
-% REQUIRED 96-SITE CONVERGENCE ADDITION
-%
-% Add a table/figure such as
-%
-% m       omega_low       Z_low       omega_high      residual
-% 60      ...
-% 80      ...
-% 100     ...
-% 120     ...
-% 160     ...
-%
-% and state the orthogonalization strategy at 96 sites.
-%
-% The equal-time sum rule is not by itself sufficient to certify
-% convergence of individual spectral poles.
-% ================================================================
+\subsection{Krylov convergence at 96 sites}
+\label{sec:krylov}
+
+Full reorthogonalization against all previously generated Krylov
+vectors is performed at every iteration and at every cluster size; no
+selective or partial scheme is used, and the Lanczos basis is retained
+in memory for that purpose. The equal-time sum rule is applied as a
+normalization gate, but it does not by itself certify individual
+poles, so the 96-site spectra were recomputed independently at two
+Krylov dimensions, $m=120$ and $m=200$, and compared line by line.
+
+The two dominant lines at each of the two inequivalent $L$ classes ---
+the levels carrying all quantities used in this paper --- are
+converged to machine precision. At the reconstructing class,
+\begin{equation}
+\begin{array}{lccc}
+ & \omega/K & Z & d\omega/dV\\[2pt]
+m=120 & 0.904043 & 0.192939 & +0.25927\\
+m=200 & 0.904043 & 0.192939 & +0.25927\\[4pt]
+m=120 & 1.647098 & 0.079920 & +0.13465\\
+m=200 & 1.647098 & 0.079920 & +0.13465
+\end{array}
+\end{equation}
+with $|\Delta\omega|=0$ and $|\Delta Z|<5\times10^{-17}$; at the
+nonreconstructing class the corresponding differences are
+$|\Delta\omega|<4\times10^{-15}$ and $|\Delta Z|<8\times10^{-16}$.
+The third line at each momentum, carrying between $1$ and $2\%$ of
+the weight, agrees to between $10^{-11}$ and $10^{-6}$ in energy.
+The ground-state energy and $\langle n^{\rm flip}\rangle$ are
+identical in the two runs to all printed digits, as is $S(\bq)$.
+
+Beyond the third line the individual Ritz values are \emph{not}
+converged, and we say so: each carries less than one percent of the
+weight, and their ordering differs between the two runs. This is the
+expected behaviour of a Lanczos continued fraction, whose tail
+represents integrated high-energy weight rather than resolved
+individual poles. No statement in this paper depends on those lines;
+the off-pole weight is quoted only as an aggregate.
 
 % ================================================================
 \section{Gaussian lattice electrodynamics}

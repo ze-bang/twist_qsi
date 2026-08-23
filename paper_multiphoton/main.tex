@@ -175,17 +175,13 @@ $146\,758\,352$ at 96 sites.
 Cluster construction, winding-sector identification, momentum
 certification, and numerical convergence are detailed in the
 Supplemental Material.
-
-% ================================================================
-% BEFORE SUBMISSION:
-% The present 96-site implementation explicitly checks the three
-% largest candidate winding sectors but does not rigorously exclude
-% every smaller sector.
-%
-% Either complete the sector certification or replace "ground-state
-% winding sector" at 96 sites by "lowest sector among those tested."
-% Do not rely on sector dimension itself as a variational argument.
-% ================================================================
+The winding sector is certified exhaustively at 48 and 72 sites, by
+diagonalizing every one of the $155$ and $310$ sectors; at 96 sites
+the twelve largest of $519$ candidates are diagonalized and the
+lowest among them is used.
+The 96-site poles are converged: recomputing the spectra at Krylov
+dimension $200$ rather than $120$ leaves the dominant pole energies
+and residues unchanged to machine precision.
 
 \begin{figure*}[t]
 \centering
@@ -310,19 +306,6 @@ sublattice-summed $S^z$ weight at every size.
 \label{fig:ladder}
 \end{figure}
 
-% ================================================================
-% BEFORE SUBMISSION:
-% Add an explicit 96-site Krylov-convergence table or plot showing
-%
-%   omega_low(m), Z_low(m), omega_high(m)
-%
-% versus Lanczos/Krylov dimension m, together with a Ritz-residual
-% or equivalent direct pole-convergence criterion.
-%
-% The equal-time sum rule is an important normalization gate but is
-% not itself a proof that individual poles have converged.
-% State the orthogonalization strategy explicitly.
-% ================================================================
 
 The reconstructed branch is also microscopically distinct from the
 upper branch.

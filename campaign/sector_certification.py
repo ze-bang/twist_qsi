@@ -98,8 +98,22 @@ def main() -> int:
     for r in rows_out[:5]:
         log(f"  key {r['key']:>12d}  dim {r['dim']:>9,}  "
             f"E0 = {r['E0']:12.6f}", t0)
-    gap = rows_out[1]["E0"] - rows_out[0]["E0"] if len(rows_out) > 1 else 0
-    log(f"margin to the best competing sector: {gap:.6f} K", t0)
+    # the margin must be measured to the best sector of DIFFERENT energy:
+    # symmetry-related sectors (the +-P pair) are exactly degenerate and
+    # are not competitors
+    e0 = rows_out[0]["E0"]
+    nxt = [r for r in rows_out if r["E0"] > e0 + 1e-9]
+    gap = (nxt[0]["E0"] - e0) if nxt else 0.0
+    ndeg = sum(1 for r in rows_out if abs(r["E0"] - e0) < 1e-9)
+    log(f"ground energy {e0:.6f} K, {ndeg}-fold degenerate across "
+        f"symmetry-related sectors", t0)
+    log(f"margin to the lowest sector of different energy: "
+        f"{gap:.6f} K", t0)
+    # is sector energy monotone in dimension?
+    bydim = sorted(rows_out, key=lambda r: -r["dim"])
+    mono = all(bydim[i]["E0"] <= bydim[i + 1]["E0"] + 1e-9
+               for i in range(len(bydim) - 1))
+    log(f"sector energy monotone in dimension: {mono}", t0)
     tag = "".join(str(s) for s in shape)
     with open(OUT / f"sector_cert_fcc{tag}.json", "w") as fh:
         json.dump({"shape": list(shape), "checked": len(order),
