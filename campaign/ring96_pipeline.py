@@ -278,7 +278,7 @@ def lanczos_real_pair(H, seedR, seedI, e0, n_iter, nf=None, wmin=1e-4):
             r["Q"][:, 0] = r["q"]
         runs.append(r)
     if all(r["done"] for r in runs):
-        return [(np.array([]), np.array([]), 0.0, np.array([]))] * 2
+        return [(np.array([]), np.array([]), 0.0, np.array([]), ([], []))] * 2
 
     def block_mv():
         cols = [r["q"] for r in runs if not r["done"]]
@@ -320,7 +320,8 @@ def lanczos_real_pair(H, seedR, seedI, e0, n_iter, nf=None, wmin=1e-4):
     out = []
     for r in runs:
         if not r["alpha"]:
-            out.append((np.array([]), np.array([]), 0.0, np.array([])))
+            out.append((np.array([]), np.array([]), 0.0, np.array([]),
+                        ([], [])))
             continue
         m = len(r["alpha"])
         ev, evec = eigh_tridiagonal(np.array(r["alpha"]),
@@ -335,7 +336,9 @@ def lanczos_real_pair(H, seedR, seedI, e0, n_iter, nf=None, wmin=1e-4):
                     cens[j] = float((rv * rv) @ nf) / den
                 del rv
         r.pop("Q", None)
-        out.append((ev - e0, wt, r["nrm"] ** 2, cens))
+        r["tridiag"] = (list(map(float, r["alpha"])),
+                        list(map(float, r["beta"][:m - 1])))
+        out.append((ev - e0, wt, r["nrm"] ** 2, cens, r["tridiag"]))
     return out
 
 def main() -> int:
@@ -517,12 +520,15 @@ def main() -> int:
     # so what is reported is the census of the excited subspace the
     # probe actually reaches at that energy.
     for q, s_pred in classes:
-        S_q, lines = 0.0, []
+        S_q, lines, tris = 0.0, [], []
         for mu in range(4):
             col = probe_col(q, mu)
-            for ev, wt, nn, cens in lanczos_real_pair(
+            tri_ch = []
+            for ev, wt, nn, cens, tri in lanczos_real_pair(
                     H, np.ascontiguousarray(col.real),
                     np.ascontiguousarray(col.imag), e0, n_iter, nf=nf):
+                tri_ch.append({"alpha": tri[0], "beta": tri[1],
+                               "nrm2": nn})
                 if nn < 1e-14:
                     continue
                 S_q += nn / n
@@ -532,6 +538,7 @@ def main() -> int:
                         ww = (w / n) if np.isfinite(c) else 0.0
                         lines.append((float(e), float(w / n),
                                       float(wc), float(ww)))
+            tris.append(tri_ch)
             del col
             log(f"    sublattice {mu} done", t0)
         lines.sort()
@@ -555,6 +562,7 @@ def main() -> int:
             log(f"    {e:8.4f}   {w/max(S_q,1e-30):8.4f}   {c:+8.4f}", t0)
         rec["momenta"].append({"q": [float(x) for x in q], "S": S_q,
                                "S_equal_time": s_pred, "star": star(q),
+                               "tridiag": tris,
                                "lines": [[r[0], r[1], r[4]]
                                          for r in agg[:16]]})
 
