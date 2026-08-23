@@ -75,8 +75,11 @@ def main() -> int:
             e = 0.0            # a frozen single state has E = 0
         else:
             tab = Table128(states[rows])
-            H = ring_matrix(tab, hw, t0) if dim > 1 else None
-            if H.nnz == 0:
+            try:
+                H = ring_matrix(tab, hw, t0)
+            except ValueError:      # no ring term acts: frozen sector
+                H = None
+            if H is None or H.nnz == 0:
                 e = 0.0
             else:
                 k = 1

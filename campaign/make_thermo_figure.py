@@ -119,62 +119,71 @@ def panel_landscape(ax):
                  loc="left", fontsize=9.4, color=INK)
 
 def panel_boundary(ax):
-    """Zone-boundary stars ordered by ratio: the valley floor, its
-    walls, and the high plateau -- the 20-25% depression at L is the
-    figure's message, read directly off the y axis."""
+    """Three groups, geometric roles explicit: the (t,1/2,1/2) valley;
+    interior stars at comparable |q| (lower than the boundary only
+    because the branch is still rising); the true zone-boundary
+    plateau.  |q| is printed under each tick so the matched-|q|
+    comparison -- valley 9-10% below interior at |q| = 0.75 -- is
+    visible directly."""
     s8 = {tuple(np.round(np.sort(s["qf"]), 3)): s for s in stars_of(8)}
     s6 = {tuple(np.round(np.sort(s["qf"]), 3)): s for s in stars_of(6)}
     order = [
-        ((0.5, 0.5, 0.5), "$L$", True),
-        ((0.25, 0.5, 0.5), r"$(\frac{1}{4}\frac{1}{2}\frac{1}{2})$",
-         True),
-        ((0.0, 0.5, 0.5), r"$(0\frac{1}{2}\frac{1}{2})$", True),
-        ((0.375, 0.375, 0.625), r"$(\frac{3}{8}\frac{3}{8}\frac{5}{8})$",
-         False),
-        ((0.0, 0.0, 0.75), r"$(00\frac{3}{4})$", False),
-        ((0.0, 0.0, 1.0), "$X$", False),
-        ((0.0, 0.75, 0.75), "$K$", False),
-        ((0.25, 0.25, 1.0), "$U$", False),
-        ((0.0, 0.5, 1.0), "$W$", False),
+        ((0.5, 0.5, 0.5), "$L$", "v"),
+        ((0.25, 0.5, 0.5), r"$t{=}\frac{1}{4}$", "v"),
+        ((0.0, 0.5, 0.5), r"$t{=}0$", "v"),
+        ((0.125, 0.375, 0.625),
+         r"$(\frac{1}{8}\frac{3}{8}\frac{5}{8})$", "i"),
+        ((0.0, 0.0, 0.75), r"$(00\frac{3}{4})$", "i"),
+        ((0.375, 0.375, 0.625),
+         r"$(\frac{3}{8}\frac{3}{8}\frac{5}{8})$", "i"),
+        ((0.0, 0.0, 1.0), "$X$", "b"),
+        ((0.0, 0.75, 0.75), "$K$", "b"),
+        ((0.25, 0.25, 1.0), "$U$", "b"),
+        ((0.0, 0.5, 1.0), "$W$", "b"),
     ]
-    # 864-site counterparts where the grid provides them
     map6 = {(0.5, 0.5, 0.5): (0.5, 0.5, 0.5),
             (0.0, 0.0, 1.0): (0.0, 0.0, 1.0)}
     ax.axvspan(-0.5, 2.5, color=ROTON, alpha=0.06, zorder=0)
-    ax.text(1.0, 2.86, r"soft valley $(t,\frac{1}{2},\frac{1}{2})$",
-            fontsize=7.8, color=ROTON, ha="center")
-    for x, (k, lab, valley) in enumerate(order):
-        col = ROTON if valley else PHOTON
+    ax.axvline(2.5, color=EDGE, lw=0.7, zorder=1)
+    ax.axvline(5.5, color=EDGE, lw=0.7, zorder=1)
+    ax.text(1.0, 2.88, r"valley $(t,\frac{1}{2},\frac{1}{2})$",
+            fontsize=7.4, color=ROTON, ha="center")
+    ax.text(4.0, 2.88, "interior,\nsame $|\\bf q|$", fontsize=7.0,
+            color=INK2, ha="center")
+    ax.text(7.5, 2.88, "zone boundary", fontsize=7.4, color=INK2,
+            ha="center")
+    ticklabels = []
+    for x, (k, lab, kind) in enumerate(order):
+        col = ROTON if kind == "v" else PHOTON
+        face = col if kind != "i" else "white"
         s = s8.get(k)
         if s:
-            err = max(s["err"], 0.019 if k == (0.5, 0.5, 0.5) else s["err"])
+            err = max(s["err"], 0.019 if k == (0.5, 0.5, 0.5)
+                      else s["err"])
             ax.errorbar(x, s["ratio"], yerr=err, fmt="o", ms=6,
-                        mfc=col, mec="white", mew=0.6, ecolor=col,
+                        mfc=face, mec=col, mew=1.1, ecolor=col,
                         elinewidth=1.1, capsize=2, zorder=4)
+            ticklabels.append(lab + f"  {s['absq']:.2f}")
+        else:
+            ticklabels.append(lab)
         k6 = map6.get(k)
         if k6:
-            q6 = tuple(np.round(np.sort(np.array(k6)), 3))
-            s6e = s6.get(q6)
+            s6e = s6.get(tuple(np.round(np.sort(np.array(k6)), 3)))
             if s6e:
-                ax.errorbar(x + 0.18, s6e["ratio"], yerr=s6e["err"],
+                ax.errorbar(x + 0.22, s6e["ratio"], yerr=s6e["err"],
                             fmt="s", ms=4.5, mfc="white", mec=INK2,
                             ecolor=INK2, elinewidth=0.9, capsize=2,
                             zorder=3)
-    ax.errorbar([], [], fmt="o", ms=6, mfc=PHOTON, mec="white",
-                label="2048 sites")
-    ax.errorbar([], [], fmt="s", ms=4.5, mfc="white", mec=INK2,
-                label="864 sites")
-    ax.legend(loc="lower right", fontsize=7.6, frameon=False)
+    ax.annotate("864", xy=(0.28, 2.135), fontsize=6.8, color=INK2)
     ax.set_xticks(range(len(order)))
-    ax.set_xticklabels([o[1] for o in order], fontsize=6.8,
-                       rotation=38, ha="right")
+    ax.set_xticklabels(ticklabels, fontsize=6.6, rotation=35,
+                       ha="right")
     ax.set_ylabel(r"$f_1(\bf q)\,/\,S(\bf q)$   $[K]$", fontsize=9.3,
                   color=INK)
-    ax.set_ylim(2.0, 2.95)
+    ax.set_ylim(2.0, 3.02)
     ax.set_xlim(-0.5, len(order) - 0.4)
-    ax.set_title("(a) the zone-boundary hierarchy", loc="left",
-                 fontsize=9.4, color=INK)
-
+    ax.set_title("(a) short-wavelength hierarchy",
+                 loc="left", fontsize=9.4, color=INK)
 
 def fig_si_grid():
     """The complete allowed-momentum scatter, for the SI."""
