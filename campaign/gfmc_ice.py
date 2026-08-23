@@ -282,6 +282,26 @@ def gfmc(lat, K=1.0, n_walkers=512, n_steps=6000, n_equil=1500,
     w_ref = lam + K * fl.sum(axis=1).mean()
     log_glob = 0.0
 
+    # incremental-update machinery: a flip of hexagon p only changes
+    # the flippability of hexagons sharing a site with p (~31 of
+    # thousands on large lattices), so the per-step cost of the
+    # dominant kernel drops by that ratio; the post-reconfiguration
+    # refresh is a row gather, since flippability is a function of the
+    # configuration alone.  The full recompute is kept for the initial
+    # state and for a periodic consistency gate.
+    site2hex = {}
+    for h, path in enumerate(lat.hexes):
+        for s in path:
+            site2hex.setdefault(int(s), []).append(h)
+    nbr = []
+    for path in lat.hexes:
+        u = sorted({h2 for s in path for h2 in site2hex[int(s)]})
+        nbr.append(u)
+    Kn = max(len(u) for u in nbr)
+    HEXNBR = np.array([u + [i] * (Kn - len(u))
+                       for i, u in enumerate(nbr)], dtype=np.int64)
+    hmxp = hm ^ hp
+
     for step in range(n_steps):
         nf = fl.sum(axis=1)
         b = lam + K * nf                      # column weights
@@ -293,11 +313,19 @@ def gfmc(lat, K=1.0, n_walkers=512, n_steps=6000, n_equil=1500,
         idx = np.where(move)[0]
         if len(idx):
             r = (rng.random(len(idx)) * nf[idx]).astype(np.int64)
-            flips = np.argsort(~fl[idx], axis=1)   # flippable first
-            chosen = flips[np.arange(len(idx)), r]
+            c = np.cumsum(fl[idx], axis=1)
+            chosen = np.argmax(c > r[:, None], axis=1)
             for w in range(states.shape[1]):
                 states[idx, w] ^= hm[chosen, w]
-        fl = flippable(states, hm, hp)
+            aff = HEXNBR[chosen]                       # (n_move, Kn)
+            sel = states[idx][:, None, :] & hm[aff]
+            evn = (sel == hp[aff]).all(axis=2)
+            odd = (sel == hmxp[aff]).all(axis=2)
+            fl[idx[:, None], aff] = evn | odd
+        if step % 2000 == 1999:
+            ref = flippable(states, hm, hp)
+            if not np.array_equal(ref, fl):
+                raise RuntimeError("incremental flippability diverged")
 
         # stochastic reconfiguration (comb resampling, unbiased)
         tot = wts.sum()
@@ -309,7 +337,7 @@ def gfmc(lat, K=1.0, n_walkers=512, n_steps=6000, n_equil=1500,
         for m in pending:
             m["mult"] = m["mult"][parents]
         states = states[parents]
-        fl = flippable(states, hm, hp)
+        fl = fl[parents]
 
         if step >= n_equil and step % measure_every == 0:
             nf2 = fl.sum(axis=1).astype(np.float64)

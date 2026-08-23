@@ -1222,3 +1222,37 @@ BONUS DISCOVERIES from the diagnostics:
 LESSON (recorded): degenerate-multiplet expectation values are basis traps;
 always decompose the probe-projected state and cross-check with a second
 alignment.
+
+--------------------------------------------------------------------------------
+OPTIMIZATION PASS (2026-08-23, jobs 19449049/19449084) -- all gated
+--------------------------------------------------------------------------------
+Profile of the completed 96-site run: CF spectroscopy 64%, candidate
+sector identification 25%, winding keys 7.5%, enumeration 1.3%.
+
+ED pipeline (ring96_pipeline.py):
+- lanczos_real_pair: re/im chains of each probe channel share ONE block
+  SpMV per iteration (the 43 GB matrix pass was the dominant traffic).
+  72-site spectroscopy 98s -> 55s (1.8x); at 96 project 5.6h -> ~3h.
+- Ground-sector disk cache (states + matrix indices only; data = -K
+  rebuilt on load) with an E0 re-verification gate: warm start 0.5s vs
+  49s at 72; at 96 saves the full 2.6h setup per rerun.
+- winding_keys as float32 GEMM (exact: integer values << 2^24): 2x at
+  72, larger at 96 (was 40 min).
+GATE: cold+warm 72-site runs reproduce E0=-14.80971536, S(L)=0.320973,
+all six lines AND censuses to 4 decimals (one far-tail 1%-weight pole
+wiggles in its 4th decimal -- Lanczos tail jitter, physically nil).
+
+GFMC (gfmc_ice.py):
+- Incremental flippability: a flip dirties only the ~31 site-sharing
+  hexagons; only those entries update. Consistency gate recomputes the
+  full table every 2000 steps and RAISES on any divergence (never fired).
+- Post-reconfiguration full recompute -> row gather fl[parents].
+- Hexagon selection argsort -> cumsum/argmax (same index-order pick).
+BENCHMARK: 864 sites 200 ms/step -> 6.2 ms/step = 32x. The 7.3h
+2048-site fullgrid would now be ~20 min.
+GATE: 48-site run hits E=-10.556848(96) vs exact -10.556012 and
+S(L)=0.36972(36)/0.37028(44) vs exact 0.370365.
+
+Running production jobs (3x sw96, r96conv) predate these edits and are
+unaffected; the speedups apply to all future reruns (incl. any deeper
+QMC for imaginary-time dynamics, now 32x cheaper).

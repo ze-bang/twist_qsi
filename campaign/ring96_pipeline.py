@@ -123,25 +123,39 @@ class Table128:
         return out
 
 
-def winding_keys(states, ipos, chunk=CHUNK):
+def winding_keys(states, ipos, chunk=1 << 19):
     """Exact integer winding key per state, packed into one int64.
 
     ipos is 4*positions as integers, so the polarization
     sum_i (2 n_i - 1) * ipos_i is an integer vector; it is packed with a
     stride wide enough that distinct vectors never collide.
+
+    The bit unpacking and the projection are done as one float32 GEMM
+    per chunk rather than a per-site accumulation loop: the
+    accumulated components are small integers (well inside float32's
+    exact range), so the result is exact, and the BLAS path is several
+    times faster than 96 vectorized outer products per chunk -- this
+    stage was 7.5% of the 96-site wall time.
     """
     nn = ipos.shape[0]
     keys = np.empty(len(states), dtype=np.int64)
     span = int(np.abs(ipos).sum(axis=0).max()) * 2 + 3
+    fpos = (2.0 * ipos).astype(np.float32)
+    shift = np.arange(64, dtype=np.uint64)
+    base = np.float32((-1.0 * ipos).sum(axis=0))
     for a in range(0, len(states), chunk):
         b = min(a + chunk, len(states))
-        acc = np.zeros((b - a, 3), dtype=np.int64)
-        for s in range(nn):
-            bit = bit_of(states[a:b], s).astype(np.int64)
-            acc += np.outer(2 * bit - 1, ipos[s])
+        bits = np.empty((b - a, nn), dtype=np.float32)
+        for w, off in ((0, 0), (1, 64)):
+            m = min(64, nn - off)
+            if m <= 0:
+                continue
+            bits[:, off:off + m] = (
+                (states[a:b, w, None] >> shift[:m]) & np.uint64(1)
+            ).astype(np.float32)
+        acc = np.rint(bits @ fpos + base).astype(np.int64)
         keys[a:b] = ((acc[:, 0] * span) + acc[:, 1]) * span + acc[:, 2]
     return keys
-
 
 def hex_words(hexes):
     out = []
@@ -242,6 +256,87 @@ def lanczos_real(H, seed, e0, n_iter, nf=None, wmin=1e-4):
             del rv
     del Q
     return ev - e0, wt, nrm ** 2, cens
+def lanczos_real_pair(H, seedR, seedI, e0, n_iter, nf=None, wmin=1e-4):
+    """Two independent full-reorthogonalization Lanczos runs -- the
+    real and imaginary parts of one probe channel -- advanced in
+    lockstep so that each iteration makes ONE pass over the sparse
+    matrix for both vectors (H @ [q_R, q_I] as a single block product).
+    The SpMV is the dominant memory traffic of the spectroscopy stage
+    (43 GB per pass at 96 sites, 64% of the total wall time), so
+    sharing it between the two chains nearly halves that stage. The
+    arithmetic of each chain is unchanged: identical alpha/beta
+    recursions, identical reorthogonalization, identical Ritz values
+    and censuses to the single-seed routine.
+    """
+    runs = []
+    for seed in (seedR, seedI):
+        nrm = float(np.linalg.norm(seed))
+        r = {"nrm": nrm, "done": nrm < 1e-14, "alpha": [], "beta": []}
+        if not r["done"]:
+            r["Q"] = np.zeros((len(seed), n_iter))
+            r["q"] = seed / nrm
+            r["Q"][:, 0] = r["q"]
+        runs.append(r)
+    if all(r["done"] for r in runs):
+        return [(np.array([]), np.array([]), 0.0, np.array([]))] * 2
+
+    def block_mv():
+        cols = [r["q"] for r in runs if not r["done"]]
+        Y = H @ np.stack(cols, axis=1)
+        j = 0
+        for r in runs:
+            if not r["done"]:
+                r["r"] = Y[:, j].copy()
+                j += 1
+
+    block_mv()
+    for r in runs:
+        if r["done"]:
+            continue
+        a = float(r["q"] @ r["r"])
+        r["alpha"].append(a)
+        r["r"] -= a * r["q"]
+    for k in range(1, n_iter):
+        for r in runs:
+            if r["done"]:
+                continue
+            r["r"] -= r["Q"][:, :k] @ (r["Q"][:, :k].T @ r["r"])
+            bb = float(np.linalg.norm(r["r"]))
+            if bb < 1e-10:
+                r["done"] = True
+                continue
+            r["beta"].append(bb)
+            r["q"] = r["r"] / bb
+            r["Q"][:, k] = r["q"]
+        if all(r["done"] for r in runs):
+            break
+        block_mv()
+        for r in runs:
+            if r["done"]:
+                continue
+            a = float(r["q"] @ r["r"])
+            r["alpha"].append(a)
+            r["r"] -= a * r["q"] + r["beta"][-1] * r["Q"][:, k - 1]
+    out = []
+    for r in runs:
+        if not r["alpha"]:
+            out.append((np.array([]), np.array([]), 0.0, np.array([])))
+            continue
+        m = len(r["alpha"])
+        ev, evec = eigh_tridiagonal(np.array(r["alpha"]),
+                                    np.array(r["beta"][:m - 1]))
+        wt = (r["nrm"] ** 2) * evec[0, :] ** 2
+        cens = np.full(len(ev), np.nan)
+        if nf is not None and "Q" in r:
+            for j in np.where(evec[0, :] ** 2 > wmin)[0]:
+                rv = r["Q"][:, :m] @ evec[:m, j]
+                den = float(rv @ rv)
+                if den > 1e-30:
+                    cens[j] = float((rv * rv) @ nf) / den
+                del rv
+        r.pop("Q", None)
+        out.append((ev - e0, wt, r["nrm"] ** 2, cens))
+    return out
 
 def main() -> int:
     t0 = time.perf_counter()
@@ -263,58 +358,97 @@ def main() -> int:
         log("  cluster fails the admissibility gate -- aborting", t0)
         return 1
 
-    states = enumerate_ice_branched(n, tets,
-                                    log=lambda m: log(m.strip(), t0))
-    log(f"enumerated {len(states):,} ice configurations "
-        f"({states.nbytes/2**30:.2f} GB)", t0)
-
-    ipos = np.rint(positions * 4).astype(np.int64)
-    if not np.allclose(ipos / 4.0, positions):
-        log("  positions are not on the quarter-integer lattice", t0)
-        return 1
-
-    rng = np.random.default_rng(12345)
-    sub = rng.integers(0, len(states),
-                       size=min(SUBSAMPLE, len(states)))
-    ksub = winding_keys(states[sub], ipos)
-    uk, cnt = np.unique(ksub, return_counts=True)
-    top = uk[np.argsort(cnt)[::-1][:N_CAND]]
-    cand = list(dict.fromkeys([int(x) for x in top] + [0]))
-    log(f"{len(uk)} sectors seen in a {len(sub):,} sample (with replacement); "
-        f"testing {len(cand)} candidates", t0)
-    del ksub, sub, uk, cnt
-
-    keys = winding_keys(states, ipos)
-    log("winding keys computed for the full manifold", t0)
-
+    # ---- ground-sector cache -----------------------------------------
+    # Identifying the ground sector costs ~2.6 h at 96 sites
+    # (enumeration + winding keys + three candidate diagonalizations),
+    # and every rerun on the same cluster repeats it.  The identified
+    # sector's state table and sparse matrix are therefore cached on
+    # disk (indices only; every stored matrix element equals -K) and
+    # reloaded when present, with the cached ground energy re-verified
+    # by one Lanczos ground-state solve as the gate.
+    tagc = "".join(str(s) for s in shape)
+    cdir = OUT / "cache"
+    cdir.mkdir(exist_ok=True)
+    cW = cdir / f"fcc{tagc}_sector_states.npy"
+    cI = cdir / f"fcc{tagc}_H_indices.npy"
+    cP = cdir / f"fcc{tagc}_H_indptr.npy"
+    cM = cdir / f"fcc{tagc}_meta.json"
     hw = hex_words(hexes)
-    best = None
-    for c in cand:
-        rows = np.where(keys == c)[0]
-        if len(rows) < 2:
-            log(f"  sector {c}: dimension {len(rows)} -- skipped", t0)
-            continue
-        tab = Table128(states[rows])
-        H = ring_matrix(tab, hw, t0)
-        e = float(eigsh(H, k=1, which="SA", tol=1e-9, ncv=30,
-                        return_eigenvectors=False)[0])
-        log(f"  sector {c}: dim {len(rows):,}, nnz {H.nnz:,}, "
-            f"E0 = {e:.8f} K", t0)
-        if best is None or e < best[0] - 1e-9:
-            best = (e, c, rows, tab, H)
-        else:
-            del tab, H
-    if best is None:
-        log("no usable sector found", t0)
-        return 1
-    e_ref, key, rows, tab, H = best
-    n_ice = len(states)
-    del states, keys
-    log(f"ground sector {key} (dim {len(rows):,}), E0 = {e_ref:.8f} K, "
+    if cW.exists() and cI.exists() and cP.exists() and cM.exists():
+        meta = json.load(open(cM))
+        tab = Table128(np.load(cW))
+        indices = np.load(cI)
+        indptr = np.load(cP)
+        H = sp.csr_matrix((-np.ones(len(indices)),
+                           indices.astype(np.int64), indptr),
+                          shape=(len(tab), len(tab)))
+        key, e_ref, n_ice = meta["key"], meta["E0"], meta["n_ice"]
+        log(f"cache hit: sector {key} (dim {len(tab):,}, nnz {H.nnz:,}) "
+            f"loaded; cached E0 = {e_ref:.8f} K", t0)
+        rows = np.arange(len(tab))
+    else:
+        states = enumerate_ice_branched(n, tets,
+                                        log=lambda m: log(m.strip(), t0))
+        log(f"enumerated {len(states):,} ice configurations "
+            f"({states.nbytes/2**30:.2f} GB)", t0)
+
+        ipos = np.rint(positions * 4).astype(np.int64)
+        if not np.allclose(ipos / 4.0, positions):
+            log("  positions are not on the quarter-integer lattice", t0)
+            return 1
+
+        rng = np.random.default_rng(12345)
+        sub = rng.integers(0, len(states),
+                           size=min(SUBSAMPLE, len(states)))
+        ksub = winding_keys(states[sub], ipos)
+        uk, cnt = np.unique(ksub, return_counts=True)
+        top = uk[np.argsort(cnt)[::-1][:N_CAND]]
+        cand = list(dict.fromkeys([int(x) for x in top] + [0]))
+        log(f"{len(uk)} sectors seen in a {len(sub):,} sample "
+            f"(with replacement); testing {len(cand)} candidates", t0)
+        del ksub, sub, uk, cnt
+
+        keys = winding_keys(states, ipos)
+        log("winding keys computed for the full manifold", t0)
+
+        best = None
+        for c in cand:
+            rows = np.where(keys == c)[0]
+            if len(rows) < 2:
+                log(f"  sector {c}: dimension {len(rows)} -- skipped", t0)
+                continue
+            tab = Table128(states[rows])
+            H = ring_matrix(tab, hw, t0)
+            e = float(eigsh(H, k=1, which="SA", tol=1e-9, ncv=30,
+                            return_eigenvectors=False)[0])
+            log(f"  sector {c}: dim {len(rows):,}, nnz {H.nnz:,}, "
+                f"E0 = {e:.8f} K", t0)
+            if best is None or e < best[0] - 1e-9:
+                best = (e, c, rows, tab, H)
+            else:
+                del tab, H
+        if best is None:
+            log("no usable sector found", t0)
+            return 1
+        e_ref, key, rows, tab, H = best
+        n_ice = len(states)
+        del states, keys
+        np.save(cW, tab.w)
+        np.save(cI, H.indices.astype(np.int32))
+        np.save(cP, H.indptr)
+        with open(cM, "w") as fh:
+            json.dump({"key": int(key), "E0": e_ref,
+                       "n_ice": int(n_ice)}, fh)
+        log("ground sector cached to disk", t0)
+    log(f"ground sector {key} (dim {len(tab):,}), E0 = {e_ref:.8f} K, "
         f"E0/site = {e_ref/n:.8f}", t0)
 
     val, vec = eigsh(H, k=1, which="SA", tol=1e-11, ncv=40)
     e0 = float(val[0])
+    if abs(e0 - e_ref) > 1e-6:
+        log(f"  CACHE GATE FAILED: recomputed E0 = {e0:.8f} vs cached "
+            f"{e_ref:.8f} -- delete the cache and rerun", t0)
+        return 1
     gs = np.ascontiguousarray(vec[:, 0].astype(np.float64))
     del val, vec
 
@@ -386,9 +520,9 @@ def main() -> int:
         S_q, lines = 0.0, []
         for mu in range(4):
             col = probe_col(q, mu)
-            for part in (col.real, col.imag):
-                ev, wt, nn, cens = lanczos_real(
-                    H, np.ascontiguousarray(part), e0, n_iter, nf=nf)
+            for ev, wt, nn, cens in lanczos_real_pair(
+                    H, np.ascontiguousarray(col.real),
+                    np.ascontiguousarray(col.imag), e0, n_iter, nf=nf):
                 if nn < 1e-14:
                     continue
                 S_q += nn / n
