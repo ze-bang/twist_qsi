@@ -1181,3 +1181,44 @@ overlap; L vs X ratio vs 1/N across methods) and fig_ladder (four-size
 L spectroscopy with the non-rotonizing-class controls and branch ratios).
 matplotlib gotcha again: \frac14 shorthand crashes mathtext (use
 \frac{1}{4}) -- as recorded in memory, costs an sbatch cycle each time.
+
+================================================================================
+CORRECTION: THE 71% BACKFLOW CLAIM WAS A BASIS ARTIFACT (jobs 19440547/1145/1405)
+================================================================================
+
+Referee point 7 ("test backflow at a larger cluster") exposed it. The soft L
+level is DEGENERATE; the per-family coherences of an arbitrary eigsh/eigh
+multiplet member are basis-dependent. The original roton_sma_vs_true run
+decomposed one arbitrary member and got dark-family share 71%; the
+basis-invariant construction (probe projected onto the multiplet = the state
+the probe creates; verified identical to 4 decimals against SMA-aligned)
+gives, with all gates exact (probe|0> overlap 1e-15, multiplet capture =
+level share, projected energy = eigenvalue to 6 decimals):
+
+              48        64        72
+  SMA         1.450     1.412     1.481
+  soft        1.024     0.954     1.068
+  recovery    29%       32%       28%     <- SIZE-STABLE, survives
+  relief    [.080,-.064,.088*,.322] [.040,-.036,.227,.227] [.276,.002,.002,.133*]
+  dark share  21%       9%        32%     <- (*) = dark family; NO dominance
+
+PAPER CORRECTED everywhere (abstract, intro, microscopic-character section,
+interpretation section, conclusion, Appendix C rewritten with the table and
+an explicit retraction paragraph). The Feynman-Cohen backflow interpretation
+is withdrawn; what survives: exact family decomposition, size-stable 28-32%
+recovery, strong family selectivity NOT concentrated in the dark family.
+
+BONUS DISCOVERIES from the diagnostics:
+- The gs-projected probe span is EXACTLY 2-dimensional at every size
+  (consistent with the rank-2 transverse curl).
+- On fcc(2,3,3) the L-weighted sublattice-3 sum is a CONSERVED QUANTITY of
+  the ring dynamics (family-3 hexagons have no sublattice-3 site; the mu=3
+  site pairs of other families are L-commensurate on that torus): probe
+  channel 3 is proportional to |0> (overlap 1.000) with negligible norm, so
+  S(L) at 72 is uncontaminated but the SMA span REQUIRES gs projection there
+  (raw span gave e_sma = 0 -- the '72-site bug').
+- 72-site SMA = 1.481 (previously unobtainable).
+
+LESSON (recorded): degenerate-multiplet expectation values are basis traps;
+always decompose the probe-projected state and cross-check with a second
+alignment.

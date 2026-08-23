@@ -129,7 +129,18 @@ def analyse(shape, t0):
     qi = max(cols_by_q, key=lambda k: cols_by_q[k][1])
     q, S, cols = cols_by_q[qi]
 
-    # identify the soft eigenstate: largest probe weight among vals[1:]
+    # --- soft eigenstate: the PROBE-ALIGNED member of the multiplet ---
+    # The soft level is degenerate (two L momenta at 48, more at 64), so
+    # an arbitrary eigsh vector is basis-dependent and its per-family
+    # coherences are meaningless.  The physical state is the projection
+    # of the probe onto the multiplet: rho = P_m (sum_mu c_mu c_mu^+) P_m,
+    # normalized -- the state S^z(q)|0> actually creates at this q.
+    # Diagnostics printed: probe-gs overlaps (must vanish), multiplet
+    # capture of the probe, and the projected-state energy (must equal
+    # the soft eigenvalue).
+    for mu in range(4):
+        ov = abs(np.vdot(gs, cols[mu])) / np.linalg.norm(cols[mu])
+        log(f"    |<0|probe_{mu}>| / |probe_{mu}| = {ov:.2e}", t0)
     wts = []
     for j in range(1, len(vals)):
         v = vecs[:, j]
@@ -137,19 +148,74 @@ def analyse(shape, t0):
         wts.append((w, j))
     wts.sort(reverse=True)
     j_soft = wts[0][1]
-    v_soft = np.ascontiguousarray(vecs[:, j_soft])
-    log(f"  soft eigenstate: level {j_soft}, omega = "
-        f"{vals[j_soft]-e0:.4f} K, probe weight {wts[0][0]:.4f}", t0)
+    mult = [j for j in range(1, len(vals))
+            if abs(vals[j] - vals[j_soft]) < 1e-7]
+    log(f"  soft multiplet: levels {mult}, omega = "
+        f"{vals[j_soft]-e0:.4f} K", t0)
+    # rho = sum_mu |P c_mu|^2-weighted pure states; equivalent single
+    # decomposition: w_p(rho) = sum_mu w_p(P c_mu) / sum_mu |P c_mu|^2
+    proj = []
+    for mu in range(4):
+        a = np.zeros(len(gs), dtype=complex)
+        for j in mult:
+            a += vecs[:, j] * np.vdot(vecs[:, j], cols[mu])
+        proj.append(a)
+    cap = sum(float(np.vdot(a, a).real) for a in proj) \
+        / sum(float(np.vdot(c, c).real) for c in cols)
+    log(f"  multiplet captures {cap:.4f} of the probe norm "
+        f"(= this level's share of S at this q)", t0)
 
-    # bare single-mode state: lowest eigenvector of H in span(cols)
-    B = np.stack([c for c in cols], axis=1)
-    Q, _ = np.linalg.qr(B)
+    def famsum_complex(v):
+        return (np.array([wp_per_hex(tab, hw, np.ascontiguousarray(
+            v.real))[fam == mu].sum() for mu in range(4)])
+            + np.array([wp_per_hex(tab, hw, np.ascontiguousarray(
+                v.imag))[fam == mu].sum() for mu in range(4)]))
+
+    nrm2 = sum(float(np.vdot(a, a).real) for a in proj)
+    w_soft = sum(famsum_complex(a) for a in proj) / nrm2
+    # energy gate on the projected state
+    e_proj = sum(float(np.vdot(a, H @ a).real) for a in proj) / nrm2
+    log(f"  projected-state energy = {e_proj - e0:.6f} K "
+        f"(soft eigenvalue {vals[j_soft]-e0:.6f})", t0)
+
+    # bare single-mode state: lowest eigenvector of H in span(cols),
+    # with the ground state PROJECTED OUT first.  On fcc(2,3,3) this is
+    # not optional: probe channel 3 at L is exactly proportional to the
+    # ground state (the weighted sublattice-3 sum is a conserved
+    # quantity of the ring dynamics on that torus -- family-3 hexagons
+    # contain no sublattice-3 site, and the two sublattice-3 sites of
+    # every other hexagon are L-commensurate), so the raw span contains
+    # |0> and its lowest eigenvalue is E0.  The elastic share this
+    # invariant contributes to S(q) is printed.
+    elastic = sum(abs(np.vdot(gs, c)) ** 2 for c in cols) / n
+    log(f"    elastic (ground-state) share of S at this q: "
+        f"{elastic / S:.4f}", t0)
+    B = np.stack([c - gs * np.vdot(gs, c) for c in cols], axis=1)
+    keep = [k for k in range(4)
+            if np.linalg.norm(B[:, k]) > 1e-8 * np.linalg.norm(cols[k])]
+    B = B[:, keep]
+    Q, R = np.linalg.qr(B)
+    good = np.abs(np.diag(R)) > 1e-8
+    Q = Q[:, good]
+    log(f"    span dimension after gs projection: {Q.shape[1]}", t0)
+    log(f"    max |<0|Q_k>| = "
+        f"{max(abs(np.vdot(gs, Q[:, k])) for k in range(Q.shape[1])):.2e}",
+        t0)
     Hq = Q.conj().T @ (H @ Q)
     ev, evec = np.linalg.eigh(Hq)
+    log(f"    span spectrum - E0 = {np.round(ev - e0, 4)}", t0)
     sma = (Q @ evec[:, 0])
     e_sma = float(ev[0]) - e0
     log(f"  single-mode energy = {e_sma:.4f} K "
         f"(exact soft level {vals[j_soft]-e0:.4f})", t0)
+    # robustness: the SMA-aligned member of the multiplet, for
+    # comparison with the probe-aligned one used above
+    b = np.zeros(len(gs), dtype=complex)
+    for j in mult:
+        b += vecs[:, j] * np.vdot(vecs[:, j], sma)
+    nb = float(np.vdot(b, b).real)
+    log(f"    multiplet capture of the SMA state: {nb:.4f}", t0)
+    w_soft_sma = famsum_complex(b) / nb
     sma_r = np.ascontiguousarray(sma.real)
     sma_i = np.ascontiguousarray(sma.imag)
 
@@ -158,7 +224,6 @@ def analyse(shape, t0):
         return np.array([w[fam == mu].sum() for mu in range(4)])
 
     w_gs = famsum(gs)
-    w_soft = famsum(v_soft)
     w_sma = famsum(sma_r) + famsum(sma_i)
     gate = w_gs.sum() / (-e0)
     log(f"  GATE sum_p w_p / (-E0/K) = {gate:.8f}", t0)
@@ -174,6 +239,11 @@ def analyse(shape, t0):
         f"{relief.sum():+8.4f}   (gate vs energies: "
         f"{d_sma.sum():.4f} ?= {e_sma:.4f}, "
         f"{d_soft.sum():.4f} ?= {vals[j_soft]-e0:.4f})", t0)
+    d_soft2 = -(w_soft_sma - w_gs)
+    relief2 = d_sma - d_soft2
+    log(f"  SMA-aligned variant relief: "
+        f"{np.round(relief2, 4)}   (probe-aligned above: "
+        f"{np.round(relief, 4)})", t0)
     # which family is dark to the probe at this L?
     hsg = [(np.asarray(p, dtype=int),
             np.where(np.arange(6) % 2 == 0, 1.0, -1.0)) for p in hexes]
@@ -201,6 +271,8 @@ def analyse(shape, t0):
             "relief_fam": [float(x) for x in relief],
             "dark_family": dark,
             "dark_share": float(relief[dark] / relief.sum()),
+            "relief_sma_aligned": [float(x) for x in relief2],
+            "elastic_share": float(elastic / S),
             "gate": float(gate)}
 
 

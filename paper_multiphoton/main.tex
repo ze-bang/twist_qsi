@@ -52,14 +52,16 @@ Green's-function Monte Carlo --- validated digit-for-digit against
 the 48-site spectra --- carries the diagnostic to complete momentum
 grids of up to 2048 sites, where the zone-boundary softening at $L$
 persists with under two percent drift, together with a shallow soft
-valley along $(t,\frac12,\frac12)$. An exact plaquette decomposition
-attributes $71\%$ of the mode's variational relaxation to the one
-hexagon family the probe leaves unconstrained, a backflow-like
-mechanism. The phenomenology --- a soft, weight-dominant collective
-level at finite momentum, located by the Feynman ratio and relaxed by
-backflow-like reorganization --- is that of a lattice roton, an
-interpretation we state precisely and whose thermodynamic limits
-(sharpness is established to 96 spins; beyond that the Monte Carlo
+valley along $(t,\frac12,\frac12)$. An exact, basis-invariant
+plaquette decomposition shows that the mode recovers a size-stable
+$28$--$32\%$ of its bare single-mode energy by reorganizing ring
+coherence in a strongly family-selective way, though not one
+concentrated in the geometrically dark hexagon family. The
+phenomenology --- a soft, weight-dominant collective level at finite
+momentum, located by the Feynman ratio --- is that of a lattice
+roton, an interpretation we state precisely and whose thermodynamic
+limits (sharpness is established to 96 spins; beyond that the Monte
+Carlo
 constrains the spectral centroid) we state alongside it.
 \end{abstract}
 
@@ -130,8 +132,7 @@ longitudinal weight, below the dominant level at every other
 accessible momentum, at every diagonalized size. The
 \emph{interpretation} we offer for this phenomenology --- a lattice
 analogue of a Feynman roton, softened where $S(\bq)$ is large and the
-oscillator strength small, relaxed by backflow-like reorganization
---- is developed in Sec.~\ref{sec:roton-sense}, together with a
+oscillator strength small --- is developed in Sec.~\ref{sec:roton-sense}, together with a
 precise statement of what it does and does not commit us to. The
 reconstruction stands independently of whether the reader adopts the
 interpretation.
@@ -555,17 +556,32 @@ description of the excitation that uses only the electric-field wave.
 
 The exact low $L$ eigenstate lies at $1.024K$, so relaxation beyond
 the electric-field wave recovers $0.427K$, or $29\%$ of the bare
-single-mode cost. Because the ring term is the entire nonconstant
-Hamiltonian, this recovery decomposes exactly, with no remainder, into
-contributions from the four hexagon families
-(Appendix~\ref{app:backflow}). Of it, $71\%$ comes from the single
-family lying in the wavefronts --- the family whose plaquettes carry
-no flux from the imposed wave and therefore contribute nothing to the
-oscillator strength. They can reorganize without reducing the overlap
-with the probe state, which is precisely the mechanism of backflow in
-Feynman--Cohen theory~\cite{FeynmanCohen1956}: the excitation lowers
-its energy by rearranging the degrees of freedom the bare wave does
-not constrain.
+single-mode cost --- and this recovery fraction is size-stable, $29$,
+$32$ and $28\%$ on the 48-, 64- and 72-site clusters. Because the
+ring term is the entire nonconstant Hamiltonian, the recovery
+decomposes exactly, with no remainder, into contributions from the
+four hexagon families (Appendix~\ref{app:backflow}). The
+decomposition must be performed with care: the soft level is
+degenerate, and the per-family coherences of an arbitrarily chosen
+multiplet member are basis-dependent. The basis-invariant
+construction --- decomposing the projection of the probe onto the
+multiplet, which is the state the probe actually creates, and which
+agrees to four decimals with the alternative alignment to the
+single-mode state --- shows the relief to be strongly
+family-selective but \emph{not} concentrated in the geometrically
+dark family: the dark family carries $21$, $9$ and $32\%$ of the
+relief at the three sizes, with the largest single-family share
+($50$--$76\%$) residing in bright families whose pattern varies with
+cluster geometry. An earlier version of this analysis attributed
+$71\%$ to the dark family; that number was an artifact of the basis
+choice within the degenerate multiplet, and we retract the
+Feynman--Cohen backflow interpretation~\cite{FeynmanCohen1956} that
+was built on it. What the decomposition does establish is that the
+collective mode lowers its energy by reorganizing ring coherence in a
+few specific hexagon families --- a correlated, family-selective
+relaxation that the single-mode state cannot perform --- and that the
+size of this effect is stable across every cluster we can
+diagonalize.
 
 
 \section{Few-photon kinematics}
@@ -616,16 +632,20 @@ declines it loses none of the results.
 
 The phenomenology assembled above --- a soft, weight-dominant
 collective level at finite momentum, located predictively by the
-ratio of oscillator strength to static structure factor, and relaxed
-by reorganization of degrees of freedom the bare density wave does not
-constrain --- is that of a Feynman roton, transplanted to a lattice
-gauge theory. In helium the sound branch is softened where $S(q)$
-peaks and lowered further by backflow; here the electric field is
-microscopically saturated, $E=S^z=\pm\frac12$, so a finite-amplitude
-wave cannot be formed by increasing $|E|$ on a bond: it must
-rearrange which bonds carry the two allowed values, that
-rearrangement costs ring coherence, and the cost is smallest where
-the Feynman ratio is smallest.
+ratio of oscillator strength to static structure factor, and lowered
+below the single-mode bound by a size-stable correlated relaxation
+--- is that of a Feynman roton, transplanted to a lattice gauge
+theory. In helium the sound branch is softened where $S(q)$ peaks;
+here the electric field is microscopically saturated,
+$E=S^z=\pm\frac12$, so a finite-amplitude wave cannot be formed by
+increasing $|E|$ on a bond: it must rearrange which bonds carry the
+two allowed values, that rearrangement costs ring coherence, and the
+cost is smallest where the Feynman ratio is smallest. We note that
+the analogy extends to the $S(q)$-driven softening but, on the
+present evidence, \emph{not} to Feynman--Cohen backflow: the exact
+family-resolved decomposition shows the mode's relaxation is not
+concentrated in the degrees of freedom the probe leaves unconstrained
+(Appendix~\ref{app:backflow}).
 
 Whether the soft feature is a \emph{minimum} deserves a precise
 statement, because the pole and the centroid behave differently along
@@ -1210,9 +1230,9 @@ times, once as a near-degeneracy prediction between different
 momentum stars --- and sign-free Monte Carlo shows that its
 zone-boundary minimum at $L$ survives, essentially unchanged, to 2048
 sites. The relaxation that carries the mode below the single-mode
-bound is dominated, in an exact plaquette decomposition, by the
-hexagon family the probe leaves unconstrained: a backflow-like
-mechanism.
+bound recovers a size-stable $28$--$32\%$ of the bare cost through a
+family-selective reorganization of ring coherence, resolved exactly
+by plaquette decomposition.
 
 We have been precise about the two statements the data do not make:
 sharpness beyond 96 spins, where only the centroid is constrained, and
@@ -1361,7 +1381,7 @@ the splitting because it connects to a specific earlier
 prediction~\cite{Kwasigroch2017,Kwasigroch2020}, not as separate
 evidence.
 
-\section{Exact decomposition of the backflow energy}
+\section{Exact family decomposition of the relaxation energy}
 \label{app:backflow}
 
 Because the ring term is the entire nonconstant Hamiltonian inside the
@@ -1374,37 +1394,72 @@ exactly a sum of plaquette contributions,
  \label{eq:edecomp}
 \end{equation}
 with no remainder. Grouping the plaquettes by hexagon family --- the
-four $\langle111\rangle$ orientations, labeled unambiguously by the
-sublattice each hexagon omits, which is immune to the periodic
-wrapping that corrupts plane fitting on a small torus --- turns
-Eq.~(\ref{eq:edecomp}) into a four-term decomposition of any energy.
-Applying it to the bare single-mode state --- the lowest eigenvector of
-$H$ within the four-dimensional space spanned by the sublattice-resolved
-probe states $S^z_\mu(L)|0\rangle$, whose energy is $1.450K$ --- and to
-the exact lowest $L$ eigenstate at $1.024K$ gives, in units of $K$,
+four $\langle111\rangle$ orientations, labeled by the sublattice each
+hexagon omits --- turns Eq.~(\ref{eq:edecomp}) into a four-term
+decomposition of any excitation energy.
+
+Two states are compared. The bare single-mode state is the lowest
+eigenvector of $H$ in the span of the sublattice-resolved probes
+$S^z_\mu(\bq_L)|0\rangle$ with the ground state projected out; that
+span is exactly two-dimensional at every size, consistent with the
+rank-two transverse curl of Appendix~\ref{app:polarization}. (The
+projection is not optional on fcc$(2,3,3)$: there the
+$L$-weighted sublattice-3 sum is a conserved quantity of the ring
+dynamics --- family-3 hexagons contain no sublattice-3 site and the
+sublattice-3 site pairs of the other families are $L$-commensurate on
+that torus --- so one probe channel is proportional to the ground
+state itself, though with negligible norm, so $S(L)$ is
+uncontaminated.) The exact soft state must be chosen with equal
+care: the level is degenerate, and the per-family coherences of an
+arbitrary multiplet member are basis-dependent. We use the
+basis-invariant choice, the normalized projection of the probe onto
+the multiplet --- the state the probe creates --- and verify that the
+alternative alignment, to the single-mode state, gives per-family
+values identical to four decimals. Three gates hold at every size:
+the probes are orthogonal to the ground state at the $10^{-15}$
+level, the multiplet captures exactly the level's known share of
+$S(\bq_L)$, and the projected state's energy reproduces the soft
+eigenvalue to six decimals.
+
+The result, in units of $K$, with the geometrically dark family (the
+one with $g_p(\bq_L)\equiv0$) marked $\star$:
 \begin{center}
-\begin{tabular}{lrrrrr}
+\begin{tabular}{lrrr}
 \hline\hline
-family & 1 & 2 & 3 & 4 & total\\
+ & 48 & 64 & 72\\
 \hline
-single mode & $0.422$ & $-0.540$ & $1.004$ & $0.565$ & $1.450$\\
-exact       & $0.341$ & $-0.476$ & $0.702$ & $0.456$ & $1.024$\\
-relief      & $0.080$ & $-0.064$ & $0.301$ & $0.110$ & $0.427$\\
+single-mode energy & $1.450$ & $1.412$ & $1.481$\\
+exact soft level   & $1.024$ & $0.954$ & $1.068$\\
+recovery           & $29\%$  & $32\%$  & $28\%$\\
+\hline
+relief, family 1 & $+0.080$ & $+0.040$ & $+0.276$\\
+relief, family 2 & $-0.064$ & $-0.036$ & $+0.002$\\
+relief, family 3 & $+0.088^\star$ & $+0.227$ & $+0.002$\\
+relief, family 4 & $+0.322$ & $+0.227$ & $+0.133^\star$\\
+\hline
+dark-family share & $21\%$ & $9\%$\,$^\star$ & $32\%$\\
 \hline\hline
 \end{tabular}
 \end{center}
-where family 3 is the one with $g_p(L)=0$ identically. The totals
-reproduce the variational and exact energies, so the decomposition is
-complete rather than approximate. Of the $0.427K$ of energy recovered
-in going from the single-mode state to the exact eigenstate,
-$0.301K$, or $71\%$, comes from the dark family alone --- although it
-constitutes one quarter of the plaquettes and contributes nothing to
-the oscillator strength. This is the precise sense in which the
-relaxation is backflow-like: the state reorganizes exactly those
-degrees of freedom that the bare electric-field wave does not
-constrain, and which therefore cost it no overlap.
+(families are listed in a fixed per-cluster order; at 64 the dark
+family is family 1). The totals reproduce the variational and exact
+energies exactly, so the decomposition is complete rather than
+approximate.
 
-
+Two conclusions follow. First, the $28$--$32\%$ variational recovery
+is stable across all three sizes: the collective mode robustly lowers
+its energy below the single-mode bound by a correlated,
+family-selective reorganization of ring coherence. Second, the
+relief is \emph{not} concentrated in the geometrically dark family:
+its share is $9$--$32\%$ with no size trend, and the largest
+single-family share resides in bright families whose pattern varies
+with cluster geometry. An earlier version of this analysis reported
+$71\%$ from the dark family; that number was an artifact of
+decomposing one arbitrarily chosen member of the degenerate
+multiplet, and the Feynman--Cohen backflow interpretation built on it
+is withdrawn. We record the correction explicitly because the
+basis-dependence of degenerate-multiplet expectation values is an
+easy trap in this kind of analysis.
 \section{Green's-function Monte Carlo}
 \label{app:gfmc}
 
@@ -1426,7 +1481,17 @@ $S(\bq)$ is diagonal in the configuration basis, and for diagonal
 observables the mixed distribution $\Psi_0\Psi_T$ is converted to the
 pure one $|\Psi_0|^2$ by forward walking: an observable measured at
 time $t$ is weighted by the number of descendants its walker retains
-at $t+T$. We use $T=80$ steps, beyond which the estimates are flat.
+at $t+T$. Convergence in $T$ and in the walker number is quantified
+against the exact 48-site reference by a scan over $256$--$2048$
+walkers and $T=20$--$160$: at $T=20$ the forward walking is
+demonstrably under-converged, biasing $S(L)$ low by about $0.7\%$
+(five standard deviations at our best statistics), while for
+$T\ge40$ every entry scatters about the exact $0.370365$ within
+errors; production runs use $T=80$. The mixed-estimator energies in
+the same scan sit $\approx1.5\times10^{-4}$ (relative) above the
+exact ground energy independently of walker number, a residual
+population-control bias two orders of magnitude below any energy
+difference used in this paper.
 
 Initialization has one subtlety worth recording. Every
 sublattice-uniform ice state is a frozen point of the dynamics ---
