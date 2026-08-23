@@ -272,24 +272,28 @@ diagnostic of the excited states.
 \end{figure*}
 
 
-\begin{figure}[t]
+
+\begin{figure*}[t]
 \centering
-\includegraphics[width=\columnwidth]{fig_dssf.pdf}
-\caption{The mode itself: exact $\Szz(\bq,\omega)$ near $L$. (a) The
- 72-site spectrum at five momenta, each normalized by its own
- $S(\bq)$; every pole is exact (Lanczos continued fraction with the
- sum-rule gate at $1.0000$), broadened by a display-only
- $\eta=0.05K$. At the three photon-like momenta the response peaks at
- $1.5$--$2.2K$; at $L$ \emph{and} at the soft-valley momentum
- $(\frac16,\frac12,\frac12)$ (Sec.~\ref{sec:valley}) it collapses
- onto a single dominant pole near $1K$ carrying over half the weight
- (shaded band). (b) The $L$-point spectrum at all four diagonalized
- sizes, overlaid: the soft pole sits at $0.90$--$1.07K$ with about
- half the weight at every size, the upper transverse branch at
- $1.65$--$1.81K$. Nothing here is fitted or extrapolated; the figure
- is the spectrum.}
-\label{fig:dssf}
-\end{figure}
+\includegraphics[width=0.98\textwidth]{fig_dispersion.pdf}
+\caption{The $S^z$ spectrum as a dispersion relation. Every exact
+ pole of the diagonalized clusters (48, 64, 72 and 96 spins, overlaid)
+ whose momentum lies on the path
+ $\Gamma\!\to\!L\!\to\!(0,\frac12,\frac12)\!\to\!X\!\to\!\Gamma$,
+ placed at its true position; marker area is the level's share of
+ $S(\bq)$ at its momentum. Red: the soft roton-like level; indigo:
+ the two dominant transverse-channel levels; teal: the residual
+ (multi-photon) weight. The dashed curve is the Gaussian photon,
+ evaluated analytically on the infinite lattice along the same path
+ with its single fitted scale; the analytic curl reproduces the
+ cluster singular value at $L$ to machine precision. The spectrum
+ tracks the free theory at long wavelength, and at $L$ --- and again
+ at the soft-valley momentum $(\frac16,\frac12,\frac12)$ ---
+ reconstructs around a pole at roughly half the free-theory energy.
+ The leg $(0,\frac12,\frac12)\!\to\!X$ contains no cluster momentum
+ and is shown for the free theory only.}
+\label{fig:dispersion}
+\end{figure*}
 \section{The Rokhsar--Kivelson deformation as an excited-state probe}
 To
 classify the eigenstates we use the conventional Rokhsar--Kivelson
@@ -672,6 +676,24 @@ state rather than by the equal-amplitude classical ensemble.
  diagonalization; the Lanczos runs carry an exact sum-rule gate that
  reads $1.0000$ at every size (Appendix~\ref{app:methods}).}
 \label{fig:ladder}
+\end{figure}
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_dssf.pdf}
+\caption{The mode itself: exact $\Szz(\bq,\omega)$ near $L$. (a) The
+ 72-site spectrum at five momenta, each normalized by its own
+ $S(\bq)$; every pole is exact (Lanczos continued fraction with the
+ sum-rule gate at $1.0000$), broadened by a display-only
+ $\eta=0.05K$. At the three photon-like momenta the response peaks at
+ $1.5$--$2.2K$; at $L$ \emph{and} at the soft-valley momentum
+ $(\frac16,\frac12,\frac12)$ (Sec.~\ref{sec:valley}) it collapses
+ onto a single dominant pole near $1K$ carrying over half the weight
+ (shaded band). (b) The $L$-point spectrum at all four diagonalized
+ sizes, overlaid: the soft pole sits at $0.90$--$1.07K$ with about
+ half the weight at every size, the upper transverse branch at
+ $1.65$--$1.81K$. Nothing here is fitted or extrapolated; the figure
+ is the spectrum.}
+\label{fig:dssf}
 \end{figure}
 \emph{Convergence of the collective state.} A systematic variational
 improvement of the electric-field wave converges rapidly to the exact
