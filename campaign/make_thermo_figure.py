@@ -129,13 +129,11 @@ def panel_boundary(ax):
     s6 = {tuple(np.round(np.sort(s["qf"]), 3)): s for s in stars_of(6)}
     order = [
         ((0.5, 0.5, 0.5), "$L$", "v"),
-        ((0.25, 0.5, 0.5), r"$t{=}\frac{1}{4}$", "v"),
-        ((0.0, 0.5, 0.5), r"$t{=}0$", "v"),
-        ((0.125, 0.375, 0.625),
-         r"$(\frac{1}{8}\frac{3}{8}\frac{5}{8})$", "i"),
-        ((0.0, 0.0, 0.75), r"$(00\frac{3}{4})$", "i"),
-        ((0.375, 0.375, 0.625),
-         r"$(\frac{3}{8}\frac{3}{8}\frac{5}{8})$", "i"),
+        ((0.25, 0.5, 0.5), r"$\frac{1}{4}$", "v"),
+        ((0.0, 0.5, 0.5), r"$0$", "v"),
+        ((0.125, 0.375, 0.625), r"$\frac{(135)}{8}$", "i"),
+        ((0.0, 0.0, 0.75), r"$\frac{(006)}{8}$", "i"),
+        ((0.375, 0.375, 0.625), r"$\frac{(335)}{8}$", "i"),
         ((0.0, 0.0, 1.0), "$X$", "b"),
         ((0.0, 0.75, 0.75), "$K$", "b"),
         ((0.25, 0.25, 1.0), "$U$", "b"),
@@ -146,12 +144,18 @@ def panel_boundary(ax):
     ax.axvspan(-0.5, 2.5, color=ROTON, alpha=0.06, zorder=0)
     ax.axvline(2.5, color=EDGE, lw=0.7, zorder=1)
     ax.axvline(5.5, color=EDGE, lw=0.7, zorder=1)
-    ax.text(1.0, 2.88, r"valley $(t,\frac{1}{2},\frac{1}{2})$",
-            fontsize=7.4, color=ROTON, ha="center")
-    ax.text(4.0, 2.88, "interior,\nsame $|\\bf q|$", fontsize=7.0,
-            color=INK2, ha="center")
-    ax.text(7.5, 2.88, "zone boundary", fontsize=7.4, color=INK2,
+    ax.text(1.0, 2.94, r"valley $(t,\frac{1}{2},\frac{1}{2})$", fontsize=7.2,
+            color=ROTON, ha="center")
+    ax.text(1.0, 2.855, r"0.71--0.87", fontsize=6.4,
+            color=ROTON, ha="center")
+    ax.text(4.0, 2.94, "interior", fontsize=7.2, color=INK2,
             ha="center")
+    ax.text(4.0, 2.855, r"0.74--0.82", fontsize=6.4,
+            color=INK2, ha="center")
+    ax.text(7.5, 2.94, "zone boundary", fontsize=7.2, color=INK2,
+            ha="center")
+    ax.text(7.5, 2.855, r"1.00--1.12", fontsize=6.4,
+            color=INK2, ha="center")
     ticklabels = []
     for x, (k, lab, kind) in enumerate(order):
         col = ROTON if kind == "v" else PHOTON
@@ -163,7 +167,7 @@ def panel_boundary(ax):
             ax.errorbar(x, s["ratio"], yerr=err, fmt="o", ms=6,
                         mfc=face, mec=col, mew=1.1, ecolor=col,
                         elinewidth=1.1, capsize=2, zorder=4)
-            ticklabels.append(lab + f"  {s['absq']:.2f}")
+            ticklabels.append(lab)
         else:
             ticklabels.append(lab)
         k6 = map6.get(k)
@@ -174,10 +178,10 @@ def panel_boundary(ax):
                             fmt="s", ms=4.5, mfc="white", mec=INK2,
                             ecolor=INK2, elinewidth=0.9, capsize=2,
                             zorder=3)
-    ax.annotate("864", xy=(0.28, 2.135), fontsize=6.8, color=INK2)
+    ax.annotate("864", xy=(0.24, 2.055), fontsize=6.5, color=INK2,
+                ha="center")
     ax.set_xticks(range(len(order)))
-    ax.set_xticklabels(ticklabels, fontsize=6.6, rotation=35,
-                       ha="right")
+    ax.set_xticklabels(ticklabels, fontsize=7.0)
     ax.set_ylabel(r"$f_1(\bf q)\,/\,S(\bf q)$   $[K]$", fontsize=9.3,
                   color=INK)
     ax.set_ylim(2.0, 3.02)

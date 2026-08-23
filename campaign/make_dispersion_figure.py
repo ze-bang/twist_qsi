@@ -179,8 +179,8 @@ def main():
         ax.scatter(x, e, s=12 + 600 * sh, color=cols[kind],
                    edgecolor="white", lw=0.5, zorder=order[kind],
                    alpha=0.92)
-    for kind, lab in (("roton", "soft (roton-like) mode"),
-                      ("photon", "transverse-channel doublet"),
+    for kind, lab in (("roton", "lower branch (soft mode)"),
+                      ("photon", "dominant branches"),
                       ("multi", "residual weight")):
         ax.scatter([], [], s=70, color=cols[kind], label=lab)
     ax.legend(loc="upper right", fontsize=7.8, frameon=False,

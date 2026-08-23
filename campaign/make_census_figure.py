@@ -61,8 +61,8 @@ def main():
                 ax.scatter(x, cen, s=430 * sh, color=col,
                            edgecolor="white", linewidth=0.6, zorder=4)
     ax.axhline(0.0, color=EDGE, lw=0.9, zorder=1)
-    ax.scatter([], [], s=90, color=ROTON, label="reconstructed level")
-    ax.scatter([], [], s=90, color=PHOTON, label="upper transverse level")
+    ax.scatter([], [], s=90, color=ROTON, label="lower branch (reconstructing class)")
+    ax.scatter([], [], s=90, color=PHOTON, label="upper branch")
     ax.scatter([], [], s=90, facecolor="white", edgecolor=INK2,
                label="non-reconstructing class")
     ax.legend(loc="upper right", fontsize=7.2, frameon=False,

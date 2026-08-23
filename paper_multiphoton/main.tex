@@ -54,10 +54,9 @@ spin-$\frac12$ gauge theory. We show that the pure pyrochlore
 ring-exchange model develops an order-one reconstruction of the
 finite-momentum $S^z$ spectrum. Operator-resolved calculations on
 48-, 64-, 72-, and 96-site clusters reveal near the zone-boundary
-$L$ point a dominant level in one transverse channel at
-$0.90$--$1.07K$, carrying $50$--$54\%$ of the
-sublattice-summed spectral weight, while a second transverse level
-remains near $1.65$--$1.81K$. The scale-free branch ratio
+$L$ point a pair of dominant levels: a lower one at
+$0.90$--$1.07K$ carrying $50$--$54\%$ of the sublattice-summed
+spectral weight, and an upper one near $1.65$--$1.81K$. The scale-free branch ratio
 $\omega_{\rm low}/\omega_{\rm high}=0.55$--$0.59$ is stable across
 all four sizes. An infinitesimal Rokhsar--Kivelson deformation shows
 that the reconstructed and unreconstructed branches have opposite
@@ -96,11 +95,12 @@ minimal ring model. We therefore ask a sharply defined question:
 \emph{what becomes of the emergent photon at lattice momentum within
 the minimal charge-free quantum-spin-ice Hamiltonian?}
 
-The answer is unexpectedly dramatic. One transverse $S^z$ channel
-undergoes an order-one reconstruction near the zone boundary.
+The answer is unexpectedly dramatic. One of the two dominant
+collective branches undergoes an order-one reconstruction near the
+zone boundary.
 Approximately half of the spectral weight transfers into a mode near
-$1K$ in energy, while the other dominant transverse feature remains
-almost a factor of two higher. The effect persists from 48 to 96
+$1K$ in energy, while the upper branch remains almost a factor of
+two higher. The effect persists from 48 to 96
 spins. Moreover, the reconstructed state has a distinct microscopic
 response to ring flippability, and the momentum sectors in which it
 appears can be identified from ground-state quantities alone.
@@ -200,8 +200,11 @@ Marker area denotes the fraction of the sublattice-summed
 $S^z$ weight carried by each level at its momentum.
 The dashed curve is the Gaussian photon with a single fitted overall
 energy scale.
-The long-wavelength response is photon-like, whereas near $L$ one
-transverse channel reconstructs around a dominant low-energy level.
+Red marks the lower branch where it reconstructs; indigo marks the
+dominant branches elsewhere and the upper branch; teal is residual
+weight.
+The long-wavelength response is photon-like, whereas near $L$ the
+lower branch reconstructs into a dominant low-energy level.
 A similar reconstruction occurs at
 $(\frac16,\frac12,\frac12)$ on the 72-site cluster.
 }
@@ -231,7 +234,7 @@ Their shares of the total $S^z$ weight at the same momentum are
 54.4\%.
 \label{eq:share}
 \end{equation}
-A second dominant transverse level remains at
+A second dominant level remains at
 \begin{equation}
 \frac{\omega_{\rm high}}{K}
 =
@@ -240,6 +243,15 @@ A second dominant transverse level remains at
 1.814,\;
 1.647 .
 \end{equation}
+Throughout this paper we call these two levels simply the
+\emph{lower branch} and the \emph{upper branch}. The terminology has
+a precise operational meaning and no more: at each momentum the
+$S^z$ probe lives in a two-dimensional transverse subspace of the
+emergent gauge field, and the two dominant levels couple through
+nearly orthogonal directions of that subspace (Supplemental
+Material), so they are the two independent collective features the
+probe can create there. No adiabatic connection to the free photon
+is implied by either name.
 
 The most robust finite-size measure is the scale-free branch ratio,
 \begin{equation}
@@ -273,7 +285,7 @@ region rather than an isolated anomalous momentum.
 
 Fixing the single Gaussian energy scale from the long-wavelength
 spectrum places the Gaussian $L$ photon near $2.03K$.
-The reconstructed level therefore lies at approximately one-half of
+The reconstructed lower branch therefore lies at approximately one-half of
 the corresponding Gaussian energy.
 We use this comparison only to quantify the order-one magnitude of
 the effect; the finite-size stability itself follows directly from
@@ -284,14 +296,15 @@ Eqs.~(\ref{eq:share}) and (\ref{eq:branchratio}).
 \includegraphics[width=\columnwidth]{fig_ladder.pdf}
 \caption{
 \textbf{Finite-size stability and internal controls.}
-Filled symbols show the low and upper transverse levels of the
+Filled symbols show the lower and upper branches of the
 reconstructing $L$ class.
 Open symbols show the dominant levels of the inequivalent
 nonreconstructing $L$ class on the anisotropic 64- and 96-site
 clusters.
 The numbers denote
 $\omega_{\rm low}/\omega_{\rm high}$.
-The reconstructed level retains approximately half of the
+The lower branch of the reconstructing class retains approximately
+half of the
 sublattice-summed $S^z$ weight at every size.
 }
 \label{fig:ladder}
@@ -312,7 +325,7 @@ sublattice-summed $S^z$ weight at every size.
 % ================================================================
 
 The reconstructed branch is also microscopically distinct from the
-upper transverse excitation.
+upper branch.
 To expose this difference without using the Gaussian benchmark, we
 employ the standard Rokhsar--Kivelson deformation
 \begin{equation}
@@ -347,7 +360,7 @@ At the 48-site $L$ point, the reconstructed $1.024K$ level has
 \begin{equation}
 \frac{d\omega_{\rm low}}{dV}=+0.339,
 \end{equation}
-whereas the upper $1.730K$ transverse level responds with the
+whereas the upper branch at $1.730K$ responds with the
 opposite sign.
 More importantly, the same contrast appears in the anisotropic
 clusters that provide an internal control.
@@ -374,7 +387,9 @@ according to whether their spectra reconstruct.
 The positive census is a fingerprint rather than a definition of the
 mode.
 Its magnitude is less size-stable than the spectral weight or branch
-ratio, and positive values occur for other finite-size eigenstates.
+ratio, and positive values occur for other finite-size eigenstates ---
+including the upper branch itself at 72 and 96 sites, as
+Fig.~\ref{fig:rk} shows.
 The exhaustive 48-site census and its exact trace identity are given
 in the Supplemental Material.
 The within-cluster sign contrast, however, provides an independent
@@ -385,12 +400,18 @@ comparison between different cluster sizes.
 \centering
 \includegraphics[width=\columnwidth]{fig_mechanism.pdf}
 \caption{
-\textbf{Microscopic fingerprint of the reconstructed branch.}
-The RK derivative
-$d\omega_n/dV$ measures the excess flippability carried by each
-excitation.
-The reconstructed $L$ level responds anomalously compared with the
-upper transverse branch.
+\textbf{Microscopic fingerprint of the reconstruction.}
+The RK derivative $d\omega_n/dV$ [Eq.~(\ref{eq:census})] measures the
+excess flippability carried by each excitation.
+The robust statement is the \emph{within-cluster class contrast}: on
+the anisotropic 64- and 96-site clusters, the lower branch of the
+reconstructing $L$ class carries a positive census while the dominant
+levels of the non-reconstructing class (open symbols), at the same
+$|\bq|$, carry negative ones.
+The sign of the \emph{upper} branch is not itself a diagnostic: it is
+negative at 48 and 64 sites but positive at 72 and 96, one instance
+of the census magnitudes' limited size stability discussed in the
+text.
 The full census distribution and deformation trajectories are given
 in the Supplemental Material.
 }
@@ -527,7 +548,7 @@ alone.
 
 The RK trajectory provides a complementary check.
 Biasing toward more flippable configurations, $V<0$, increases
-$S(L)$ and softens the reconstructed level from approximately
+$S(L)$ and softens the lower branch from approximately
 $1.02K$ to $0.73K$, while $f_1(L)$ changes by less than one percent.
 We interpret this as a correlated evolution of the ground-state
 structure factor and the soft spectrum, not as a temporal or causal
@@ -570,7 +591,8 @@ momenta.
 \caption{
 \textbf{Large-system ground-state landscape.}
 (a) Feynman ratio $f_1(\bq)/S(\bq)$ on the 2048-site supercell,
-grouped by geometric role, with $|\bq|$ printed under each star.
+grouped by geometric role, with each group's $|\bq|$ range (cubic
+reciprocal units) indicated.
 Red: the $(t,\frac12,\frac12)$ valley, nearly flat along its line.
 Open circles: \emph{interior} stars at comparable $|\bq|$ --- these
 sit below the boundary plateau only because the branch is still
@@ -632,8 +654,8 @@ The interpretation also does not require a strict adiabatic
 The $S^z$ probe occupies a two-dimensional transverse gauge-field
 subspace, and the two dominant levels couple through nearly
 orthogonal transverse directions.
-We therefore refer operationally to two dominant transverse
-$S^z$-active branches.
+This is the operational content of the lower- and upper-branch
+terminology used throughout.
 The basis-invariant polarization construction is given in the
 Supplemental Material.
 
@@ -655,8 +677,8 @@ The pure ring model shows that an emergent photon that appears as a
 single long-wavelength mode can reorganize strongly at lattice
 momenta without leaving the charge-free ice manifold.
 Near the zone boundary, a lower feature acquires a large fraction of
-the theoretical $S^z$ response while another transverse feature
-remains at higher energy and additional weight appears outside the
+the theoretical $S^z$ response while the upper branch
+remains at higher energy, and additional weight appears outside the
 two dominant branches.
 
 A material-specific neutron cross section may reweight these
@@ -674,9 +696,9 @@ within the compact gauge sector itself.
 
 In summary, the emergent photon of the pure quantum-spin-ice ring
 model is nonperturbatively reconstructed at the lattice scale.
-Across four finite clusters, one transverse $S^z$ channel near the
-zone boundary transfers approximately half of its spectral weight into
-a mode with a stable scale-free branch ratio
+Across four finite clusters, the $S^z$ response near the zone
+boundary transfers approximately half of its spectral weight into a
+lower branch with a stable scale-free ratio to the upper one,
 \begin{equation}
 \omega_{\rm low}/\omega_{\rm high}=0.55\text{--}0.59.
 \end{equation}
