@@ -118,6 +118,74 @@ def panel_landscape(ax):
     ax.set_title("(a) all allowed momenta",
                  loc="left", fontsize=9.4, color=INK)
 
+def panel_boundary(ax):
+    """Zone-boundary stars ordered by ratio: the valley floor, its
+    walls, and the high plateau -- the 20-25% depression at L is the
+    figure's message, read directly off the y axis."""
+    s8 = {tuple(np.round(np.sort(s["qf"]), 3)): s for s in stars_of(8)}
+    s6 = {tuple(np.round(np.sort(s["qf"]), 3)): s for s in stars_of(6)}
+    order = [
+        ((0.5, 0.5, 0.5), "$L$", True),
+        ((0.25, 0.5, 0.5), r"$(\frac{1}{4}\frac{1}{2}\frac{1}{2})$",
+         True),
+        ((0.0, 0.5, 0.5), r"$(0\frac{1}{2}\frac{1}{2})$", True),
+        ((0.375, 0.375, 0.625), r"$(\frac{3}{8}\frac{3}{8}\frac{5}{8})$",
+         False),
+        ((0.0, 0.0, 0.75), r"$(00\frac{3}{4})$", False),
+        ((0.0, 0.0, 1.0), "$X$", False),
+        ((0.0, 0.75, 0.75), "$K$", False),
+        ((0.25, 0.25, 1.0), "$U$", False),
+        ((0.0, 0.5, 1.0), "$W$", False),
+    ]
+    # 864-site counterparts where the grid provides them
+    map6 = {(0.5, 0.5, 0.5): (0.5, 0.5, 0.5),
+            (0.0, 0.0, 1.0): (0.0, 0.0, 1.0)}
+    ax.axvspan(-0.5, 2.5, color=ROTON, alpha=0.06, zorder=0)
+    ax.text(1.0, 2.86, r"soft valley $(t,\frac{1}{2},\frac{1}{2})$",
+            fontsize=7.8, color=ROTON, ha="center")
+    for x, (k, lab, valley) in enumerate(order):
+        col = ROTON if valley else PHOTON
+        s = s8.get(k)
+        if s:
+            err = max(s["err"], 0.019 if k == (0.5, 0.5, 0.5) else s["err"])
+            ax.errorbar(x, s["ratio"], yerr=err, fmt="o", ms=6,
+                        mfc=col, mec="white", mew=0.6, ecolor=col,
+                        elinewidth=1.1, capsize=2, zorder=4)
+        k6 = map6.get(k)
+        if k6:
+            q6 = tuple(np.round(np.sort(np.array(k6)), 3))
+            s6e = s6.get(q6)
+            if s6e:
+                ax.errorbar(x + 0.18, s6e["ratio"], yerr=s6e["err"],
+                            fmt="s", ms=4.5, mfc="white", mec=INK2,
+                            ecolor=INK2, elinewidth=0.9, capsize=2,
+                            zorder=3)
+    ax.errorbar([], [], fmt="o", ms=6, mfc=PHOTON, mec="white",
+                label="2048 sites")
+    ax.errorbar([], [], fmt="s", ms=4.5, mfc="white", mec=INK2,
+                label="864 sites")
+    ax.legend(loc="lower right", fontsize=7.6, frameon=False)
+    ax.set_xticks(range(len(order)))
+    ax.set_xticklabels([o[1] for o in order], fontsize=6.8,
+                       rotation=38, ha="right")
+    ax.set_ylabel(r"$f_1(\bf q)\,/\,S(\bf q)$   $[K]$", fontsize=9.3,
+                  color=INK)
+    ax.set_ylim(2.0, 2.95)
+    ax.set_xlim(-0.5, len(order) - 0.4)
+    ax.set_title("(a) the zone-boundary hierarchy", loc="left",
+                 fontsize=9.4, color=INK)
+
+
+def fig_si_grid():
+    """The complete allowed-momentum scatter, for the SI."""
+    fig, ax = plt.subplots(figsize=(3.6, 2.8))
+    fig.patch.set_facecolor("white")
+    panel_landscape(ax)
+    ax.set_title("")
+    fig.subplots_adjust(left=0.13, right=0.97, top=0.97, bottom=0.16)
+    for ext in ("pdf", "png"):
+        fig.savefig(OUTDIR / f"fig_si_grid.{ext}", dpi=300)
+    print("wrote", OUTDIR / "fig_si_grid.pdf")
 
 def panel_energy(ax):
     ed_N = np.array([48, 64, 72, 96])
@@ -173,9 +241,10 @@ def panel_zb(ax):
 
 
 def main():
+    fig_si_grid()
     fig, ax = plt.subplots(1, 3, figsize=(7.0, 2.55))
     fig.patch.set_facecolor("white")
-    panel_landscape(ax[0])
+    panel_boundary(ax[0])
     panel_energy(ax[1])
     panel_zb(ax[2])
     for a in ax:
