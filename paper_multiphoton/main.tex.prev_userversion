@@ -1,0 +1,724 @@
+\documentclass[
+aps,
+prl,
+twocolumn,
+amsmath,
+amssymb,
+superscriptaddress,
+longbibliography,
+floatfix
+]{revtex4-2}
+
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[
+colorlinks=true,
+citecolor=blue!55!black,
+urlcolor=blue!55!black,
+linkcolor=blue!55!black
+]{hyperref}
+
+\graphicspath{{figs/}}
+\setlength{\emergencystretch}{3em}
+
+\newcommand{\bq}{\bm q}
+\newcommand{\Szz}{S^{zz}}
+
+\begin{document}
+
+\title{
+Roton-like Reconstruction of the Emergent Photon in Quantum Spin Ice
+}
+
+\author{Zhengbang Zhou}
+\email{zhengbang.zhou@mail.utoronto.ca}
+\affiliation{
+Department of Physics, University of Toronto,
+Toronto, Ontario M5S 1A7, Canada
+}
+
+\author{Yong Baek Kim}
+\email{ybkim@physics.utoronto.ca}
+\affiliation{
+Department of Physics, University of Toronto,
+Toronto, Ontario M5S 1A7, Canada
+}
+
+\date{\today}
+
+\begin{abstract}
+Quantum spin ice hosts an emergent photon at long wavelength, but its
+fate at lattice momenta is governed by a strongly interacting compact
+spin-$\frac12$ gauge theory. We show that the pure pyrochlore
+ring-exchange model develops an order-one reconstruction of the
+finite-momentum $S^z$ spectrum. Operator-resolved calculations on
+48-, 64-, 72-, and 96-site clusters reveal near the zone-boundary
+$L$ point a pair of dominant levels: a lower one at
+$0.90$--$1.07K$ carrying $50$--$54\%$ of the sublattice-summed
+spectral weight, and an upper one near $1.65$--$1.81K$. The scale-free branch ratio
+$\omega_{\rm low}/\omega_{\rm high}=0.55$--$0.59$ is stable across
+all four sizes. An infinitesimal Rokhsar--Kivelson deformation shows
+that the reconstructed and unreconstructed branches have opposite
+microscopic responses to ring flippability. Remarkably, the momentum
+dependence of the reconstruction is anticipated from the ground state
+alone: the Feynman ratio $f_1(\bq)/S(\bq)$ distinguishes
+reconstructing from nonreconstructing momentum classes and identifies
+a nearly degenerate soft mode away from $L$. Sign-free
+Green's-function Monte Carlo on complete momentum grids up to 2048
+sites shows that the corresponding spectral centroid retains an
+$L$-centered minimum within a shallow zone-boundary valley.
+The resulting phenomenology is a lattice analogue of roton formation
+in a strongly interacting emergent gauge field.
+\end{abstract}
+
+\maketitle
+
+Quantum spin ice provides a microscopic realization of an emergent
+compact $U(1)$ gauge field. At long wavelength its gapless excitation
+is governed by Maxwell electrodynamics, giving the familiar emergent
+photon of the Coulomb phase
+\cite{Hermele2004,Benton2012,Shannon2012,KatoOnoda2015}.
+The microscopic theory, however, is not a weakly interacting Maxwell
+field. In the spin-$\frac12$ ice manifold the electric field is
+saturated, $E=S^z=\pm\frac12$, and the compact ring dynamics provide
+the entire nonconstant Hamiltonian. The lattice-scale continuation of
+the photon is therefore a genuinely interacting many-body problem.
+
+This distinction is especially important experimentally. Large
+momentum does not by itself imply leaving the low-energy ice manifold:
+the effective ring Hamiltonian is a \emph{lattice} Hamiltonian and
+therefore contains excitations throughout its Brillouin zone. What
+becomes nonuniversal at short wavelength is not the well-posedness of
+the problem but its sensitivity to microscopic terms beyond the
+minimal ring model. We therefore ask a sharply defined question:
+\emph{what becomes of the emergent photon at lattice momentum within
+the minimal charge-free quantum-spin-ice Hamiltonian?}
+
+The answer is unexpectedly dramatic. One of the two dominant
+collective branches undergoes an order-one reconstruction near the
+zone boundary.
+Approximately half of the spectral weight transfers into a mode near
+$1K$ in energy, while the upper branch remains almost a factor of
+two higher. The effect persists from 48 to 96
+spins. Moreover, the reconstructed state has a distinct microscopic
+response to ring flippability, and the momentum sectors in which it
+appears can be identified from ground-state quantities alone.
+
+Previous results already point toward strong finite-momentum photon
+interactions. The emergent fine-structure constant is large
+\cite{Pace2021}; semiclassical approaches predict substantial
+anharmonic renormalization and interaction-induced splitting of the
+transverse polarizations
+\cite{Kwasigroch2017,Kwasigroch2020,Szabo2019}; and quantum Monte
+Carlo with analytic continuation finds broad zone-boundary response
+beyond Gaussian electrodynamics \cite{Huang2018}.
+What has not been resolved is how the microscopic $S^z$ spectral
+weight is distributed among individual eigenstates.
+Our operator-resolved calculation determines that distribution
+directly.
+
+We study the standard ring-exchange Hamiltonian in the spin-ice
+manifold,
+\begin{equation}
+H=-K\sum_p
+\left(W_p+W_p^\dagger\right),
+\qquad
+W_p=
+S_1^+S_2^-S_3^+S_4^-S_5^+S_6^- ,
+\label{eq:ring}
+\end{equation}
+where $p$ runs over elementary contractible pyrochlore hexagons.
+In gauge language $W_p=e^{iB_p}$.
+Because
+\begin{equation}
+E_\ell=S_\ell^z=\pm\frac12,
+\end{equation}
+the conventional electric term $\sum_\ell E_\ell^2$ is a constant
+inside the constrained manifold. The photon stiffness is therefore
+generated dynamically by the ring Hamiltonian itself.
+
+Our observable is the zero-temperature sublattice-summed pseudospin
+response
+\begin{equation}
+\Szz(\bq,\omega)
+=
+\frac{1}{N}
+\sum_{\mu,n}
+\left|
+\langle n|S_\mu^z(\bq)|0\rangle
+\right|^2
+\delta(\omega-\omega_n),
+\label{eq:szz}
+\end{equation}
+where
+\begin{equation}
+S_\mu^z(\bq)=
+\sum_{i\in\mu}
+e^{-i\bq\cdot\bm r_i}S_i^z .
+\end{equation}
+All spectral fractions quoted below are normalized within
+Eq.~(\ref{eq:szz}) at fixed momentum.
+
+Equation~(\ref{eq:szz}) is the theoretical pseudospin response,
+not a complete material-specific neutron cross section.
+A physical neutron measurement additionally contains coherent
+sublattice interference, local easy-axis rotations, the magnetic
+$g$ tensor, form factors, and the neutron polarization projector.
+We return to this distinction below and give the full discussion in
+the Supplemental Material.
+
+We evaluate Eq.~(\ref{eq:szz}) by complete diagonalization on
+48 sites and Lanczos continued fractions on 64-, 72-, and 96-site
+clusters, reaching a constrained sector of dimension
+$146\,758\,352$ at 96 sites.
+Cluster construction, winding-sector identification, momentum
+certification, and numerical convergence are detailed in the
+Supplemental Material.
+The winding sector is certified exhaustively at 48 and 72 sites, by
+diagonalizing every one of the $155$ and $310$ sectors; at 96 sites
+the twelve largest of $519$ candidates are diagonalized and the
+lowest among them is used.
+The 96-site poles are converged: recomputing the spectra at Krylov
+dimension $200$ rather than $120$ leaves the dominant pole energies
+and residues unchanged to machine precision.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.98\textwidth]{fig_dispersion.pdf}
+\caption{
+\textbf{Nonperturbative finite-momentum reconstruction.}
+Operator-resolved $S^z$ spectrum along
+$\Gamma\!\rightarrow\!L\!\rightarrow\!
+(0,\frac12,\frac12)\!\rightarrow\!X\!\rightarrow\!\Gamma$,
+combining the diagonalized clusters.
+Marker area denotes the fraction of the sublattice-summed
+$S^z$ weight carried by each level at its momentum.
+The dashed curve is the Gaussian photon with a single fitted overall
+energy scale.
+Red marks the lower branch where it reconstructs; indigo marks the
+dominant branches elsewhere and the upper branch; teal is residual
+weight.
+The long-wavelength response is photon-like, whereas near $L$ the
+lower branch reconstructs into a dominant low-energy level.
+A similar reconstruction occurs at
+$(\frac16,\frac12,\frac12)$ on the 72-site cluster.
+}
+\label{fig:dispersion}
+\end{figure*}
+
+Figure~\ref{fig:dispersion} shows the central result.
+Near the zone center, the dominant response follows the expected
+long-wavelength photon.
+At $L$, the spectrum changes qualitatively.
+The dominant low-energy levels occur at
+\begin{equation}
+\frac{\omega_{\rm low}}{K}
+=
+1.024,\;
+0.954,\;
+1.068,\;
+0.904
+\label{eq:low}
+\end{equation}
+for 48, 64, 72, and 96 sites, respectively.
+Their shares of the total $S^z$ weight at the same momentum are
+\begin{equation}
+50.8\%,\;
+50.0\%,\;
+54.0\%,\;
+54.4\%.
+\label{eq:share}
+\end{equation}
+A second dominant level remains at
+\begin{equation}
+\frac{\omega_{\rm high}}{K}
+=
+1.730,\;
+1.652,\;
+1.814,\;
+1.647 .
+\end{equation}
+Throughout this paper we call these two levels simply the
+\emph{lower branch} and the \emph{upper branch}. The terminology has
+a precise operational meaning and no more: at each momentum the
+$S^z$ probe lives in a two-dimensional transverse subspace of the
+emergent gauge field, and the two dominant levels couple through
+nearly orthogonal directions of that subspace (Supplemental
+Material), so they are the two independent collective features the
+probe can create there. No adiabatic connection to the free photon
+is implied by either name.
+
+The most robust finite-size measure is the scale-free branch ratio,
+\begin{equation}
+\frac{\omega_{\rm low}}
+{\omega_{\rm high}}
+=
+0.592,\;
+0.578,\;
+0.589,\;
+0.549 .
+\label{eq:branchratio}
+\end{equation}
+Both Eq.~(\ref{eq:share}) and Eq.~(\ref{eq:branchratio}) remain
+nearly unchanged across three cluster shapes and a factor of roughly
+$1.6\times10^4$ in constrained Hilbert-space dimension.
+Neither requires comparison with a Gaussian fit.
+
+The reconstruction is also not confined to the single point $L$.
+On the 72-site cluster,
+\begin{equation}
+\bq_v=
+\left(
+\frac16,\frac12,\frac12
+\right)
+\end{equation}
+supports a dominant level at $1.075K$ carrying $55\%$ of the
+$S^z$ weight, essentially degenerate with the $L$-point level at
+$1.068K$ carrying $54\%$.
+The finite-size spectra therefore indicate a soft zone-boundary
+region rather than an isolated anomalous momentum.
+
+Fixing the single Gaussian energy scale from the long-wavelength
+spectrum places the Gaussian $L$ photon near $2.03K$.
+The reconstructed lower branch therefore lies at approximately one-half of
+the corresponding Gaussian energy.
+We use this comparison only to quantify the order-one magnitude of
+the effect; the finite-size stability itself follows directly from
+Eqs.~(\ref{eq:share}) and (\ref{eq:branchratio}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_ladder.pdf}
+\caption{
+\textbf{Finite-size stability and internal controls.}
+Filled symbols show the lower and upper branches of the
+reconstructing $L$ class.
+Open symbols show the dominant levels of the inequivalent
+nonreconstructing $L$ class on the anisotropic 64- and 96-site
+clusters.
+The numbers denote
+$\omega_{\rm low}/\omega_{\rm high}$.
+The lower branch of the reconstructing class retains approximately
+half of the
+sublattice-summed $S^z$ weight at every size.
+}
+\label{fig:ladder}
+\end{figure}
+
+
+The reconstructed branch is also microscopically distinct from the
+upper branch.
+To expose this difference without using the Gaussian benchmark, we
+employ the standard Rokhsar--Kivelson deformation
+\begin{equation}
+H(V)
+=
+H+
+V\sum_p n_p^{\rm flip},
+\label{eq:rk}
+\end{equation}
+where $n_p^{\rm flip}$ projects onto a flippable alternating hexagon.
+We use $V$ only as an infinitesimal probe of the physical ring point
+$V=0$.
+Hellmann--Feynman gives
+\begin{equation}
+\left.
+\frac{d\omega_n}{dV}
+\right|_{V=0}
+=
+\left\langle n\left|
+\sum_p n_p^{\rm flip}
+\right|n\right\rangle
+-
+\left\langle0\left|
+\sum_p n_p^{\rm flip}
+\right|0\right\rangle .
+\label{eq:census}
+\end{equation}
+The slope is therefore an exact state-resolved census of the change
+in flippability carried by the excitation.
+
+At the 48-site $L$ point, the reconstructed $1.024K$ level has
+\begin{equation}
+\frac{d\omega_{\rm low}}{dV}=+0.339,
+\end{equation}
+whereas the upper branch at $1.730K$ responds with the
+opposite sign.
+More importantly, the same contrast appears in the anisotropic
+clusters that provide an internal control.
+On 64 sites, the reconstructing and nonreconstructing $L$ classes
+have censuses
+\begin{equation}
++0.338
+\qquad{\rm and}\qquad
+-0.166,
+\end{equation}
+respectively.
+On 96 sites the reconstructing class has
+\begin{equation}
++0.259,
+\end{equation}
+while the dominant levels of the nonreconstructing class have
+\begin{equation}
+-0.02,\qquad -0.09.
+\end{equation}
+Thus momentum classes that are identical in $|\bq|$ and in the
+Gaussian theory show opposite microscopic responses precisely
+according to whether their spectra reconstruct.
+
+The positive census is a fingerprint rather than a definition of the
+mode.
+Its magnitude is less size-stable than the spectral weight or branch
+ratio, and positive values occur for other finite-size eigenstates ---
+including the upper branch itself at 72 and 96 sites, as
+Fig.~\ref{fig:rk} shows.
+The exhaustive 48-site census and its exact trace identity are given
+in the Supplemental Material.
+The within-cluster sign contrast, however, provides an independent
+diagnostic that requires neither a fitted energy scale nor a
+comparison between different cluster sizes.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_mechanism.pdf}
+\caption{
+\textbf{Microscopic fingerprint of the reconstruction.}
+The RK derivative $d\omega_n/dV$ [Eq.~(\ref{eq:census})] measures the
+excess flippability carried by each excitation.
+The robust statement is the \emph{within-cluster class contrast}: on
+the anisotropic 64- and 96-site clusters, the lower branch of the
+reconstructing $L$ class carries a positive census while the dominant
+levels of the non-reconstructing class (open symbols), at the same
+$|\bq|$, carry negative ones.
+The sign of the \emph{upper} branch is not itself a diagnostic: it is
+negative at 48 and 64 sites but positive at 72 and 96, one instance
+of the census magnitudes' limited size stability discussed in the
+text.
+The full census distribution and deformation trajectories are given
+in the Supplemental Material.
+}
+\label{fig:rk}
+\end{figure}
+
+We now ask why the reconstruction appears where it does.
+The first frequency moment of Eq.~(\ref{eq:szz}) can be evaluated
+exactly,
+\begin{equation}
+f_1(\bq)
+=
+\frac{K}{2N}
+\sum_p
+\left\langle
+W_p+W_p^\dagger
+\right\rangle
+\sum_\mu
+\left|
+g_p^\mu(\bq)
+\right|^2 ,
+\label{eq:f1}
+\end{equation}
+where $g_p^\mu(\bq)$ is the alternating lattice curl of the
+sublattice-resolved electric-field wave around plaquette $p$.
+Together with
+\begin{equation}
+S(\bq)
+=
+\int d\omega\,
+\Szz(\bq,\omega),
+\end{equation}
+this gives the Feynman single-mode ratio
+\begin{equation}
+\omega_{\rm SMA}(\bq)
+=
+\frac{f_1(\bq)}{S(\bq)} .
+\label{eq:sma}
+\end{equation}
+
+Equation~(\ref{eq:sma}) is exactly the spectral centroid of the state
+created by $S^z(\bq)$.
+A small value therefore does not by itself prove that the spectrum
+contains a single sharp pole.
+Its importance here is different:
+both $f_1$ and $S$ are properties of the ground state.
+The ratio can consequently be evaluated before calculating any
+excited state and tested as a forward diagnostic of where strong
+spectral reconstruction occurs.
+
+The anisotropic clusters provide particularly sharp tests.
+On 64 sites, the $L$ star splits into two inequivalent momentum
+classes having the same $|\bq|$ and the same Gaussian energy.
+Their interacting ground-state structure factors are
+\begin{equation}
+S=0.369
+\qquad{\rm and}\qquad
+S=0.227,
+\end{equation}
+giving substantially different values of $f_1/S$.
+The lower-ratio class subsequently develops the
+$0.954K$ level carrying $50.0\%$ of the weight.
+The other remains dominated by a $1.998K$ level carrying $77\%$.
+The reconstruction therefore follows the interacting ground-state
+diagnostic rather than the label $L$ itself.
+
+The same test repeats on 96 sites.
+Its two inequivalent $L$ classes have
+\begin{equation}
+S=0.355
+\qquad{\rm and}\qquad
+S=0.241.
+\end{equation}
+The lower-ratio class develops the
+$0.904K$ level with $54.4\%$ of the weight, whereas the other
+retains its dominant response near $1.65$--$1.73K$.
+Subject to the 96-site sector and Krylov checks noted above, this is
+an independent repeat of the 64-site discrimination.
+
+A different test occurs on 72 sites.
+The ground-state values of $f_1/S$ at $L$ and at
+$(\frac16,\frac12,\frac12)$ differ by only $0.9\%$.
+Their dominant low-energy levels subsequently appear within
+$0.7\%$:
+\begin{equation}
+\omega_L=1.068K,
+\qquad
+\omega_{\bq_v}=1.075K.
+\end{equation}
+Their corresponding spectral-weight fractions are $54\%$ and
+$55\%$.
+The ratio does not predict either absolute pole energy:
+the centroid also contains the high-energy spectral weight.
+It does, however, identify two distinct momentum sectors with almost
+identical ground-state centroids, both of which subsequently show
+strongly reconstructed spectra.
+
+The small ratio near $L$ has two ingredients.
+The first is geometric.
+For $\bq\parallel[111]$, one family of pyrochlore hexagons lies in
+the wavefronts of the electric-field oscillation.
+The alternating lattice curl through those plaquettes vanishes
+exactly, reducing the oscillator-strength cost in
+Eq.~(\ref{eq:f1}).
+At $L$ the family-resolved geometric weights are
+\begin{equation}
+(96,96,96,0),
+\end{equation}
+compared with
+\begin{equation}
+(96,96,96,96)
+\end{equation}
+at $X$.
+
+Geometry alone is not sufficient.
+The same exact cancellation occurs at shorter wavelength along
+$[111]$, where no comparable reconstruction appears.
+The second ingredient is the enhanced interacting structure factor.
+On the 48-site cluster,
+\begin{equation}
+S(L)=0.370,
+\end{equation}
+whereas the equal-amplitude superposition over the same constrained
+configurations gives
+\begin{equation}
+S_{\rm EA}(L)=0.297.
+\end{equation}
+Classical loop Monte Carlo on a 2048-site ice manifold likewise gives
+an essentially flat structure factor among the principal
+zone-boundary momenta.
+The $L$ enhancement is therefore generated predominantly by the
+interacting quantum amplitudes rather than by the ice constraint
+alone.
+
+The RK trajectory provides a complementary check.
+Biasing toward more flippable configurations, $V<0$, increases
+$S(L)$ and softens the lower branch from approximately
+$1.02K$ to $0.73K$, while $f_1(L)$ changes by less than one percent.
+We interpret this as a correlated evolution of the ground-state
+structure factor and the soft spectrum, not as a temporal or causal
+ordering.
+The complete deformation scan is shown in the Supplemental Material.
+
+Because Eq.~(\ref{eq:sma}) contains ground-state quantities only, its
+momentum dependence can be evaluated on systems far beyond the reach
+of operator-resolved diagonalization.
+The ring Hamiltonian is stoquastic in the ice basis, allowing
+sign-free Green's-function Monte Carlo with forward walking.
+The method is benchmarked against exact ground-state quantities on
+48 sites and against the 72-site ground-state energy; convergence in
+walker number and forward-walking time is given in the Supplemental
+Material.
+
+We compute $S(\bq)$ on the complete allowed momentum grids of
+$6^3$ and $8^3$ cubic supercells containing 864 and 2048 spins.
+At the principal zone-boundary points,
+\begin{equation}
+\begin{array}{c|cc}
+&864&2048\\
+\hline
+L&2.142(10)&2.179(19)\\
+X&2.660(10)&2.713(21)\\
+W&-&2.781(10)\\
+K&-&2.718(20)\\
+U&-&2.736(11)
+\end{array}
+\label{eq:qmc}
+\end{equation}
+in units of $K$.
+The $L$ value changes by only $1.7\%$ between 864 and 2048 sites and
+remains $20$--$25\%$ below the other principal zone-boundary
+momenta.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.98\textwidth]{fig_thermo.pdf}
+\caption{
+\textbf{Large-system ground-state landscape.}
+(a) Feynman ratio $f_1(\bq)/S(\bq)$ on the 2048-site supercell,
+grouped by geometric role, with each group's $|\bq|$ range (cubic
+reciprocal units) indicated.
+Red: the $(t,\frac12,\frac12)$ valley, nearly flat along its line.
+Open circles: \emph{interior} stars at comparable $|\bq|$ --- these
+sit below the boundary plateau only because the branch is still
+rising with $|\bq|$; at matched $|\bq|=0.75$ the valley lies
+$9$--$10\%$ (many standard deviations) below the interior star
+$(0,0,\frac34)$, which is mid-climb along $\Delta$, not a second
+valley.
+Filled indigo: the true zone-boundary momenta $X$, $K$, $U$, $W$,
+$20$--$25\%$ above $L$.
+Open squares: 864-site values at the momenta the two grids share.
+The complete allowed momentum grid is shown in the Supplemental
+Material.
+(b) Ground-state-energy benchmarks comparing exact diagonalization
+and GFMC.
+(c) Size evolution of the ratio at $L$ and $X$ across both methods.
+GFMC constrains the spectral centroid, whereas the finite-cluster
+diagonalizations establish the dominant low-energy pole.
+}
+\label{fig:thermo}
+\end{figure*}
+
+The large-system result in Fig.~\ref{fig:thermo} is a statement about
+the \emph{spectral centroid}, not the thermodynamic survival of an
+individual sharp pole.
+Along the radial $[111]$ direction, $f_1/S$ rises from $\Gamma$ to
+$L$.
+The centroid therefore does not form a helium-like radial minimum.
+Within the zone-boundary manifold, however, it develops an
+$L$-centered minimum and a shallow valley along
+$(t,\frac12,\frac12)$.
+The valley is distinguished at matched $|\bq|$, not merely by a low
+value: interior momenta at intermediate $|\bq|$, such as
+$(0,0,\frac34)$, also lie below the boundary plateau, but only
+because the centroid is still rising along their lines; at the same
+$|\bq|=0.75$ the valley sits $9$--$10\%$ below $(0,0,\frac34)$, far
+outside the statistical errors, and is nearly flat along its own
+line.
+The 72-site spectrum at
+$(\frac16,\frac12,\frac12)$ provides a direct finite-size dynamical
+example that this low-centroid valley can host strongly reconstructed
+spectral weight away from $L$.
+
+The resulting phenomenology is naturally roton-like.
+In Feynman's construction, a collective excitation becomes inexpensive
+where the ratio of oscillator strength to static correlation is small.
+Here the same organizing principle identifies a weight-dominant
+finite-momentum excitation of a compact emergent gauge field.
+The designation attaches to the lower branch only, and for measured
+reasons rather than by definition.
+The upper branch is not anomalously soft: at $1.65$--$1.81K$ it sits
+at $81$--$89\%$ of the Gaussian energy, the size of renormalization
+an ordinarily interacting photon exhibits, whereas the lower branch
+sits near one half.
+It is not weight-dominant: it retains $18$--$32\%$ of the response
+against $50$--$54\%$.
+And it is not the state the Feynman construction produces: the
+single-mode state built from $S^z(\bq_L)|0\rangle$ overlaps the
+lower-branch multiplet with squared amplitude $0.88$, $0.87$, and
+$0.86$ on the 48-, 64-, and 72-site clusters, coupling to the upper
+branch only through the orthogonal transverse channel.
+A shared census sign at some sizes (Fig.~\ref{fig:rk}) alters none of
+this, the census being a fingerprint rather than a definition.
+The lattice geometry changes the detailed shape of the phenomenon:
+rather than a continuum radial dip identical to that of liquid helium,
+the finite-size branch descends into the zone boundary while the
+large-system centroid develops a minimum within the boundary
+manifold.
+We use ``roton-like'' in this operational sense and do not assume that
+the finite-size pole remains infinitely sharp in the thermodynamic
+limit.
+
+The interpretation also does not require a strict adiabatic
+``photon ancestry'' for the low level.
+The $S^z$ probe occupies a two-dimensional transverse gauge-field
+subspace, and the two dominant levels couple through nearly
+orthogonal transverse directions.
+This is the operational content of the lower- and upper-branch
+terminology used throughout.
+The basis-invariant polarization construction is given in the
+Supplemental Material.
+
+Additional state-resolved diagnostics support the collective
+character of the reconstructed branch.
+A variational electric-field wave relaxes rapidly toward the exact
+48-site state, and an exact basis-invariant plaquette decomposition
+shows that the reconstructed mode recovers
+$28$--$32\%$ of its bare single-mode energy on the 48-, 64-, and
+72-site clusters.
+The recovery is strongly selective among hexagon families but is not
+concentrated in the geometrically dark family.
+Parity, weak-photon kinematics, off-pole spectral weight, and the full
+family decomposition are presented in the Supplemental Material.
+
+For experiment, the robust conclusion is spectral redistribution
+rather than a universal intensity ratio.
+The pure ring model shows that an emergent photon that appears as a
+single long-wavelength mode can reorganize strongly at lattice
+momenta without leaving the charge-free ice manifold.
+Near the zone boundary, a lower feature acquires a large fraction of
+the theoretical $S^z$ response while the upper branch
+remains at higher energy, and additional weight appears outside the
+two dominant branches.
+
+A material-specific neutron cross section may reweight these
+features substantially.
+The experimental intensity is a coherent projection of the
+sublattice-resolved amplitudes and depends on the local easy axes,
+$g$ tensor, magnetic form factor, and neutron polarization.
+Consequently the theoretical $50$--$54\%$ weight fraction should not
+be read as a universal neutron intensity fraction.
+Likewise, longer ring exchanges, virtual spinons, and other
+material-specific interactions can modify the zone-boundary spectrum.
+The experimentally robust message of the minimal model is instead
+that strong short-wavelength reconstruction is possible already
+within the compact gauge sector itself.
+
+In summary, the emergent photon of the pure quantum-spin-ice ring
+model is nonperturbatively reconstructed at the lattice scale.
+Across four finite clusters, the $S^z$ response near the zone
+boundary transfers approximately half of its spectral weight into a
+lower branch with a stable scale-free ratio to the upper one,
+\begin{equation}
+\omega_{\rm low}/\omega_{\rm high}=0.55\text{--}0.59.
+\end{equation}
+The reconstructed state has an independent microscopic fingerprint in
+its response to ring flippability.
+The ground-state Feynman ratio identifies where the reconstruction
+occurs, including inequivalent $L$ classes and a soft valley away
+from $L$, while sign-free Monte Carlo shows that the associated
+centroid landscape remains robust on complete momentum grids up to
+2048 spins.
+These results establish a lattice-scale regime in which the dynamics
+of a compact spin-$\frac12$ gauge field are qualitatively richer than
+those of a weakly renormalized Maxwell photon.
+
+\begin{acknowledgments}
+We thank the Digital Research Alliance of Canada for computational
+resources.
+The complete set of scripts generating the numerical results and
+figures is included with the submission.
+\end{acknowledgments}
+
+\bibliographystyle{apsrev4-2}
+\bibliography{refs}
+
+\end{document}
