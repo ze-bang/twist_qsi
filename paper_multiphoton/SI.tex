@@ -480,6 +480,47 @@ $\bq\neq\Gamma$ and none at $\Gamma$;
 \item orthonormality and completeness of the Bloch basis.
 \end{enumerate}
 
+\subsection{Exact degeneracy of the transverse doublet}
+\label{sec:degeneracy}
+
+A property of Eq.~(\ref{eq:gaussian}) that the Letter uses as its
+reference point deserves to be stated separately, because it is what
+makes the measured splitting a qualitative rather than a quantitative
+statement. At every momentum of every cluster we examined, the two
+nonzero singular values are not merely both present but \emph{equal}
+to machine precision,
+\begin{equation}
+\sigma_1(\bq)=\sigma_2(\bq)
+\qquad\text{for all }\bq\neq\Gamma,
+\end{equation}
+so the Gaussian transverse doublet is exactly degenerate throughout
+the zone. Representative values on the 48-site cluster are
+$\sigma=3$ at $(\frac13,\frac13,\frac13)$, $2\sqrt3=3.4641016151$ at
+$L$, $\sqrt{15}=3.8729833462$ at $(\frac16,\frac16,\frac56)$, $\sqrt{13}$ at $(\frac13,\frac13,\frac23)$, and $4$ at $X$,
+each appearing twice with the remaining singular values below
+$10^{-15}$. The agreement between the two members is at the level of
+the singular-value solver, $\lesssim10^{-15}$ relative.
+
+The consequence is the one the Letter draws. The parameters $U$ and
+$K$ enter Eq.~(\ref{eq:gaussian}) only through the overall prefactor
+$\sqrt{2UK}$, which multiplies both members identically. Renormalizing
+the Gaussian theory---by any amount, in either parameter, at any
+momentum-independent strength---therefore rescales the doublet without
+splitting it. A nonzero splitting cannot be produced within Gaussian
+lattice electrodynamics at all, and its observation is not a
+quantitative correction to that description but a failure of it. This
+is why the branch ratio $\omega_{\rm low}/\omega_{\rm high}$ is used
+in the Letter as a scale-free diagnostic: its Gaussian value is unity
+for every choice of parameters, so any deviation is a pure
+interaction effect, and unlike the softening
+$\omega_{\rm low}/\omega_G$ it does not require the fitted scale
+$\sqrt{2UK}=0.5868K$ at all.
+
+We emphasize that the degeneracy is a statement about the Gaussian
+theory on these tori, verified numerically at every momentum we use,
+and not a symmetry argument we have proved in general. Nothing in the
+Letter requires more than the verified statement.
+
 The pure ring Hamiltonian contains no independent bare value of $U$,
 so one overall scale must be inferred from the interacting spectrum.
 A single linear least-squares fit gives
@@ -633,20 +674,126 @@ S(\bq)
 \int d\omega\,
 \Szz(\bq,\omega),
 \end{equation}
-so the normalized state proportional to
-$S^z(\bq)|0\rangle$ has variational energy
+and the ratio of the two is
 \begin{equation}
-\omega_{\rm SMA}(\bq)
+\omega_F(\bq)
 =
 \frac{f_1(\bq)}{S(\bq)}.
+\label{eq:omegaF}
 \end{equation}
 
-This ratio is identically the spectral centroid.
-Its value after a spectrum has been calculated is therefore not
-independent evidence for a low pole.
-The nontrivial tests used in the Letter are instead the predictions
-made using the ground-state ratio before the corresponding excited
-states are calculated.
+\subsection{Why the ratio is a bound and not merely a centroid}
+\label{sec:why_bound}
+
+Equation~(\ref{eq:omegaF}) admits two readings, and only the second
+carries evidential weight.
+
+The first is that $\omega_F$ is the centroid of
+$\Szz(\bq,\omega)$---the first moment divided by the zeroth. Read this
+way the quantity is a summary of a spectrum, and once that spectrum
+has been computed it says nothing the spectrum does not already say. A
+low centroid at a momentum whose spectrum we have diagonalized is a
+restatement of the low pole, not evidence for it.
+
+The second reading is the operative one. Let
+\begin{equation}
+|\psi_{\bq}\rangle
+=
+\frac{S^z(\bq)|0\rangle}{\sqrt{S(\bq)}},
+\end{equation}
+which is normalized and, for $\bq\neq\Gamma$, orthogonal to the ground
+state because $S^z(\bq)$ carries nonzero momentum. Then
+\begin{equation}
+\langle\psi_{\bq}|H-E_0|\psi_{\bq}\rangle
+=
+\frac{\langle0|S^z(-\bq)(H-E_0)S^z(\bq)|0\rangle}
+{\langle0|S^z(-\bq)S^z(\bq)|0\rangle}
+=
+\frac{f_1(\bq)}{S(\bq)},
+\end{equation}
+the numerator being $\sum_n\omega_n|\langle n|S^z(\bq)|0\rangle|^2=f_1$
+by definition. So $\omega_F$ is the variational energy of an explicit
+trial state, and by the Rayleigh--Ritz principle applied within the
+subspace orthogonal to $|0\rangle$,
+\begin{equation}
+\omega_F(\bq)\;\geq\;\omega_{\min}(\bq),
+\end{equation}
+where $\omega_{\min}$ is the lowest excitation at $\bq$ odd under
+global spin reversal. This is a rigorous inequality, and both sides of
+Eq.~(\ref{eq:omegaF}) are ground-state expectation values. A small
+$\omega_F$ therefore \emph{certifies} the existence of a low-lying
+odd excitation at that momentum without any excited state having been
+computed. That is the sense in which the quantity is used.
+
+The bound is not tight, and we do not present it as one. At $L$ on the
+48-site cluster $\omega_F=1.846K$ against a true lowest excitation of
+$1.024K$, an overestimate of $80\%$, because the centroid is pulled up
+by the high-energy weight in the same channel. What survives the
+looseness is the \emph{ordering}, which is the use we make of it.
+
+\subsection{The ratio ranks the momenta correctly}
+\label{sec:rank}
+
+Because $\omega_F$ grows with $|\bq|$ for trivial reasons, momenta at
+different $|\bq|$ are compared after normalizing by the Gaussian
+energy $\omega_G=\sqrt{2UK}\,\sigma$ at the single fitted scale of
+Sec.~\ref{sec:gaussian}. Table~\ref{tab:rank} collects every momentum
+resolved at 48 sites.
+
+\begin{table}[h]
+\caption{Ground-state predictor against measured softening, all
+momenta resolved at 48 sites. The predictor $\omega_F/\omega_G$ is
+built entirely from ground-state data; $\omega_{\rm low}/\omega_G$ is
+measured from the diagonalized spectrum. The two columns order the
+five momenta identically.}
+\label{tab:rank}
+\begin{ruledtabular}
+\begin{tabular}{lccccc}
+$\bq$ & $|\bq|$ & $S(\bq)$ & $f_1(\bq)$ & $\omega_F/\omega_G$ &
+$\omega_{\rm low}/\omega_G$\\
+\hline
+$L$ & $0.866$ & $0.3704$ & $0.6835$ & $0.908$ & $0.503$\\
+$(\frac13,\frac13,\frac23)$ & $0.816$ & $0.2870$ & $0.7150$ & $1.177$
+ & $0.824$\\
+$X$ & $1.000$ & $0.2727$ & $0.8790$ & $1.373$ & $0.952$\\
+$(\frac13,\frac13,\frac13)$ & $0.577$ & $0.1894$ & $0.4585$ & $1.375$
+ & $1.076$\\
+$(\frac16,\frac16,\frac56)$ & $0.866$ & $0.2583$ & $0.8306$ & $1.415$
+ & $1.114$\\
+\end{tabular}
+\end{ruledtabular}
+\end{table}
+
+The two orderings agree on all five entries, with no inversions: the
+Spearman rank correlation is exactly $+1$. Neither column is ordered
+by $|\bq|$, which is the point of including that column: the first and
+last rows sit on the same shell $|\bq|=0.866$ and are separated by the
+predictor ($0.908$ against $1.415$) exactly as they are separated by
+the measurement ($0.503$ against $1.114$). The predictor is therefore
+not a proxy for wavevector magnitude. The predictor separates the
+two momenta that soften ($0.908$, $1.177$) from the three that do not
+($1.373$--$1.415$) by a clear gap, and within the softening pair it
+places $L$ first, which is where the reconstruction is largest. This
+is the sense in which the ground-state ratio locates the
+reconstruction rather than merely describing it afterwards.
+
+Three further forward tests are reported elsewhere in this
+Supplement and were made before the corresponding spectra were
+computed: the discrimination between the two inequivalent $L$ classes
+at 64 sites, the same discrimination at 96, and the predicted near
+degeneracy of $L$ and $(\frac16,\frac12,\frac12)$ at 72 sites, where
+ratios differing by $0.9\%$ produced levels differing by $0.7\%$.
+
+We note the limits of the diagnostic. It bounds the lowest odd
+excitation but says nothing about spectral weight, so it cannot by
+itself distinguish a soft mode that is bright from one that is dark;
+the diagonalizations supply that. It is an inequality in one direction
+only, so a large $\omega_F$ does not forbid a low mode---it merely
+fails to certify one. And the normalization by $\omega_G$ inherits the
+single fitted scale of Sec.~\ref{sec:gaussian}, though only as a
+common factor across the table, so the ordering in
+Table~\ref{tab:rank} would be unchanged by any other choice of that
+scale.
 
 % ================================================================
 \section{Geometry and the interacting enhancement of $S(L)$}
@@ -1239,7 +1386,7 @@ The complete momentum grids contain 216 momenta on the 864-site
 $6^3$ cell and 512 momenta on the 2048-site $8^3$ cell.
 
 % ================================================================
-\section{Large-system centroid landscape}
+\section{Large-system landscape of the Feynman bound}
 \label{sec:thermo}
 
 \begin{figure}[t]
@@ -1370,15 +1517,20 @@ those clusters;
 
 \item
 an RK flippability derivative provides an independent microscopic
-fingerprint of the reconstructing momentum class;
+fingerprint of the reconstructing momentum class, the reconstructed
+mode gaining flippable hexagons at every size and every
+reconstructing momentum while every dominant level at a
+nonreconstructing momentum loses them;
 
 \item
-the ground-state Feynman ratio discriminates the reconstructing and
-nonreconstructing classes available on the finite clusters;
+the ground-state Feynman ratio, a rigorous variational upper bound,
+ranks the resolved momenta in exactly the order of their measured
+softening and discriminates the reconstructing from the
+nonreconstructing classes on the finite clusters;
 
 \item
-GFMC establishes the large-system momentum dependence of the
-corresponding spectral centroid up to 2048 sites.
+GFMC establishes the large-system momentum dependence of that bound
+up to 2048 sites.
 \end{enumerate}
 
 Several statements remain beyond the calculation.
