@@ -17,7 +17,8 @@ urlcolor=blue!55!black,linkcolor=blue!55!black]{hyperref}
 
 \begin{document}
 
-\title{Roton-like Reconstruction of the Emergent Photon in Quantum Spin Ice}
+\title{Saturation of the Emergent Electric Field Makes the
+Photon Anharmonic at Lattice Momenta}
 
 \author{Zhengbang Zhou}
 \email{zhengbang.zhou@mail.utoronto.ca}
@@ -32,427 +33,318 @@ Toronto, Ontario M5S 1A7, Canada}
 \date{\today}
 
 \begin{abstract}
-The emergent photon of quantum spin ice is well understood at long
-wavelength, but at lattice momenta the compact $U(1)$ theory has no
-small parameter---the electric field is saturated at
-$S^z=\pm\frac12$, so a field wave cannot be reduced in amplitude, only
-rearranged---and which eigenstates carry the spin response there has
-never been resolved. We compute the operator-resolved
-$\Szz(\bq,\omega)$ of the pure pyrochlore ring-exchange model on 48-,
-64-, 72-, and 96-site clusters, the largest a constrained sector of
-dimension $1.47\times10^{8}$. In the Gaussian theory the two
-transverse modes are exactly degenerate at every momentum, and no
-renormalization of its parameters can split them; we measure splittings
-up to a factor $1.7$ that are momentum-specific rather than functions
-of $|\bq|$---two momenta at identical $|\bq|$ split by $1.69$ and
-$1.06$---and are largest at the zone-boundary $L$ point, where the
-lower member collapses to half the Gaussian energy and takes $50$--$54\%$ of the longitudinal weight,
-against $0.82$--$1.11$ of that energy at every other momentum
-resolved. The dominant zone-boundary response is therefore not a
-photon. That mode is elementary---the lowest excitation of its
-sector---and its photon-like partner is excluded from being a two-mode
-composite by spin-reversal parity and by kinematics independently. Its
-softness is predicted before any excited state is computed by the
-Feynman ratio $f_1(\bq)/S(\bq)$, a rigorous variational bound built
-from ground-state data, which ranks all five resolved momenta in
-exactly the order of their measured softening; its two factors
-identify the mechanism as an exact curl cancellation on one hexagon
-family multiplied by a quantum enhancement of the static correlations
-that is absent in the classical ice manifold. The reconstruction is
-stable across four clusters, three cluster shapes, and a factor
-$1.6\times10^{4}$ in Hilbert-space dimension, and sign-free
-Green's-function Monte Carlo carries the ground-state diagnostic to
-$2048$ spins with its minimum still at $L$. The phenomenology is
-Feynman's and the object is a lattice roton, predicting a two-feature
-zone-boundary response whose energy ratio $0.55$--$0.59$ and
-two-to-one weight ratio are both independent of the overall energy
-scale.
+The emergent photon of quantum spin ice is described at long wavelength
+by Gaussian lattice electrodynamics, a harmonic theory whose two
+parameters enter the transverse spectrum only through a common
+prefactor. That rigidity fixes three statements at every momentum and
+for every choice of parameters: the single-mode state
+$S^z(\bq)|0\rangle$ is exactly an eigenstate, so Feynman's ratio
+saturates at $f_1/S=\omega$; each transverse channel carries a single
+spectral pole; and the two transverse polarizations are degenerate, which
+we verify by diagonalizing the lattice curl at $153$ allowed momenta of
+three tori. Compactness must break all three, because the emergent
+electric field is saturated at $S^z=\pm\frac12$: a field wave cannot be
+built by raising an amplitude, only by rearranging which links carry
+which of the two allowed values, and exponentially many ice
+configurations carry the same wave. We compute the operator-resolved
+$\Szz(\bq,\omega)$ on $48$-, $64$-, $72$- and $96$-site clusters, the
+largest a constrained sector of dimension $1.47\times10^{8}$, and find
+all three identities violated by order one and all three most strongly at
+the zone-boundary $L$ point, where the variational bound overshoots by
+$1.68$, a third of the channel weight leaves the dominant pole, and the
+doublet splits by $1.69$. The bound overshoot ranks the five resolved
+momenta exactly as the softening does. The mechanism is exact and
+parameter-free: in the ice basis the probe is diagonal, so a ring
+exchange either shifts the density-wave amplitude by
+$a(c')-a(c)=\pm g_p$ or leaves it untouched, and the hexagons that leave
+it untouched are those lying in the wavefronts---one family in four when
+$\bq$ is parallel to a $\langle111\rangle$ axis. Flipping those costs no
+spectral weight, and the soft eigenstate exploits it, recovering $89\%$
+of the dephasing the rigid wave suffers on the driven plaquettes and
+paying $0.108K$ there against its partner's $1.082K$. A counterfactual
+that removes the cancellation makes $L$ an ordinary momentum; at $X$,
+where no family is dark, nothing softens. The result is not a new
+excitation but the photon itself reorganized, and it predicts a
+two-feature zone-boundary response whose $0.55$--$0.59$ energy ratio and
+two-to-one weight ratio are independent of the overall energy scale.
 \end{abstract}
 
 \maketitle
-\emph{Introduction.}---Quantum spin ice realizes a compact $U(1)$
-lattice gauge theory in a magnetic insulator. In the two-in--two-out
-manifold of the pyrochlore lattice, virtual exchange resonates the six
-spins around an elementary hexagon, and the resulting deconfined phase
-supports a gapless emergent photon together with gapped electric and
-magnetic charges~\cite{Hermele2004,Castelnovo2008,Gingras2014,
-SavaryBalents2017,RauGingras2019,Broholm2020}. That long-wavelength
-description is quantitatively established and motivates the search for
-candidate materials~\cite{Benton2012,Shannon2012,KatoOnoda2015,
-Ross2011,Sibille2018,Gaudet2019,Gao2019,Smith2022,Poree2025,Gao2025}.
 
-At lattice momenta the same theory is a different problem, and the
-reason is structural. The emergent electric field is microscopically
-saturated, $E_\ell=S^z_\ell=\pm\frac12$, so $\sum_\ell E_\ell^2$ is a
-constant inside the constrained manifold: there is no electric
-stiffness to tune, no coupling constant to send to zero, and hence no
-free-field limit from which the interacting theory can be reached
-perturbatively. The emergent fine-structure constant is
-large~\cite{Pace2021}. A field wave cannot be made small in amplitude,
-only rearranged in position---which is a statement about
-short-wavelength physics, precisely the regime the Gaussian expansion
-does not control.
+\emph{Introduction.}---Quantum spin ice realizes a compact $U(1)$ lattice
+gauge theory in a magnetic insulator. In the two-in--two-out manifold of
+the pyrochlore lattice, virtual exchange resonates the six spins around
+an elementary hexagon, and the deconfined phase supports a gapless
+emergent photon together with gapped electric and magnetic
+charges~\cite{Hermele2004,Castelnovo2008,Gingras2014,SavaryBalents2017,
+RauGingras2019,Broholm2020}. At long wavelength this photon is described
+by Gaussian lattice electrodynamics, a theory of decoupled harmonic
+oscillators, and that description is quantitatively established and
+underpins the search for candidate
+materials~\cite{Benton2012,Shannon2012,KatoOnoda2015,Ross2011,
+Sibille2018,Gaudet2019,Gao2019,Smith2022,Poree2025,Gao2025}.
 
-Existing numerics stop short of that regime in a specific sense.
-Gaussian and semiclassical treatments expand about small flux and are
-controlled in the infrared, though they already predict substantial
-anharmonic renormalization and an interaction-induced splitting of the
-transverse polarizations~\cite{Benton2012,Kwasigroch2017,
-Kwasigroch2020,Szabo2019}. Quantum Monte Carlo with analytic
-continuation resolves broadened lineshapes and finds zone-boundary
-weight beyond Gaussian electrodynamics, but not individual eigenstates
-or their matrix elements~\cite{Huang2018}. Constrained-space exact
-diagonalization has reached 96 spins, organized around ground-state
-and low-energy electrodynamic parameters rather than the full
-response~\cite{Pace2021}. What has not been done is the direct
-question: at large $|\bq|$, \emph{which} eigenstates of the compact
-theory carry the spin response, and how much.
+Being harmonic makes the Gaussian theory unusually rigid, and that
+rigidity is what we exploit. It has two free parameters, an electric
+stiffness $U$ and the ring coupling $K$, and they enter the transverse
+spectrum only through a common prefactor,
+$\omega_\lambda(\bq)=\sqrt{2UK}\,\sigma_\lambda(\bq)$. Consequently three
+statements hold at every momentum for \emph{every} choice of those
+parameters: the single-mode state $S^z(\bq)|0\rangle$ is exactly an
+eigenstate, so Feynman's ratio saturates, $f_1/S=\omega$; each transverse
+channel has a single spectral pole; and the two transverse polarizations
+are degenerate. No renormalization of a harmonic theory can violate any
+of them. They are therefore a parameter-free baseline against which
+departures can be measured without a fit.
 
-We answer it. Our punchlines are:
+Compactness must violate all three, and for a reason that is structural
+rather than perturbative. The emergent electric field is microscopically
+saturated, $E_\ell=S^z_\ell=\pm\frac12$. A field wave at wavevector $\bq$
+therefore cannot be built by increasing an amplitude---there is no
+amplitude to increase---but only by rearranging which links carry which
+of the two allowed values. That rearrangement is not unique:
+exponentially many ice configurations share the same density-wave
+amplitude, so the excitation retains internal freedom at fixed spectral
+weight. A harmonic theory has no such freedom, which is precisely why its
+single-mode state is already exact. What is not obvious, and what we
+compute, is whether the excitation uses that freedom, by how much, and
+where.
 
+We find that it does, dramatically, at zone-boundary momenta. Our results
+are:
 \begin{enumerate}
-\item In the Gaussian theory the two transverse modes are
-\emph{exactly} degenerate at every momentum of our clusters, and any
-renormalization of its two parameters rescales both equally. We
-measure splittings up to a factor $1.69$ at the zone-boundary $L$
-point, and they are not a function of $|\bq|$: two momenta at
-identical $|\bq|$ split by $1.69$ and $1.06$. This is a qualitative
-failure of the Gaussian description, not a quantitative correction to
-it, and it is momentum-specific rather than a generic large-$|\bq|$
-effect.
-\item At $L$ the lower member does not merely split off; it collapses
-to $0.50$ of the Gaussian energy and takes $50$--$54\%$ of the
-longitudinal weight. At every other momentum we resolve it sits
-between $0.82$ and $1.11$ of the Gaussian energy. The dominant
-zone-boundary response is therefore not a photon.
-\item This mode is elementary---the lowest excitation of its sector at
-every size where the low-lying spectrum is available---and its
-photon-like partner cannot be a two-mode composite, by spin-reversal
-parity and by kinematics independently.
-\item Its softness is quantitatively predicted, before any excited
-state is computed, by the Feynman ratio $f_1(\bq)/S(\bq)$: this
-ground-state quantity is a rigorous variational upper bound, and it
-ranks all five resolved momenta in exactly the order of their measured
-softening. The mechanism it exposes is an exact lattice cancellation
-in the oscillator strength multiplied by a quantum enhancement of the
-static correlations.
-\item The reconstruction is stable across four clusters, three cluster
-shapes, and a factor $1.6\times10^{4}$ in Hilbert-space dimension, and
-sign-free Monte Carlo carries the ground-state diagnostic to $2048$
-spins. It predicts a two-feature zone-boundary response whose energy
-ratio and weight ratio are both independent of the overall energy
-scale.
+\item All three harmonic identities fail by order one, and all three fail
+hardest at the zone-boundary $L$ point: the Feynman bound overshoots the
+true level by $1.68$, a third of the channel weight leaves the dominant
+pole, and the transverse doublet splits by $1.69$.
+\item The departure from harmonicity is not scattered. Ranked across the
+five momenta we resolve, the bound overshoot orders them \emph{exactly} as
+the softening does, without inversion.
+\item The mechanism is exact and requires no fitted parameter. In the ice
+basis the probe is diagonal, so a ring exchange either shifts the
+density-wave amplitude or does not; the hexagons that do not are those
+lying in the wavefronts, one family in four when $\bq$ is parallel to a
+$\langle111\rangle$ axis. Flipping them is motion at constant probe
+value, hence free of spectral-weight cost.
+\item The soft eigenstate exploits exactly this. It recovers $89\%$ of the
+dephasing that the rigid wave suffers on the driven plaquettes, paying
+only $0.108K$ there against its partner's $1.082K$---a factor of ten,
+against an overall energy ratio of $0.59$.
+\item The effect is momentum-specific and size-stable: removing the
+geometric cancellation in a counterfactual makes $L$ an ordinary
+momentum, no family is dark at $X$ and nothing softens there, and the
+zone-boundary branch turns over on all three clusters we can
+diagonalize.
 \end{enumerate}
 
-\emph{Model, observable, and method.}---We study the standard ring
-Hamiltonian in the spin-ice manifold~\cite{Hermele2004,Shannon2012},
+\emph{Model, observable, method.}---We study the standard ring
+Hamiltonian on the spin-ice manifold~\cite{Hermele2004,Shannon2012},
 $H=-K\sum_p(W_p+W_p^\dagger)$ with
-$W_p=S_1^+S_2^-S_3^+S_4^-S_5^+S_6^-$ summed over contractible
-elementary hexagons; in gauge language $W_p=e^{iB_p}$ and $H$ is the
-compact magnetic energy $-2K\sum_p\cos B_p$. Because $S^z$ is the
-emergent electric field, the natural probe is the sublattice-summed
-longitudinal response
+$W_p=S^+_1S^-_2S^+_3S^-_4S^+_5S^-_6$ over contractible elementary
+hexagons; in gauge language $W_p=e^{iB_p}$ and $H$ is the compact
+magnetic energy $-2K\sum_p\cos B_p$. It has no diagonal part, a fact we
+use repeatedly. Since $S^z$ is the emergent electric field the natural
+probe is
 $\Szz(\bq,\omega)=N^{-1}\sum_{\mu,n}|\langle
-n|A^\mu_{\bq}|0\rangle|^2\delta(\omega-\omega_n)$ with
-$A^\mu_{\bq}=\sum_{i\in\mu}e^{-i\bq\cdot\bm r_i}S^z_i$. All spectral
-fractions below are normalized within $\Szz$ at fixed $\bq$. This is
-the theoretical pseudospin response, not a material-specific neutron
-cross section, which additionally involves coherent sublattice
-interference, the local easy axes, the $g$ tensor, form factors, and
-the polarization projector; we treat that fully in the Supplemental
+n|A^\mu_{\bq}|0\rangle|^2\delta(\omega-\omega_n)$, with
+$A^\mu_{\bq}=\sum_{i\in\mu}e^{-i\bq\cdot\bm r_i}S^z_i$ resolved by
+sublattice $\mu$. All spectral fractions are normalized within $\Szz$ at
+fixed $\bq$. This is the theoretical pseudospin response, not a
+material-specific neutron cross section; the Supplemental Material
+treats the difference in full.
+
+We evaluate $\Szz$ by complete diagonalization at $48$ sites and by
+Lanczos continued fractions at $64$, $72$ and $96$, the last in a winding
+sector of dimension $146\,758\,352$. Sectors are certified exhaustively
+at $48$ and $72$ sites and by the twelve largest of $519$ at $96$;
+Krylov dimension $200$ against $120$ leaves the dominant poles unchanged
+to machine precision. Details and convergence are in the Supplemental
 Material.
 
-We evaluate $\Szz$ by complete diagonalization at 48 sites and by
-Lanczos continued fractions at 64, 72, and 96, the last in a winding
-sector of dimension $146\,758\,352$. Winding sectors are certified
-exhaustively at 48 and 72 sites---all $155$ and $310$ sectors
-diagonalized, margins $0.99K$---and by the twelve largest of $519$ at
-96, where the margin is $0.375K$. Recomputing the 96-site spectra at
-Krylov dimension $200$ rather than $120$ leaves the dominant pole
-energies and residues unchanged to machine precision. Details are in
-the Supplemental Material.
+\emph{The harmonic baseline is rigid.}---The gauge field lives on the
+links of the diamond lattice, equivalently on the pyrochlore sites, four
+per cubic cell, while the gradient that generates gauge transformations
+has one column per diamond site, two per cell. Gauge invariance
+$Cd_0=0$---which we verify to $0.0\times10^{0}$---therefore removes two
+of the four link modes and leaves exactly two transverse polarizations,
+the same count as Maxwell in three dimensions and for the same reason.
 
-\emph{The Gaussian doublet and what replaces it.}---The Gaussian
-theory of this model is lattice electrodynamics with two parameters,
-an electric stiffness $U$ and the ring coupling $K$. Diagonalizing the
-lattice curl at momentum $\bq$ gives its transverse spectrum,
-$\omega_\lambda(\bq)=\sqrt{2UK}\,\sigma_\lambda(\bq)$, with
-$\sigma_\lambda$ the nonzero singular values of the curl. On every
-cluster and at every momentum we examined, exactly two are nonzero and
-they are \emph{equal} to machine precision: $\sigma_1=\sigma_2$, e.g.\
-$2\sqrt3$ at $L$ and $4$ at $X$. The two transverse polarizations are
-degenerate throughout the zone, and because $U$ and $K$ enter only
-through the prefactor, that degeneracy survives \emph{any}
-renormalization of the Gaussian theory, however strong. A splitting of
-the doublet cannot be produced within that description at all.
+Their degeneracy is a separate fact and does not follow from that
+counting. We verified it directly by diagonalizing the lattice curl at
+every allowed momentum of fcc$(4,4,4)$, fcc$(3,4,5)$ and fcc$(2,3,5)$:
+at all $153$ momenta, including $32$ of generic symmetry on the
+anisotropic boxes, $\sigma_2/\sigma_1=1.00000000$, with
+$\sigma_3/\sigma_1\sim10^{-15}$ confirming rank two. Because $U$ and $K$
+multiply both members alike, no renormalization of the Gaussian theory
+can split the doublet at all. Together with the two harmonic identities
+noted above, this fixes the baseline $(H_1,H_2,H_3)=(1,0,1)$ of
+Table~\ref{tab:harm} at every momentum and for every parameter choice.
 
-Figure~\ref{fig:dispersion} shows what the exact spectrum does
-instead. At the smallest momentum we resolve, the two dominant levels
-are nearly degenerate---their ratio is $0.957$---and both sit within
-$12\%$ of the Gaussian energy, obtained by fixing the single scale
-$\sqrt{2UK}$ from the long-wavelength spectrum. This is a weakly
-renormalized photon doublet, as expected. At the remaining momenta the
-doublet splits, by factors from $1.06$ to $1.69$.
-
-The splitting is momentum-specific, not a generic consequence of large
-$|\bq|$, and the cluster provides its own control. At $|\bq|=0.866$
-exactly, $L$ splits by $1.69$ while $(\frac16,\frac16,\frac56)$ splits
-by only $1.06$; at $|\bq|=1$ exactly, $X$ splits by $1.53$ and
-$(\frac13,\frac13,\frac23)$ by $1.19$. Identical wavevector magnitude,
-splittings differing by up to a factor of $1.6$: whatever produces the
-effect selects particular momenta, not a shell.
-
-Splitting alone, however, is still not the phenomenon. At $X$ the
-doublet splits substantially yet its lower member sits at $0.952$ of
-the Gaussian energy---split, but nothing has softened. At $L$ both
-happen at once: the splitting is largest \emph{and} the lower member
-falls to $0.503$ of the Gaussian energy, half. It is that combination,
-not the splitting by itself, that we call the reconstruction, and $L$
-is the only momentum in Table~\ref{tab:momenta} where it occurs. The
-softening is likewise not ordered by $|\bq|$---the same two momenta at
-$|\bq|=0.866$ give $0.503$ and $1.114$.
+\emph{Measuring the failure.}---Table~\ref{tab:harm} collects the three
+departures at every momentum we resolve at $48$ sites. All are order
+one, all are largest at $L$, and the first---the overshoot of the
+variational bound, which is precisely how far the single-mode state is
+from being an eigenstate---orders the five momenta exactly as the
+softening does.
 
 \begin{table}[b]
-\caption{All momenta resolved at 48 sites, ordered by the
-ground-state predictor. $\omega_G$ is the Gaussian energy at the
-single fitted scale; the Gaussian doublet is exactly degenerate at
-every entry. The predictor orders the five momenta exactly as the
-measured softening $\omega_{\rm low}/\omega_G$ does.}
-\label{tab:momenta}
+\caption{Departures from harmonic lattice electrodynamics, $48$ sites,
+evaluated in the softer transverse channel. A harmonic theory gives
+$H_1=1$, $H_2=0$, $H_3=1$ at every momentum for any $U$ and $K$.
+$H_1$ is monotone in the softening; $H_2$ and $H_3$ are largest at $L$
+but not monotone.}
+\label{tab:harm}
 \begin{ruledtabular}
 \begin{tabular}{lccccc}
-$\bq$ & $S(\bq)$ & $f_1/S$ & $(f_1/S)/\omega_G$ &
-$\omega_{\rm low}/\omega_G$ & $\omega_{\rm low}/\omega_{\rm high}$\\
+$\bq$ & $\omega_{\rm low}/K$ & $H_1$ & $H_2$ & $H_3$ &
+$\omega_{\rm low}/\omega_G$\\
+ & & $\frac{f_1/S}{\omega}$ & off-pole & $\frac{\omega_{\rm hi}}{\omega_{\rm lo}}$ & \\
 \hline
-$L$ & $0.370$ & $1.846$ & $\bm{0.908}$ & $\bm{0.503}$ & $0.592$\\
-$(\frac13,\frac13,\frac23)$ & $0.287$ & $2.491$ & $1.177$ & $0.824$
- & $0.843$\\
-$X$ & $0.273$ & $3.223$ & $1.373$ & $0.952$ & $0.653$\\
-$(\frac13,\frac13,\frac13)$ & $0.189$ & $2.420$ & $1.375$ & $1.076$
- & $0.957$\\
-$(\frac16,\frac16,\frac56)$ & $0.258$ & $3.216$ & $1.415$ & $1.114$
- & $0.943$\\
+$L$ & $1.024$ & $\bm{1.678}$ & $\bm{0.335}$ & $\bm{1.691}$ & $0.503$\\
+$(\frac13,\frac13,\frac23)$ & $1.744$ & $1.346$ & $0.216$ & $1.187$
+ & $0.824$\\
+$X$ & $2.235$ & $1.274$ & $0.255$ & $1.531$ & $0.952$\\
+$(\frac13,\frac13,\frac13)$ & $1.895$ & $1.260$ & $0.164$ & $1.045$
+ & $1.076$\\
+$(\frac16,\frac16,\frac56)$ & $2.533$ & $1.213$ & $0.270$ & $1.061$
+ & $1.114$\\
 \end{tabular}
 \end{ruledtabular}
 \end{table}
 
-\emph{The mode is elementary.}---Before interpreting it we establish
-what it is not. At 48, 64, and 72 sites, where the low-lying spectrum
-is available in full, the reconstructed level is the \emph{lowest
-excitation of its sector}---$1.024K$, $0.954K$, $1.068K$, with nothing
-between it and the ground state. It cannot be a composite of anything.
+Two of these deserve emphasis. That $H_2=0.335$ means a third of the
+weight in that channel has left its dominant pole: the response is not a
+single renormalized quasiparticle even qualitatively. And $H_3=1.691$ is
+a splitting of a doublet that the Gaussian theory holds exactly
+degenerate for any parameters, so it is not a large correction within
+that description but a failure of it. That interactions split these
+polarizations at intermediate wavevector was predicted semiclassically by
+Kwasigroch, Dou\c{c}ot and Castelnovo~\cite{Kwasigroch2017}; what is new
+here is its size at the zone boundary, that only one member softens, and
+the microscopic reason.
 
-Its photon-like partner cannot be a two-mode composite either, and two
-independent arguments exclude it. Global spin reversal $S^z\to-S^z$ is
-a symmetry of $H$; the ground state is even and $A_{\bq}$ is odd, so
-only odd states carry weight in $\Szz$. Any state built from an even
-number of elementary excitations is even and therefore exactly dark to
-this probe---we verify the complementarity numerically to $10^{-25}$.
-The upper branch carries $22$--$32\%$ of the weight, so it is odd.
-Independently, kinematics: two elementary excitations cost at least
-$2\times1.024K=2.047K$ at 48 sites and three cost $3.07K$, while the
-upper branch lies at $1.730K$, below the two-particle threshold. Both
-branches are single elementary excitations.
-
-\emph{Why $L$: the oscillator strength.}---The location of the
-reconstruction is not an accident of the cluster, and it can be
-derived. The two lowest moments of $\Szz$ are ground-state quantities.
-The zeroth is the equal-time structure factor,
-$m_0=\int\!d\omega\,\Szz=\langle A^\dagger_{\bq} A_{\bq}\rangle\equiv
-S(\bq)$, which measures how much static correlation at wavevector
-$\bq$ the ground state already holds. The first follows from the
-$f$-sum rule,
+\emph{Why compactness permits this.}---The mechanism follows from one
+observation. In the basis of ice configurations $|c\rangle$ the probe is
+diagonal,
+$A^\mu_{\bq}|c\rangle=a^\mu(c)|c\rangle$, whereas the ring exchange is
+purely off-diagonal, taking $c$ to $c'$ with hexagon $p$ flipped. The
+commutator $[A^\mu_{\bq},W_p]=g^\mu_p(\bq)W_p$ is therefore a statement
+about configurations,
 \begin{equation}
-m_1=\int\!d\omega\,\omega\,\Szz(\bq,\omega)
-=\tfrac12\bigl\langle\bigl[A^\dagger_{\bq},[H,A_{\bq}]\bigr]\bigr\rangle .
-\label{eq:fsum}
+a^\mu(c')-a^\mu(c)=\pm\,g^\mu_p(\bq),
+\qquad
+g^\mu_p=\!\!\!\sum_{j\in p\cap\mu}\!\!\!(-1)^j e^{-i\bq\cdot\bm r_j},
+\label{eq:shift}
 \end{equation}
-For the ring Hamiltonian this evaluates in closed form. Since $W_p$
-raises $S^z$ on alternating sites of its hexagon and lowers it on the
-others, $[A_{\bq},W_p]=g_p(\bq)W_p$ with
-$g_p(\bq)=\sum_{j\in p}(-1)^{j}e^{-i\bq\cdot\bm r_j}$, the
-\emph{alternating lattice curl} of the imposed field wave around $p$.
-Then $[H,A_{\bq}]=K\sum_p g_p(W_p-W_p^\dagger)$, and
-Eq.~(\ref{eq:fsum}) collapses to
-\begin{equation}
-f_1(\bq)\equiv m_1=\frac{K}{2N}\sum_p
-\bigl\langle W_p+W_p^\dagger\bigr\rangle
-\sum_\mu\bigl|g^\mu_p(\bq)\bigr|^2 .
-\label{eq:f1}
-\end{equation}
-This has the form of a Maxwell magnetic energy and reads directly: the
-cost of imposing an electric-field wave of wavevector $\bq$ is the
-squared curl that wave drives through each plaquette, weighted by how
-strongly that plaquette actually resonates in the ground state. It
-contains no fitted parameter and no excited state.
+so $g^\mu_p$ is exactly the amount by which flipping $p$ shifts the
+density-wave amplitude. We verified Eq.~(\ref{eq:shift}) on $4000$
+configurations, every hexagon and every sublattice: the largest
+discrepancy is $0.0\times10^{0}$.
 
-Their ratio,
-\begin{equation}
-\omega_F(\bq)=\frac{f_1(\bq)}{S(\bq)}
-=\frac{\langle 0|A^\dagger_{\bq}(H-E_0)A_{\bq}|0\rangle}
-{\langle 0|A^\dagger_{\bq} A_{\bq}|0\rangle},
-\label{eq:sma}
-\end{equation}
-is simultaneously two things. Trivially it is the centroid of
-$\Szz(\bq,\omega)$, first moment over zeroth. More usefully, the
-right-hand side of Eq.~(\ref{eq:sma}) is the expectation value of
-$H-E_0$ in the normalized single-mode state
-$A_{\bq}|0\rangle/\sqrt{S(\bq)}$, which is orthogonal to the ground
-state for $\bq\ne0$. Hence $\omega_F$ is a \emph{rigorous variational
-upper bound} on the lowest odd excitation at $\bq$. This is Feynman's
-construction for the helium roton~\cite{Feynman1954}, and it is why
-the quantity is worth computing: a small $\omega_F$ does not describe
-a soft mode after the fact, it \emph{certifies} from ground-state data
-alone that one exists.
+This turns a dynamical question into a geometric one. A pyrochlore
+hexagon is planar with its plane perpendicular to one of the four
+$\langle111\rangle$ axes, and each hexagon omits one sublattice, so the
+hexagons fall into four families. A plane wave is constant on planes
+perpendicular to $\bq$; if a family's plane \emph{is} such a wavefront,
+all six of its sites share a phase, the alternating sum cancels term by
+term, and $g^\mu_p=0$ for every $\mu$. At $L$, where
+$\bq\parallel[1\bar11]$, exactly one family satisfies this. Its measured
+geometric weight is $0.0000$ against $96.0000$ for each of the other
+three, and its axis is parallel to $\bq$ to six digits,
+$|\hat{\bm n}\cdot\hat{\bq}|=1.000000$. We call it \emph{dark}.
 
-It does more than certify. Normalized to the Gaussian energy so that
-momenta of different $|\bq|$ are comparable, $\omega_F/\omega_G$ ranks
-all five resolved momenta in exactly the order of their measured
-softening (Table~\ref{tab:momenta}), with no inversions: $L$ is
-predicted softest and is softest, $(\frac13,\frac13,\frac23)$ second
-and is second, and the three momenta the predictor places together at
-$1.37$--$1.42$ are the three that do not soften at all. Since neither
-the softening nor the splitting is ordered by $|\bq|$, this is not a
-trivial correlation: on the shell $|\bq|=0.866$ the predictor assigns
-$0.908$ to $L$ and $1.415$ to $(\frac16,\frac16,\frac56)$, and the
-measured softenings are $0.503$ and $1.114$. The bound is not
-tight---$\omega_F(L)=1.846K$ against a true $1.024K$, since the
-centroid also carries the high-energy weight---but as an ordering of
-which momenta reconstruct it is exact on this data.
+Now the consequence. Because $H$ has no diagonal part, energy is ring
+coherence and nothing else, and every excitation carries an exact
+additive bill,
+$\omega_n=K\sum_p[\langle0|W_p+W_p^\dagger|0\rangle-\langle
+n|W_p+W_p^\dagger|n\rangle]$. Writing the excitation as the ground state
+modulated, $\psi(c)\simeq a(c)\psi_0(c)$, its coherence on $p$ is a sum
+over the connected pairs of $a^*(c')a(c)\psi_0(c')\psi_0(c)$. Since
+$\psi_0>0$, the ground-state version of that sum interferes
+constructively---that is what makes the ground state cheap. In the
+excited state, by Eq.~(\ref{eq:shift}), a dark plaquette has
+$a(c')=a(c)$ and the factor is $|a|^2>0$: the pair still resonates in
+phase and \emph{no} coherence is lost. A bright plaquette has
+$a(c')\neq a(c)$, the pair dephases, and the lost coherence is the
+energy. This is also what the $f$-sum rule has been saying:
+$f_1=\frac{K}{2N}\sum_p\langle W_p+W_p^\dagger\rangle\sum_\mu|g^\mu_p|^2$
+is a sum of dephasings, and it is blind to the dark family because a
+dark plaquette cannot be dephased.
 
-Equation~(\ref{eq:f1}) also says why $L$ wins, and it takes both
-factors. Geometrically, for $\bq\parallel[111]$ one of the four
-hexagon families lies entirely within the wavefronts of the field
-oscillation, so its alternating curl vanishes identically: the
-family-resolved geometric weights are $(96,96,0,96)$ at $L$ against
-$(96,96,96,96)$ at $X$. A quarter of the plaquettes cost nothing and
-$f_1$ drops. Geometry alone is not enough---the momentum
-$(\frac13,\frac13,\frac13)$ has a family cancellation too,
-$(72,0,72,72)$, and does not soften, because its $S$ is the smallest
-in the table. The second ingredient is dynamical: $S(L)=0.370$ is the
-largest, while the equal-amplitude superposition over the same ice
-configurations gives only $0.297$ and classical loop Monte Carlo on a
-2048-site manifold is flat among zone-boundary momenta. The
-enhancement is made by the interacting quantum amplitudes, not by the
-ice constraint---which is what distinguishes this from a
-Rokhsar--Kivelson resonon, whose softening follows from classical
-correlations. $L$ is the one momentum where a vanishing curl family
-coincides with the strongest static correlations, and
-Eq.~(\ref{eq:sma}) multiplies the two.
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.98\textwidth]{fig_ledger.pdf}
+\caption{\textbf{The mechanism and the anharmonicity it produces.}
+(a) Exact energy ledger at $L$, $48$ sites, split by whether the probe
+drives the family. The rigid single-mode state pays $0.968K$ of
+dephasing on the three bright families; the true soft eigenstate has
+recovered $89\%$ of it while its dark-family cost is essentially
+unchanged, so the entire relaxation happens on the driven plaquettes.
+Its partner performs no such recovery and pays ten times more there.
+(b) In a harmonic theory $H_1=(f_1/S)/\omega$ equals unity at every
+momentum for any parameters. Measured, it ranks the five resolved
+momenta exactly as the softening does.}
+\label{fig:ledger}
+\end{figure*}
+
+\emph{The state uses the freedom.}---Availability is a property of the
+momentum; the dark family is equally available to every level at $L$. What
+distinguishes the eigenstates is what they do with it, and the exact
+ledger settles that (Fig.~\ref{fig:ledger}a). The rigid single-mode
+state costs $1.846K$, of which $0.968K$ is dephasing on the bright
+families. The soft eigenstate costs $1.024K$, of which only $0.108K$ is
+bright: it has recovered $89\%$ of the dephasing while leaving its
+dark-family cost essentially unchanged, so the entire relaxation of
+$0.822K$ is bright-family recovery ($105\%$ of it, the dark contribution
+being $-5\%$). Its partner at the same momentum recovers nothing and
+pays $1.082K$ there, a factor of ten more, against an overall energy
+ratio of $0.59$. The same pattern holds at $72$ sites, where the
+bright-family ratio is $0.282$ against an overall $0.589$.
+
+The soft mode is therefore a density wave dressed so as to re-phase the
+resonances the wave would otherwise dephase, depositing what remains on
+the family where flipping does not change the probe value and so costs no
+spectral weight. It buys energy in a currency the probe cannot see---and
+saturation of $E$ is what makes that currency exist.
+
+\emph{Controls.}---Three checks establish that this is the operative
+mechanism rather than a description of it. At $X$ no $\langle111\rangle$
+axis is parallel to $\bq$, the geometric weights are $(96,96,96,96)$, no
+family is dark: there is nowhere to deposit the disturbance and nothing
+softens, the lowest level sitting at $0.952$ of its Gaussian energy
+against $0.503$ at $L$. In a counterfactual in which the dark family is
+given the mean bright weight, $f_1(L)$ rises from $0.6835$ to $0.8797$
+---which coincides with $f_1(X)=0.8797$, confirming that the entire
+suppression at $L$ is the dark family---and $L$'s predictor becomes
+$1.168$, tied with $(\frac13,\frac13,\frac23)$ at $1.177$, a momentum
+that softens only to $0.824$. Remove the cancellation and $L$ stops being
+special. Finally the ground state anticipates all of it: $S(L)=0.3704$ is
+the largest structure factor of any resolved momentum, and $f_1/S$
+normalized by the Gaussian energy ranks the five momenta exactly as the
+measured softening does, a prediction available before any excited state
+is computed and carried to $2048$ spins by sign-free Green's-function
+Monte Carlo, where the $L$-centered minimum persists with $1.7\%$ drift
+(Fig.~\ref{fig:thermo}).
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=0.98\textwidth]{fig_dispersion.pdf}
-\caption{\textbf{Order-one reconstruction at lattice momentum.}
-Operator-resolved $S^z$ spectrum along
+\caption{\textbf{The spectrum at lattice momenta.} Operator-resolved
+$S^z$ spectrum along
 $\Gamma\!\to\!L\!\to\!(0,\frac12,\frac12)\!\to\!X\!\to\!\Gamma$,
 combining all four clusters; marker area is the fraction of the
-sublattice-summed weight carried by each level. The dashed curve is
-the Gaussian photon at a single fitted scale, whose two transverse
+sublattice-summed weight carried by each level. The dashed curve is the
+Gaussian photon at a single fitted scale, whose two transverse
 polarizations are exactly degenerate everywhere. Near $\Gamma$ the two
-dominant levels track it and each other. Near $L$ the doublet splits
-by a factor $1.69$ and its lower member collapses to half the Gaussian
-energy while absorbing half the response.}
+dominant levels track it and each other. Along $\Gamma\to L$ the lower
+branch first rises above it and then turns over, falling to half the
+Gaussian energy at the zone boundary while absorbing half the response.}
 \label{fig:dispersion}
 \end{figure*}
 
-\emph{Interpretation: this is a roton.}---We use the term in Feynman's
-specific sense---the collective mode created by the density-wave
-operator at finite momentum, soft because $f_1/S$ has a minimum
-there---and not as a synonym for ``low-lying mode.'' Four measured
-statements identify the reconstructed branch as that object, none of
-which refer to it as ``the lower of two levels.''
-
-First, it is what the density-wave operator makes: the single-mode
-state $A_{\bq_L}|0\rangle$ overlaps the reconstructed multiplet with
-squared amplitude $0.88$, $0.87$, and $0.86$ at 48, 64, and 72 sites,
-coupling to its partner only through the orthogonal transverse
-channel. The Feynman construction produces this branch and not the
-other; that, rather than an energy ordering, is the categorization.
-Second, it is elementary, as established above. Third, its softness is
-predicted by $\omega_F$ in rank order across momenta. Fourth, relaxing
-the single-mode state within the exact spectrum recovers $28$--$32\%$
-of its energy, a size-stable amount, through a strongly
-family-selective reorganization of ring coherence---the correlated
-relaxation that in helium carries Feynman's bound down toward the true
-roton.
-
-The lattice modifies the geometry of the phenomenon and we state that
-plainly. Along the radial $[111]$ direction the centroid rises from
-$\Gamma$ to $L$ and folds back by periodicity, so there is no
-helium-like radial minimum; the minimum lives in the zone-boundary
-manifold, and its shallow extension along $(t,\frac12,\frac12)$ is why
-the 72-site cluster finds a second reconstructed momentum on that
-line.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{fig_mechanism.pdf}
-\caption{\textbf{Flippability census.} State-resolved $d\omega_n/dV$
-from Eq.~(\ref{eq:census}). The reconstructed mode gains flippable
-hexagons at every size and momentum where it occurs (filled), whereas
-every dominant level at a momentum that does not reconstruct loses
-them (open). The sign is a property of the momentum, not of a branch
-ordering: at 72 and 96 sites the photon-like partner at a
-reconstructing momentum is also positive.}
-\label{fig:rk}
-\end{figure}
-
-\emph{What the mode does microscopically.}---One further property uses
-no fitted scale and no Gaussian comparison at all. Adding the
-Rokhsar--Kivelson term $H(V)=H+V\sum_p n_p^{\rm flip}$, with
-$n_p^{\rm flip}$ the projector onto a flippable alternating hexagon,
-and applying Hellmann--Feynman at the physical point $V=0$ gives
-\begin{equation}
-\frac{d\omega_n}{dV}\Big|_{V=0}=
-\Bigl\langle n\Bigl|\sum_p n_p^{\rm flip}\Bigr|n\Bigr\rangle-
-\Bigl\langle 0\Bigl|\sum_p n_p^{\rm flip}\Bigr|0\Bigr\rangle,
-\label{eq:census}
-\end{equation}
-an exact state-resolved census of the flippable hexagons an excitation
-adds or removes. Flippability is the resource that ring resonance
-consumes: a hexagon must be flippable to contribute to the energy at
-all. The ground state balances having many flippable plaquettes
-against phasing them coherently, and a typical excitation loses on
-both counts---averaged over a sector the census is exactly
-$\mathrm{nnz}(H)/D-\langle n^{\rm flip}\rangle_0<0$, and at 48 sites
-only $58$ of $9104$ eigenstates are positive.
-
-The reconstructed mode is one of them, at every size and every
-momentum where the reconstruction occurs: $+0.339$, $+0.338$,
-$+0.134$, $+0.152$, $+0.259$. It is resource-rich and
-coherence-poor---it rearranges spins so that \emph{more} hexagons
-could flip while the ring processes on them are less coherent, paying
-its energy in resonance rather than in the ice rule. Conversely, every
-dominant level at a momentum that does \emph{not} reconstruct loses
-flippability: the inequivalent $L$ classes at identical $|\bq|$ on the
-anisotropic 64- and 96-site clusters give $-0.166$ and $-0.015$,
-$-0.088$ (Fig.~\ref{fig:rk}).
-
-We are explicit about the limit of this diagnostic, because it bears
-on how much weight the interpretation can carry. The sign tracks the
-\emph{momentum}, not the branch ordering: at a reconstructing momentum
-the photon-like partner is negative at 48 and 64 sites but positive at
-72 and 96, so a positive census is not by itself proof that a given
-level is the roton. What is uniform across all our data is the pair of
-statements just made---the reconstructed mode always gains, everything
-at a nonreconstructing momentum always loses---and it is in that form
-that the census enters the argument.
-
-\emph{Robustness.}---The three cluster shapes $2{\times}2{\times}n$,
-$2{\times}3{\times}3$, and $2{\times}3{\times}4$ sample different
-boundary identifications and the reconstruction survives all of them
-(Table~\ref{tab:ladder}, Fig.~\ref{fig:ladder}). The most robust
-measures need no fitted scale: the branch ratio is $0.55$--$0.59$
-across a factor $1.6\times10^{4}$ in sector dimension, and the weight
-fraction is $50$--$54\%$. Absolute energies drift by about ten
-percent, as expected at these sizes, and the census magnitude drifts
-more. Not everything is stable and we say which: the polarization
-splitting at $X$ falls from $42\%$ at 48 sites to $6\%$ at 64, and we
-draw no conclusion from it.
-
 \begin{table}[b]
-\caption{The reconstruction across all four clusters, at $L$.}
+\caption{Size dependence at $L$. The scale-free measures---the branch
+ratio and the weight fraction---are the stable ones.}
 \label{tab:ladder}
 \begin{ruledtabular}
 \begin{tabular}{lcccc}
@@ -466,7 +358,7 @@ $\omega_{\rm high}/K$ & $1.730$ & $1.652$ & $1.814$ & $1.647$\\
 weight & $32.3\%$ & $31.3\%$ & $17.8\%$ & $22.5\%$\\
 $\omega_{\rm low}/\omega_{\rm high}$ & $0.592$ & $0.578$ & $0.589$
  & $0.549$\\
-$d\omega_{\rm low}/dV$ & $+0.339$ & $+0.338$ & $+0.134$ & $+0.259$\\
+turnover to $L$ & $-46\%$ & $-42\%$ & $-31\%$ & ---\\
 \end{tabular}
 \end{ruledtabular}
 \end{table}
@@ -474,29 +366,18 @@ $d\omega_{\rm low}/dV$ & $+0.339$ & $+0.338$ & $+0.134$ & $+0.259$\\
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{fig_ladder.pdf}
-\caption{\textbf{Finite-size stability and internal controls.}
-Filled: the reconstructed mode and its partner at $L$. Open: dominant
-levels of the inequivalent nonreconstructing class at identical
-$|\bq|$ on the anisotropic 64- and 96-site clusters. Numbers give
+\caption{\textbf{Finite-size stability and internal controls.} Filled:
+the soft level and its partner at $L$. Open: dominant levels of the
+inequivalent nonreconstructing class at identical $|\bq|$ on the
+anisotropic 64- and 96-site clusters. Numbers give
 $\omega_{\rm low}/\omega_{\rm high}$.}
 \label{fig:ladder}
 \end{figure}
 
-Because $\omega_F$ needs only the ground state, it can be pushed far
-beyond exact diagonalization. The ring Hamiltonian is stoquastic in
-the ice basis, permitting sign-free Green's-function Monte Carlo with
-forward walking, benchmarked against the exact 48-site $S(L)$ to every
-digit. On complete allowed momentum grids of $864$ and $2048$ spins
-the ratio at $L$ is $2.142(10)$ and $2.179(19)$, against $2.660(10)$
-and $2.713(21)$ at $X$ and $2.72$--$2.78$ at $W$, $K$, and $U$: an
-$L$-centered minimum $20$--$25\%$ deep that drifts by $1.7\%$ between
-the two sizes (Fig.~\ref{fig:thermo}). The diagnostic that predicts
-the reconstruction at 48 spins still has its minimum at $L$ at $2048$.
-
 \begin{figure*}[t]
 \centering
 \includegraphics[width=0.98\textwidth]{fig_thermo.pdf}
-\caption{\textbf{Large-system ground-state landscape.}
+\caption{\textbf{The ground-state diagnostic at large size.}
 (a) $f_1(\bq)/S(\bq)$ on the 2048-site supercell grouped by geometric
 role, with each group's $|\bq|$ range indicated; at matched
 $|\bq|=0.75$ the valley sits $9$--$10\%$ below the interior star
@@ -506,58 +387,87 @@ $(0,0,\frac34)$. Open squares: 864-site values at shared momenta.
 \label{fig:thermo}
 \end{figure*}
 
+\emph{Consequences and robustness.}---The mechanism bends the
+dispersion. Walking outward along $\Gamma\to L$ the branch first rises
+like a photon---at $t=\frac13$ it lies \emph{above} the Gaussian curve
+and is nearly degenerate with its partner, $1.895$ against
+$1.980$---then turns over and falls into the zone boundary, by $46\%$,
+$42\%$ and $31\%$ at $48$, $64$ and $72$ sites, against the partner's
+$12.6\%$ (Fig.~\ref{fig:dispersion}). Each cluster resolves one interior
+momentum on that line, so what is established is the inequality
+$\omega(\text{interior})>\omega(L)$ at three independent sizes rather
+than the shape of a minimum.
+
+The scale-free measures are the stable ones
+(Table~\ref{tab:ladder}, Fig.~\ref{fig:ladder}): the branch ratio is
+$0.55$--$0.59$ across a factor $1.6\times10^{4}$ in sector dimension and
+three cluster shapes, and the soft branch holds $50$--$54\%$ of the
+response throughout. Absolute energies drift by about ten percent, as
+expected at these sizes. Not everything is stable and we say which: the
+polarization splitting at $X$ falls from $42\%$ at $48$ sites to $6\%$ at
+$64$, and we draw no conclusion from it.
+
+\emph{Relation to the roton.}---The phenomenology is Feynman's, and it is
+worth saying exactly how far the parallel runs. Our $f_1/S$ is literally
+his construction; $S(\bq)$ peaks where the mode softens, as it does at the
+helium roton; his bound overshoots by $1.80$ here against roughly a
+factor two in helium, and in both cases relaxation below it is the
+physics. The dispersion turns over. And, as with the helium roton, this
+is not a new quasiparticle: it is one of the two transverse
+polarizations, continuously connected to the photon doublet at small
+$\bq$, carrying no new quantum number---phonon and roton are likewise one
+branch.
+
+The parallel stops at the mechanism. In helium Galilean invariance fixes
+$f_1=\hbar^2k^2/2m$, so the numerator carries no structure and a roton
+minimum can only come from $S(k)$ peaking. Here both factors move: against
+$X$, $S$ is enhanced by $36\%$---helium's mechanism---while $f_1$ is
+suppressed by $22\%$ through an exact lattice cancellation that has no
+continuum counterpart, and the counterfactual above shows the second is
+what makes $L$ the minimum. Roughly half of the effect is a mechanism a
+liquid cannot have. We therefore use ``roton-like'' descriptively and
+rest no claim on it.
+
 \emph{Experimental implications.}---The signature is a two-feature
-zone-boundary response where a renormalized photon gives one.
+zone-boundary response where a renormalized photon would give one.
 Following $[111]$ outward, a single dispersing mode at small $\bq$
-separates into two, the splitting growing from unresolvable to a
-factor $1.7$ by the zone boundary, with the \emph{lower} feature
-carrying two to three times the weight of the upper. Two aspects are
-scale-free and so testable without knowing $K$: the ratio of the two
-energies, $0.55$--$0.59$, and the ratio of their weights. A single
-photon branch with a renormalized velocity produces neither,
-and---this is the sharper point---no Gaussian theory produces a
-splitting at all, since its doublet is degenerate for every choice of
-parameters. Because the reconstruction tracks $f_1/S$ rather than the
-label $L$, the same signature should appear along
-$(t,\frac12,\frac12)$, as it does in our 72-site spectrum.
+separates into two, the splitting growing from unresolvable to a factor
+$1.7$ at the zone boundary, with the \emph{lower} feature carrying two to
+three times the weight of the upper. Two aspects are scale-free and so
+testable without knowing $K$: the energy ratio, $0.55$--$0.59$, and the
+weight ratio. A renormalized photon velocity produces neither, and no
+Gaussian theory produces a splitting at all. Because the effect tracks
+$f_1/S$ rather than the label $L$, the same signature should appear along
+$(t,\frac12,\frac12)$, as it does in our $72$-site spectrum.
 
-Two caveats bound this. A material-specific neutron cross section
-reweights the sublattice amplitudes coherently, so the theoretical
-$50$--$54\%$ fraction is not a universal neutron intensity; and longer
-ring exchanges, virtual spinons, and other microscopic terms can
-modify the zone-boundary spectrum of a real material. The robust
-prediction of the minimal model is the redistribution itself.
+Two caveats bound this. A material-specific cross section reweights the
+sublattice amplitudes coherently, so the theoretical $50$--$54\%$
+fraction is not a universal neutron intensity; and longer ring exchanges
+and virtual spinons can modify the zone-boundary spectrum of a real
+material. The robust prediction of the minimal model is the
+redistribution itself.
 
-\emph{Discussion.}---The emergent photon of quantum spin ice is
-nonperturbatively reconstructed at the lattice scale. Its transverse
-doublet, exactly degenerate in the Gaussian theory for any parameters,
-splits by a factor $1.7$ at the zone boundary, and the split-off
-member falls to half the Gaussian energy while taking half the
-longitudinal weight. That member is an elementary excitation; it is
-the mode the electric-field density wave creates; its softness is
-predicted in rank order by a ground-state bound whose two factors
-identify the mechanism---an exact curl cancellation on one hexagon
-family, multiplied by quantum-enhanced static correlations---and it is
-microscopically distinguished by gaining ring flippability where
-nonreconstructing momenta lose it. The phenomenology is Feynman's and
-the object is a lattice roton.
+\emph{Discussion.}---Harmonic lattice electrodynamics fails at the
+lattice scale in quantum spin ice, and it fails by order one in three
+independent, parameter-free respects at once. The reason is that the
+emergent electric field is saturated. A harmonic theory builds a field
+wave by raising an amplitude, and the resulting single-mode state is
+already an eigenstate with nothing left to optimize. A compact theory has
+no amplitude to raise and must instead choose among exponentially many
+configurations carrying the same wave---and it chooses well, re-phasing
+the ring resonances the wave would dephase and depositing what remains
+where the probe is blind. The lattice decides where that is possible: at
+$\bq$ parallel to a $\langle111\rangle$ axis, one hexagon family in four
+lies in the wavefronts and drops out of the oscillator strength entirely.
 
-What makes this possible is the structural point we began with: the
-compact theory has no small parameter at short wavelength. Because
-$E_\ell=\pm\frac12$ is saturated, a finite-amplitude field wave cannot
-be built by increasing an amplitude, only by rearranging which bonds
-carry which of the two allowed values---and that rearrangement is
-cheapest where the curl vanishes and the static correlations are
-strongest. A Gaussian photon has no such freedom, which is why no
-renormalization of it reaches this mode.
+What this is not is a new excitation. It is the emergent photon,
+reorganized where compactness and geometry together allow it. The open
+questions are whether the reorganization survives virtual spinons and
+longer ring exchanges in microscopic XXZ models, and whether the
+finite-size pole remains sharp in the thermodynamic limit---which
+requires dynamical rather than ground-state Monte Carlo, since beyond
+$96$ spins we constrain the bound and not the pole.
 
-Sharpness is established up to 96 spins; beyond that the Monte Carlo
-constrains the bound, not the pole, and whether the level broadens
-into a narrow continuum in the thermodynamic limit is open. The
-natural next questions are whether the reconstruction survives virtual
-spinons and longer ring exchanges in microscopic XXZ models, and
-whether it can be seen directly---a question that requires dynamical
-rather than ground-state Monte Carlo.
 \begin{acknowledgments}
 We thank the Digital Research Alliance of Canada for computational
 resources. The complete set of scripts generating the numerical
