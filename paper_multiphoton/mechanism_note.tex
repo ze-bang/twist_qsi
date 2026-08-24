@@ -5,6 +5,7 @@
 \usepackage{tikz}
 \usepackage{xcolor}
 \usepackage{booktabs}
+\usepackage{multirow}
 \usepackage[colorlinks=true,linkcolor=blue!55!black]{hyperref}
 
 \usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing,
@@ -490,6 +491,275 @@ than ``the total cancels'': on a dark plaquette
 amplitudes are individually unmoved by the flip. The cross-check is
 that $\sum_\mu|g^\mu_p|^2$ summed over each family reproduces the
 geometric weights $(96,96,0,96)$ exactly.
+
+\section{The computed evidence}
+\label{sec:evidence}
+
+Everything above was asserted; this section is the arithmetic behind it.
+All numbers come from exact diagonalization of the ground winding sector
+of the $48$-site cluster fcc$(2,2,3)$ (dimension $9\,104$,
+$E_0=-10.55601176\,K$) unless another size is named, and every script
+that produced them is in the repository.
+
+\paragraph{Gate.} The family decomposition used throughout must
+reconstruct the Hamiltonian. It does:
+$\sum_\mu\langle0|H_\mu|0\rangle=-10.5560117565$ against
+$E_0=-10.5560117565$, a difference of $2.8\times10^{-14}$.
+
+\subsection{The flip identity, Eq.~(\ref{eq:shift})}
+
+For $4000$ ice configurations, every hexagon, every sublattice, we
+flipped each flippable plaquette and compared the change in the
+density-wave amplitude against $g^\mu_p$. The identity is exact
+(Table~\ref{tab:flip}); note in particular that the dark family does not
+merely have a small shift, it has none at all.
+
+\begin{table}[h]
+\centering
+\caption{Direct verification of $a^\mu(c')-a^\mu(c)=\pm g^\mu_p$ at
+$\bq_L$. The sign is per configuration (which way the ring flips).}
+\label{tab:flip}
+\begin{tabular}{ccccc}
+\toprule
+family $\mu$ & $n_{\rm hex}$ & $\max_\mu|g^\mu_p|$ &
+$\max\bigl|\Delta a^\mu\mp g^\mu_p\bigr|$ & mean $|\Delta a^\mu|$\\
+\midrule
+$0$ & $12$ & $2.000000$ & $0.000\times10^{0}$ & $1.000000$\\
+$1$ & $12$ & $2.000000$ & $0.000\times10^{0}$ & $1.000000$\\
+\textbf{2 (dark)} & $12$ & $\bm{0.000000}$ & $0.000\times10^{0}$
+ & $\bm{0.000000}$\\
+$3$ & $12$ & $2.000000$ & $0.000\times10^{0}$ & $1.000000$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The dark family is the one whose axis is parallel to
+\texorpdfstring{$\bq$}{q}}
+
+Table~\ref{tab:geom} confirms the wavefront picture of
+Fig.~\ref{fig:wavefront} quantitatively: the family with vanishing
+geometric weight is precisely the family whose $\langle111\rangle$ axis
+is parallel to $\bq_L$, to six digits.
+
+\begin{table}[h]
+\centering
+\caption{Geometric weight $\sum_p\sum_\mu|g^\mu_p|^2$ per family at
+$\bq_L=(\tfrac12,-\tfrac12,\tfrac12)$, against the orientation of each
+family's axis.}
+\label{tab:geom}
+\begin{tabular}{ccccc}
+\toprule
+family $\mu$ & $n_{\rm hex}$ & $\sum|g|^2$ & $\langle111\rangle$ axis &
+$|\hat{\bm n}\cdot\hat{\bq}|$\\
+\midrule
+$0$ & $12$ & $96.0000$ & $[1\,1\,1]$ & $0.333333$\\
+$1$ & $12$ & $96.0000$ & $[1\,\bar1\,\bar1]$ & $0.333333$\\
+\textbf{2 (dark)} & $12$ & $\bm{0.0000}$ & $[\bar1\,1\,\bar1]$ &
+ $\bm{1.000000}$\\
+$3$ & $12$ & $96.0000$ & $[\bar1\,\bar1\,1]$ & $0.333333$\\
+\midrule
+\multicolumn{5}{l}{\emph{at $X=(1,0,0)$:}\quad
+$96.0,\;96.0,\;96.0,\;96.0$ \quad --- no family is dark}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+The ground state does resonate on the dark family, so the cancellation
+is not trivially about idle plaquettes: the family-resolved coherences
+are $\langle\Wp+\Wpd\rangle_\mu=2.6296,\,3.2195,\,2.3535,\,2.3535$,
+summing to $10.5560=|E_0|$. (They are unequal because the
+$2\times2\times3$ box makes the four families inequivalent; this is a
+finite-size effect, not physics.)
+
+\subsection{The energy bill, and the two controls}
+
+Table~\ref{tab:bill} in \S\ref{sec:state} gives the $48$-site ledger.
+Table~\ref{tab:controls} adds what makes it an argument rather than an
+observation.
+
+\begin{table}[h]
+\centering
+\caption{Excitation energy in $K$, split by whether the probe drives the
+family. The soft level's advantage is concentrated entirely in the
+bright column; at $X$, where no family is dark, no such split exists and
+nothing softens.}
+\label{tab:controls}
+\begin{tabular}{llccc c}
+\toprule
+& state & bright & dark & total & $\omega_{\rm low}/\omega_{\rm Gauss}$\\
+\midrule
+\multirow{2}{*}{48 sites, $L$}
+ & soft    & $0.1081$ & $0.9154$ & $1.0235$ & $0.503$\\
+ & partner & $1.0822$ & $0.6481$ & $1.7303$ & $0.851$\\
+ & \emph{ratio} & $\bm{0.0999}$ & $1.4124$ & $0.5915$ &\\
+\midrule
+\multirow{2}{*}{72 sites, $L$}
+ & soft    & $0.4585$ & $0.6095$ & $1.0681$ &\\
+ & partner & $1.6237$ & $0.1906$ & $1.8143$ &\\
+ & \emph{ratio} & $\bm{0.2824}$ & $3.1973$ & $0.5887$ &\\
+\midrule
+48 sites, $X$ & dominant & \multicolumn{2}{c}{no dark family exists}
+ & $2.2354$ & $0.952$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+Two things to read off. First, at both sizes the soft level's overall
+advantage ($0.59$) is far smaller than its advantage on the driven
+plaquettes ($0.10$ and $0.28$): the saving is specifically there, not
+spread evenly. Second, at $X$ the trade is simply unavailable, and the
+lowest level sits at $0.952$ of its Gaussian energy instead of $0.503$.
+Softening tracks the \emph{existence} of a dark family.
+
+\subsection{The consequence: a non-monotonic branch}
+
+If the mechanism is right it should bend the dispersion, and it does.
+Walking outward along $\Gamma\!\to\!L$, the branch rises like a photon,
+turns over, and falls into the zone boundary
+(Fig.~\ref{fig:disp}). Every cluster we can diagonalize shows it.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[x=7.4cm,y=1.55cm]
+
+% axes
+\draw[->,gray!70] (0,0) -- (0.62,0) node[right,font=\small]{$t$};
+\draw[->,gray!70] (0,0) -- (0,2.35) node[above,font=\small]{$\omega/K$};
+\foreach \t in {0,0.25,0.5}{
+  \draw[gray!45] (\t,0) -- (\t,-0.06) node[below,font=\scriptsize]{\t};
+}
+\foreach \w in {0,1,2}{
+  \draw[gray!45] (0,\w) -- (-0.008,\w) node[left,font=\scriptsize]{\w};
+}
+\node[font=\scriptsize,gray!60] at (0.02,-0.22) {$\Gamma$};
+\node[font=\scriptsize,gray!60] at (0.5,-0.22) {$L$};
+\draw[gray!35,dashed] (0.5,0) -- (0.5,2.3);
+
+% Gaussian reference: sigma 3.0 at t=1/3, 2sqrt3 at L, scale 0.58684
+\draw[gray!65,dash pattern=on 3pt off 2pt,line width=0.8pt]
+  (0,0) -- (0.3333,1.7605) -- (0.5,2.0333);
+\node[gray!65,font=\scriptsize,anchor=west] at (0.505,2.03)
+  {Gaussian};
+
+% 48-site lower branch
+\draw[softc,line width=1.2pt] (0,0) -- (0.3333,1.8949) -- (0.5,1.0235);
+\foreach \t/\w in {0.3333/1.8949, 0.5/1.0235}{
+  \fill[softc] (\t,\w) circle (2.4pt);}
+\node[softc,font=\scriptsize,anchor=south west] at (0.335,1.90) {48};
+
+% 64-site
+\draw[softc!62,line width=1.0pt] (0,0) -- (0.25,1.6547) -- (0.5,0.9545);
+\foreach \t/\w in {0.25/1.6547, 0.5/0.9545}{
+  \fill[softc!62] (\t,\w) circle (2.2pt);}
+\node[softc!62,font=\scriptsize,anchor=south east] at (0.248,1.66) {64};
+
+% 72-site
+\draw[softc!40,line width=1.0pt] (0,0) -- (0.3333,1.5380) -- (0.5,1.0681);
+\foreach \t/\w in {0.3333/1.5380, 0.5/1.0681}{
+  \fill[softc!40] (\t,\w) circle (2.2pt);}
+\node[softc!40,font=\scriptsize,anchor=north west] at (0.338,1.52) {72};
+
+% upper branch, 48
+\draw[phot,line width=1.0pt,densely dotted]
+  (0,0) -- (0.3333,1.9802) -- (0.5,1.7303);
+\foreach \t/\w in {0.3333/1.9802, 0.5/1.7303}{
+  \draw[phot,fill=white,line width=0.8pt] (\t,\w) circle (2.2pt);}
+\node[phot,font=\scriptsize,anchor=west] at (0.505,1.74)
+  {partner (48)};
+
+% annotation
+\draw[-{Latex[length=2.2mm]},acc,line width=0.9pt]
+  (0.44,1.86) to[bend left=22] (0.485,1.12);
+\node[acc,font=\scriptsize,anchor=east,align=right] at (0.435,1.50)
+  {turns over:\\ $-46\%$ (48), $-42\%$ (64), $-31\%$ (72)};
+
+\end{tikzpicture}
+\caption{The lower branch along $\Gamma\to L$, with $\bq=t(1,\bar11)$.
+It rises like a photon --- at $t=\tfrac13$ it is \emph{above} the
+Gaussian curve, and nearly degenerate with its partner ($1.895$ against
+$1.980$) --- then turns over and falls into the zone boundary. The
+partner falls only $12.6\%$ over the same interval. Each cluster
+resolves one interior momentum on this line, so what is established is
+the inequality $\omega(\text{interior})>\omega(L)$ at three independent
+sizes, not the shape of the minimum.}
+\label{fig:disp}
+\end{figure}
+
+\subsection{What the ground state already knew}
+
+Two ground-state quantities anticipate all of this, which is worth
+recording because they are computable far beyond exact diagonalization.
+The static structure factor is largest exactly where the mode softens
+($S(L)=0.3704$, against $0.2872$, $0.2729$, $0.2583$, $0.1894$ at the
+other resolved momenta), and the Feynman ratio $f_1/S$, normalized by
+the Gaussian energy, orders all five momenta exactly as the measured
+softening does --- Spearman correlation $+1$, no inversions.
+
+\begin{table}[h]
+\centering
+\caption{The ground-state predictor against the measured softening. The
+two right-hand columns rank the five momenta identically. Neither is
+ordered by $|\bq|$: the first and last rows lie on the same shell.}
+\label{tab:predict}
+\begin{tabular}{lccccc}
+\toprule
+$\bq$ & $|\bq|$ & $S(\bq)$ & $f_1$ & $(f_1/S)/\omega_G$ &
+$\omega_{\rm low}/\omega_G$\\
+\midrule
+$L$ & $0.866$ & $0.3704$ & $0.6835$ & $\bm{0.908}$ & $\bm{0.503}$\\
+$(\frac13,\frac13,\frac23)$ & $0.816$ & $0.2870$ & $0.7150$ & $1.177$
+ & $0.824$\\
+$X$ & $1.000$ & $0.2727$ & $0.8790$ & $1.373$ & $0.952$\\
+$(\frac13,\frac13,\frac13)$ & $0.577$ & $0.1894$ & $0.4585$ & $1.375$
+ & $1.076$\\
+$(\frac16,\frac16,\frac56)$ & $0.866$ & $0.2583$ & $0.8306$ & $1.415$
+ & $1.114$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The baseline: no Gaussian theory can do this}
+
+Finally, the reference the softening is measured against. In Gaussian
+lattice electrodynamics the two transverse polarizations are not merely
+close but \emph{exactly} degenerate: diagonalizing the lattice curl at
+every allowed momentum of fcc$(4,4,4)$, fcc$(3,4,5)$ and fcc$(2,3,5)$
+--- $153$ momenta in all, including $32$ in the generic class on the
+anisotropic boxes --- gives $\sigma_2/\sigma_1=1.00000000$ every time,
+with $\sigma_3/\sigma_1\sim10^{-15}$ confirming rank two.
+
+Since $U$ and $K$ enter $\omega_\lambda=\sqrt{2UK}\,\sigma_\lambda$ only
+through the common prefactor, \emph{no} renormalization of the Gaussian
+theory --- of any strength, in either parameter --- can split the
+doublet. The observed factor $1.69$ at $L$ is therefore outside that
+description entirely, not a large correction within it.
+
+\subsection{What this does not establish}
+\label{sec:notclaimed}
+
+Three things, stated so they are not read into the above.
+
+\emph{This is not a new quasiparticle.} The soft level is one of the two
+transverse polarizations, continuously connected to the photon doublet
+at small $\bq$ (at $t=\tfrac13$ the two levels are $1.895$ and $1.980$,
+nearly degenerate), carrying no new quantum number and no new
+charge. What the mechanism describes is the \emph{same} excitation
+reorganizing itself where the lattice permits --- which is exactly the
+status of the roton in helium, where phonon and roton are one branch.
+
+\emph{The minimum is not resolved.} Each cluster contributes one
+interior point on the $\Gamma\to L$ line, so we establish
+$\omega(\text{interior})>\omega(L)$ three times over, not the curvature
+or position of a minimum.
+
+\emph{The splitting itself is not new.} That interactions split the two
+transverse polarizations at intermediate wavevector was predicted
+semiclassically by Kwasigroch, Dou\c{c}ot and Castelnovo. What is added
+here is that the splitting is order one at the zone boundary, that one
+member falls to half the Gaussian energy while the other does not, and
+the exact microscopic reason why.
 
 \section{Summary}
 
